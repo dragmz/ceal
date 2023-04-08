@@ -4,26 +4,26 @@ program:
     (
         include
         | function
-        | struct
+        | struct ';'
     )* EOF;
 
 include: '#include' (STRING | ANGLE_STRING);
 function: type ID '(' params ')' '{' stmt* '}';
 
-struct: 'struct' ID '{' field* '}' ';';
+struct: 'struct' ID '{' field* '}';
 field: type ID ';';
 
 type: 'const'? ID;
 params: (param (',' param)*)?;
 param: type ID;
 stmt:
-    type ID ';'                                         # Declaration
-    | type ID '=' expr ';'                              # Definition
-    | ID ('.' ID)* '=' expr ';'                         # Assignment
-    | call_expr ';'                                     # Call
-    | 'if' '(' expr ')' (('{' stmt* '}') | stmt) elseif* else?        # If
-    | 'return' expr? ';'                                 # Return
-    | '{' stmt* '}'                                     # Block
+    declaration ';'                                         # DeclarationStmt
+    | definition ';'                              # DefinitionStmt
+    | ID ('.' ID)* '=' expr ';'                         # AssignmentStmt
+    | call_expr ';'                                     # CallStmt
+    | 'if' '(' expr ')' (('{' stmt* '}') | stmt) elseif* else?        # IfStmt
+    | 'return' expr? ';'                                 # ReturnStmt
+    | '{' stmt* '}'                                     # BlockStmt
     ;
 expr:
     expr muldiv expr            # MulDivExpr
@@ -35,6 +35,8 @@ expr:
     | ID '.' ID ('.' ID)*       # MemberExpr
     | call_expr                 # CallExpr
     ;
+declaration: type ID;
+definition: type ID '=' expr;
 elseif: 'else if' '(' expr ')' (('{' stmt* '}') | stmt);
 else: 'else' (('{' stmt* '}') | stmt);
 args: (expr (',' expr)*)?;

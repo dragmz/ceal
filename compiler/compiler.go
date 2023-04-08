@@ -229,8 +229,8 @@ type SymbolTableVisitor struct {
 	slot int // TODO: make the slot index stack-based
 }
 
-func (v *SymbolTableVisitor) VisitDeclaration(ctx *parser.DeclarationContext) interface{} {
-	id := ctx.ID().GetText()
+func (v *SymbolTableVisitor) VisitDeclarationStmt(ctx *parser.DeclarationStmtContext) interface{} {
+	id := ctx.Declaration().ID().GetText()
 
 	if _, ok := v.scope.variables[id]; ok {
 		panic(fmt.Sprintf("variable '%s' is already defined", id))
@@ -242,7 +242,7 @@ func (v *SymbolTableVisitor) VisitDeclaration(ctx *parser.DeclarationContext) in
 
 	v.slot++
 
-	t := ctx.Type_().ID().GetText()
+	t := ctx.Declaration().Type_().ID().GetText()
 
 	vr := &Variable{
 		t:     t,
@@ -256,8 +256,8 @@ func (v *SymbolTableVisitor) VisitDeclaration(ctx *parser.DeclarationContext) in
 	return v.VisitChildren(ctx)
 }
 
-func (v *SymbolTableVisitor) VisitDefinition(ctx *parser.DefinitionContext) interface{} {
-	id := ctx.ID().GetText()
+func (v *SymbolTableVisitor) VisitDefinitionStmt(ctx *parser.DefinitionStmtContext) interface{} {
+	id := ctx.Definition().ID().GetText()
 
 	if _, ok := v.scope.variables[id]; ok {
 		panic(fmt.Sprintf("variable '%s' is already defined", id))
@@ -270,7 +270,7 @@ func (v *SymbolTableVisitor) VisitDefinition(ctx *parser.DefinitionContext) inte
 	v.slot++
 
 	vr := &Variable{
-		t:     ctx.Type_().ID().GetText(),
+		t:     ctx.Definition().Type_().ID().GetText(),
 		name:  id,
 		local: local,
 	}
@@ -281,7 +281,7 @@ func (v *SymbolTableVisitor) VisitDefinition(ctx *parser.DefinitionContext) inte
 	return v.VisitChildren(ctx)
 }
 
-func (v *SymbolTableVisitor) VisitBlock(ctx *parser.BlockContext) interface{} {
+func (v *SymbolTableVisitor) VisitBlockStmt(ctx *parser.BlockStmtContext) interface{} {
 	v.scope = v.scope.enter()
 	v.VisitChildren(ctx)
 	v.scope = v.scope.exit()
@@ -740,7 +740,8 @@ func (a *AstFunction) String() string {
 }
 
 type AstProgram struct {
-	functions map[string]*AstFunction
+	functions      map[string]*AstFunction
+	functionsNames []string
 }
 
 func (a *AstProgram) String() string {
@@ -754,7 +755,9 @@ func (a *AstProgram) String() string {
 		res.WriteString(fmt.Sprintf("b %s\n", main.fun.name))
 	}
 
-	for name, fun := range a.functions {
+	for _, name := range a.functionsNames {
+		fun := a.functions[name]
+
 		if name == AvmMainName {
 			continue
 		}
@@ -791,7 +794,7 @@ func (v *AstVisitor) VisitMemberExpr(ctx *parser.MemberExprContext) interface{} 
 	return ast
 }
 
-func (v *AstVisitor) VisitAssignment(ctx *parser.AssignmentContext) interface{} {
+func (v *AstVisitor) VisitAssignmentStmt(ctx *parser.AssignmentStmtContext) interface{} {
 	ids := ctx.AllID()
 
 	vr, f := v.mustResolve(ids)
@@ -813,8 +816,8 @@ func (v *AstVisitor) VisitAssignment(ctx *parser.AssignmentContext) interface{} 
 	return ast
 }
 
-func (v *AstVisitor) VisitDeclaration(ctx *parser.DeclarationContext) interface{} {
-	id := ctx.Type_().ID().GetText()
+func (v *AstVisitor) VisitDeclarationStmt(ctx *parser.DeclarationStmtContext) interface{} {
+	id := ctx.Declaration().Type_().ID().GetText()
 	t := v.scope.resolveType(id)
 
 	if t == nil {
@@ -888,7 +891,7 @@ func (v *AstVisitor) VisitConstantExpr(ctx *parser.ConstantExprContext) interfac
 func (v *AstVisitor) VisitCallExpr(ctx *parser.CallExprContext) interface{} {
 	return v.Visit(ctx.Call_expr())
 }
-func (v *AstVisitor) VisitCall(ctx *parser.CallContext) interface{} {
+func (v *AstVisitor) VisitCallStmt(ctx *parser.CallStmtContext) interface{} {
 	return v.Visit(ctx.Call_expr())
 }
 
@@ -936,7 +939,7 @@ func (v *AstVisitor) VisitCall_expr(ctx *parser.Call_exprContext) interface{} {
 	return ast
 }
 
-func (v *AstVisitor) VisitReturn(ctx *parser.ReturnContext) interface{} {
+func (v *AstVisitor) VisitReturnStmt(ctx *parser.ReturnStmtContext) interface{} {
 	ast := &AstReturn{
 		function: v.scope.function,
 	}
@@ -948,7 +951,7 @@ func (v *AstVisitor) VisitReturn(ctx *parser.ReturnContext) interface{} {
 	return ast
 }
 
-func (v *AstVisitor) VisitIf(ctx *parser.IfContext) interface{} {
+func (v *AstVisitor) VisitIfStmt(ctx *parser.IfStmtContext) interface{} {
 	alts := []*AstIfAlternative{}
 
 	ast := &AstIf{
@@ -1044,15 +1047,15 @@ func (v *AstVisitor) mustResolve(ids []antlr.TerminalNode) (*Variable, *StructFi
 	return vr, f
 }
 
-func (v *AstVisitor) VisitDefinition(ctx *parser.DefinitionContext) interface{} {
-	id := ctx.ID().GetText()
+func (v *AstVisitor) VisitDefinitionStmt(ctx *parser.DefinitionStmtContext) interface{} {
+	id := ctx.Definition().ID().GetText()
 	vr := v.scope.variables[id]
 	t := v.scope.resolveType(vr.t)
 
 	ast := &AstAssign{
 		v:     vr,
 		t:     t,
-		value: v.visitStatement(ctx.Expr()),
+		value: v.visitStatement(ctx.Definition().Expr()),
 	}
 
 	return ast
@@ -1077,11 +1080,12 @@ func (v *AstVisitor) VisitFunction(ctx *parser.FunctionContext) interface{} {
 	v.scope = v.scope.exit()
 
 	v.program.functions[id] = ast
+	v.program.functionsNames = append(v.program.functionsNames, ast.fun.name)
 
 	return nil
 }
 
-func (v *AstVisitor) VisitBlock(ctx *parser.BlockContext) interface{} {
+func (v *AstVisitor) VisitBlockStmt(ctx *parser.BlockStmtContext) interface{} {
 	v.scope = v.scope.enter()
 
 	ast := &AstBlock{}

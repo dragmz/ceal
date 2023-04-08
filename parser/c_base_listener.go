@@ -68,47 +68,47 @@ func (s *BaseCListener) EnterParam(ctx *ParamContext) {}
 // ExitParam is called when production param is exited.
 func (s *BaseCListener) ExitParam(ctx *ParamContext) {}
 
-// EnterDeclaration is called when production Declaration is entered.
-func (s *BaseCListener) EnterDeclaration(ctx *DeclarationContext) {}
+// EnterDeclarationStmt is called when production DeclarationStmt is entered.
+func (s *BaseCListener) EnterDeclarationStmt(ctx *DeclarationStmtContext) {}
 
-// ExitDeclaration is called when production Declaration is exited.
-func (s *BaseCListener) ExitDeclaration(ctx *DeclarationContext) {}
+// ExitDeclarationStmt is called when production DeclarationStmt is exited.
+func (s *BaseCListener) ExitDeclarationStmt(ctx *DeclarationStmtContext) {}
 
-// EnterDefinition is called when production Definition is entered.
-func (s *BaseCListener) EnterDefinition(ctx *DefinitionContext) {}
+// EnterDefinitionStmt is called when production DefinitionStmt is entered.
+func (s *BaseCListener) EnterDefinitionStmt(ctx *DefinitionStmtContext) {}
 
-// ExitDefinition is called when production Definition is exited.
-func (s *BaseCListener) ExitDefinition(ctx *DefinitionContext) {}
+// ExitDefinitionStmt is called when production DefinitionStmt is exited.
+func (s *BaseCListener) ExitDefinitionStmt(ctx *DefinitionStmtContext) {}
 
-// EnterAssignment is called when production Assignment is entered.
-func (s *BaseCListener) EnterAssignment(ctx *AssignmentContext) {}
+// EnterAssignmentStmt is called when production AssignmentStmt is entered.
+func (s *BaseCListener) EnterAssignmentStmt(ctx *AssignmentStmtContext) {}
 
-// ExitAssignment is called when production Assignment is exited.
-func (s *BaseCListener) ExitAssignment(ctx *AssignmentContext) {}
+// ExitAssignmentStmt is called when production AssignmentStmt is exited.
+func (s *BaseCListener) ExitAssignmentStmt(ctx *AssignmentStmtContext) {}
 
-// EnterCall is called when production Call is entered.
-func (s *BaseCListener) EnterCall(ctx *CallContext) {}
+// EnterCallStmt is called when production CallStmt is entered.
+func (s *BaseCListener) EnterCallStmt(ctx *CallStmtContext) {}
 
-// ExitCall is called when production Call is exited.
-func (s *BaseCListener) ExitCall(ctx *CallContext) {}
+// ExitCallStmt is called when production CallStmt is exited.
+func (s *BaseCListener) ExitCallStmt(ctx *CallStmtContext) {}
 
-// EnterIf is called when production If is entered.
-func (s *BaseCListener) EnterIf(ctx *IfContext) {}
+// EnterIfStmt is called when production IfStmt is entered.
+func (s *BaseCListener) EnterIfStmt(ctx *IfStmtContext) {}
 
-// ExitIf is called when production If is exited.
-func (s *BaseCListener) ExitIf(ctx *IfContext) {}
+// ExitIfStmt is called when production IfStmt is exited.
+func (s *BaseCListener) ExitIfStmt(ctx *IfStmtContext) {}
 
-// EnterReturn is called when production Return is entered.
-func (s *BaseCListener) EnterReturn(ctx *ReturnContext) {}
+// EnterReturnStmt is called when production ReturnStmt is entered.
+func (s *BaseCListener) EnterReturnStmt(ctx *ReturnStmtContext) {}
 
-// ExitReturn is called when production Return is exited.
-func (s *BaseCListener) ExitReturn(ctx *ReturnContext) {}
+// ExitReturnStmt is called when production ReturnStmt is exited.
+func (s *BaseCListener) ExitReturnStmt(ctx *ReturnStmtContext) {}
 
-// EnterBlock is called when production Block is entered.
-func (s *BaseCListener) EnterBlock(ctx *BlockContext) {}
+// EnterBlockStmt is called when production BlockStmt is entered.
+func (s *BaseCListener) EnterBlockStmt(ctx *BlockStmtContext) {}
 
-// ExitBlock is called when production Block is exited.
-func (s *BaseCListener) ExitBlock(ctx *BlockContext) {}
+// ExitBlockStmt is called when production BlockStmt is exited.
+func (s *BaseCListener) ExitBlockStmt(ctx *BlockStmtContext) {}
 
 // EnterMulDivExpr is called when production MulDivExpr is entered.
 func (s *BaseCListener) EnterMulDivExpr(ctx *MulDivExprContext) {}
@@ -157,6 +157,18 @@ func (s *BaseCListener) EnterMinusExpr(ctx *MinusExprContext) {}
 
 // ExitMinusExpr is called when production MinusExpr is exited.
 func (s *BaseCListener) ExitMinusExpr(ctx *MinusExprContext) {}
+
+// EnterDeclaration is called when production declaration is entered.
+func (s *BaseCListener) EnterDeclaration(ctx *DeclarationContext) {}
+
+// ExitDeclaration is called when production declaration is exited.
+func (s *BaseCListener) ExitDeclaration(ctx *DeclarationContext) {}
+
+// EnterDefinition is called when production definition is entered.
+func (s *BaseCListener) EnterDefinition(ctx *DefinitionContext) {}
+
+// ExitDefinition is called when production definition is exited.
+func (s *BaseCListener) ExitDefinition(ctx *DefinitionContext) {}
 
 // EnterElseif is called when production elseif is entered.
 func (s *BaseCListener) EnterElseif(ctx *ElseifContext) {}

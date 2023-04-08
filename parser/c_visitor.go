@@ -31,26 +31,26 @@ type CVisitor interface {
 	// Visit a parse tree produced by CParser#param.
 	VisitParam(ctx *ParamContext) interface{}
 
-	// Visit a parse tree produced by CParser#Declaration.
-	VisitDeclaration(ctx *DeclarationContext) interface{}
+	// Visit a parse tree produced by CParser#DeclarationStmt.
+	VisitDeclarationStmt(ctx *DeclarationStmtContext) interface{}
 
-	// Visit a parse tree produced by CParser#Definition.
-	VisitDefinition(ctx *DefinitionContext) interface{}
+	// Visit a parse tree produced by CParser#DefinitionStmt.
+	VisitDefinitionStmt(ctx *DefinitionStmtContext) interface{}
 
-	// Visit a parse tree produced by CParser#Assignment.
-	VisitAssignment(ctx *AssignmentContext) interface{}
+	// Visit a parse tree produced by CParser#AssignmentStmt.
+	VisitAssignmentStmt(ctx *AssignmentStmtContext) interface{}
 
-	// Visit a parse tree produced by CParser#Call.
-	VisitCall(ctx *CallContext) interface{}
+	// Visit a parse tree produced by CParser#CallStmt.
+	VisitCallStmt(ctx *CallStmtContext) interface{}
 
-	// Visit a parse tree produced by CParser#If.
-	VisitIf(ctx *IfContext) interface{}
+	// Visit a parse tree produced by CParser#IfStmt.
+	VisitIfStmt(ctx *IfStmtContext) interface{}
 
-	// Visit a parse tree produced by CParser#Return.
-	VisitReturn(ctx *ReturnContext) interface{}
+	// Visit a parse tree produced by CParser#ReturnStmt.
+	VisitReturnStmt(ctx *ReturnStmtContext) interface{}
 
-	// Visit a parse tree produced by CParser#Block.
-	VisitBlock(ctx *BlockContext) interface{}
+	// Visit a parse tree produced by CParser#BlockStmt.
+	VisitBlockStmt(ctx *BlockStmtContext) interface{}
 
 	// Visit a parse tree produced by CParser#MulDivExpr.
 	VisitMulDivExpr(ctx *MulDivExprContext) interface{}
@@ -75,6 +75,12 @@ type CVisitor interface {
 
 	// Visit a parse tree produced by CParser#MinusExpr.
 	VisitMinusExpr(ctx *MinusExprContext) interface{}
+
+	// Visit a parse tree produced by CParser#declaration.
+	VisitDeclaration(ctx *DeclarationContext) interface{}
+
+	// Visit a parse tree produced by CParser#definition.
+	VisitDefinition(ctx *DefinitionContext) interface{}
 
 	// Visit a parse tree produced by CParser#elseif.
 	VisitElseif(ctx *ElseifContext) interface{}

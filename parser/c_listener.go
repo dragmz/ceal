@@ -31,26 +31,26 @@ type CListener interface {
 	// EnterParam is called when entering the param production.
 	EnterParam(c *ParamContext)
 
-	// EnterDeclaration is called when entering the Declaration production.
-	EnterDeclaration(c *DeclarationContext)
+	// EnterDeclarationStmt is called when entering the DeclarationStmt production.
+	EnterDeclarationStmt(c *DeclarationStmtContext)
 
-	// EnterDefinition is called when entering the Definition production.
-	EnterDefinition(c *DefinitionContext)
+	// EnterDefinitionStmt is called when entering the DefinitionStmt production.
+	EnterDefinitionStmt(c *DefinitionStmtContext)
 
-	// EnterAssignment is called when entering the Assignment production.
-	EnterAssignment(c *AssignmentContext)
+	// EnterAssignmentStmt is called when entering the AssignmentStmt production.
+	EnterAssignmentStmt(c *AssignmentStmtContext)
 
-	// EnterCall is called when entering the Call production.
-	EnterCall(c *CallContext)
+	// EnterCallStmt is called when entering the CallStmt production.
+	EnterCallStmt(c *CallStmtContext)
 
-	// EnterIf is called when entering the If production.
-	EnterIf(c *IfContext)
+	// EnterIfStmt is called when entering the IfStmt production.
+	EnterIfStmt(c *IfStmtContext)
 
-	// EnterReturn is called when entering the Return production.
-	EnterReturn(c *ReturnContext)
+	// EnterReturnStmt is called when entering the ReturnStmt production.
+	EnterReturnStmt(c *ReturnStmtContext)
 
-	// EnterBlock is called when entering the Block production.
-	EnterBlock(c *BlockContext)
+	// EnterBlockStmt is called when entering the BlockStmt production.
+	EnterBlockStmt(c *BlockStmtContext)
 
 	// EnterMulDivExpr is called when entering the MulDivExpr production.
 	EnterMulDivExpr(c *MulDivExprContext)
@@ -75,6 +75,12 @@ type CListener interface {
 
 	// EnterMinusExpr is called when entering the MinusExpr production.
 	EnterMinusExpr(c *MinusExprContext)
+
+	// EnterDeclaration is called when entering the declaration production.
+	EnterDeclaration(c *DeclarationContext)
+
+	// EnterDefinition is called when entering the definition production.
+	EnterDefinition(c *DefinitionContext)
 
 	// EnterElseif is called when entering the elseif production.
 	EnterElseif(c *ElseifContext)
@@ -121,26 +127,26 @@ type CListener interface {
 	// ExitParam is called when exiting the param production.
 	ExitParam(c *ParamContext)
 
-	// ExitDeclaration is called when exiting the Declaration production.
-	ExitDeclaration(c *DeclarationContext)
+	// ExitDeclarationStmt is called when exiting the DeclarationStmt production.
+	ExitDeclarationStmt(c *DeclarationStmtContext)
 
-	// ExitDefinition is called when exiting the Definition production.
-	ExitDefinition(c *DefinitionContext)
+	// ExitDefinitionStmt is called when exiting the DefinitionStmt production.
+	ExitDefinitionStmt(c *DefinitionStmtContext)
 
-	// ExitAssignment is called when exiting the Assignment production.
-	ExitAssignment(c *AssignmentContext)
+	// ExitAssignmentStmt is called when exiting the AssignmentStmt production.
+	ExitAssignmentStmt(c *AssignmentStmtContext)
 
-	// ExitCall is called when exiting the Call production.
-	ExitCall(c *CallContext)
+	// ExitCallStmt is called when exiting the CallStmt production.
+	ExitCallStmt(c *CallStmtContext)
 
-	// ExitIf is called when exiting the If production.
-	ExitIf(c *IfContext)
+	// ExitIfStmt is called when exiting the IfStmt production.
+	ExitIfStmt(c *IfStmtContext)
 
-	// ExitReturn is called when exiting the Return production.
-	ExitReturn(c *ReturnContext)
+	// ExitReturnStmt is called when exiting the ReturnStmt production.
+	ExitReturnStmt(c *ReturnStmtContext)
 
-	// ExitBlock is called when exiting the Block production.
-	ExitBlock(c *BlockContext)
+	// ExitBlockStmt is called when exiting the BlockStmt production.
+	ExitBlockStmt(c *BlockStmtContext)
 
 	// ExitMulDivExpr is called when exiting the MulDivExpr production.
 	ExitMulDivExpr(c *MulDivExprContext)
@@ -165,6 +171,12 @@ type CListener interface {
 
 	// ExitMinusExpr is called when exiting the MinusExpr production.
 	ExitMinusExpr(c *MinusExprContext)
+
+	// ExitDeclaration is called when exiting the declaration production.
+	ExitDeclaration(c *DeclarationContext)
+
+	// ExitDefinition is called when exiting the definition production.
+	ExitDefinition(c *DefinitionContext)
 
 	// ExitElseif is called when exiting the elseif production.
 	ExitElseif(c *ElseifContext)

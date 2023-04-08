@@ -39,31 +39,31 @@ func (v *BaseCVisitor) VisitParam(ctx *ParamContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseCVisitor) VisitDeclaration(ctx *DeclarationContext) interface{} {
+func (v *BaseCVisitor) VisitDeclarationStmt(ctx *DeclarationStmtContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseCVisitor) VisitDefinition(ctx *DefinitionContext) interface{} {
+func (v *BaseCVisitor) VisitDefinitionStmt(ctx *DefinitionStmtContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseCVisitor) VisitAssignment(ctx *AssignmentContext) interface{} {
+func (v *BaseCVisitor) VisitAssignmentStmt(ctx *AssignmentStmtContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseCVisitor) VisitCall(ctx *CallContext) interface{} {
+func (v *BaseCVisitor) VisitCallStmt(ctx *CallStmtContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseCVisitor) VisitIf(ctx *IfContext) interface{} {
+func (v *BaseCVisitor) VisitIfStmt(ctx *IfStmtContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseCVisitor) VisitReturn(ctx *ReturnContext) interface{} {
+func (v *BaseCVisitor) VisitReturnStmt(ctx *ReturnStmtContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseCVisitor) VisitBlock(ctx *BlockContext) interface{} {
+func (v *BaseCVisitor) VisitBlockStmt(ctx *BlockStmtContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -96,6 +96,14 @@ func (v *BaseCVisitor) VisitAddSubExpr(ctx *AddSubExprContext) interface{} {
 }
 
 func (v *BaseCVisitor) VisitMinusExpr(ctx *MinusExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitDeclaration(ctx *DeclarationContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitDefinition(ctx *DefinitionContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
