@@ -1,0 +1,5785 @@
+{
+	"version": 8,
+	"ops": [
+		{
+			"name": "err",
+			"imms": [],
+			"stacks": [],
+			"returns": [],
+			"doc": "Fail immediately.",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "sha256",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "SHA256 hash of value A, yields [32]byte",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "keccak256",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "Keccak256 hash of value A, yields [32]byte",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "sha512_256",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "SHA512_256 hash of value A, yields [32]byte",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "ed25519verify",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				},
+				{
+					"type": "bytes",
+					"name": "s3"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "for (data A, signature B, pubkey C) verify the signature of (\"ProgData\" || program_hash || data) against the pubkey =\u003e {0 or 1}",
+			"docExtra": "The 32 byte public key is the last element on the stack, preceded by the 64 byte signature at the second-to-last element on the stack, preceded by the data which was signed at the third-to-last element on the stack.",
+			"enum": []
+		},
+		{
+			"name": "ecdsa_verify",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				},
+				{
+					"type": "bytes",
+					"name": "s3"
+				},
+				{
+					"type": "bytes",
+					"name": "s4"
+				},
+				{
+					"type": "bytes",
+					"name": "s5"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "for (data A, signature B, C and pubkey D, E) verify the signature of the data against the pubkey =\u003e {0 or 1}",
+			"docExtra": "The 32 byte Y-component of a public key is the last element on the stack, preceded by X-component of a pubkey, preceded by S and R components of a signature, preceded by the data that is fifth element on the stack. All values are big-endian encoded. The signed data must be 32 bytes long, and signatures in lower-S form are only accepted.",
+			"enum": [
+				{
+					"type": "void",
+					"name": "Secp256k1"
+				},
+				{
+					"type": "void",
+					"name": "Secp256r1"
+				}
+			]
+		},
+		{
+			"name": "ecdsa_pk_decompress",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				},
+				{
+					"type": "bytes",
+					"name": "r2"
+				}
+			],
+			"doc": "decompress pubkey A into components X, Y",
+			"docExtra": "The 33 byte public key in a compressed form to be decompressed into X and Y (top) components. All values are big-endian encoded.",
+			"enum": [
+				{
+					"type": "void",
+					"name": "Secp256k1"
+				},
+				{
+					"type": "void",
+					"name": "Secp256r1"
+				}
+			]
+		},
+		{
+			"name": "ecdsa_pk_recover",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				},
+				{
+					"type": "bytes",
+					"name": "s3"
+				},
+				{
+					"type": "bytes",
+					"name": "s4"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				},
+				{
+					"type": "bytes",
+					"name": "r2"
+				}
+			],
+			"doc": "for (data A, recovery id B, signature C, D) recover a public key",
+			"docExtra": "S (top) and R elements of a signature, recovery id and data (bottom) are expected on the stack and used to deriver a public key. All values are big-endian encoded. The signed data must be 32 bytes long.",
+			"enum": [
+				{
+					"type": "void",
+					"name": "Secp256k1"
+				},
+				{
+					"type": "void",
+					"name": "Secp256r1"
+				}
+			]
+		},
+		{
+			"name": "+",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "A plus B. Fail on overflow.",
+			"docExtra": "Overflow is an error condition which halts execution and fails the transaction. Full precision is available from `addw`.",
+			"enum": []
+		},
+		{
+			"name": "-",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "A minus B. Fail if B \u003e A.",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "/",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "A divided by B (truncated division). Fail if B == 0.",
+			"docExtra": "`divmodw` is available to divide the two-element values produced by `mulw` and `addw`.",
+			"enum": []
+		},
+		{
+			"name": "*",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "A times B. Fail on overflow.",
+			"docExtra": "Overflow is an error condition which halts execution and fails the transaction. Full precision is available from `mulw`.",
+			"enum": []
+		},
+		{
+			"name": "\u003c",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "A less than B =\u003e {0 or 1}",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "\u003e",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "A greater than B =\u003e {0 or 1}",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "\u003c=",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "A less than or equal to B =\u003e {0 or 1}",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "\u003e=",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "A greater than or equal to B =\u003e {0 or 1}",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "\u0026\u0026",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "A is not zero and B is not zero =\u003e {0 or 1}",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "||",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "A is not zero or B is not zero =\u003e {0 or 1}",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "==",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				},
+				{
+					"type": "any",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "A is equal to B =\u003e {0 or 1}",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "!=",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				},
+				{
+					"type": "any",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "A is not equal to B =\u003e {0 or 1}",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "!",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "A == 0 yields 1; else 0",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "len",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "yields length of byte value A",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "itob",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "converts uint64 A to big-endian byte array, always of length 8",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "btoi",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "converts big-endian byte array A to uint64. Fails if len(A) \u003e 8. Padded by leading 0s if len(A) \u003c 8.",
+			"docExtra": "`btoi` fails if the input is longer than 8 bytes.",
+			"enum": []
+		},
+		{
+			"name": "%",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "A modulo B. Fail if B == 0.",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "|",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "A bitwise-or B",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "\u0026",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "A bitwise-and B",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "^",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "A bitwise-xor B",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "~",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "bitwise invert value A",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "mulw",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				},
+				{
+					"type": "uint64",
+					"name": "r2"
+				}
+			],
+			"doc": "A times B as a 128-bit result in two uint64s. X is the high 64 bits, Y is the low",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "addw",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				},
+				{
+					"type": "uint64",
+					"name": "r2"
+				}
+			],
+			"doc": "A plus B as a 128-bit result. X is the carry-bit, Y is the low-order 64 bits.",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "divmodw",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				},
+				{
+					"type": "uint64",
+					"name": "s3"
+				},
+				{
+					"type": "uint64",
+					"name": "s4"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				},
+				{
+					"type": "uint64",
+					"name": "r2"
+				},
+				{
+					"type": "uint64",
+					"name": "r3"
+				},
+				{
+					"type": "uint64",
+					"name": "r4"
+				}
+			],
+			"doc": "W,X = (A,B / C,D); Y,Z = (A,B modulo C,D)",
+			"docExtra": "The notation J,K indicates that two uint64 values J and K are interpreted as a uint128 value, with J as the high uint64 and K the low.",
+			"enum": []
+		},
+		{
+			"name": "intcblock",
+			"imms": [],
+			"stacks": [],
+			"returns": [],
+			"doc": "prepare block of uint64 constants for use by intc",
+			"docExtra": "`intcblock` loads following program bytes into an array of integer constants in the evaluator. These integer constants can be referred to by `intc` and `intc_*` which will push the value onto the stack. Subsequent calls to `intcblock` reset and replace the integer constants available to the script.",
+			"enum": []
+		},
+		{
+			"name": "intc",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "Ith constant from intcblock",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "intc_0",
+			"imms": [],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "constant 0 from intcblock",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "intc_1",
+			"imms": [],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "constant 1 from intcblock",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "intc_2",
+			"imms": [],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "constant 2 from intcblock",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "intc_3",
+			"imms": [],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "constant 3 from intcblock",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "bytecblock",
+			"imms": [],
+			"stacks": [],
+			"returns": [],
+			"doc": "prepare block of byte-array constants for use by bytec",
+			"docExtra": "`bytecblock` loads the following program bytes into an array of byte-array constants in the evaluator. These constants can be referred to by `bytec` and `bytec_*` which will push the value onto the stack. Subsequent calls to `bytecblock` reset and replace the bytes constants available to the script.",
+			"enum": []
+		},
+		{
+			"name": "bytec",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "Ith constant from bytecblock",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "bytec_0",
+			"imms": [],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "constant 0 from bytecblock",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "bytec_1",
+			"imms": [],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "constant 1 from bytecblock",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "bytec_2",
+			"imms": [],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "constant 2 from bytecblock",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "bytec_3",
+			"imms": [],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "constant 3 from bytecblock",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "arg",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "Nth LogicSig argument",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "arg_0",
+			"imms": [],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "LogicSig argument 0",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "arg_1",
+			"imms": [],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "LogicSig argument 1",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "arg_2",
+			"imms": [],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "LogicSig argument 2",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "arg_3",
+			"imms": [],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "LogicSig argument 3",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "txn",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "field F of current transaction",
+			"docExtra": "",
+			"enum": [
+				{
+					"type": "bytes",
+					"name": "Sender"
+				},
+				{
+					"type": "uint64",
+					"name": "Fee"
+				},
+				{
+					"type": "uint64",
+					"name": "FirstValid"
+				},
+				{
+					"type": "uint64",
+					"name": "FirstValidTime"
+				},
+				{
+					"type": "uint64",
+					"name": "LastValid"
+				},
+				{
+					"type": "bytes",
+					"name": "Note"
+				},
+				{
+					"type": "bytes",
+					"name": "Lease"
+				},
+				{
+					"type": "bytes",
+					"name": "Receiver"
+				},
+				{
+					"type": "uint64",
+					"name": "Amount"
+				},
+				{
+					"type": "bytes",
+					"name": "CloseRemainderTo"
+				},
+				{
+					"type": "bytes",
+					"name": "VotePK"
+				},
+				{
+					"type": "bytes",
+					"name": "SelectionPK"
+				},
+				{
+					"type": "uint64",
+					"name": "VoteFirst"
+				},
+				{
+					"type": "uint64",
+					"name": "VoteLast"
+				},
+				{
+					"type": "uint64",
+					"name": "VoteKeyDilution"
+				},
+				{
+					"type": "bytes",
+					"name": "Type"
+				},
+				{
+					"type": "uint64",
+					"name": "TypeEnum"
+				},
+				{
+					"type": "uint64",
+					"name": "XferAsset"
+				},
+				{
+					"type": "uint64",
+					"name": "AssetAmount"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetSender"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetReceiver"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetCloseTo"
+				},
+				{
+					"type": "uint64",
+					"name": "GroupIndex"
+				},
+				{
+					"type": "bytes",
+					"name": "TxID"
+				},
+				{
+					"type": "uint64",
+					"name": "ApplicationID"
+				},
+				{
+					"type": "uint64",
+					"name": "OnCompletion"
+				},
+				{
+					"type": "bytes",
+					"name": "ApplicationArgs"
+				},
+				{
+					"type": "uint64",
+					"name": "NumAppArgs"
+				},
+				{
+					"type": "bytes",
+					"name": "Accounts"
+				},
+				{
+					"type": "uint64",
+					"name": "NumAccounts"
+				},
+				{
+					"type": "bytes",
+					"name": "ApprovalProgram"
+				},
+				{
+					"type": "bytes",
+					"name": "ClearStateProgram"
+				},
+				{
+					"type": "bytes",
+					"name": "RekeyTo"
+				},
+				{
+					"type": "uint64",
+					"name": "ConfigAsset"
+				},
+				{
+					"type": "uint64",
+					"name": "ConfigAssetTotal"
+				},
+				{
+					"type": "uint64",
+					"name": "ConfigAssetDecimals"
+				},
+				{
+					"type": "uint64",
+					"name": "ConfigAssetDefaultFrozen"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetUnitName"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetName"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetURL"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetMetadataHash"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetManager"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetReserve"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetFreeze"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetClawback"
+				},
+				{
+					"type": "uint64",
+					"name": "FreezeAsset"
+				},
+				{
+					"type": "bytes",
+					"name": "FreezeAssetAccount"
+				},
+				{
+					"type": "uint64",
+					"name": "FreezeAssetFrozen"
+				},
+				{
+					"type": "uint64",
+					"name": "Assets"
+				},
+				{
+					"type": "uint64",
+					"name": "NumAssets"
+				},
+				{
+					"type": "uint64",
+					"name": "Applications"
+				},
+				{
+					"type": "uint64",
+					"name": "NumApplications"
+				},
+				{
+					"type": "uint64",
+					"name": "GlobalNumUint"
+				},
+				{
+					"type": "uint64",
+					"name": "GlobalNumByteSlice"
+				},
+				{
+					"type": "uint64",
+					"name": "LocalNumUint"
+				},
+				{
+					"type": "uint64",
+					"name": "LocalNumByteSlice"
+				},
+				{
+					"type": "uint64",
+					"name": "ExtraProgramPages"
+				},
+				{
+					"type": "uint64",
+					"name": "Nonparticipation"
+				},
+				{
+					"type": "bytes",
+					"name": "Logs"
+				},
+				{
+					"type": "uint64",
+					"name": "NumLogs"
+				},
+				{
+					"type": "uint64",
+					"name": "CreatedAssetID"
+				},
+				{
+					"type": "uint64",
+					"name": "CreatedApplicationID"
+				},
+				{
+					"type": "bytes",
+					"name": "LastLog"
+				},
+				{
+					"type": "bytes",
+					"name": "StateProofPK"
+				},
+				{
+					"type": "bytes",
+					"name": "ApprovalProgramPages"
+				},
+				{
+					"type": "uint64",
+					"name": "NumApprovalProgramPages"
+				},
+				{
+					"type": "bytes",
+					"name": "ClearStateProgramPages"
+				},
+				{
+					"type": "uint64",
+					"name": "NumClearStateProgramPages"
+				}
+			]
+		},
+		{
+			"name": "global",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "global field F",
+			"docExtra": "",
+			"enum": [
+				{
+					"type": "uint64",
+					"name": "MinTxnFee"
+				},
+				{
+					"type": "uint64",
+					"name": "MinBalance"
+				},
+				{
+					"type": "uint64",
+					"name": "MaxTxnLife"
+				},
+				{
+					"type": "bytes",
+					"name": "ZeroAddress"
+				},
+				{
+					"type": "uint64",
+					"name": "GroupSize"
+				},
+				{
+					"type": "uint64",
+					"name": "LogicSigVersion"
+				},
+				{
+					"type": "uint64",
+					"name": "Round"
+				},
+				{
+					"type": "uint64",
+					"name": "LatestTimestamp"
+				},
+				{
+					"type": "uint64",
+					"name": "CurrentApplicationID"
+				},
+				{
+					"type": "bytes",
+					"name": "CreatorAddress"
+				},
+				{
+					"type": "bytes",
+					"name": "CurrentApplicationAddress"
+				},
+				{
+					"type": "bytes",
+					"name": "GroupID"
+				},
+				{
+					"type": "uint64",
+					"name": "OpcodeBudget"
+				},
+				{
+					"type": "uint64",
+					"name": "CallerApplicationID"
+				},
+				{
+					"type": "bytes",
+					"name": "CallerApplicationAddress"
+				}
+			]
+		},
+		{
+			"name": "gtxn",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				},
+				{
+					"type": "uint64",
+					"name": "i2"
+				}
+			],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "field F of the Tth transaction in the current group",
+			"docExtra": "for notes on transaction fields available, see `txn`. If this transaction is _i_ in the group, `gtxn i field` is equivalent to `txn field`.",
+			"enum": [
+				{
+					"type": "bytes",
+					"name": "Sender"
+				},
+				{
+					"type": "uint64",
+					"name": "Fee"
+				},
+				{
+					"type": "uint64",
+					"name": "FirstValid"
+				},
+				{
+					"type": "uint64",
+					"name": "FirstValidTime"
+				},
+				{
+					"type": "uint64",
+					"name": "LastValid"
+				},
+				{
+					"type": "bytes",
+					"name": "Note"
+				},
+				{
+					"type": "bytes",
+					"name": "Lease"
+				},
+				{
+					"type": "bytes",
+					"name": "Receiver"
+				},
+				{
+					"type": "uint64",
+					"name": "Amount"
+				},
+				{
+					"type": "bytes",
+					"name": "CloseRemainderTo"
+				},
+				{
+					"type": "bytes",
+					"name": "VotePK"
+				},
+				{
+					"type": "bytes",
+					"name": "SelectionPK"
+				},
+				{
+					"type": "uint64",
+					"name": "VoteFirst"
+				},
+				{
+					"type": "uint64",
+					"name": "VoteLast"
+				},
+				{
+					"type": "uint64",
+					"name": "VoteKeyDilution"
+				},
+				{
+					"type": "bytes",
+					"name": "Type"
+				},
+				{
+					"type": "uint64",
+					"name": "TypeEnum"
+				},
+				{
+					"type": "uint64",
+					"name": "XferAsset"
+				},
+				{
+					"type": "uint64",
+					"name": "AssetAmount"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetSender"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetReceiver"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetCloseTo"
+				},
+				{
+					"type": "uint64",
+					"name": "GroupIndex"
+				},
+				{
+					"type": "bytes",
+					"name": "TxID"
+				},
+				{
+					"type": "uint64",
+					"name": "ApplicationID"
+				},
+				{
+					"type": "uint64",
+					"name": "OnCompletion"
+				},
+				{
+					"type": "bytes",
+					"name": "ApplicationArgs"
+				},
+				{
+					"type": "uint64",
+					"name": "NumAppArgs"
+				},
+				{
+					"type": "bytes",
+					"name": "Accounts"
+				},
+				{
+					"type": "uint64",
+					"name": "NumAccounts"
+				},
+				{
+					"type": "bytes",
+					"name": "ApprovalProgram"
+				},
+				{
+					"type": "bytes",
+					"name": "ClearStateProgram"
+				},
+				{
+					"type": "bytes",
+					"name": "RekeyTo"
+				},
+				{
+					"type": "uint64",
+					"name": "ConfigAsset"
+				},
+				{
+					"type": "uint64",
+					"name": "ConfigAssetTotal"
+				},
+				{
+					"type": "uint64",
+					"name": "ConfigAssetDecimals"
+				},
+				{
+					"type": "uint64",
+					"name": "ConfigAssetDefaultFrozen"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetUnitName"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetName"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetURL"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetMetadataHash"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetManager"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetReserve"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetFreeze"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetClawback"
+				},
+				{
+					"type": "uint64",
+					"name": "FreezeAsset"
+				},
+				{
+					"type": "bytes",
+					"name": "FreezeAssetAccount"
+				},
+				{
+					"type": "uint64",
+					"name": "FreezeAssetFrozen"
+				},
+				{
+					"type": "uint64",
+					"name": "Assets"
+				},
+				{
+					"type": "uint64",
+					"name": "NumAssets"
+				},
+				{
+					"type": "uint64",
+					"name": "Applications"
+				},
+				{
+					"type": "uint64",
+					"name": "NumApplications"
+				},
+				{
+					"type": "uint64",
+					"name": "GlobalNumUint"
+				},
+				{
+					"type": "uint64",
+					"name": "GlobalNumByteSlice"
+				},
+				{
+					"type": "uint64",
+					"name": "LocalNumUint"
+				},
+				{
+					"type": "uint64",
+					"name": "LocalNumByteSlice"
+				},
+				{
+					"type": "uint64",
+					"name": "ExtraProgramPages"
+				},
+				{
+					"type": "uint64",
+					"name": "Nonparticipation"
+				},
+				{
+					"type": "bytes",
+					"name": "Logs"
+				},
+				{
+					"type": "uint64",
+					"name": "NumLogs"
+				},
+				{
+					"type": "uint64",
+					"name": "CreatedAssetID"
+				},
+				{
+					"type": "uint64",
+					"name": "CreatedApplicationID"
+				},
+				{
+					"type": "bytes",
+					"name": "LastLog"
+				},
+				{
+					"type": "bytes",
+					"name": "StateProofPK"
+				},
+				{
+					"type": "bytes",
+					"name": "ApprovalProgramPages"
+				},
+				{
+					"type": "uint64",
+					"name": "NumApprovalProgramPages"
+				},
+				{
+					"type": "bytes",
+					"name": "ClearStateProgramPages"
+				},
+				{
+					"type": "uint64",
+					"name": "NumClearStateProgramPages"
+				}
+			]
+		},
+		{
+			"name": "load",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "Ith scratch space value. All scratch spaces are 0 at program start.",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "store",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				}
+			],
+			"returns": [],
+			"doc": "store A to the Ith scratch space",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "txna",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				},
+				{
+					"type": "uint64",
+					"name": "i2"
+				}
+			],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "Ith value of the array field F of the current transaction\n`txna` can be called using `txn` with 2 immediates.",
+			"docExtra": "",
+			"enum": [
+				{
+					"type": "bytes",
+					"name": "ApplicationArgs"
+				},
+				{
+					"type": "bytes",
+					"name": "Accounts"
+				},
+				{
+					"type": "uint64",
+					"name": "Assets"
+				},
+				{
+					"type": "uint64",
+					"name": "Applications"
+				},
+				{
+					"type": "bytes",
+					"name": "Logs"
+				},
+				{
+					"type": "bytes",
+					"name": "ApprovalProgramPages"
+				},
+				{
+					"type": "bytes",
+					"name": "ClearStateProgramPages"
+				}
+			]
+		},
+		{
+			"name": "gtxna",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				},
+				{
+					"type": "uint64",
+					"name": "i2"
+				},
+				{
+					"type": "uint64",
+					"name": "i3"
+				}
+			],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "Ith value of the array field F from the Tth transaction in the current group\n`gtxna` can be called using `gtxn` with 3 immediates.",
+			"docExtra": "",
+			"enum": [
+				{
+					"type": "bytes",
+					"name": "ApplicationArgs"
+				},
+				{
+					"type": "bytes",
+					"name": "Accounts"
+				},
+				{
+					"type": "uint64",
+					"name": "Assets"
+				},
+				{
+					"type": "uint64",
+					"name": "Applications"
+				},
+				{
+					"type": "bytes",
+					"name": "Logs"
+				},
+				{
+					"type": "bytes",
+					"name": "ApprovalProgramPages"
+				},
+				{
+					"type": "bytes",
+					"name": "ClearStateProgramPages"
+				}
+			]
+		},
+		{
+			"name": "gtxns",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "field F of the Ath transaction in the current group",
+			"docExtra": "for notes on transaction fields available, see `txn`. If top of stack is _i_, `gtxns field` is equivalent to `gtxn _i_ field`. gtxns exists so that _i_ can be calculated, often based on the index of the current transaction.",
+			"enum": [
+				{
+					"type": "bytes",
+					"name": "Sender"
+				},
+				{
+					"type": "uint64",
+					"name": "Fee"
+				},
+				{
+					"type": "uint64",
+					"name": "FirstValid"
+				},
+				{
+					"type": "uint64",
+					"name": "FirstValidTime"
+				},
+				{
+					"type": "uint64",
+					"name": "LastValid"
+				},
+				{
+					"type": "bytes",
+					"name": "Note"
+				},
+				{
+					"type": "bytes",
+					"name": "Lease"
+				},
+				{
+					"type": "bytes",
+					"name": "Receiver"
+				},
+				{
+					"type": "uint64",
+					"name": "Amount"
+				},
+				{
+					"type": "bytes",
+					"name": "CloseRemainderTo"
+				},
+				{
+					"type": "bytes",
+					"name": "VotePK"
+				},
+				{
+					"type": "bytes",
+					"name": "SelectionPK"
+				},
+				{
+					"type": "uint64",
+					"name": "VoteFirst"
+				},
+				{
+					"type": "uint64",
+					"name": "VoteLast"
+				},
+				{
+					"type": "uint64",
+					"name": "VoteKeyDilution"
+				},
+				{
+					"type": "bytes",
+					"name": "Type"
+				},
+				{
+					"type": "uint64",
+					"name": "TypeEnum"
+				},
+				{
+					"type": "uint64",
+					"name": "XferAsset"
+				},
+				{
+					"type": "uint64",
+					"name": "AssetAmount"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetSender"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetReceiver"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetCloseTo"
+				},
+				{
+					"type": "uint64",
+					"name": "GroupIndex"
+				},
+				{
+					"type": "bytes",
+					"name": "TxID"
+				},
+				{
+					"type": "uint64",
+					"name": "ApplicationID"
+				},
+				{
+					"type": "uint64",
+					"name": "OnCompletion"
+				},
+				{
+					"type": "bytes",
+					"name": "ApplicationArgs"
+				},
+				{
+					"type": "uint64",
+					"name": "NumAppArgs"
+				},
+				{
+					"type": "bytes",
+					"name": "Accounts"
+				},
+				{
+					"type": "uint64",
+					"name": "NumAccounts"
+				},
+				{
+					"type": "bytes",
+					"name": "ApprovalProgram"
+				},
+				{
+					"type": "bytes",
+					"name": "ClearStateProgram"
+				},
+				{
+					"type": "bytes",
+					"name": "RekeyTo"
+				},
+				{
+					"type": "uint64",
+					"name": "ConfigAsset"
+				},
+				{
+					"type": "uint64",
+					"name": "ConfigAssetTotal"
+				},
+				{
+					"type": "uint64",
+					"name": "ConfigAssetDecimals"
+				},
+				{
+					"type": "uint64",
+					"name": "ConfigAssetDefaultFrozen"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetUnitName"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetName"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetURL"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetMetadataHash"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetManager"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetReserve"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetFreeze"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetClawback"
+				},
+				{
+					"type": "uint64",
+					"name": "FreezeAsset"
+				},
+				{
+					"type": "bytes",
+					"name": "FreezeAssetAccount"
+				},
+				{
+					"type": "uint64",
+					"name": "FreezeAssetFrozen"
+				},
+				{
+					"type": "uint64",
+					"name": "Assets"
+				},
+				{
+					"type": "uint64",
+					"name": "NumAssets"
+				},
+				{
+					"type": "uint64",
+					"name": "Applications"
+				},
+				{
+					"type": "uint64",
+					"name": "NumApplications"
+				},
+				{
+					"type": "uint64",
+					"name": "GlobalNumUint"
+				},
+				{
+					"type": "uint64",
+					"name": "GlobalNumByteSlice"
+				},
+				{
+					"type": "uint64",
+					"name": "LocalNumUint"
+				},
+				{
+					"type": "uint64",
+					"name": "LocalNumByteSlice"
+				},
+				{
+					"type": "uint64",
+					"name": "ExtraProgramPages"
+				},
+				{
+					"type": "uint64",
+					"name": "Nonparticipation"
+				},
+				{
+					"type": "bytes",
+					"name": "Logs"
+				},
+				{
+					"type": "uint64",
+					"name": "NumLogs"
+				},
+				{
+					"type": "uint64",
+					"name": "CreatedAssetID"
+				},
+				{
+					"type": "uint64",
+					"name": "CreatedApplicationID"
+				},
+				{
+					"type": "bytes",
+					"name": "LastLog"
+				},
+				{
+					"type": "bytes",
+					"name": "StateProofPK"
+				},
+				{
+					"type": "bytes",
+					"name": "ApprovalProgramPages"
+				},
+				{
+					"type": "uint64",
+					"name": "NumApprovalProgramPages"
+				},
+				{
+					"type": "bytes",
+					"name": "ClearStateProgramPages"
+				},
+				{
+					"type": "uint64",
+					"name": "NumClearStateProgramPages"
+				}
+			]
+		},
+		{
+			"name": "gtxnsa",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				},
+				{
+					"type": "uint64",
+					"name": "i2"
+				}
+			],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "Ith value of the array field F from the Ath transaction in the current group\n`gtxnsa` can be called using `gtxns` with 2 immediates.",
+			"docExtra": "",
+			"enum": [
+				{
+					"type": "bytes",
+					"name": "ApplicationArgs"
+				},
+				{
+					"type": "bytes",
+					"name": "Accounts"
+				},
+				{
+					"type": "uint64",
+					"name": "Assets"
+				},
+				{
+					"type": "uint64",
+					"name": "Applications"
+				},
+				{
+					"type": "bytes",
+					"name": "Logs"
+				},
+				{
+					"type": "bytes",
+					"name": "ApprovalProgramPages"
+				},
+				{
+					"type": "bytes",
+					"name": "ClearStateProgramPages"
+				}
+			]
+		},
+		{
+			"name": "gload",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				},
+				{
+					"type": "uint64",
+					"name": "i2"
+				}
+			],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "Ith scratch space value of the Tth transaction in the current group",
+			"docExtra": "`gload` fails unless the requested transaction is an ApplicationCall and T \u003c GroupIndex.",
+			"enum": []
+		},
+		{
+			"name": "gloads",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "Ith scratch space value of the Ath transaction in the current group",
+			"docExtra": "`gloads` fails unless the requested transaction is an ApplicationCall and A \u003c GroupIndex.",
+			"enum": []
+		},
+		{
+			"name": "gaid",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "ID of the asset or application created in the Tth transaction of the current group",
+			"docExtra": "`gaid` fails unless the requested transaction created an asset or application and T \u003c GroupIndex.",
+			"enum": []
+		},
+		{
+			"name": "gaids",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "ID of the asset or application created in the Ath transaction of the current group",
+			"docExtra": "`gaids` fails unless the requested transaction created an asset or application and A \u003c GroupIndex.",
+			"enum": []
+		},
+		{
+			"name": "loads",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "Ath scratch space value.  All scratch spaces are 0 at program start.",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "stores",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "any",
+					"name": "s2"
+				}
+			],
+			"returns": [],
+			"doc": "store B to the Ath scratch space",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "bnz",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				},
+				{
+					"type": "uint64",
+					"name": "i2"
+				}
+			],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				}
+			],
+			"returns": [],
+			"doc": "branch to TARGET if value A is not zero",
+			"docExtra": "The `bnz` instruction opcode 0x40 is followed by two immediate data bytes which are a high byte first and low byte second which together form a 16 bit offset which the instruction may branch to. For a bnz instruction at `pc`, if the last element of the stack is not zero then branch to instruction at `pc + 3 + N`, else proceed to next instruction at `pc + 3`. Branch targets must be aligned instructions. (e.g. Branching to the second byte of a 2 byte op will be rejected.) Starting at v4, the offset is treated as a signed 16 bit integer allowing for backward branches and looping. In prior version (v1 to v3), branch offsets are limited to forward branches only, 0-0x7fff.\n\nAt v2 it became allowed to branch to the end of the program exactly after the last instruction: bnz to byte N (with 0-indexing) was illegal for a TEAL program with N bytes before v2, and is legal after it. This change eliminates the need for a last instruction of no-op as a branch target at the end. (Branching beyond the end--in other words, to a byte larger than N--is still illegal and will cause the program to fail.)",
+			"enum": []
+		},
+		{
+			"name": "bz",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				},
+				{
+					"type": "uint64",
+					"name": "i2"
+				}
+			],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				}
+			],
+			"returns": [],
+			"doc": "branch to TARGET if value A is zero",
+			"docExtra": "See `bnz` for details on how branches work. `bz` inverts the behavior of `bnz`.",
+			"enum": []
+		},
+		{
+			"name": "b",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				},
+				{
+					"type": "uint64",
+					"name": "i2"
+				}
+			],
+			"stacks": [],
+			"returns": [],
+			"doc": "branch unconditionally to TARGET",
+			"docExtra": "See `bnz` for details on how branches work. `b` always jumps to the offset.",
+			"enum": []
+		},
+		{
+			"name": "return",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				}
+			],
+			"returns": [],
+			"doc": "use A as success value; end",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "assert",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				}
+			],
+			"returns": [],
+			"doc": "immediately fail unless A is a non-zero number",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "bury",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				}
+			],
+			"returns": [],
+			"doc": "replace the Nth value from the top of the stack with A. bury 0 fails.",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "popn",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [],
+			"returns": [],
+			"doc": "remove N values from the top of the stack",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "dupn",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				}
+			],
+			"returns": [],
+			"doc": "duplicate A, N times",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "pop",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				}
+			],
+			"returns": [],
+			"doc": "discard A",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "dup",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				},
+				{
+					"type": "any",
+					"name": "r2"
+				}
+			],
+			"doc": "duplicate A",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "dup2",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				},
+				{
+					"type": "any",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				},
+				{
+					"type": "any",
+					"name": "r2"
+				},
+				{
+					"type": "any",
+					"name": "r3"
+				},
+				{
+					"type": "any",
+					"name": "r4"
+				}
+			],
+			"doc": "duplicate A and B",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "dig",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				},
+				{
+					"type": "any",
+					"name": "r2"
+				}
+			],
+			"doc": "Nth value from the top of the stack. dig 0 is equivalent to dup",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "swap",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				},
+				{
+					"type": "any",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				},
+				{
+					"type": "any",
+					"name": "r2"
+				}
+			],
+			"doc": "swaps A and B on stack",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "select",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				},
+				{
+					"type": "any",
+					"name": "s2"
+				},
+				{
+					"type": "uint64",
+					"name": "s3"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "selects one of two values based on top-of-stack: B if C != 0, else A",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "cover",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "remove top of stack, and place it deeper in the stack such that N elements are above it. Fails if stack depth \u003c= N.",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "uncover",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "remove the value at depth N in the stack and shift above items down so the Nth deep value is on top of the stack. Fails if stack depth \u003c= N.",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "concat",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "join A and B",
+			"docExtra": "`concat` fails if the result would be greater than 4096 bytes.",
+			"enum": []
+		},
+		{
+			"name": "substring",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				},
+				{
+					"type": "uint64",
+					"name": "i2"
+				}
+			],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "A range of bytes from A starting at S up to but not including E. If E \u003c S, or either is larger than the array length, the program fails",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "substring3",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				},
+				{
+					"type": "uint64",
+					"name": "s3"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "A range of bytes from A starting at B up to but not including C. If C \u003c B, or either is larger than the array length, the program fails",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "getbit",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "Bth bit of (byte-array or integer) A. If B is greater than or equal to the bit length of the value (8*byte length), the program fails",
+			"docExtra": "see explanation of bit ordering in setbit",
+			"enum": []
+		},
+		{
+			"name": "setbit",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				},
+				{
+					"type": "uint64",
+					"name": "s3"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "Copy of (byte-array or integer) A, with the Bth bit set to (0 or 1) C. If B is greater than or equal to the bit length of the value (8*byte length), the program fails",
+			"docExtra": "When A is a uint64, index 0 is the least significant bit. Setting bit 3 to 1 on the integer 0 yields 8, or 2^3. When A is a byte array, index 0 is the leftmost bit of the leftmost byte. Setting bits 0 through 11 to 1 in a 4-byte-array of 0s yields the byte array 0xfff00000. Setting bit 3 to 1 on the 1-byte-array 0x00 yields the byte array 0x10.",
+			"enum": []
+		},
+		{
+			"name": "getbyte",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "Bth byte of A, as an integer. If B is greater than or equal to the array length, the program fails",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "setbyte",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				},
+				{
+					"type": "uint64",
+					"name": "s3"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "Copy of A with the Bth byte set to small integer (between 0..255) C. If B is greater than or equal to the array length, the program fails",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "extract",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				},
+				{
+					"type": "uint64",
+					"name": "i2"
+				}
+			],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "A range of bytes from A starting at S up to but not including S+L. If L is 0, then extract to the end of the string. If S or S+L is larger than the array length, the program fails",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "extract3",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				},
+				{
+					"type": "uint64",
+					"name": "s3"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "A range of bytes from A starting at B up to but not including B+C. If B+C is larger than the array length, the program fails\n`extract3` can be called using `extract` with no immediates.",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "extract_uint16",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "A uint16 formed from a range of big-endian bytes from A starting at B up to but not including B+2. If B+2 is larger than the array length, the program fails",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "extract_uint32",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "A uint32 formed from a range of big-endian bytes from A starting at B up to but not including B+4. If B+4 is larger than the array length, the program fails",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "extract_uint64",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "A uint64 formed from a range of big-endian bytes from A starting at B up to but not including B+8. If B+8 is larger than the array length, the program fails",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "replace2",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "Copy of A with the bytes starting at S replaced by the bytes of B. Fails if S+len(B) exceeds len(A)\n`replace2` can be called using `replace` with 1 immediate.",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "replace3",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				},
+				{
+					"type": "bytes",
+					"name": "s3"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "Copy of A with the bytes starting at B replaced by the bytes of C. Fails if B+len(C) exceeds len(A)\n`replace3` can be called using `replace` with no immediates.",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "base64_decode",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "decode A which was base64-encoded using _encoding_ E. Fail if A is not base64 encoded with encoding E",
+			"docExtra": "*Warning*: Usage should be restricted to very rare use cases. In almost all cases, smart contracts should directly handle non-encoded byte-strings.\tThis opcode should only be used in cases where base64 is the only available option, e.g. interoperability with a third-party that only signs base64 strings.\n\n Decodes A using the base64 encoding E. Specify the encoding with an immediate arg either as URL and Filename Safe (`URLEncoding`) or Standard (`StdEncoding`). See [RFC 4648 sections 4 and 5](https://rfc-editor.org/rfc/rfc4648.html#section-4). It is assumed that the encoding ends with the exact number of `=` padding characters as required by the RFC. When padding occurs, any unused pad bits in the encoding must be set to zero or the decoding will fail. The special cases of `\\n` and `\\r` are allowed but completely ignored. An error will result when attempting to decode a string with a character that is not in the encoding alphabet or not one of `=`, `\\r`, or `\\n`.",
+			"enum": [
+				{
+					"type": "any",
+					"name": "URLEncoding"
+				},
+				{
+					"type": "any",
+					"name": "StdEncoding"
+				}
+			]
+		},
+		{
+			"name": "json_ref",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "key B's value, of type R, from a [valid](jsonspec.md) utf-8 encoded json object A",
+			"docExtra": "*Warning*: Usage should be restricted to very rare use cases, as JSON decoding is expensive and quite limited. In addition, JSON objects are large and not optimized for size.\n\nAlmost all smart contracts should use simpler and smaller methods (such as the [ABI](https://arc.algorand.foundation/ARCs/arc-0004). This opcode should only be used in cases where JSON is only available option, e.g. when a third-party only signs JSON.",
+			"enum": [
+				{
+					"type": "bytes",
+					"name": "JSONString"
+				},
+				{
+					"type": "uint64",
+					"name": "JSONUint64"
+				},
+				{
+					"type": "bytes",
+					"name": "JSONObject"
+				}
+			]
+		},
+		{
+			"name": "balance",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "balance for account A, in microalgos. The balance is observed after the effects of previous transactions in the group, and after the fee for the current transaction is deducted. Changes caused by inner transactions are observable immediately following `itxn_submit`",
+			"docExtra": "params: Txn.Accounts offset (or, since v4, an _available_ account address), _available_ application id (or, since v4, a Txn.ForeignApps offset). Return: value.",
+			"enum": []
+		},
+		{
+			"name": "app_opted_in",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "1 if account A is opted in to application B, else 0",
+			"docExtra": "params: Txn.Accounts offset (or, since v4, an _available_ account address), _available_ application id (or, since v4, a Txn.ForeignApps offset). Return: 1 if opted in and 0 otherwise.",
+			"enum": []
+		},
+		{
+			"name": "app_local_get",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "local state of the key B in the current application in account A",
+			"docExtra": "params: Txn.Accounts offset (or, since v4, an _available_ account address), state key. Return: value. The value is zero (of type uint64) if the key does not exist.",
+			"enum": []
+		},
+		{
+			"name": "app_local_get_ex",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				},
+				{
+					"type": "bytes",
+					"name": "s3"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				},
+				{
+					"type": "uint64",
+					"name": "r2"
+				}
+			],
+			"doc": "X is the local state of application B, key C in account A. Y is 1 if key existed, else 0",
+			"docExtra": "params: Txn.Accounts offset (or, since v4, an _available_ account address), _available_ application id (or, since v4, a Txn.ForeignApps offset), state key. Return: did_exist flag (top of the stack, 1 if the application and key existed and 0 otherwise), value. The value is zero (of type uint64) if the key does not exist.",
+			"enum": []
+		},
+		{
+			"name": "app_global_get",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "global state of the key A in the current application",
+			"docExtra": "params: state key. Return: value. The value is zero (of type uint64) if the key does not exist.",
+			"enum": []
+		},
+		{
+			"name": "app_global_get_ex",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				},
+				{
+					"type": "uint64",
+					"name": "r2"
+				}
+			],
+			"doc": "X is the global state of application A, key B. Y is 1 if key existed, else 0",
+			"docExtra": "params: Txn.ForeignApps offset (or, since v4, an _available_ application id), state key. Return: did_exist flag (top of the stack, 1 if the application and key existed and 0 otherwise), value. The value is zero (of type uint64) if the key does not exist.",
+			"enum": []
+		},
+		{
+			"name": "app_local_put",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				},
+				{
+					"type": "any",
+					"name": "s3"
+				}
+			],
+			"returns": [],
+			"doc": "write C to key B in account A's local state of the current application",
+			"docExtra": "params: Txn.Accounts offset (or, since v4, an _available_ account address), state key, value.",
+			"enum": []
+		},
+		{
+			"name": "app_global_put",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "any",
+					"name": "s2"
+				}
+			],
+			"returns": [],
+			"doc": "write B to key A in the global state of the current application",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "app_local_del",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				}
+			],
+			"returns": [],
+			"doc": "delete key B from account A's local state of the current application",
+			"docExtra": "params: Txn.Accounts offset (or, since v4, an _available_ account address), state key.\n\nDeleting a key which is already absent has no effect on the application local state. (In particular, it does _not_ cause the program to fail.)",
+			"enum": []
+		},
+		{
+			"name": "app_global_del",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				}
+			],
+			"returns": [],
+			"doc": "delete key A from the global state of the current application",
+			"docExtra": "params: state key.\n\nDeleting a key which is already absent has no effect on the application global state. (In particular, it does _not_ cause the program to fail.)",
+			"enum": []
+		},
+		{
+			"name": "asset_holding_get",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				},
+				{
+					"type": "uint64",
+					"name": "r2"
+				}
+			],
+			"doc": "X is field F from account A's holding of asset B. Y is 1 if A is opted into B, else 0",
+			"docExtra": "params: Txn.Accounts offset (or, since v4, an _available_ address), asset id (or, since v4, a Txn.ForeignAssets offset). Return: did_exist flag (1 if the asset existed and 0 otherwise), value.",
+			"enum": [
+				{
+					"type": "uint64",
+					"name": "AssetBalance"
+				},
+				{
+					"type": "uint64",
+					"name": "AssetFrozen"
+				}
+			]
+		},
+		{
+			"name": "asset_params_get",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				},
+				{
+					"type": "uint64",
+					"name": "r2"
+				}
+			],
+			"doc": "X is field F from asset A. Y is 1 if A exists, else 0",
+			"docExtra": "params: Txn.ForeignAssets offset (or, since v4, an _available_ asset id. Return: did_exist flag (1 if the asset existed and 0 otherwise), value.",
+			"enum": [
+				{
+					"type": "uint64",
+					"name": "AssetTotal"
+				},
+				{
+					"type": "uint64",
+					"name": "AssetDecimals"
+				},
+				{
+					"type": "uint64",
+					"name": "AssetDefaultFrozen"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetUnitName"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetName"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetURL"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetMetadataHash"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetManager"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetReserve"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetFreeze"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetClawback"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetCreator"
+				}
+			]
+		},
+		{
+			"name": "app_params_get",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				},
+				{
+					"type": "uint64",
+					"name": "r2"
+				}
+			],
+			"doc": "X is field F from app A. Y is 1 if A exists, else 0",
+			"docExtra": "params: Txn.ForeignApps offset or an _available_ app id. Return: did_exist flag (1 if the application existed and 0 otherwise), value.",
+			"enum": [
+				{
+					"type": "bytes",
+					"name": "AppApprovalProgram"
+				},
+				{
+					"type": "bytes",
+					"name": "AppClearStateProgram"
+				},
+				{
+					"type": "uint64",
+					"name": "AppGlobalNumUint"
+				},
+				{
+					"type": "uint64",
+					"name": "AppGlobalNumByteSlice"
+				},
+				{
+					"type": "uint64",
+					"name": "AppLocalNumUint"
+				},
+				{
+					"type": "uint64",
+					"name": "AppLocalNumByteSlice"
+				},
+				{
+					"type": "uint64",
+					"name": "AppExtraProgramPages"
+				},
+				{
+					"type": "bytes",
+					"name": "AppCreator"
+				},
+				{
+					"type": "bytes",
+					"name": "AppAddress"
+				}
+			]
+		},
+		{
+			"name": "acct_params_get",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				},
+				{
+					"type": "uint64",
+					"name": "r2"
+				}
+			],
+			"doc": "X is field F from account A. Y is 1 if A owns positive algos, else 0",
+			"docExtra": "",
+			"enum": [
+				{
+					"type": "uint64",
+					"name": "AcctBalance"
+				},
+				{
+					"type": "uint64",
+					"name": "AcctMinBalance"
+				},
+				{
+					"type": "bytes",
+					"name": "AcctAuthAddr"
+				},
+				{
+					"type": "uint64",
+					"name": "AcctTotalNumUint"
+				},
+				{
+					"type": "uint64",
+					"name": "AcctTotalNumByteSlice"
+				},
+				{
+					"type": "uint64",
+					"name": "AcctTotalExtraAppPages"
+				},
+				{
+					"type": "uint64",
+					"name": "AcctTotalAppsCreated"
+				},
+				{
+					"type": "uint64",
+					"name": "AcctTotalAppsOptedIn"
+				},
+				{
+					"type": "uint64",
+					"name": "AcctTotalAssetsCreated"
+				},
+				{
+					"type": "uint64",
+					"name": "AcctTotalAssets"
+				},
+				{
+					"type": "uint64",
+					"name": "AcctTotalBoxes"
+				},
+				{
+					"type": "uint64",
+					"name": "AcctTotalBoxBytes"
+				}
+			]
+		},
+		{
+			"name": "min_balance",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "minimum required balance for account A, in microalgos. Required balance is affected by ASA, App, and Box usage. When creating or opting into an app, the minimum balance grows before the app code runs, therefore the increase is visible there. When deleting or closing out, the minimum balance decreases after the app executes. Changes caused by inner transactions or box usage are observable immediately following the opcode effecting the change.",
+			"docExtra": "params: Txn.Accounts offset (or, since v4, an _available_ account address), _available_ application id (or, since v4, a Txn.ForeignApps offset). Return: value.",
+			"enum": []
+		},
+		{
+			"name": "pushbytes",
+			"imms": [],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "immediate BYTES",
+			"docExtra": "pushbytes args are not added to the bytecblock during assembly processes",
+			"enum": []
+		},
+		{
+			"name": "pushint",
+			"imms": [],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "immediate UINT",
+			"docExtra": "pushint args are not added to the intcblock during assembly processes",
+			"enum": []
+		},
+		{
+			"name": "pushbytess",
+			"imms": [],
+			"stacks": [],
+			"returns": [],
+			"doc": "push sequences of immediate byte arrays to stack (first byte array being deepest)",
+			"docExtra": "pushbytess args are not added to the bytecblock during assembly processes",
+			"enum": []
+		},
+		{
+			"name": "pushints",
+			"imms": [],
+			"stacks": [],
+			"returns": [],
+			"doc": "push sequence of immediate uints to stack in the order they appear (first uint being deepest)",
+			"docExtra": "pushints args are not added to the intcblock during assembly processes",
+			"enum": []
+		},
+		{
+			"name": "ed25519verify_bare",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				},
+				{
+					"type": "bytes",
+					"name": "s3"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "for (data A, signature B, pubkey C) verify the signature of the data against the pubkey =\u003e {0 or 1}",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "callsub",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				},
+				{
+					"type": "uint64",
+					"name": "i2"
+				}
+			],
+			"stacks": [],
+			"returns": [],
+			"doc": "branch unconditionally to TARGET, saving the next instruction on the call stack",
+			"docExtra": "The call stack is separate from the data stack. Only `callsub`, `retsub`, and `proto` manipulate it.",
+			"enum": []
+		},
+		{
+			"name": "retsub",
+			"imms": [],
+			"stacks": [],
+			"returns": [],
+			"doc": "pop the top instruction from the call stack and branch to it",
+			"docExtra": "If the current frame was prepared by `proto A R`, `retsub` will remove the 'A' arguments from the stack, move the `R` return values down, and pop any stack locations above the relocated return values.",
+			"enum": []
+		},
+		{
+			"name": "proto",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				},
+				{
+					"type": "uint64",
+					"name": "i2"
+				}
+			],
+			"stacks": [],
+			"returns": [],
+			"doc": "Prepare top call frame for a retsub that will assume A args and R return values.",
+			"docExtra": "Fails unless the last instruction executed was a `callsub`.",
+			"enum": []
+		},
+		{
+			"name": "frame_dig",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "Nth (signed) value from the frame pointer.",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "frame_bury",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				}
+			],
+			"returns": [],
+			"doc": "replace the Nth (signed) value from the frame pointer in the stack with A",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "switch",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				}
+			],
+			"returns": [],
+			"doc": "branch to the Ath label. Continue at following instruction if index A exceeds the number of labels.",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "match",
+			"imms": [],
+			"stacks": [],
+			"returns": [],
+			"doc": "given match cases from A[1] to A[N], branch to the Ith label where A[I] = B. Continue to the following instruction if no matches are found.",
+			"docExtra": "`match` consumes N+1 values from the stack. Let the top stack value be B. The following N values represent an ordered list of match cases/constants (A), where the first value (A[0]) is the deepest in the stack. The immediate arguments are an ordered list of N labels (T). `match` will branch to target T[I], where A[I] = B. If there are no matches then execution continues on to the next instruction.",
+			"enum": []
+		},
+		{
+			"name": "shl",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "A times 2^B, modulo 2^64",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "shr",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "A divided by 2^B",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "sqrt",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "The largest integer I such that I^2 \u003c= A",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "bitlen",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "The highest set bit in A. If A is a byte-array, it is interpreted as a big-endian unsigned integer. bitlen of 0 is 0, bitlen of 8 is 4",
+			"docExtra": "bitlen interprets arrays as big-endian integers, unlike setbit/getbit",
+			"enum": []
+		},
+		{
+			"name": "exp",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "A raised to the Bth power. Fail if A == B == 0 and on overflow",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "expw",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				},
+				{
+					"type": "uint64",
+					"name": "r2"
+				}
+			],
+			"doc": "A raised to the Bth power as a 128-bit result in two uint64s. X is the high 64 bits, Y is the low. Fail if A == B == 0 or if the results exceeds 2^128-1",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "bsqrt",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "The largest integer I such that I^2 \u003c= A. A and I are interpreted as big-endian unsigned integers",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "divw",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				},
+				{
+					"type": "uint64",
+					"name": "s3"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "A,B / C. Fail if C == 0 or if result overflows.",
+			"docExtra": "The notation A,B indicates that A and B are interpreted as a uint128 value, with A as the high uint64 and B the low.",
+			"enum": []
+		},
+		{
+			"name": "sha3_256",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "SHA3_256 hash of value A, yields [32]byte",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "b+",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "A plus B. A and B are interpreted as big-endian unsigned integers",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "b-",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "A minus B. A and B are interpreted as big-endian unsigned integers. Fail on underflow.",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "b/",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "A divided by B (truncated division). A and B are interpreted as big-endian unsigned integers. Fail if B is zero.",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "b*",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "A times B. A and B are interpreted as big-endian unsigned integers.",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "b\u003c",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "1 if A is less than B, else 0. A and B are interpreted as big-endian unsigned integers",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "b\u003e",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "1 if A is greater than B, else 0. A and B are interpreted as big-endian unsigned integers",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "b\u003c=",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "1 if A is less than or equal to B, else 0. A and B are interpreted as big-endian unsigned integers",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "b\u003e=",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "1 if A is greater than or equal to B, else 0. A and B are interpreted as big-endian unsigned integers",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "b==",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "1 if A is equal to B, else 0. A and B are interpreted as big-endian unsigned integers",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "b!=",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "0 if A is equal to B, else 1. A and B are interpreted as big-endian unsigned integers",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "b%",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "A modulo B. A and B are interpreted as big-endian unsigned integers. Fail if B is zero.",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "b|",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "A bitwise-or B. A and B are zero-left extended to the greater of their lengths",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "b\u0026",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "A bitwise-and B. A and B are zero-left extended to the greater of their lengths",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "b^",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "A bitwise-xor B. A and B are zero-left extended to the greater of their lengths",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "b~",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "A with all bits inverted",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "bzero",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "zero filled byte-array of length A",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "log",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				}
+			],
+			"returns": [],
+			"doc": "write A to log state of the current application",
+			"docExtra": "`log` fails if called more than MaxLogCalls times in a program, or if the sum of logged bytes exceeds 1024 bytes.",
+			"enum": []
+		},
+		{
+			"name": "itxn_begin",
+			"imms": [],
+			"stacks": [],
+			"returns": [],
+			"doc": "begin preparation of a new inner transaction in a new transaction group",
+			"docExtra": "`itxn_begin` initializes Sender to the application address; Fee to the minimum allowable, taking into account MinTxnFee and credit from overpaying in earlier transactions; FirstValid/LastValid to the values in the invoking transaction, and all other fields to zero or empty values.",
+			"enum": []
+		},
+		{
+			"name": "itxn_field",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "any",
+					"name": "s1"
+				}
+			],
+			"returns": [],
+			"doc": "set field F of the current inner transaction to A",
+			"docExtra": "`itxn_field` fails if A is of the wrong type for F, including a byte array of the wrong size for use as an address when F is an address field. `itxn_field` also fails if A is an account, asset, or app that is not _available_, or an attempt is made extend an array field beyond the limit imposed by consensus parameters. (Addresses set into asset params of acfg transactions need not be _available_.)",
+			"enum": [
+				{
+					"type": "bytes",
+					"name": "Sender"
+				},
+				{
+					"type": "uint64",
+					"name": "Fee"
+				},
+				{
+					"type": "bytes",
+					"name": "Note"
+				},
+				{
+					"type": "bytes",
+					"name": "Receiver"
+				},
+				{
+					"type": "uint64",
+					"name": "Amount"
+				},
+				{
+					"type": "bytes",
+					"name": "CloseRemainderTo"
+				},
+				{
+					"type": "bytes",
+					"name": "VotePK"
+				},
+				{
+					"type": "bytes",
+					"name": "SelectionPK"
+				},
+				{
+					"type": "uint64",
+					"name": "VoteFirst"
+				},
+				{
+					"type": "uint64",
+					"name": "VoteLast"
+				},
+				{
+					"type": "uint64",
+					"name": "VoteKeyDilution"
+				},
+				{
+					"type": "bytes",
+					"name": "Type"
+				},
+				{
+					"type": "uint64",
+					"name": "TypeEnum"
+				},
+				{
+					"type": "uint64",
+					"name": "XferAsset"
+				},
+				{
+					"type": "uint64",
+					"name": "AssetAmount"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetSender"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetReceiver"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetCloseTo"
+				},
+				{
+					"type": "uint64",
+					"name": "ApplicationID"
+				},
+				{
+					"type": "uint64",
+					"name": "OnCompletion"
+				},
+				{
+					"type": "bytes",
+					"name": "ApplicationArgs"
+				},
+				{
+					"type": "bytes",
+					"name": "Accounts"
+				},
+				{
+					"type": "bytes",
+					"name": "ApprovalProgram"
+				},
+				{
+					"type": "bytes",
+					"name": "ClearStateProgram"
+				},
+				{
+					"type": "bytes",
+					"name": "RekeyTo"
+				},
+				{
+					"type": "uint64",
+					"name": "ConfigAsset"
+				},
+				{
+					"type": "uint64",
+					"name": "ConfigAssetTotal"
+				},
+				{
+					"type": "uint64",
+					"name": "ConfigAssetDecimals"
+				},
+				{
+					"type": "uint64",
+					"name": "ConfigAssetDefaultFrozen"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetUnitName"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetName"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetURL"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetMetadataHash"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetManager"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetReserve"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetFreeze"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetClawback"
+				},
+				{
+					"type": "uint64",
+					"name": "FreezeAsset"
+				},
+				{
+					"type": "bytes",
+					"name": "FreezeAssetAccount"
+				},
+				{
+					"type": "uint64",
+					"name": "FreezeAssetFrozen"
+				},
+				{
+					"type": "uint64",
+					"name": "Assets"
+				},
+				{
+					"type": "uint64",
+					"name": "Applications"
+				},
+				{
+					"type": "uint64",
+					"name": "GlobalNumUint"
+				},
+				{
+					"type": "uint64",
+					"name": "GlobalNumByteSlice"
+				},
+				{
+					"type": "uint64",
+					"name": "LocalNumUint"
+				},
+				{
+					"type": "uint64",
+					"name": "LocalNumByteSlice"
+				},
+				{
+					"type": "uint64",
+					"name": "ExtraProgramPages"
+				},
+				{
+					"type": "uint64",
+					"name": "Nonparticipation"
+				},
+				{
+					"type": "bytes",
+					"name": "StateProofPK"
+				},
+				{
+					"type": "bytes",
+					"name": "ApprovalProgramPages"
+				},
+				{
+					"type": "bytes",
+					"name": "ClearStateProgramPages"
+				}
+			]
+		},
+		{
+			"name": "itxn_submit",
+			"imms": [],
+			"stacks": [],
+			"returns": [],
+			"doc": "execute the current inner transaction group. Fail if executing this group would exceed the inner transaction limit, or if any transaction in the group fails.",
+			"docExtra": "`itxn_submit` resets the current transaction so that it can not be resubmitted. A new `itxn_begin` is required to prepare another inner transaction.",
+			"enum": []
+		},
+		{
+			"name": "itxn",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "field F of the last inner transaction",
+			"docExtra": "",
+			"enum": [
+				{
+					"type": "bytes",
+					"name": "Sender"
+				},
+				{
+					"type": "uint64",
+					"name": "Fee"
+				},
+				{
+					"type": "uint64",
+					"name": "FirstValid"
+				},
+				{
+					"type": "uint64",
+					"name": "FirstValidTime"
+				},
+				{
+					"type": "uint64",
+					"name": "LastValid"
+				},
+				{
+					"type": "bytes",
+					"name": "Note"
+				},
+				{
+					"type": "bytes",
+					"name": "Lease"
+				},
+				{
+					"type": "bytes",
+					"name": "Receiver"
+				},
+				{
+					"type": "uint64",
+					"name": "Amount"
+				},
+				{
+					"type": "bytes",
+					"name": "CloseRemainderTo"
+				},
+				{
+					"type": "bytes",
+					"name": "VotePK"
+				},
+				{
+					"type": "bytes",
+					"name": "SelectionPK"
+				},
+				{
+					"type": "uint64",
+					"name": "VoteFirst"
+				},
+				{
+					"type": "uint64",
+					"name": "VoteLast"
+				},
+				{
+					"type": "uint64",
+					"name": "VoteKeyDilution"
+				},
+				{
+					"type": "bytes",
+					"name": "Type"
+				},
+				{
+					"type": "uint64",
+					"name": "TypeEnum"
+				},
+				{
+					"type": "uint64",
+					"name": "XferAsset"
+				},
+				{
+					"type": "uint64",
+					"name": "AssetAmount"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetSender"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetReceiver"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetCloseTo"
+				},
+				{
+					"type": "uint64",
+					"name": "GroupIndex"
+				},
+				{
+					"type": "bytes",
+					"name": "TxID"
+				},
+				{
+					"type": "uint64",
+					"name": "ApplicationID"
+				},
+				{
+					"type": "uint64",
+					"name": "OnCompletion"
+				},
+				{
+					"type": "bytes",
+					"name": "ApplicationArgs"
+				},
+				{
+					"type": "uint64",
+					"name": "NumAppArgs"
+				},
+				{
+					"type": "bytes",
+					"name": "Accounts"
+				},
+				{
+					"type": "uint64",
+					"name": "NumAccounts"
+				},
+				{
+					"type": "bytes",
+					"name": "ApprovalProgram"
+				},
+				{
+					"type": "bytes",
+					"name": "ClearStateProgram"
+				},
+				{
+					"type": "bytes",
+					"name": "RekeyTo"
+				},
+				{
+					"type": "uint64",
+					"name": "ConfigAsset"
+				},
+				{
+					"type": "uint64",
+					"name": "ConfigAssetTotal"
+				},
+				{
+					"type": "uint64",
+					"name": "ConfigAssetDecimals"
+				},
+				{
+					"type": "uint64",
+					"name": "ConfigAssetDefaultFrozen"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetUnitName"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetName"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetURL"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetMetadataHash"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetManager"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetReserve"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetFreeze"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetClawback"
+				},
+				{
+					"type": "uint64",
+					"name": "FreezeAsset"
+				},
+				{
+					"type": "bytes",
+					"name": "FreezeAssetAccount"
+				},
+				{
+					"type": "uint64",
+					"name": "FreezeAssetFrozen"
+				},
+				{
+					"type": "uint64",
+					"name": "Assets"
+				},
+				{
+					"type": "uint64",
+					"name": "NumAssets"
+				},
+				{
+					"type": "uint64",
+					"name": "Applications"
+				},
+				{
+					"type": "uint64",
+					"name": "NumApplications"
+				},
+				{
+					"type": "uint64",
+					"name": "GlobalNumUint"
+				},
+				{
+					"type": "uint64",
+					"name": "GlobalNumByteSlice"
+				},
+				{
+					"type": "uint64",
+					"name": "LocalNumUint"
+				},
+				{
+					"type": "uint64",
+					"name": "LocalNumByteSlice"
+				},
+				{
+					"type": "uint64",
+					"name": "ExtraProgramPages"
+				},
+				{
+					"type": "uint64",
+					"name": "Nonparticipation"
+				},
+				{
+					"type": "bytes",
+					"name": "Logs"
+				},
+				{
+					"type": "uint64",
+					"name": "NumLogs"
+				},
+				{
+					"type": "uint64",
+					"name": "CreatedAssetID"
+				},
+				{
+					"type": "uint64",
+					"name": "CreatedApplicationID"
+				},
+				{
+					"type": "bytes",
+					"name": "LastLog"
+				},
+				{
+					"type": "bytes",
+					"name": "StateProofPK"
+				},
+				{
+					"type": "bytes",
+					"name": "ApprovalProgramPages"
+				},
+				{
+					"type": "uint64",
+					"name": "NumApprovalProgramPages"
+				},
+				{
+					"type": "bytes",
+					"name": "ClearStateProgramPages"
+				},
+				{
+					"type": "uint64",
+					"name": "NumClearStateProgramPages"
+				}
+			]
+		},
+		{
+			"name": "itxna",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				},
+				{
+					"type": "uint64",
+					"name": "i2"
+				}
+			],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "Ith value of the array field F of the last inner transaction",
+			"docExtra": "",
+			"enum": [
+				{
+					"type": "bytes",
+					"name": "ApplicationArgs"
+				},
+				{
+					"type": "bytes",
+					"name": "Accounts"
+				},
+				{
+					"type": "uint64",
+					"name": "Assets"
+				},
+				{
+					"type": "uint64",
+					"name": "Applications"
+				},
+				{
+					"type": "bytes",
+					"name": "Logs"
+				},
+				{
+					"type": "bytes",
+					"name": "ApprovalProgramPages"
+				},
+				{
+					"type": "bytes",
+					"name": "ClearStateProgramPages"
+				}
+			]
+		},
+		{
+			"name": "itxn_next",
+			"imms": [],
+			"stacks": [],
+			"returns": [],
+			"doc": "begin preparation of a new inner transaction in the same transaction group",
+			"docExtra": "`itxn_next` initializes the transaction exactly as `itxn_begin` does",
+			"enum": []
+		},
+		{
+			"name": "gitxn",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				},
+				{
+					"type": "uint64",
+					"name": "i2"
+				}
+			],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "field F of the Tth transaction in the last inner group submitted",
+			"docExtra": "",
+			"enum": [
+				{
+					"type": "bytes",
+					"name": "Sender"
+				},
+				{
+					"type": "uint64",
+					"name": "Fee"
+				},
+				{
+					"type": "uint64",
+					"name": "FirstValid"
+				},
+				{
+					"type": "uint64",
+					"name": "FirstValidTime"
+				},
+				{
+					"type": "uint64",
+					"name": "LastValid"
+				},
+				{
+					"type": "bytes",
+					"name": "Note"
+				},
+				{
+					"type": "bytes",
+					"name": "Lease"
+				},
+				{
+					"type": "bytes",
+					"name": "Receiver"
+				},
+				{
+					"type": "uint64",
+					"name": "Amount"
+				},
+				{
+					"type": "bytes",
+					"name": "CloseRemainderTo"
+				},
+				{
+					"type": "bytes",
+					"name": "VotePK"
+				},
+				{
+					"type": "bytes",
+					"name": "SelectionPK"
+				},
+				{
+					"type": "uint64",
+					"name": "VoteFirst"
+				},
+				{
+					"type": "uint64",
+					"name": "VoteLast"
+				},
+				{
+					"type": "uint64",
+					"name": "VoteKeyDilution"
+				},
+				{
+					"type": "bytes",
+					"name": "Type"
+				},
+				{
+					"type": "uint64",
+					"name": "TypeEnum"
+				},
+				{
+					"type": "uint64",
+					"name": "XferAsset"
+				},
+				{
+					"type": "uint64",
+					"name": "AssetAmount"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetSender"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetReceiver"
+				},
+				{
+					"type": "bytes",
+					"name": "AssetCloseTo"
+				},
+				{
+					"type": "uint64",
+					"name": "GroupIndex"
+				},
+				{
+					"type": "bytes",
+					"name": "TxID"
+				},
+				{
+					"type": "uint64",
+					"name": "ApplicationID"
+				},
+				{
+					"type": "uint64",
+					"name": "OnCompletion"
+				},
+				{
+					"type": "bytes",
+					"name": "ApplicationArgs"
+				},
+				{
+					"type": "uint64",
+					"name": "NumAppArgs"
+				},
+				{
+					"type": "bytes",
+					"name": "Accounts"
+				},
+				{
+					"type": "uint64",
+					"name": "NumAccounts"
+				},
+				{
+					"type": "bytes",
+					"name": "ApprovalProgram"
+				},
+				{
+					"type": "bytes",
+					"name": "ClearStateProgram"
+				},
+				{
+					"type": "bytes",
+					"name": "RekeyTo"
+				},
+				{
+					"type": "uint64",
+					"name": "ConfigAsset"
+				},
+				{
+					"type": "uint64",
+					"name": "ConfigAssetTotal"
+				},
+				{
+					"type": "uint64",
+					"name": "ConfigAssetDecimals"
+				},
+				{
+					"type": "uint64",
+					"name": "ConfigAssetDefaultFrozen"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetUnitName"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetName"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetURL"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetMetadataHash"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetManager"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetReserve"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetFreeze"
+				},
+				{
+					"type": "bytes",
+					"name": "ConfigAssetClawback"
+				},
+				{
+					"type": "uint64",
+					"name": "FreezeAsset"
+				},
+				{
+					"type": "bytes",
+					"name": "FreezeAssetAccount"
+				},
+				{
+					"type": "uint64",
+					"name": "FreezeAssetFrozen"
+				},
+				{
+					"type": "uint64",
+					"name": "Assets"
+				},
+				{
+					"type": "uint64",
+					"name": "NumAssets"
+				},
+				{
+					"type": "uint64",
+					"name": "Applications"
+				},
+				{
+					"type": "uint64",
+					"name": "NumApplications"
+				},
+				{
+					"type": "uint64",
+					"name": "GlobalNumUint"
+				},
+				{
+					"type": "uint64",
+					"name": "GlobalNumByteSlice"
+				},
+				{
+					"type": "uint64",
+					"name": "LocalNumUint"
+				},
+				{
+					"type": "uint64",
+					"name": "LocalNumByteSlice"
+				},
+				{
+					"type": "uint64",
+					"name": "ExtraProgramPages"
+				},
+				{
+					"type": "uint64",
+					"name": "Nonparticipation"
+				},
+				{
+					"type": "bytes",
+					"name": "Logs"
+				},
+				{
+					"type": "uint64",
+					"name": "NumLogs"
+				},
+				{
+					"type": "uint64",
+					"name": "CreatedAssetID"
+				},
+				{
+					"type": "uint64",
+					"name": "CreatedApplicationID"
+				},
+				{
+					"type": "bytes",
+					"name": "LastLog"
+				},
+				{
+					"type": "bytes",
+					"name": "StateProofPK"
+				},
+				{
+					"type": "bytes",
+					"name": "ApprovalProgramPages"
+				},
+				{
+					"type": "uint64",
+					"name": "NumApprovalProgramPages"
+				},
+				{
+					"type": "bytes",
+					"name": "ClearStateProgramPages"
+				},
+				{
+					"type": "uint64",
+					"name": "NumClearStateProgramPages"
+				}
+			]
+		},
+		{
+			"name": "gitxna",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				},
+				{
+					"type": "uint64",
+					"name": "i2"
+				},
+				{
+					"type": "uint64",
+					"name": "i3"
+				}
+			],
+			"stacks": [],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "Ith value of the array field F from the Tth transaction in the last inner group submitted",
+			"docExtra": "",
+			"enum": [
+				{
+					"type": "bytes",
+					"name": "ApplicationArgs"
+				},
+				{
+					"type": "bytes",
+					"name": "Accounts"
+				},
+				{
+					"type": "uint64",
+					"name": "Assets"
+				},
+				{
+					"type": "uint64",
+					"name": "Applications"
+				},
+				{
+					"type": "bytes",
+					"name": "Logs"
+				},
+				{
+					"type": "bytes",
+					"name": "ApprovalProgramPages"
+				},
+				{
+					"type": "bytes",
+					"name": "ClearStateProgramPages"
+				}
+			]
+		},
+		{
+			"name": "box_create",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "create a box named A, of length B. Fail if A is empty or B exceeds 32,768. Returns 0 if A already existed, else 1",
+			"docExtra": "Newly created boxes are filled with 0 bytes. `box_create` will fail if the referenced box already exists with a different size. Otherwise, existing boxes are unchanged by `box_create`.",
+			"enum": []
+		},
+		{
+			"name": "box_extract",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				},
+				{
+					"type": "uint64",
+					"name": "s3"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "read C bytes from box A, starting at offset B. Fail if A does not exist, or the byte range is outside A's size.",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "box_replace",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				},
+				{
+					"type": "bytes",
+					"name": "s3"
+				}
+			],
+			"returns": [],
+			"doc": "write byte-array C into box A, starting at offset B. Fail if A does not exist, or the byte range is outside A's size.",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "box_del",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				}
+			],
+			"doc": "delete box named A if it exists. Return 1 if A existed, 0 otherwise",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "box_len",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "uint64",
+					"name": "r1"
+				},
+				{
+					"type": "uint64",
+					"name": "r2"
+				}
+			],
+			"doc": "X is the length of box A if A exists, else 0. Y is 1 if A exists, else 0.",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "box_get",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				},
+				{
+					"type": "uint64",
+					"name": "r2"
+				}
+			],
+			"doc": "X is the contents of box A if A exists, else ''. Y is 1 if A exists, else 0.",
+			"docExtra": "For boxes that exceed 4,096 bytes, consider `box_create`, `box_extract`, and `box_replace`",
+			"enum": []
+		},
+		{
+			"name": "box_put",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				}
+			],
+			"returns": [],
+			"doc": "replaces the contents of box A with byte-array B. Fails if A exists and len(B) != len(box A). Creates A if it does not exist",
+			"docExtra": "For boxes that exceed 4,096 bytes, consider `box_create`, `box_extract`, and `box_replace`",
+			"enum": []
+		},
+		{
+			"name": "txnas",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "Ath value of the array field F of the current transaction",
+			"docExtra": "",
+			"enum": [
+				{
+					"type": "bytes",
+					"name": "ApplicationArgs"
+				},
+				{
+					"type": "bytes",
+					"name": "Accounts"
+				},
+				{
+					"type": "uint64",
+					"name": "Assets"
+				},
+				{
+					"type": "uint64",
+					"name": "Applications"
+				},
+				{
+					"type": "bytes",
+					"name": "Logs"
+				},
+				{
+					"type": "bytes",
+					"name": "ApprovalProgramPages"
+				},
+				{
+					"type": "bytes",
+					"name": "ClearStateProgramPages"
+				}
+			]
+		},
+		{
+			"name": "gtxnas",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				},
+				{
+					"type": "uint64",
+					"name": "i2"
+				}
+			],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "Ath value of the array field F from the Tth transaction in the current group",
+			"docExtra": "",
+			"enum": [
+				{
+					"type": "bytes",
+					"name": "ApplicationArgs"
+				},
+				{
+					"type": "bytes",
+					"name": "Accounts"
+				},
+				{
+					"type": "uint64",
+					"name": "Assets"
+				},
+				{
+					"type": "uint64",
+					"name": "Applications"
+				},
+				{
+					"type": "bytes",
+					"name": "Logs"
+				},
+				{
+					"type": "bytes",
+					"name": "ApprovalProgramPages"
+				},
+				{
+					"type": "bytes",
+					"name": "ClearStateProgramPages"
+				}
+			]
+		},
+		{
+			"name": "gtxnsas",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "Bth value of the array field F from the Ath transaction in the current group",
+			"docExtra": "",
+			"enum": [
+				{
+					"type": "bytes",
+					"name": "ApplicationArgs"
+				},
+				{
+					"type": "bytes",
+					"name": "Accounts"
+				},
+				{
+					"type": "uint64",
+					"name": "Assets"
+				},
+				{
+					"type": "uint64",
+					"name": "Applications"
+				},
+				{
+					"type": "bytes",
+					"name": "Logs"
+				},
+				{
+					"type": "bytes",
+					"name": "ApprovalProgramPages"
+				},
+				{
+					"type": "bytes",
+					"name": "ClearStateProgramPages"
+				}
+			]
+		},
+		{
+			"name": "args",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				}
+			],
+			"doc": "Ath LogicSig argument",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "gloadss",
+			"imms": [],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				},
+				{
+					"type": "uint64",
+					"name": "s2"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "Bth scratch space value of the Ath transaction in the current group",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "itxnas",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "Ath value of the array field F of the last inner transaction",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "gitxnas",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				},
+				{
+					"type": "uint64",
+					"name": "i2"
+				}
+			],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "Ath value of the array field F from the Tth transaction in the last inner group submitted",
+			"docExtra": "",
+			"enum": []
+		},
+		{
+			"name": "vrf_verify",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "bytes",
+					"name": "s1"
+				},
+				{
+					"type": "bytes",
+					"name": "s2"
+				},
+				{
+					"type": "bytes",
+					"name": "s3"
+				}
+			],
+			"returns": [
+				{
+					"type": "bytes",
+					"name": "r1"
+				},
+				{
+					"type": "uint64",
+					"name": "r2"
+				}
+			],
+			"doc": "Verify the proof B of message A against pubkey C. Returns vrf output and verification flag.",
+			"docExtra": "`VrfAlgorand` is the VRF used in Algorand. It is ECVRF-ED25519-SHA512-Elligator2, specified in the IETF internet draft [draft-irtf-cfrg-vrf-03](https://datatracker.ietf.org/doc/draft-irtf-cfrg-vrf/03/).",
+			"enum": [
+				{
+					"type": "void",
+					"name": "VrfAlgorand"
+				}
+			]
+		},
+		{
+			"name": "block",
+			"imms": [
+				{
+					"type": "uint64",
+					"name": "i1"
+				}
+			],
+			"stacks": [
+				{
+					"type": "uint64",
+					"name": "s1"
+				}
+			],
+			"returns": [
+				{
+					"type": "any",
+					"name": "r1"
+				}
+			],
+			"doc": "field F of block A. Fail unless A falls between txn.LastValid-1002 and txn.FirstValid (exclusive)",
+			"docExtra": "",
+			"enum": [
+				{
+					"type": "bytes",
+					"name": "BlkSeed"
+				},
+				{
+					"type": "uint64",
+					"name": "BlkTimestamp"
+				}
+			]
+		}
+	]
+}
