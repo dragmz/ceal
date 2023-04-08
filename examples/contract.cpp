@@ -9,14 +9,14 @@ void init(const bytes sender, const uint64 ts)
 void noop()
 {
 	bytes ts; // timestamp bytes
-	
+
 	ts = avm_box_extract(avm_txn.Sender, 0, 4);
 	avm_log(ts);
 }
 
 uint64 avm_main()
 {
-	/* 
+	/*
 		this is AVM entry point
 
 		it checks if the application already exists

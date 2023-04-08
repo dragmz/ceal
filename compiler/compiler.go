@@ -57,11 +57,20 @@ type BuiltinStruct struct {
 }
 
 type Struct struct {
-	name      string
 	fields    map[string]*StructField
 	functions map[string]*StructFunction
 
 	builtin *BuiltinStruct
+}
+
+type SimpleType struct {
+	empty bool
+}
+
+type Type struct {
+	name    string
+	complex *Struct // struct
+	simple  *SimpleType
 }
 
 type LocalVariable struct {
@@ -80,16 +89,17 @@ type Variable struct {
 
 	local *LocalVariable
 	param *ParameterVariable
+
+	fields map[string]*Variable
 }
 
 type Scope struct {
-	structs   map[string]*Struct
+	types     map[string]*Type
 	functions map[string]*Function
 	variables map[string]*Variable
 
 	children []*Scope
 
-	slot     int
 	function *Function
 
 	read bool
@@ -98,18 +108,62 @@ type Scope struct {
 	parent *Scope
 }
 
+func (vt *SymbolTableVisitor) initVariable(v *Variable) {
+	t := vt.scope.resolveType(v.t)
+
+	if t.simple != nil {
+		return
+	}
+
+	if t.complex.builtin != nil {
+		return
+	}
+
+	if v.param != nil {
+		panic("struct types are not supported for parameters yet")
+	}
+
+	fields := map[string]*Variable{}
+
+	for _, f := range t.complex.fields {
+		v := &Variable{
+			name: f.name,
+			t:    f.t,
+			local: &LocalVariable{
+				slot: vt.slot,
+			},
+		}
+
+		vt.slot++
+
+		vt.initVariable(v)
+
+		fields[f.name] = v
+	}
+
+	v.fields = fields
+}
+
+func (s *Scope) resolveType(typeName string) *Type {
+	current := s
+
+	for current != nil {
+		if t, ok := current.types[typeName]; ok {
+			return t
+		}
+
+		current = current.parent
+	}
+
+	return nil
+}
+
 func NewScope(parent *Scope) *Scope {
 	s := &Scope{
 		parent:    parent,
-		structs:   map[string]*Struct{},
+		types:     map[string]*Type{},
 		functions: map[string]*Function{},
 		variables: map[string]*Variable{},
-	}
-
-	if parent != nil {
-		s.slot = parent.slot + len(parent.children)
-	} else {
-		s.slot = 0
 	}
 
 	return s
@@ -171,6 +225,8 @@ type SymbolTableVisitor struct {
 
 	global *Scope
 	scope  *Scope
+
+	slot int // TODO: make the slot index stack-based
 }
 
 func (v *SymbolTableVisitor) VisitDeclaration(ctx *parser.DeclarationContext) interface{} {
@@ -181,15 +237,20 @@ func (v *SymbolTableVisitor) VisitDeclaration(ctx *parser.DeclarationContext) in
 	}
 
 	local := &LocalVariable{
-		slot: v.scope.slot + len(v.scope.variables),
+		slot: v.slot,
 	}
 
+	v.slot++
+
+	t := ctx.Type_().ID().GetText()
+
 	vr := &Variable{
-		t:     ctx.Type_().ID().GetText(),
+		t:     t,
 		name:  id,
 		local: local,
 	}
 
+	v.initVariable(vr)
 	v.scope.variables[vr.name] = vr
 
 	return v.VisitChildren(ctx)
@@ -203,8 +264,10 @@ func (v *SymbolTableVisitor) VisitDefinition(ctx *parser.DefinitionContext) inte
 	}
 
 	local := &LocalVariable{
-		slot: v.scope.slot + len(v.scope.variables),
+		slot: v.slot,
 	}
+
+	v.slot++
 
 	vr := &Variable{
 		t:     ctx.Type_().ID().GetText(),
@@ -212,6 +275,7 @@ func (v *SymbolTableVisitor) VisitDefinition(ctx *parser.DefinitionContext) inte
 		local: local,
 	}
 
+	v.initVariable(vr)
 	v.scope.variables[vr.name] = vr
 
 	return v.VisitChildren(ctx)
@@ -228,12 +292,11 @@ func (v *SymbolTableVisitor) VisitBlock(ctx *parser.BlockContext) interface{} {
 func (v *SymbolTableVisitor) VisitStruct(ctx *parser.StructContext) interface{} {
 	name := ctx.ID().GetText()
 
-	if _, ok := v.global.structs[name]; ok {
-		panic(fmt.Sprintf("struct '%s' is already defined", name))
+	if t := v.scope.resolveType(name); t != nil {
+		panic(fmt.Sprintf("type '%s' is already defined", name))
 	}
 
 	s := &Struct{
-		name:      name,
 		fields:    map[string]*StructField{},
 		functions: map[string]*StructFunction{},
 	}
@@ -254,7 +317,12 @@ func (v *SymbolTableVisitor) VisitStruct(ctx *parser.StructContext) interface{} 
 		s.fields[name] = f
 	}
 
-	v.global.structs[s.name] = s
+	t := &Type{
+		name:    name,
+		complex: s,
+	}
+
+	v.global.types[t.name] = t
 
 	return nil
 }
@@ -280,12 +348,12 @@ func (v *SymbolTableVisitor) VisitFunction(ctx *parser.FunctionContext) interfac
 	}
 
 	ret := ctx.Type_().ID().GetText()
-	t := v.global.structs[ret]
+	t := v.scope.resolveType(ret)
 
-	if t != nil {
-		user.returns = len(t.fields)
+	if t.complex != nil {
+		user.returns = len(t.complex.fields)
 	} else {
-		if ret == "void" {
+		if t.simple.empty {
 			user.returns = 0
 		} else {
 			user.returns = 1
@@ -318,14 +386,15 @@ func (v *SymbolTableVisitor) VisitFunction(ctx *parser.FunctionContext) interfac
 			index: index,
 		}
 
+		index++
+
 		vr := &Variable{
 			t:     pctx.Type_().ID().GetText(),
 			name:  id,
 			param: param,
 		}
 
-		index++
-
+		v.initVariable(vr)
 		v.scope.variables[id] = vr
 	}
 
@@ -395,25 +464,6 @@ func (a *AstVariable) String() string {
 	return fmt.Sprintf("byte %s", a.v.name)
 }
 
-type AstAssignVariable struct {
-	v     *Variable
-	value AstStatement
-}
-
-func (a *AstAssignVariable) String() string {
-	if a.v.param != nil {
-		// TODO: add param var assignment support
-		panic("cannot assign param var")
-	}
-
-	ast := avm_store_Ast{
-		s1: a.value,
-		i1: itoa(a.v.local.slot),
-	}
-
-	return ast.String()
-}
-
 type AstBinop struct {
 	l  AstStatement
 	op string
@@ -432,37 +482,71 @@ func (a *AstMinusOp) String() string {
 	return fmt.Sprintf("int 0\n%s\n-", a.value.String())
 }
 
-type AstAssignStructField struct {
+type AstAssign struct {
 	v   *Variable
-	s   *Struct
+	t   *Type
 	f   *StructField
 	fun *Function
 
 	value AstStatement
 }
 
-func (a *AstAssignStructField) String() string {
-	if a.s.builtin != nil {
-		return fmt.Sprintf("%s %s", a.fun.builtin.op, a.f.name)
+func (a *AstAssign) String() string {
+	if a.v.param != nil {
+		// TODO: add param var assignment support
+		panic("cannot assign param var")
+	}
+
+	if a.t.complex != nil {
+		if a.t.complex.builtin != nil {
+			return fmt.Sprintf("%s %s", a.fun.builtin.op, a.f.name)
+		} else {
+			if a.v.param != nil {
+				panic("accessing struct param fields is not supported yet")
+			}
+
+			v := a.v.fields[a.f.name]
+
+			ast := avm_store_Ast{
+				s1: a.value,
+				i1: itoa(v.local.slot),
+			}
+
+			return ast.String()
+		}
 	} else {
-		// TODO
-		panic("not implemented")
+		ast := avm_store_Ast{
+			s1: a.value,
+			i1: itoa(a.v.local.slot),
+		}
+
+		return ast.String()
 	}
 }
 
 type AstStructField struct {
 	v   *Variable
-	s   *Struct
+	t   *Type
 	f   *StructField
 	fun *Function
 }
 
 func (a *AstStructField) String() string {
-	if a.s.builtin != nil {
+	if a.t.complex.builtin != nil {
 		return fmt.Sprintf("%s %s", a.fun.builtin.op, a.f.name)
-	} else {
-		panic("not implemented")
 	}
+
+	if a.v.param != nil {
+		panic("accessing struct param fields is not supported yet")
+	}
+
+	v := a.v.fields[a.f.name]
+
+	ast := avm_load_Ast{
+		i1: itoa(v.local.slot),
+	}
+
+	return ast.String()
 }
 
 type AstCall struct {
@@ -694,73 +778,47 @@ func (v *AstVisitor) visitStatement(tree antlr.ParseTree) AstStatement {
 }
 
 func (v *AstVisitor) VisitMemberExpr(ctx *parser.MemberExprContext) interface{} {
-	ids := ctx.AllID()
-	id := ids[0].GetText()
+	vr, f := v.mustResolve(ctx.AllID())
+	fun := v.global.functions[f.fun]
 
-	vr := v.resolveVariable(id)
-
-	// TODO: support multilevel members
-	if len(ids) > 1 {
-		s := v.global.structs[vr.t]
-		id := ids[1].GetText()
-		f := s.fields[id]
-		fun := v.global.functions[f.fun]
-
-		ast := &AstStructField{
-			v:   vr,
-			s:   s,
-			f:   s.fields[id],
-			fun: fun,
-		}
-
-		return ast
+	ast := &AstStructField{
+		v:   vr,
+		t:   v.scope.resolveType(vr.t),
+		f:   f,
+		fun: fun,
 	}
 
-	return nil
+	return ast
 }
 
 func (v *AstVisitor) VisitAssignment(ctx *parser.AssignmentContext) interface{} {
 	ids := ctx.AllID()
 
-	vr := v.resolveVariable(ids[0].GetText())
+	vr, f := v.mustResolve(ids)
 	if vr.readonly {
 		panic(fmt.Sprintf("variable '%s' is read only", vr.name))
 	}
 
-	if len(ids) == 1 {
-		ast := &AstAssignVariable{
-			value: v.visitStatement(ctx.Expr()),
-			v:     vr,
-		}
-
-		return ast
+	if vr.readonly {
+		panic(fmt.Sprintf("variable '%s' is read only", vr.name))
 	}
 
-	// TODO: support multilevel members
-	if len(ids) > 1 {
-		s := v.global.structs[vr.t]
-		id := ids[1].GetText()
-
-		// TODO: support nested fields
-		ast := &AstAssignStructField{
-			s:     s,
-			f:     s.fields[id],
-			v:     vr,
-			value: v.visitStatement(ctx.Expr()),
-		}
-
-		return ast
+	ast := &AstAssign{
+		v:     vr,
+		t:     v.scope.resolveType(vr.t),
+		f:     f,
+		value: v.visitStatement(ctx.Expr()),
 	}
 
-	return nil
+	return ast
 }
 
 func (v *AstVisitor) VisitDeclaration(ctx *parser.DeclarationContext) interface{} {
-	t := ctx.Type_().ID().GetText()
-	if t != "uint64" && t != "bytes" {
-		if _, ok := v.global.structs[t]; !ok {
-			panic(fmt.Sprintf("type '%s' not found", t))
-		}
+	id := ctx.Type_().ID().GetText()
+	t := v.scope.resolveType(id)
+
+	if t == nil {
+		panic(fmt.Sprintf("type '%s' not found", id))
 	}
 
 	return nil
@@ -768,7 +826,7 @@ func (v *AstVisitor) VisitDeclaration(ctx *parser.DeclarationContext) interface{
 
 func (v *AstVisitor) VisitVariableExpr(ctx *parser.VariableExprContext) interface{} {
 	id := ctx.ID().GetText()
-	vr := v.resolveVariable(id)
+	vr := v.mustResolveVariable(id)
 
 	ast := &AstVariable{
 		v: vr,
@@ -842,13 +900,18 @@ func (v *AstVisitor) VisitCall_expr(ctx *parser.Call_exprContext) interface{} {
 	imms := []AstStatement{}
 
 	if len(ids) > 1 {
-		vr := v.resolveVariable(id)
-		t := v.global.structs[vr.t]
-		if t.builtin == nil {
+		vr := v.mustResolveVariable(id)
+		t := v.scope.resolveType(vr.t)
+
+		if t.simple != nil {
+			panic("cannot call simple type")
+		}
+
+		if t.complex.builtin == nil {
 			panic("calling struct function is not supported yet")
 		}
 
-		id = t.fields[ids[1].GetText()].fun
+		id = t.complex.fields[ids[1].GetText()].fun
 
 		// TODO: currently supports just a single level of fields
 
@@ -936,7 +999,7 @@ func (v *AstVisitor) VisitIf(ctx *parser.IfContext) interface{} {
 	return ast
 }
 
-func (v *AstVisitor) resolveVariable(name string) *Variable {
+func (v *AstVisitor) mustResolveVariable(name string) *Variable {
 	current := v.scope
 
 	for current != nil {
@@ -950,12 +1013,45 @@ func (v *AstVisitor) resolveVariable(name string) *Variable {
 	panic(fmt.Sprintf("variable '%s' not found", name))
 }
 
+func (v *AstVisitor) mustResolve(ids []antlr.TerminalNode) (*Variable, *StructField) {
+	vr := v.mustResolveVariable(ids[0].GetText())
+	t := v.scope.resolveType(vr.t)
+
+	if len(ids) == 1 {
+		return vr, nil
+	}
+
+	if t.simple != nil {
+		panic("cannot resolve simple type access")
+	}
+
+	if len(ids) > 2 {
+		panic("multilevel member access is not supported yet")
+	}
+
+	var f *StructField
+
+	nvr := vr
+
+	for i := 1; i < len(ids); i++ {
+		vr = nvr
+		t = v.scope.resolveType(vr.t)
+		id := ids[i].GetText()
+		f = t.complex.fields[id]
+		nvr = vr.fields[id]
+	}
+
+	return vr, f
+}
+
 func (v *AstVisitor) VisitDefinition(ctx *parser.DefinitionContext) interface{} {
 	id := ctx.ID().GetText()
 	vr := v.scope.variables[id]
+	t := v.scope.resolveType(vr.t)
 
-	ast := &AstAssignVariable{
+	ast := &AstAssign{
 		v:     vr,
+		t:     t,
 		value: v.visitStatement(ctx.Expr()),
 	}
 
@@ -1018,6 +1114,28 @@ func Compile(src string) string {
 
 	global := NewScope(nil)
 
+	global.types["void"] = &Type{
+		name: "void",
+		simple: &SimpleType{
+			empty: true,
+		},
+	}
+
+	global.types["bytes"] = &Type{
+		name:   "bytes",
+		simple: &SimpleType{},
+	}
+
+	global.types["uint64"] = &Type{
+		name:   "uint64",
+		simple: &SimpleType{},
+	}
+
+	global.types["any"] = &Type{
+		name:   "any",
+		simple: &SimpleType{},
+	}
+
 	for _, item := range builtin_functions {
 		f := &Function{
 			t:    item.t,
@@ -1046,7 +1164,6 @@ func Compile(src string) string {
 
 	for _, item := range builtin_structs {
 		s := &Struct{
-			name:      item.name,
 			builtin:   &BuiltinStruct{},
 			fields:    map[string]*StructField{},
 			functions: map[string]*StructFunction{},
@@ -1076,7 +1193,12 @@ func Compile(src string) string {
 			s.functions[f.name] = f
 		}
 
-		global.structs[s.name] = s
+		t := &Type{
+			name:    item.name,
+			complex: s,
+		}
+
+		global.types[t.name] = t
 	}
 
 	for _, item := range builtin_variables {
