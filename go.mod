@@ -7,4 +7,7 @@ require (
 	github.com/pkg/errors v0.9.1
 )
 
-require golang.org/x/exp v0.0.0-20230321023759-10a507213a29 // indirect
+require (
+	github.com/joe-p/tealfmt v0.0.0-20221219211223-cec2ea891d52 // indirect
+	golang.org/x/exp v0.0.0-20230321023759-10a507213a29 // indirect
+)

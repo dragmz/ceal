@@ -1,0 +1,67 @@
+#pragma version 8
+
+// function avm_main
+avm_main:
+
+	int 1
+	bz end_0
+
+	byte "if"
+	log
+
+end_0:
+
+	int 1
+	bz skip_1_0
+
+	byte "if"
+	log
+	b end_1
+
+skip_1_0:
+
+	int 2
+	bz end_1
+
+	byte "else if"
+	log
+
+end_1:
+
+	int 1
+	bz skip_2_0
+
+	byte "if"
+	log
+	b end_2
+
+skip_2_0:
+
+	byte "else"
+	log
+
+end_2:
+
+	int 1
+	bz skip_3_0
+
+	byte "if"
+	log
+	b end_3
+
+skip_3_0:
+
+	int 2
+	bz skip_3_1
+
+	byte "else if"
+	log
+	b end_3
+
+skip_3_1:
+
+	byte "else"
+	log
+
+end_3:
+

@@ -3229,12 +3229,12 @@ func (a *avm_ed25519verify_Ast) String() string {
 }
 
 type avm_ecdsa_verify_Ast struct {
-	i1 string
 	s1 AstStatement
 	s2 AstStatement
 	s3 AstStatement
 	s4 AstStatement
 	s5 AstStatement
+	i1 string
 }
 
 func (a *avm_ecdsa_verify_Ast) String() string {
@@ -3251,13 +3251,13 @@ func (a *avm_ecdsa_verify_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("ecdsa_verify")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
 type avm_ecdsa_pk_decompress_Ast struct {
-	i1 string
 	s1 AstStatement
+	i1 string
 }
 
 func (a *avm_ecdsa_pk_decompress_Ast) String() string {
@@ -3266,16 +3266,16 @@ func (a *avm_ecdsa_pk_decompress_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("ecdsa_pk_decompress")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
 type avm_ecdsa_pk_recover_Ast struct {
-	i1 string
 	s1 AstStatement
 	s2 AstStatement
 	s3 AstStatement
 	s4 AstStatement
+	i1 string
 }
 
 func (a *avm_ecdsa_pk_recover_Ast) String() string {
@@ -3290,7 +3290,7 @@ func (a *avm_ecdsa_pk_recover_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("ecdsa_pk_recover")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
@@ -3662,7 +3662,7 @@ func (a *avm_intc_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("intc")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
@@ -3719,7 +3719,7 @@ func (a *avm_bytec_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("bytec")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
@@ -3767,7 +3767,7 @@ func (a *avm_arg_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("arg")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
@@ -3815,7 +3815,7 @@ func (a *avm_txn_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("txn")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
@@ -3827,7 +3827,7 @@ func (a *avm_global_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("global")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
@@ -3840,8 +3840,9 @@ func (a *avm_gtxn_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("gtxn")
 	res.WriteString(" ")
-	res.WriteString("i1")
-	res.WriteString("i2")
+	res.WriteString(a.i1)
+	res.WriteString(" ")
+	res.WriteString(a.i2)
 	return res.String()
 }
 
@@ -3853,13 +3854,13 @@ func (a *avm_load_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("load")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
 type avm_store_Ast struct {
-	i1 string
 	s1 AstStatement
+	i1 string
 }
 
 func (a *avm_store_Ast) String() string {
@@ -3868,7 +3869,7 @@ func (a *avm_store_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("store")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
@@ -3881,8 +3882,9 @@ func (a *avm_txna_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("txna")
 	res.WriteString(" ")
-	res.WriteString("i1")
-	res.WriteString("i2")
+	res.WriteString(a.i1)
+	res.WriteString(" ")
+	res.WriteString(a.i2)
 	return res.String()
 }
 
@@ -3896,15 +3898,17 @@ func (a *avm_gtxna_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("gtxna")
 	res.WriteString(" ")
-	res.WriteString("i1")
-	res.WriteString("i2")
-	res.WriteString("i3")
+	res.WriteString(a.i1)
+	res.WriteString(" ")
+	res.WriteString(a.i2)
+	res.WriteString(" ")
+	res.WriteString(a.i3)
 	return res.String()
 }
 
 type avm_gtxns_Ast struct {
-	i1 string
 	s1 AstStatement
+	i1 string
 }
 
 func (a *avm_gtxns_Ast) String() string {
@@ -3913,14 +3917,14 @@ func (a *avm_gtxns_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("gtxns")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
 type avm_gtxnsa_Ast struct {
+	s1 AstStatement
 	i1 string
 	i2 string
-	s1 AstStatement
 }
 
 func (a *avm_gtxnsa_Ast) String() string {
@@ -3929,8 +3933,9 @@ func (a *avm_gtxnsa_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("gtxnsa")
 	res.WriteString(" ")
-	res.WriteString("i1")
-	res.WriteString("i2")
+	res.WriteString(a.i1)
+	res.WriteString(" ")
+	res.WriteString(a.i2)
 	return res.String()
 }
 
@@ -3943,14 +3948,15 @@ func (a *avm_gload_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("gload")
 	res.WriteString(" ")
-	res.WriteString("i1")
-	res.WriteString("i2")
+	res.WriteString(a.i1)
+	res.WriteString(" ")
+	res.WriteString(a.i2)
 	return res.String()
 }
 
 type avm_gloads_Ast struct {
-	i1 string
 	s1 AstStatement
+	i1 string
 }
 
 func (a *avm_gloads_Ast) String() string {
@@ -3959,7 +3965,7 @@ func (a *avm_gloads_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("gloads")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
@@ -3971,7 +3977,7 @@ func (a *avm_gaid_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("gaid")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
@@ -4015,9 +4021,9 @@ func (a *avm_stores_Ast) String() string {
 }
 
 type avm_bnz_Ast struct {
+	s1 AstStatement
 	i1 string
 	i2 string
-	s1 AstStatement
 }
 
 func (a *avm_bnz_Ast) String() string {
@@ -4026,15 +4032,16 @@ func (a *avm_bnz_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("bnz")
 	res.WriteString(" ")
-	res.WriteString("i1")
-	res.WriteString("i2")
+	res.WriteString(a.i1)
+	res.WriteString(" ")
+	res.WriteString(a.i2)
 	return res.String()
 }
 
 type avm_bz_Ast struct {
+	s1 AstStatement
 	i1 string
 	i2 string
-	s1 AstStatement
 }
 
 func (a *avm_bz_Ast) String() string {
@@ -4043,8 +4050,9 @@ func (a *avm_bz_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("bz")
 	res.WriteString(" ")
-	res.WriteString("i1")
-	res.WriteString("i2")
+	res.WriteString(a.i1)
+	res.WriteString(" ")
+	res.WriteString(a.i2)
 	return res.String()
 }
 
@@ -4057,8 +4065,9 @@ func (a *avm_b_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("b")
 	res.WriteString(" ")
-	res.WriteString("i1")
-	res.WriteString("i2")
+	res.WriteString(a.i1)
+	res.WriteString(" ")
+	res.WriteString(a.i2)
 	return res.String()
 }
 
@@ -4087,8 +4096,8 @@ func (a *avm_assert_Ast) String() string {
 }
 
 type avm_bury_Ast struct {
-	i1 string
 	s1 AstStatement
+	i1 string
 }
 
 func (a *avm_bury_Ast) String() string {
@@ -4097,7 +4106,7 @@ func (a *avm_bury_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("bury")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
@@ -4109,13 +4118,13 @@ func (a *avm_popn_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("popn")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
 type avm_dupn_Ast struct {
-	i1 string
 	s1 AstStatement
+	i1 string
 }
 
 func (a *avm_dupn_Ast) String() string {
@@ -4124,7 +4133,7 @@ func (a *avm_dupn_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("dupn")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
@@ -4168,8 +4177,8 @@ func (a *avm_dup2_Ast) String() string {
 }
 
 type avm_dig_Ast struct {
-	i1 string
 	s1 AstStatement
+	i1 string
 }
 
 func (a *avm_dig_Ast) String() string {
@@ -4178,7 +4187,7 @@ func (a *avm_dig_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("dig")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
@@ -4216,8 +4225,8 @@ func (a *avm_select_Ast) String() string {
 }
 
 type avm_cover_Ast struct {
-	i1 string
 	s1 AstStatement
+	i1 string
 }
 
 func (a *avm_cover_Ast) String() string {
@@ -4226,13 +4235,13 @@ func (a *avm_cover_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("cover")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
 type avm_uncover_Ast struct {
-	i1 string
 	s1 AstStatement
+	i1 string
 }
 
 func (a *avm_uncover_Ast) String() string {
@@ -4241,7 +4250,7 @@ func (a *avm_uncover_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("uncover")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
@@ -4261,9 +4270,9 @@ func (a *avm_concat_Ast) String() string {
 }
 
 type avm_substring_Ast struct {
+	s1 AstStatement
 	i1 string
 	i2 string
-	s1 AstStatement
 }
 
 func (a *avm_substring_Ast) String() string {
@@ -4272,8 +4281,9 @@ func (a *avm_substring_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("substring")
 	res.WriteString(" ")
-	res.WriteString("i1")
-	res.WriteString("i2")
+	res.WriteString(a.i1)
+	res.WriteString(" ")
+	res.WriteString(a.i2)
 	return res.String()
 }
 
@@ -4362,9 +4372,9 @@ func (a *avm_setbyte_Ast) String() string {
 }
 
 type avm_extract_Ast struct {
+	s1 AstStatement
 	i1 string
 	i2 string
-	s1 AstStatement
 }
 
 func (a *avm_extract_Ast) String() string {
@@ -4373,8 +4383,9 @@ func (a *avm_extract_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("extract")
 	res.WriteString(" ")
-	res.WriteString("i1")
-	res.WriteString("i2")
+	res.WriteString(a.i1)
+	res.WriteString(" ")
+	res.WriteString(a.i2)
 	return res.String()
 }
 
@@ -4442,9 +4453,9 @@ func (a *avm_extract_uint64_Ast) String() string {
 }
 
 type avm_replace2_Ast struct {
-	i1 string
 	s1 AstStatement
 	s2 AstStatement
+	i1 string
 }
 
 func (a *avm_replace2_Ast) String() string {
@@ -4455,7 +4466,7 @@ func (a *avm_replace2_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("replace2")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
@@ -4478,8 +4489,8 @@ func (a *avm_replace3_Ast) String() string {
 }
 
 type avm_base64_decode_Ast struct {
-	i1 string
 	s1 AstStatement
+	i1 string
 }
 
 func (a *avm_base64_decode_Ast) String() string {
@@ -4488,14 +4499,14 @@ func (a *avm_base64_decode_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("base64_decode")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
 type avm_json_ref_Ast struct {
-	i1 string
 	s1 AstStatement
 	s2 AstStatement
+	i1 string
 }
 
 func (a *avm_json_ref_Ast) String() string {
@@ -4506,7 +4517,7 @@ func (a *avm_json_ref_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("json_ref")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
@@ -4658,9 +4669,9 @@ func (a *avm_app_global_del_Ast) String() string {
 }
 
 type avm_asset_holding_get_Ast struct {
-	i1 string
 	s1 AstStatement
 	s2 AstStatement
+	i1 string
 }
 
 func (a *avm_asset_holding_get_Ast) String() string {
@@ -4671,13 +4682,13 @@ func (a *avm_asset_holding_get_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("asset_holding_get")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
 type avm_asset_params_get_Ast struct {
-	i1 string
 	s1 AstStatement
+	i1 string
 }
 
 func (a *avm_asset_params_get_Ast) String() string {
@@ -4686,13 +4697,13 @@ func (a *avm_asset_params_get_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("asset_params_get")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
 type avm_app_params_get_Ast struct {
-	i1 string
 	s1 AstStatement
+	i1 string
 }
 
 func (a *avm_app_params_get_Ast) String() string {
@@ -4701,13 +4712,13 @@ func (a *avm_app_params_get_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("app_params_get")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
 type avm_acct_params_get_Ast struct {
-	i1 string
 	s1 AstStatement
+	i1 string
 }
 
 func (a *avm_acct_params_get_Ast) String() string {
@@ -4716,7 +4727,7 @@ func (a *avm_acct_params_get_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("acct_params_get")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
@@ -4795,8 +4806,9 @@ func (a *avm_callsub_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("callsub")
 	res.WriteString(" ")
-	res.WriteString("i1")
-	res.WriteString("i2")
+	res.WriteString(a.i1)
+	res.WriteString(" ")
+	res.WriteString(a.i2)
 	return res.String()
 }
 
@@ -4818,8 +4830,9 @@ func (a *avm_proto_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("proto")
 	res.WriteString(" ")
-	res.WriteString("i1")
-	res.WriteString("i2")
+	res.WriteString(a.i1)
+	res.WriteString(" ")
+	res.WriteString(a.i2)
 	return res.String()
 }
 
@@ -4831,13 +4844,13 @@ func (a *avm_frame_dig_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("frame_dig")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
 type avm_frame_bury_Ast struct {
-	i1 string
 	s1 AstStatement
+	i1 string
 }
 
 func (a *avm_frame_bury_Ast) String() string {
@@ -4846,7 +4859,7 @@ func (a *avm_frame_bury_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("frame_bury")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
@@ -5253,8 +5266,8 @@ func (a *avm_itxn_begin_Ast) String() string {
 }
 
 type avm_itxn_field_Ast struct {
-	i1 string
 	s1 AstStatement
+	i1 string
 }
 
 func (a *avm_itxn_field_Ast) String() string {
@@ -5263,7 +5276,7 @@ func (a *avm_itxn_field_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("itxn_field")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
@@ -5284,7 +5297,7 @@ func (a *avm_itxn_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("itxn")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
@@ -5297,8 +5310,9 @@ func (a *avm_itxna_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("itxna")
 	res.WriteString(" ")
-	res.WriteString("i1")
-	res.WriteString("i2")
+	res.WriteString(a.i1)
+	res.WriteString(" ")
+	res.WriteString(a.i2)
 	return res.String()
 }
 
@@ -5320,8 +5334,9 @@ func (a *avm_gitxn_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("gitxn")
 	res.WriteString(" ")
-	res.WriteString("i1")
-	res.WriteString("i2")
+	res.WriteString(a.i1)
+	res.WriteString(" ")
+	res.WriteString(a.i2)
 	return res.String()
 }
 
@@ -5335,9 +5350,11 @@ func (a *avm_gitxna_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("gitxna")
 	res.WriteString(" ")
-	res.WriteString("i1")
-	res.WriteString("i2")
-	res.WriteString("i3")
+	res.WriteString(a.i1)
+	res.WriteString(" ")
+	res.WriteString(a.i2)
+	res.WriteString(" ")
+	res.WriteString(a.i3)
 	return res.String()
 }
 
@@ -5444,8 +5461,8 @@ func (a *avm_box_put_Ast) String() string {
 }
 
 type avm_txnas_Ast struct {
-	i1 string
 	s1 AstStatement
+	i1 string
 }
 
 func (a *avm_txnas_Ast) String() string {
@@ -5454,14 +5471,14 @@ func (a *avm_txnas_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("txnas")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
 type avm_gtxnas_Ast struct {
+	s1 AstStatement
 	i1 string
 	i2 string
-	s1 AstStatement
 }
 
 func (a *avm_gtxnas_Ast) String() string {
@@ -5470,15 +5487,16 @@ func (a *avm_gtxnas_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("gtxnas")
 	res.WriteString(" ")
-	res.WriteString("i1")
-	res.WriteString("i2")
+	res.WriteString(a.i1)
+	res.WriteString(" ")
+	res.WriteString(a.i2)
 	return res.String()
 }
 
 type avm_gtxnsas_Ast struct {
-	i1 string
 	s1 AstStatement
 	s2 AstStatement
+	i1 string
 }
 
 func (a *avm_gtxnsas_Ast) String() string {
@@ -5489,7 +5507,7 @@ func (a *avm_gtxnsas_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("gtxnsas")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
@@ -5521,8 +5539,8 @@ func (a *avm_gloadss_Ast) String() string {
 }
 
 type avm_itxnas_Ast struct {
-	i1 string
 	s1 AstStatement
+	i1 string
 }
 
 func (a *avm_itxnas_Ast) String() string {
@@ -5531,14 +5549,14 @@ func (a *avm_itxnas_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("itxnas")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
 type avm_gitxnas_Ast struct {
+	s1 AstStatement
 	i1 string
 	i2 string
-	s1 AstStatement
 }
 
 func (a *avm_gitxnas_Ast) String() string {
@@ -5547,16 +5565,17 @@ func (a *avm_gitxnas_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("gitxnas")
 	res.WriteString(" ")
-	res.WriteString("i1")
-	res.WriteString("i2")
+	res.WriteString(a.i1)
+	res.WriteString(" ")
+	res.WriteString(a.i2)
 	return res.String()
 }
 
 type avm_vrf_verify_Ast struct {
-	i1 string
 	s1 AstStatement
 	s2 AstStatement
 	s3 AstStatement
+	i1 string
 }
 
 func (a *avm_vrf_verify_Ast) String() string {
@@ -5569,13 +5588,13 @@ func (a *avm_vrf_verify_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("vrf_verify")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }
 
 type avm_block_Ast struct {
-	i1 string
 	s1 AstStatement
+	i1 string
 }
 
 func (a *avm_block_Ast) String() string {
@@ -5584,6 +5603,6 @@ func (a *avm_block_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("block")
 	res.WriteString(" ")
-	res.WriteString("i1")
+	res.WriteString(a.i1)
 	return res.String()
 }

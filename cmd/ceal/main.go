@@ -1,11 +1,13 @@
 package main
 
 import (
+	"bytes"
 	"ceal/compiler"
 	"flag"
 	"fmt"
 	"os"
 
+	"github.com/joe-p/tealfmt"
 	"github.com/pkg/errors"
 )
 
@@ -13,7 +15,8 @@ import (
 //go:generate go run ../gen/main.go -spec ../../ceal.json --out ../../compiler/compiler_gen.go
 
 type args struct {
-	Path string
+	Path   string
+	Format bool
 }
 
 func run(a args) error {
@@ -25,6 +28,11 @@ func run(a args) error {
 	src := string(bs)
 
 	teal := compiler.Compile(src)
+
+	if a.Format {
+		teal = tealfmt.Format(bytes.NewBufferString(teal))
+	}
+
 	fmt.Print(teal)
 
 	return nil
@@ -33,6 +41,7 @@ func run(a args) error {
 func main() {
 	var a args
 	flag.StringVar(&a.Path, "path", "", "source file path")
+	flag.BoolVar(&a.Format, "format", false, "format output")
 	flag.Parse()
 
 	err := run(a)

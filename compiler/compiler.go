@@ -3,10 +3,23 @@ package compiler
 import (
 	"ceal/parser"
 	"fmt"
+	"strconv"
 	"strings"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 )
+
+func itoa(v int) string {
+	return strconv.Itoa(v)
+}
+
+func atoi(v string) int {
+	i, err := strconv.Atoi(v)
+	if err != nil {
+		panic(err)
+	}
+	return i
+}
 
 type FunctionParam struct {
 	t    string
@@ -334,7 +347,7 @@ func (v *SymbolTableVisitor) VisitChildren(node antlr.RuleNode) interface{} {
 	return nil
 }
 
-type ASTVisitor struct {
+type AstVisitor struct {
 	*parser.BaseCVisitor
 
 	global *Scope
@@ -345,11 +358,11 @@ type ASTVisitor struct {
 	label int
 }
 
-func (v *ASTVisitor) Visit(tree antlr.ParseTree) interface{} {
+func (v *AstVisitor) Visit(tree antlr.ParseTree) interface{} {
 	return tree.Accept(v)
 }
 
-func (v *ASTVisitor) VisitChildren(node antlr.RuleNode) interface{} {
+func (v *AstVisitor) VisitChildren(node antlr.RuleNode) interface{} {
 	for _, child := range node.GetChildren() {
 		child.(antlr.ParseTree).Accept(v)
 	}
@@ -366,11 +379,13 @@ type AstVariable struct {
 
 func (a *AstVariable) String() string {
 	if a.v.local != nil {
-		return fmt.Sprintf("load %d", a.v.local.slot)
+		ast := avm_load_Ast{i1: itoa(a.v.local.slot)}
+		return ast.String()
 	}
 
 	if a.v.param != nil {
-		return fmt.Sprintf("frame_dig %d", a.v.param.index)
+		ast := avm_frame_dig_Ast{i1: itoa(a.v.param.index)}
+		return ast.String()
 	}
 
 	if a.v.t == "uint64" {
@@ -391,7 +406,12 @@ func (a *AstAssignVariable) String() string {
 		panic("cannot assign param var")
 	}
 
-	return fmt.Sprintf("%s\nstore %d", a.value.String(), a.v.local.slot)
+	ast := avm_store_Ast{
+		s1: a.value,
+		i1: itoa(a.v.local.slot),
+	}
+
+	return ast.String()
 }
 
 type AstBinop struct {
@@ -551,43 +571,48 @@ func (a *AstBlock) String() string {
 	return ops.String()
 }
 
+type AstIfAlternative struct {
+	condition  AstStatement
+	statements []AstStatement
+}
+
 type AstIf struct {
-	condition    AstStatement
 	label        int
-	statements   []AstStatement
-	alternatives []AstStatement
+	alternatives []*AstIfAlternative
 }
 
 func (a *AstIf) String() string {
-	ops := strings.Builder{}
-
-	for _, stmt := range a.statements {
-		ops.WriteString(stmt.String())
-		ops.WriteString("\n")
-	}
-
-	alts := strings.Builder{}
-
-	for _, stmt := range a.alternatives {
-		alts.WriteString(stmt.String())
-		alts.WriteString("\n")
-	}
-
 	res := strings.Builder{}
 
-	res.WriteString(a.condition.String())
-	res.WriteString("\n")
-	res.WriteString(fmt.Sprintf("bz skip_%d\n", a.label))
-	res.WriteString(ops.String())
-	if len(a.alternatives) > 0 {
-		res.WriteString(fmt.Sprintf("b end_%d\n", a.label))
+	for i, alt := range a.alternatives {
+		if alt.condition != nil {
+			res.WriteString(alt.condition.String())
+			res.WriteString("\n")
+
+			if i < len(a.alternatives)-1 {
+				res.WriteString(fmt.Sprintf("bz skip_%d_%d\n", a.label, i))
+			} else {
+				res.WriteString(fmt.Sprintf("bz end_%d\n", a.label))
+			}
+		}
+
+		for _, stmt := range alt.statements {
+			res.WriteString(stmt.String())
+			res.WriteString("\n")
+		}
+
+		if i < len(a.alternatives)-1 {
+			res.WriteString(fmt.Sprintf("b end_%d\n", a.label))
+		}
+
+		if alt.condition != nil {
+			if i < len(a.alternatives)-1 {
+				res.WriteString(fmt.Sprintf("skip_%d_%d:\n", a.label, i))
+			}
+		}
 	}
-	res.WriteString(fmt.Sprintf("skip_%d:", a.label))
-	if len(a.alternatives) > 0 {
-		res.WriteString("\n")
-		res.WriteString(alts.String())
-		res.WriteString(fmt.Sprintf("end_%d:", a.label))
-	}
+
+	res.WriteString(fmt.Sprintf("end_%d:", a.label))
 
 	return res.String()
 }
@@ -604,7 +629,13 @@ func (a *AstFunction) String() string {
 	res.WriteString(fmt.Sprintf("%s:\n", a.fun.name))
 
 	if a.fun.user.sub {
-		res.WriteString(fmt.Sprintf("proto %d %d\n", a.fun.user.args, a.fun.user.returns))
+		ast := avm_proto_Ast{
+			i1: itoa(a.fun.user.args),
+			i2: itoa(a.fun.user.returns),
+		}
+
+		res.WriteString(ast.String())
+		res.WriteString("\n")
 	}
 
 	for _, stmt := range a.statements {
@@ -653,7 +684,7 @@ func (a *AstProgram) String() string {
 	return res.String()
 }
 
-func (v *ASTVisitor) visitStatement(tree antlr.ParseTree) AstStatement {
+func (v *AstVisitor) visitStatement(tree antlr.ParseTree) AstStatement {
 	res := v.Visit(tree)
 	if res == nil {
 		return nil
@@ -662,7 +693,7 @@ func (v *ASTVisitor) visitStatement(tree antlr.ParseTree) AstStatement {
 	return res.(AstStatement)
 }
 
-func (v *ASTVisitor) VisitMemberExpr(ctx *parser.MemberExprContext) interface{} {
+func (v *AstVisitor) VisitMemberExpr(ctx *parser.MemberExprContext) interface{} {
 	ids := ctx.AllID()
 	id := ids[0].GetText()
 
@@ -688,7 +719,7 @@ func (v *ASTVisitor) VisitMemberExpr(ctx *parser.MemberExprContext) interface{} 
 	return nil
 }
 
-func (v *ASTVisitor) VisitAssignment(ctx *parser.AssignmentContext) interface{} {
+func (v *AstVisitor) VisitAssignment(ctx *parser.AssignmentContext) interface{} {
 	ids := ctx.AllID()
 
 	vr := v.resolveVariable(ids[0].GetText())
@@ -724,7 +755,7 @@ func (v *ASTVisitor) VisitAssignment(ctx *parser.AssignmentContext) interface{} 
 	return nil
 }
 
-func (v *ASTVisitor) VisitDeclaration(ctx *parser.DeclarationContext) interface{} {
+func (v *AstVisitor) VisitDeclaration(ctx *parser.DeclarationContext) interface{} {
 	t := ctx.Type_().ID().GetText()
 	if t != "uint64" && t != "bytes" {
 		if _, ok := v.global.structs[t]; !ok {
@@ -735,7 +766,7 @@ func (v *ASTVisitor) VisitDeclaration(ctx *parser.DeclarationContext) interface{
 	return nil
 }
 
-func (v *ASTVisitor) VisitVariableExpr(ctx *parser.VariableExprContext) interface{} {
+func (v *AstVisitor) VisitVariableExpr(ctx *parser.VariableExprContext) interface{} {
 	id := ctx.ID().GetText()
 	vr := v.resolveVariable(id)
 
@@ -746,13 +777,13 @@ func (v *ASTVisitor) VisitVariableExpr(ctx *parser.VariableExprContext) interfac
 	return ast
 }
 
-func (v *ASTVisitor) VisitMinusExpr(ctx *parser.MinusExprContext) interface{} {
+func (v *AstVisitor) VisitMinusExpr(ctx *parser.MinusExprContext) interface{} {
 	return &AstMinusOp{
 		value: v.visitStatement(ctx.Expr()),
 	}
 }
 
-func (v *ASTVisitor) VisitAddSubExpr(ctx *parser.AddSubExprContext) interface{} {
+func (v *AstVisitor) VisitAddSubExpr(ctx *parser.AddSubExprContext) interface{} {
 	exprs := ctx.AllExpr()
 	return &AstBinop{
 		l:  v.visitStatement(exprs[0]),
@@ -760,7 +791,7 @@ func (v *ASTVisitor) VisitAddSubExpr(ctx *parser.AddSubExprContext) interface{} 
 		op: ctx.Addsub().GetText(),
 	}
 }
-func (v *ASTVisitor) VisitMulDivExpr(ctx *parser.MulDivExprContext) interface{} {
+func (v *AstVisitor) VisitMulDivExpr(ctx *parser.MulDivExprContext) interface{} {
 	exprs := ctx.AllExpr()
 	return &AstBinop{
 		l:  v.visitStatement(exprs[0]),
@@ -769,7 +800,7 @@ func (v *ASTVisitor) VisitMulDivExpr(ctx *parser.MulDivExprContext) interface{} 
 	}
 }
 
-func (v *ASTVisitor) VisitEqNeqExpr(ctx *parser.EqNeqExprContext) interface{} {
+func (v *AstVisitor) VisitEqNeqExpr(ctx *parser.EqNeqExprContext) interface{} {
 	exprs := ctx.AllExpr()
 	return &AstBinop{
 		l:  v.visitStatement(exprs[0]),
@@ -778,7 +809,7 @@ func (v *ASTVisitor) VisitEqNeqExpr(ctx *parser.EqNeqExprContext) interface{} {
 	}
 }
 
-func (v *ASTVisitor) VisitConstantExpr(ctx *parser.ConstantExprContext) interface{} {
+func (v *AstVisitor) VisitConstantExpr(ctx *parser.ConstantExprContext) interface{} {
 	var res AstStatement
 
 	if ctx.INT() != nil {
@@ -796,14 +827,14 @@ func (v *ASTVisitor) VisitConstantExpr(ctx *parser.ConstantExprContext) interfac
 	return res
 }
 
-func (v *ASTVisitor) VisitCallExpr(ctx *parser.CallExprContext) interface{} {
+func (v *AstVisitor) VisitCallExpr(ctx *parser.CallExprContext) interface{} {
 	return v.Visit(ctx.Call_expr())
 }
-func (v *ASTVisitor) VisitCall(ctx *parser.CallContext) interface{} {
+func (v *AstVisitor) VisitCall(ctx *parser.CallContext) interface{} {
 	return v.Visit(ctx.Call_expr())
 }
 
-func (v *ASTVisitor) VisitCall_expr(ctx *parser.Call_exprContext) interface{} {
+func (v *AstVisitor) VisitCall_expr(ctx *parser.Call_exprContext) interface{} {
 	ids := ctx.AllID()
 
 	id := ids[0].GetText()
@@ -842,7 +873,7 @@ func (v *ASTVisitor) VisitCall_expr(ctx *parser.Call_exprContext) interface{} {
 	return ast
 }
 
-func (v *ASTVisitor) VisitReturn(ctx *parser.ReturnContext) interface{} {
+func (v *AstVisitor) VisitReturn(ctx *parser.ReturnContext) interface{} {
 	ast := &AstReturn{
 		function: v.scope.function,
 	}
@@ -854,37 +885,58 @@ func (v *ASTVisitor) VisitReturn(ctx *parser.ReturnContext) interface{} {
 	return ast
 }
 
-func (v *ASTVisitor) VisitIf(ctx *parser.IfContext) interface{} {
+func (v *AstVisitor) VisitIf(ctx *parser.IfContext) interface{} {
+	alts := []*AstIfAlternative{}
+
 	ast := &AstIf{
-		condition: v.visitStatement(ctx.Expr()),
-		label:     v.label,
+		label: v.label,
 	}
 
 	v.label++
 
+	alt := &AstIfAlternative{
+		condition: v.visitStatement(ctx.Expr()),
+	}
+
 	for _, item := range ctx.AllStmt() {
 		if stmt := v.visitStatement(item); stmt != nil {
-			ast.statements = append(ast.statements, stmt)
+			alt.statements = append(alt.statements, stmt)
 		}
 	}
 
-	/*
-		if len(ctx.AllElseif()) > 0 {
-			// TODO: handle 'else if'
+	alts = append(alts, alt)
+
+	for _, elif := range ctx.AllElseif() {
+		alt := &AstIfAlternative{
+			condition: v.visitStatement(elif.Expr()),
 		}
-	*/
+
+		for _, item := range elif.AllStmt() {
+			if stmt := v.visitStatement(item); stmt != nil {
+				alt.statements = append(alt.statements, stmt)
+			}
+		}
+
+		alts = append(alts, alt)
+	}
 
 	if ctx.Else_() != nil {
+		alt := &AstIfAlternative{}
+
 		for _, item := range ctx.Else_().AllStmt() {
 			stmt := v.visitStatement(item)
-			ast.alternatives = append(ast.alternatives, stmt)
+			alt.statements = append(alt.statements, stmt)
 		}
+
+		alts = append(alts, alt)
 	}
+
+	ast.alternatives = alts
 
 	return ast
 }
 
-func (v *ASTVisitor) resolveVariable(name string) *Variable {
+func (v *AstVisitor) resolveVariable(name string) *Variable {
 	current := v.scope
 
 	for current != nil {
@@ -898,7 +950,7 @@ func (v *ASTVisitor) resolveVariable(name string) *Variable {
 	panic(fmt.Sprintf("variable '%s' not found", name))
 }
 
-func (v *ASTVisitor) VisitDefinition(ctx *parser.DefinitionContext) interface{} {
+func (v *AstVisitor) VisitDefinition(ctx *parser.DefinitionContext) interface{} {
 	id := ctx.ID().GetText()
 	vr := v.scope.variables[id]
 
@@ -910,7 +962,7 @@ func (v *ASTVisitor) VisitDefinition(ctx *parser.DefinitionContext) interface{} 
 	return ast
 }
 
-func (v *ASTVisitor) VisitFunction(ctx *parser.FunctionContext) interface{} {
+func (v *AstVisitor) VisitFunction(ctx *parser.FunctionContext) interface{} {
 	id := ctx.ID().GetText()
 	fun := v.global.functions[id]
 
@@ -933,7 +985,7 @@ func (v *ASTVisitor) VisitFunction(ctx *parser.FunctionContext) interface{} {
 	return nil
 }
 
-func (v *ASTVisitor) VisitBlock(ctx *parser.BlockContext) interface{} {
+func (v *AstVisitor) VisitBlock(ctx *parser.BlockContext) interface{} {
 	v.scope = v.scope.enter()
 
 	ast := &AstBlock{}
@@ -950,7 +1002,7 @@ func (v *ASTVisitor) VisitBlock(ctx *parser.BlockContext) interface{} {
 	return ast
 }
 
-func (v *ASTVisitor) VisitProgram(ctx *parser.ProgramContext) interface{} {
+func (v *AstVisitor) VisitProgram(ctx *parser.ProgramContext) interface{} {
 	v.scope = v.global
 	v.VisitChildren(ctx)
 	v.scope = nil
@@ -1052,7 +1104,7 @@ func Compile(src string) string {
 
 	global.readonly()
 
-	av := &ASTVisitor{
+	av := &AstVisitor{
 		BaseCVisitor: &parser.BaseCVisitor{
 			BaseParseTreeVisitor: &antlr.BaseParseTreeVisitor{},
 		},
