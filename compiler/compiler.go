@@ -57,7 +57,9 @@ type BuiltinStruct struct {
 }
 
 type Struct struct {
-	fields    map[string]*StructField
+	fields      map[string]*StructField
+	fieldsNames []string
+
 	functions map[string]*StructFunction
 
 	builtin *BuiltinStruct
@@ -125,7 +127,8 @@ func (vt *SymbolTableVisitor) initVariable(v *Variable) {
 
 	fields := map[string]*Variable{}
 
-	for _, f := range t.complex.fields {
+	for _, name := range t.complex.fieldsNames {
+		f := t.complex.fields[name]
 		v := &Variable{
 			name: f.name,
 			t:    f.t,
@@ -315,6 +318,7 @@ func (v *SymbolTableVisitor) VisitStruct(ctx *parser.StructContext) interface{} 
 		}
 
 		s.fields[name] = f
+		s.fieldsNames = append(s.fieldsNames, f.name)
 	}
 
 	t := &Type{
