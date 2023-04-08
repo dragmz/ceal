@@ -1,0 +1,46 @@
+#pragma version 8
+b avm_main
+// function init
+init:
+proto 2 0
+frame_dig -2
+int 4
+box_create
+frame_dig -2
+frame_dig -1
+itob
+box_put
+retsub
+// function noop
+noop:
+proto 0 0
+txn Sender
+int 0
+int 4
+box_extract
+store 0
+load 0
+log
+retsub
+// function avm_main
+avm_main:
+txn ApplicationID
+int 0
+==
+bz end_0
+txn Sender
+global Round
+block BlkTimestamp
+callsub init
+int 1
+return
+end_0:
+txn OnCompletion
+int NoOp
+!=
+bz end_1
+err
+end_1:
+callsub noop
+int 1
+return

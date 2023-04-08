@@ -1,0 +1,21 @@
+#pragma version 8
+// function avm_main
+avm_main:
+txn ApplicationID
+int 0
+==
+bz skip_0_0
+txn Sender
+int 4
+box_create
+b end_0
+skip_0_0:
+txn OnCompletion
+int NoOp
+!=
+bz end_1
+err
+end_1:
+txn Sender
+box_get
+end_0:

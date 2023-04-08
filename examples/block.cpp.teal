@@ -1,0 +1,5 @@
+#pragma version 8
+// function avm_main
+avm_main:
+int 1
+block BlkSeed

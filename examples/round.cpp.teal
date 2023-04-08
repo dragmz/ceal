@@ -1,0 +1,5 @@
+#pragma version 8
+// function avm_main
+avm_main:
+global Round
+return
