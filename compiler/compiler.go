@@ -229,7 +229,7 @@ type SymbolTableVisitor struct {
 	global *Scope
 	scope  *Scope
 
-	slot int // TODO: make the slot index stack-based
+	slot int // TODO: fix vars - make the slot index stack-based
 }
 
 func (v *SymbolTableVisitor) VisitDeclarationStmt(ctx *parser.DeclarationStmtContext) interface{} {
