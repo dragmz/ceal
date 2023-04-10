@@ -11,6 +11,10 @@ func (v *SymbolTableVisitor) initVariable(vr *Variable) {
 	t := v.scope.resolveType(vr.t)
 
 	if t.simple != nil {
+		if vr.local != nil {
+			vr.local.slot = v.slot
+			v.slot++
+		}
 		return
 	}
 
@@ -27,14 +31,10 @@ func (v *SymbolTableVisitor) initVariable(vr *Variable) {
 	for _, name := range t.complex.fieldsNames {
 		f := t.complex.fields[name]
 		fv := &Variable{
-			name: f.name,
-			t:    f.t,
-			local: &LocalVariable{
-				slot: v.slot,
-			},
+			name:  f.name,
+			t:     f.t,
+			local: &LocalVariable{},
 		}
-
-		v.slot++
 
 		v.initVariable(fv)
 
@@ -60,11 +60,7 @@ func (v *SymbolTableVisitor) VisitDeclarationStmt(ctx *parser.DeclarationStmtCon
 		panic(fmt.Sprintf("variable '%s' is already defined", id))
 	}
 
-	local := &LocalVariable{
-		slot: v.slot,
-	}
-
-	v.slot++
+	local := &LocalVariable{}
 
 	t := ctx.Declaration().Type_().ID().GetText()
 
@@ -87,11 +83,7 @@ func (v *SymbolTableVisitor) VisitDefinitionStmt(ctx *parser.DefinitionStmtConte
 		panic(fmt.Sprintf("variable '%s' is already defined", id))
 	}
 
-	local := &LocalVariable{
-		slot: v.slot,
-	}
-
-	v.slot++
+	local := &LocalVariable{}
 
 	vr := &Variable{
 		t:     ctx.Definition().Type_().ID().GetText(),

@@ -4,31 +4,31 @@ b avm_main
 add:
 proto 2 1
 frame_dig -2
-store 1
+store 0
 frame_dig -1
-store 2
+store 1
+load 0
 load 1
-load 2
 +
 retsub
 
 // function avm_main
 avm_main:
 int 1
-store 4
+store 2
 int 2
-store 5
-load 4
-load 5
+store 3
+load 2
+load 3
 callsub add
+store 4
+load 2
+store 5
+load 3
 store 6
-load 4
-store 8
 load 5
-store 9
-load 8
-load 9
-+
 load 6
++
+load 4
 +
 return
