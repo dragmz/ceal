@@ -95,7 +95,6 @@ type Scope struct {
 	i    int
 
 	parent *Scope
-	slot   int
 }
 
 func (s *Scope) resolveType(typeName string) *Type {
@@ -118,10 +117,6 @@ func NewScope(parent *Scope) *Scope {
 		types:     map[string]*Type{},
 		functions: map[string]*Function{},
 		variables: map[string]*Variable{},
-	}
-
-	if parent != nil {
-		s.slot = parent.slot
 	}
 
 	return s
@@ -176,31 +171,6 @@ type UserFunction struct {
 	sub bool
 
 	scope *Scope
-}
-
-type StackItem struct {
-	parent *StackItem
-	slot   int
-}
-
-type Stack struct {
-	current *StackItem
-}
-
-func (s *Stack) push() {
-	n := &StackItem{
-		parent: s.current,
-	}
-
-	if s.current != nil {
-		n.slot = s.current.slot
-	}
-
-	s.current = n
-}
-
-func (s *Stack) pop() {
-	s.current = s.current.parent
 }
 
 type AstProgram struct {
@@ -361,7 +331,6 @@ func Compile(src string) string {
 		},
 		global:  global,
 		program: program,
-		stack:   &Stack{},
 	}
 
 	stream.Seek(0)

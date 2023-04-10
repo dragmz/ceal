@@ -19,13 +19,12 @@ func atoi(v string) int {
 }
 
 type AstVariable struct {
-	s *Stack
 	v *Variable
 }
 
 func (a *AstVariable) String() string {
 	if a.v.local != nil {
-		ast := avm_load_Ast{i1: itoa(a.v.local.slot + a.s.current.slot)}
+		ast := avm_load_Ast{i1: itoa(a.v.local.slot)}
 		return ast.String()
 	}
 
@@ -60,8 +59,6 @@ func (a *AstMinusOp) String() string {
 }
 
 type AstAssign struct {
-	s *Stack
-
 	slot int
 	v    *Variable
 	t    *Type
@@ -89,7 +86,7 @@ func (a *AstAssign) String() string {
 
 			ast := avm_store_Ast{
 				s1: a.value,
-				i1: itoa(v.local.slot + a.s.current.slot),
+				i1: itoa(v.local.slot),
 			}
 
 			return ast.String()
@@ -97,7 +94,7 @@ func (a *AstAssign) String() string {
 	} else {
 		ast := avm_store_Ast{
 			s1: a.value,
-			i1: itoa(a.v.local.slot + a.s.current.slot),
+			i1: itoa(a.v.local.slot),
 		}
 
 		return ast.String()
@@ -217,21 +214,16 @@ func (a *AstReturn) String() string {
 }
 
 type AstBlock struct {
-	s          *Stack
 	statements []AstStatement
 }
 
 func (a *AstBlock) String() string {
 	ops := strings.Builder{}
 
-	a.s.push()
-
 	for _, stmt := range a.statements {
 		ops.WriteString(stmt.String())
 		ops.WriteString("\n")
 	}
-
-	a.s.pop()
 
 	return ops.String()
 }
@@ -242,7 +234,6 @@ type AstIfAlternative struct {
 }
 
 type AstIf struct {
-	s            *Stack
 	label        int
 	alternatives []*AstIfAlternative
 }
@@ -262,14 +253,10 @@ func (a *AstIf) String() string {
 			}
 		}
 
-		a.s.push()
-
 		for _, stmt := range alt.statements {
 			res.WriteString(stmt.String())
 			res.WriteString("\n")
 		}
-
-		a.s.pop()
 
 		if i < len(a.alternatives)-1 {
 			res.WriteString(fmt.Sprintf("b end_%d\n", a.label))
@@ -288,7 +275,6 @@ func (a *AstIf) String() string {
 }
 
 type AstFunction struct {
-	s          *Stack
 	fun        *Function
 	statements []AstStatement
 }
@@ -309,8 +295,6 @@ func (a *AstFunction) String() string {
 		res.WriteString("\n")
 	}
 
-	a.s.push()
-
 	for _, stmt := range a.statements {
 		res.WriteString(stmt.String())
 		res.WriteString("\n")
@@ -324,8 +308,6 @@ func (a *AstFunction) String() string {
 			}
 		}
 	}
-
-	a.s.pop()
 
 	return res.String()
 }

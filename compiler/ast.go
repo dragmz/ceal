@@ -14,9 +14,9 @@ type AstVisitor struct {
 	scope  *Scope
 
 	program *AstProgram
-	stack   *Stack
 
 	label int
+	slot  int
 }
 
 func (v *AstVisitor) Visit(tree antlr.ParseTree) interface{} {
@@ -66,7 +66,6 @@ func (v *AstVisitor) VisitAssignmentStmt(ctx *parser.AssignmentStmtContext) inte
 	}
 
 	ast := &AstAssign{
-		s:     v.stack,
 		v:     vr,
 		t:     v.scope.resolveType(vr.t),
 		f:     f,
@@ -92,7 +91,6 @@ func (v *AstVisitor) VisitVariableExpr(ctx *parser.VariableExprContext) interfac
 	vr := v.mustResolveVariable(id)
 
 	ast := &AstVariable{
-		s: v.stack,
 		v: vr,
 	}
 
@@ -216,7 +214,6 @@ func (v *AstVisitor) VisitIfStmt(ctx *parser.IfStmtContext) interface{} {
 	alts := []*AstIfAlternative{}
 
 	ast := &AstIf{
-		s:     v.stack,
 		label: v.label,
 	}
 
@@ -315,7 +312,6 @@ func (v *AstVisitor) VisitDefinitionStmt(ctx *parser.DefinitionStmtContext) inte
 	t := v.scope.resolveType(vr.t)
 
 	ast := &AstAssign{
-		s:     v.stack,
 		v:     vr,
 		t:     t,
 		value: v.visitStatement(ctx.Definition().Expr()),
@@ -331,7 +327,6 @@ func (v *AstVisitor) VisitFunction(ctx *parser.FunctionContext) interface{} {
 	v.scope = fun.user.scope
 
 	ast := &AstFunction{
-		s:   v.stack,
 		fun: fun,
 	}
 
@@ -352,9 +347,7 @@ func (v *AstVisitor) VisitFunction(ctx *parser.FunctionContext) interface{} {
 func (v *AstVisitor) VisitBlockStmt(ctx *parser.BlockStmtContext) interface{} {
 	v.scope = v.scope.enter()
 
-	ast := &AstBlock{
-		s: v.stack,
-	}
+	ast := &AstBlock{}
 
 	for _, item := range ctx.AllStmt() {
 		stmt := v.visitStatement(item)

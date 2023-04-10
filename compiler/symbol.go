@@ -7,8 +7,8 @@ import (
 	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 )
 
-func (vt *SymbolTableVisitor) initVariable(v *Variable) {
-	t := vt.scope.resolveType(v.t)
+func (v *SymbolTableVisitor) initVariable(vr *Variable) {
+	t := v.scope.resolveType(vr.t)
 
 	if t.simple != nil {
 		return
@@ -18,7 +18,7 @@ func (vt *SymbolTableVisitor) initVariable(v *Variable) {
 		return
 	}
 
-	if v.param != nil {
+	if vr.param != nil {
 		panic("struct types are not supported for parameters yet")
 	}
 
@@ -26,22 +26,22 @@ func (vt *SymbolTableVisitor) initVariable(v *Variable) {
 
 	for _, name := range t.complex.fieldsNames {
 		f := t.complex.fields[name]
-		v := &Variable{
+		fv := &Variable{
 			name: f.name,
 			t:    f.t,
 			local: &LocalVariable{
-				slot: vt.scope.slot,
+				slot: v.slot,
 			},
 		}
 
-		vt.scope.slot++
+		v.slot++
 
-		vt.initVariable(v)
+		v.initVariable(fv)
 
-		fields[f.name] = v
+		fields[f.name] = fv
 	}
 
-	v.fields = fields
+	vr.fields = fields
 }
 
 type SymbolTableVisitor struct {
@@ -49,6 +49,8 @@ type SymbolTableVisitor struct {
 
 	global *Scope
 	scope  *Scope
+
+	slot int
 }
 
 func (v *SymbolTableVisitor) VisitDeclarationStmt(ctx *parser.DeclarationStmtContext) interface{} {
@@ -59,10 +61,10 @@ func (v *SymbolTableVisitor) VisitDeclarationStmt(ctx *parser.DeclarationStmtCon
 	}
 
 	local := &LocalVariable{
-		slot: v.scope.slot,
+		slot: v.slot,
 	}
 
-	v.scope.slot++
+	v.slot++
 
 	t := ctx.Declaration().Type_().ID().GetText()
 
@@ -86,10 +88,10 @@ func (v *SymbolTableVisitor) VisitDefinitionStmt(ctx *parser.DefinitionStmtConte
 	}
 
 	local := &LocalVariable{
-		slot: v.scope.slot,
+		slot: v.slot,
 	}
 
-	v.scope.slot++
+	v.slot++
 
 	vr := &Variable{
 		t:     ctx.Definition().Type_().ID().GetText(),
