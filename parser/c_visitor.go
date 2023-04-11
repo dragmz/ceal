@@ -52,8 +52,38 @@ type CVisitor interface {
 	// Visit a parse tree produced by CParser#BlockStmt.
 	VisitBlockStmt(ctx *BlockStmtContext) interface{}
 
+	// Visit a parse tree produced by CParser#GotoStmt.
+	VisitGotoStmt(ctx *GotoStmtContext) interface{}
+
+	// Visit a parse tree produced by CParser#LabelStmt.
+	VisitLabelStmt(ctx *LabelStmtContext) interface{}
+
+	// Visit a parse tree produced by CParser#ForStmt.
+	VisitForStmt(ctx *ForStmtContext) interface{}
+
+	// Visit a parse tree produced by CParser#WhileStmt.
+	VisitWhileStmt(ctx *WhileStmtContext) interface{}
+
+	// Visit a parse tree produced by CParser#DoWhileStmt.
+	VisitDoWhileStmt(ctx *DoWhileStmtContext) interface{}
+
+	// Visit a parse tree produced by CParser#SwitchStmt.
+	VisitSwitchStmt(ctx *SwitchStmtContext) interface{}
+
+	// Visit a parse tree produced by CParser#BreakStmt.
+	VisitBreakStmt(ctx *BreakStmtContext) interface{}
+
 	// Visit a parse tree produced by CParser#AndExpr.
 	VisitAndExpr(ctx *AndExprContext) interface{}
+
+	// Visit a parse tree produced by CParser#ConstantExpr.
+	VisitConstantExpr(ctx *ConstantExprContext) interface{}
+
+	// Visit a parse tree produced by CParser#EqNeqExpr.
+	VisitEqNeqExpr(ctx *EqNeqExprContext) interface{}
+
+	// Visit a parse tree produced by CParser#OrExpr.
+	VisitOrExpr(ctx *OrExprContext) interface{}
 
 	// Visit a parse tree produced by CParser#MulDivExpr.
 	VisitMulDivExpr(ctx *MulDivExprContext) interface{}
@@ -61,8 +91,11 @@ type CVisitor interface {
 	// Visit a parse tree produced by CParser#MemberExpr.
 	VisitMemberExpr(ctx *MemberExprContext) interface{}
 
-	// Visit a parse tree produced by CParser#ConstantExpr.
-	VisitConstantExpr(ctx *ConstantExprContext) interface{}
+	// Visit a parse tree produced by CParser#PostIncDecExpr.
+	VisitPostIncDecExpr(ctx *PostIncDecExprContext) interface{}
+
+	// Visit a parse tree produced by CParser#PreIncDecExpr.
+	VisitPreIncDecExpr(ctx *PreIncDecExprContext) interface{}
 
 	// Visit a parse tree produced by CParser#VariableExpr.
 	VisitVariableExpr(ctx *VariableExprContext) interface{}
@@ -73,17 +106,26 @@ type CVisitor interface {
 	// Visit a parse tree produced by CParser#NotExpr.
 	VisitNotExpr(ctx *NotExprContext) interface{}
 
-	// Visit a parse tree produced by CParser#EqNeqExpr.
-	VisitEqNeqExpr(ctx *EqNeqExprContext) interface{}
-
 	// Visit a parse tree produced by CParser#AddSubExpr.
 	VisitAddSubExpr(ctx *AddSubExprContext) interface{}
 
-	// Visit a parse tree produced by CParser#OrExpr.
-	VisitOrExpr(ctx *OrExprContext) interface{}
-
 	// Visit a parse tree produced by CParser#MinusExpr.
 	VisitMinusExpr(ctx *MinusExprContext) interface{}
+
+	// Visit a parse tree produced by CParser#case.
+	VisitCase(ctx *CaseContext) interface{}
+
+	// Visit a parse tree produced by CParser#default.
+	VisitDefault(ctx *DefaultContext) interface{}
+
+	// Visit a parse tree produced by CParser#forInit.
+	VisitForInit(ctx *ForInitContext) interface{}
+
+	// Visit a parse tree produced by CParser#forCondition.
+	VisitForCondition(ctx *ForConditionContext) interface{}
+
+	// Visit a parse tree produced by CParser#forIter.
+	VisitForIter(ctx *ForIterContext) interface{}
 
 	// Visit a parse tree produced by CParser#declaration.
 	VisitDeclaration(ctx *DeclarationContext) interface{}
@@ -111,4 +153,7 @@ type CVisitor interface {
 
 	// Visit a parse tree produced by CParser#eqneq.
 	VisitEqneq(ctx *EqneqContext) interface{}
+
+	// Visit a parse tree produced by CParser#incdec.
+	VisitIncdec(ctx *IncdecContext) interface{}
 }

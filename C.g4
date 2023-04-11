@@ -24,19 +24,45 @@ stmt:
     | 'if' '(' expr ')' (('{' stmt* '}') | stmt) elseif* else?      # IfStmt
     | 'return' expr? ';'                                            # ReturnStmt
     | '{' stmt* '}'                                                 # BlockStmt
+    | 'goto' ID ';'                                                 # GotoStmt
+    | ID ':'                                                        # LabelStmt
+    | 'for' '(' forInit ';' forCondition ';' forIter ')' stmt       # ForStmt
+    | 'while' '(' expr ')' stmt                                     # WhileStmt
+    | 'do' stmt 'while' '(' expr ')' ';'                            # DoWhileStmt
+    | 'switch' '(' expr ')' '{' case* default? '}'                  # SwitchStmt
+    | 'break' ';'                                                   # BreakStmt
     ;
+
 expr:
-    expr '||' expr              # OrExpr
-    | expr '&&' expr            # AndExpr
+    ID incdec                   # PostIncDecExpr
+    | incdec ID                 # PreIncDecExpr
     | expr muldiv expr          # MulDivExpr
     | expr addsub expr          # AddSubExpr
-    | '-' expr                  # MinusExpr
     | expr eqneq expr           # EqNeqExpr
+    | expr '&&' expr            # AndExpr
+    | expr '||' expr            # OrExpr
+    | '-' expr                  # MinusExpr
     | '!' expr                  # NotExpr
     | ID                        # VariableExpr
     | (INT | STRING)            # ConstantExpr
     | ID '.' ID ('.' ID)*       # MemberExpr
     | call_expr                 # CallExpr
+    ;
+
+case: 'case' expr ':' stmt*;
+default: 'default' ':' stmt*;
+
+forInit:
+    definition
+    | expr*
+    ;
+
+forCondition:
+    expr
+    ;
+
+forIter:
+    expr (',' expr)*
     ;
 
 declaration: type ID;
@@ -48,6 +74,7 @@ call_expr: ID ('.' ID)* '(' args ')';
 muldiv: '*' | '/';
 addsub: ('+' | '-');
 eqneq: ('==' | '!=' | '<' | '>' | '<=' | '>=');
+incdec: ('++' | '--');
 
 INT: [0-9]+;
 STRING: '"' ( ~["\\] | '\\' . )* '"' ;

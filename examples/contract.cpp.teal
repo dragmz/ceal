@@ -13,7 +13,6 @@ box_put
 retsub
 // function noop
 noop:
-proto 0 0
 txn Sender
 int 0
 int 4
@@ -27,20 +26,20 @@ avm_main:
 txn ApplicationID
 int 0
 ==
-bz end_0
+bz if_end_0
 txn Sender
 global Round
 block BlkTimestamp
 callsub init
 int 1
 return
-end_0:
+if_end_0:
 txn OnCompletion
 int NoOp
 !=
-bz end_1
+bz if_end_1
 err
-end_1:
+if_end_1:
 callsub noop
 int 1
 return

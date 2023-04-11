@@ -84,7 +84,7 @@ var builtin_functions = []BuiltinFunctionData {
 		ret := ceal.ReadReturnTypeName(op)
 
 		bw.WriteString("\t{\n")
-		bw.WriteString(fmt.Sprintf("\t\tt: \"%s\", name: \"avm_%s\", op: \"%s\",\n", ret, name, op.Name))
+		fmt.Fprintf(bw, "\t\tt: \"%s\", name: \"avm_%s\", op: \"%s\",\n", ret, name, op.Name)
 		bw.WriteString("\t\tstack: []BuiltinFunctionParamData{\n")
 		for _, arg := range op.Stacks {
 			fmt.Fprintf(bw, "\t\t\t{ t: \"%s\", name: \"%s\" },\n", arg.Type, arg.Name)
@@ -145,7 +145,7 @@ var builtin_structs = []BuiltinStructData {
 			fmt.Fprintf(bw, "\t\tname: \"avm_%s_t\",\n", name)
 			bw.WriteString("\t\tfields: []BuiltinStructFieldData{\n")
 			for _, e := range op.Enum {
-				bw.WriteString(fmt.Sprintf("\t\t\t{t: \"%s\", name: \"%s\", fun: \"avm_%s\"},\n", e.Type, e.Name, name))
+				fmt.Fprintf(bw, "\t\t\t{t: \"%s\", name: \"%s\", fun: \"avm_%s\"},\n", e.Type, e.Name, name)
 			}
 			bw.WriteString("\t\t},\n")
 			bw.WriteString("\t\tfunctions: []BuiltinStructFunctionData{\n")
@@ -164,7 +164,7 @@ var builtin_structs = []BuiltinStructData {
 			bw.WriteString("\t\tfunctions: []BuiltinStructFunctionData{\n")
 			for _, e := range op.Enum {
 				bw.WriteString("\t\t\t{\n")
-				bw.WriteString(fmt.Sprintf("\t\t\t\tt: \"%s\", name: \"%s\", fun: \"avm_%s\",\n", e.Type, e.Name, name))
+				fmt.Fprintf(bw, "\t\t\t\tt: \"%s\", name: \"%s\", fun: \"avm_%s\",\n", e.Type, e.Name, name)
 				bw.WriteString("\t\t\t\tparams: []BuiltinStructFunctionParamData{\n")
 				for i := 1; i < len(op.Imms); i++ {
 					imm := op.Imms[i]
@@ -187,7 +187,7 @@ var builtin_structs = []BuiltinStructData {
 			fmt.Fprintf(bw, "\t\tname: \"%s\",\n", rt)
 			bw.WriteString("\t\tfields: []BuiltinStructFieldData{\n")
 			for _, r := range op.Returns {
-				bw.WriteString(fmt.Sprintf("\t\t\t{t: \"%s\", name: \"%s\", fun: \"avm_%s\",},\n", r.Type, r.Name, name))
+				fmt.Fprintf(bw, "\t\t\t{t: \"%s\", name: \"%s\", fun: \"avm_%s\",},\n", r.Type, r.Name, name)
 			}
 			bw.WriteString("\t\t},\n")
 			bw.WriteString("\t\tfunctions: []BuiltinStructFunctionData{\n")
@@ -255,7 +255,7 @@ type TealExpr interface
 
 		bw.WriteString("}\n")
 
-		bw.WriteString(fmt.Sprintf("func (a *avm_%s_Ast) String() string {\n", name))
+		fmt.Fprintf(bw, "func (a *avm_%s_Ast) String() string {\n", name)
 		bw.WriteString("\tres := strings.Builder{}\n")
 
 		for _, arg := range op.Stacks {

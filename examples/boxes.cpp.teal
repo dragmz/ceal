@@ -4,18 +4,18 @@ avm_main:
 txn ApplicationID
 int 0
 ==
-bz skip_0_0
+bz if_skip_0_0
 txn Sender
 int 4
 box_create
-b end_0
-skip_0_0:
+b if_end_0
+if_skip_0_0:
 txn OnCompletion
 int NoOp
 !=
-bz end_1
+bz if_end_1
 err
-end_1:
+if_end_1:
 txn Sender
 box_get
-end_0:
+if_end_0:

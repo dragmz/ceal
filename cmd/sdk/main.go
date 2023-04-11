@@ -123,16 +123,16 @@ struct any
 		case 0:
 		case 1:
 		default:
-			bw.WriteString(fmt.Sprintf("struct %s\n", rt))
+			fmt.Fprintf(bw, "struct %s\n", rt)
 			bw.WriteString("{\n")
 			for _, r := range op.Returns {
-				bw.WriteString(fmt.Sprintf("\t%s %s;\n", r.Type, r.Name))
+				fmt.Fprintf(bw, "\t%s %s;\n", r.Type, r.Name)
 			}
 			bw.WriteString("};\n")
 		}
 
 		bw.WriteString("/*\n")
-		bw.WriteString(fmt.Sprintf("%s - %s\n", op.Name, op.Doc))
+		fmt.Fprintf(bw, "%s - %s\n", op.Name, op.Doc)
 		if len(op.DocExtra) > 0 {
 			bw.WriteString("\n")
 			bw.WriteString(op.DocExtra)
@@ -150,17 +150,17 @@ struct any
 			bw.WriteString("{\n")
 			for _, e := range op.Enum {
 				if rt == "void" {
-					bw.WriteString(fmt.Sprintf("\t%s %s(%s);\n", rt, e.Name, formatParams(op, 1)))
+					fmt.Fprintf(bw, "\t%s %s(%s);\n", rt, e.Name, formatParams(op, 1))
 				} else {
 					if len(op.Imms)+len(op.Stacks) > 1 {
-						bw.WriteString(fmt.Sprintf("\t%s %s(%s);\n", e.Type, e.Name, formatParams(op, 1)))
+						fmt.Fprintf(bw, "\t%s %s(%s);\n", e.Type, e.Name, formatParams(op, 1))
 					} else {
-						bw.WriteString(fmt.Sprintf("\tconst %s %s;\n", e.Type, e.Name))
+						fmt.Fprintf(bw, "\tconst %s %s;\n", e.Type, e.Name)
 					}
 				}
 			}
 			bw.WriteString("};\n")
-			bw.WriteString(fmt.Sprintf("extern %s avm_%s;\n", t, name))
+			fmt.Fprintf(bw, "extern %s avm_%s;\n", t, name)
 		}
 	}
 

@@ -222,6 +222,45 @@ func (v *SymbolTableVisitor) VisitFunction(ctx *parser.FunctionContext) interfac
 	return nil
 }
 
+func (v *SymbolTableVisitor) VisitForStmt(ctx *parser.ForStmtContext) interface{} {
+	v.scope = v.scope.enter()
+
+	init := ctx.ForInit()
+
+	if init.Definition() != nil {
+		id := init.Definition().ID().GetText()
+
+		if _, ok := v.scope.variables[id]; ok {
+			panic(fmt.Sprintf("variable '%s' is already defined", id))
+		}
+
+		local := &LocalVariable{}
+
+		vr := &Variable{
+			t:     init.Definition().Type_().ID().GetText(),
+			name:  id,
+			local: local,
+		}
+
+		v.initVariable(vr)
+		v.scope.variables[vr.name] = vr
+	}
+
+	v.Visit(ctx.Stmt())
+
+	v.scope = v.scope.exit()
+
+	return nil
+}
+
+func (v *SymbolTableVisitor) VisitWhileStmt(ctx *parser.WhileStmtContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *SymbolTableVisitor) VisitDoWhileStmt(ctx *parser.DoWhileStmtContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *SymbolTableVisitor) Visit(tree antlr.ParseTree) interface{} {
 	return tree.Accept(v)
 }

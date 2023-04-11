@@ -15,8 +15,10 @@ type AstVisitor struct {
 
 	program *AstProgram
 
-	label int
+	index int
 	slot  int
+
+	labels *LabelScope
 }
 
 func (v *AstVisitor) Visit(tree antlr.ParseTree) interface{} {
@@ -240,10 +242,10 @@ func (v *AstVisitor) VisitIfStmt(ctx *parser.IfStmtContext) interface{} {
 	alts := []*AstIfAlternative{}
 
 	ast := &AstIf{
-		label: v.label,
+		index: v.index,
 	}
 
-	v.label++
+	v.index++
 
 	alt := &AstIfAlternative{
 		condition: v.visitStatement(ctx.Expr()),
@@ -313,10 +315,6 @@ func (v *AstVisitor) mustResolve(ids []antlr.TerminalNode) (*Variable, *StructFi
 		panic("cannot resolve simple type access")
 	}
 
-	if len(ids) > 2 {
-		panic("multilevel member access is not supported yet")
-	}
-
 	var f *StructField
 
 	nvr := vr
@@ -332,15 +330,31 @@ func (v *AstVisitor) mustResolve(ids []antlr.TerminalNode) (*Variable, *StructFi
 	return vr, f
 }
 
-func (v *AstVisitor) VisitDefinitionStmt(ctx *parser.DefinitionStmtContext) interface{} {
-	id := ctx.Definition().ID().GetText()
+func (v *AstVisitor) VisitDefinition(ctx *parser.DefinitionContext) interface{} {
+	id := ctx.ID().GetText()
 	vr := v.scope.variables[id]
 	t := v.scope.resolveType(vr.t)
+	e := ctx.Expr()
 
 	ast := &AstAssign{
 		v:     vr,
 		t:     t,
-		value: v.visitStatement(ctx.Definition().Expr()),
+		value: v.visitStatement(e),
+	}
+
+	return ast
+}
+
+func (v *AstVisitor) VisitDefinitionStmt(ctx *parser.DefinitionStmtContext) interface{} {
+	id := ctx.Definition().ID().GetText()
+	vr := v.scope.variables[id]
+	t := v.scope.resolveType(vr.t)
+	e := ctx.Definition().Expr()
+
+	ast := &AstAssign{
+		v:     vr,
+		t:     t,
+		value: v.visitStatement(e),
 	}
 
 	return ast
@@ -393,4 +407,155 @@ func (v *AstVisitor) VisitProgram(ctx *parser.ProgramContext) interface{} {
 	v.scope = nil
 
 	return nil
+}
+
+func (v *AstVisitor) VisitGotoStmt(ctx *parser.GotoStmtContext) interface{} {
+	ast := &AstGoto{
+		label: ctx.ID().GetText(),
+	}
+
+	return ast
+}
+
+func (v *AstVisitor) VisitLabelStmt(ctx *parser.LabelStmtContext) interface{} {
+	ast := &AstLabel{
+		name: ctx.ID().GetText(),
+	}
+
+	return ast
+}
+
+func (v *AstVisitor) VisitPostIncDecExpr(ctx *parser.PostIncDecExprContext) interface{} {
+	ast := &AstPostfix{
+		v:  v.mustResolveVariable(ctx.ID().GetText()),
+		op: ctx.Incdec().GetText(),
+	}
+
+	return ast
+}
+
+func (v *AstVisitor) VisitPreIncDecExpr(ctx *parser.PreIncDecExprContext) interface{} {
+	ast := &AstPrefix{
+		v:  v.mustResolveVariable(ctx.ID().GetText()),
+		op: ctx.Incdec().GetText(),
+	}
+
+	return ast
+}
+
+func (v *AstVisitor) VisitForStmt(ctx *parser.ForStmtContext) interface{} {
+	v.scope = v.scope.enter()
+	v.labels.Push("for")
+
+	init := []AstStatement{}
+
+	if ctx.ForInit().Definition() != nil {
+		ast := v.visitStatement(ctx.ForInit().Definition())
+		init = append(init, ast)
+	}
+
+	for _, e := range ctx.ForInit().AllExpr() {
+		ast := v.visitStatement(e)
+		init = append(init, ast)
+	}
+
+	condition := v.visitStatement(ctx.ForCondition().Expr())
+
+	iter := []AstStatement{}
+
+	for _, e := range ctx.ForIter().AllExpr() {
+		// TODO: pop is just a temporary solution; should not push onto the stack at all
+		ast := &AstPop{
+			s: v.visitStatement(e),
+		}
+
+		iter = append(iter, ast)
+	}
+
+	stmt := v.visitStatement(ctx.Stmt())
+
+	ast := &AstFor{
+		index:     v.index,
+		init:      init,
+		condition: condition,
+		iter:      iter,
+		s:         stmt,
+	}
+
+	v.index++
+
+	v.labels.Pop()
+	v.scope = v.scope.exit()
+
+	return ast
+}
+
+func (v *AstVisitor) VisitWhileStmt(ctx *parser.WhileStmtContext) interface{} {
+	ast := &AstWhile{
+		index:     v.index,
+		condition: v.visitStatement(ctx.Expr()),
+		s:         v.visitStatement(ctx.Stmt()),
+	}
+
+	v.index++
+
+	return ast
+}
+
+func (v *AstVisitor) VisitDoWhileStmt(ctx *parser.DoWhileStmtContext) interface{} {
+	ast := &AstDoWhile{
+		index:     v.index,
+		condition: v.visitStatement(ctx.Expr()),
+		s:         v.visitStatement(ctx.Stmt()),
+	}
+
+	v.index++
+
+	return ast
+}
+
+func (v *AstVisitor) VisitBreakStmt(ctx *parser.BreakStmtContext) interface{} {
+	return &AstBreak{
+		label: v.labels.Get(),
+		index: v.index,
+	}
+}
+
+func (v *AstVisitor) VisitSwitchStmt(ctx *parser.SwitchStmtContext) interface{} {
+	ast := &AstSwitch{
+		index: v.index,
+		value: v.visitStatement(ctx.Expr()),
+	}
+
+	v.labels.Push("switch")
+
+	for _, c := range ctx.AllCase_() {
+		stmts := []AstStatement{}
+
+		for _, item := range c.AllStmt() {
+			stmts = append(stmts, v.visitStatement(item))
+		}
+
+		sc := &AstSwitchCase{
+			value:      v.visitStatement(c.Expr()),
+			statements: stmts,
+		}
+
+		ast.cases = append(ast.cases, sc)
+	}
+
+	if ctx.Default_() != nil {
+		stmts := []AstStatement{}
+
+		for _, item := range ctx.Default_().AllStmt() {
+			stmts = append(stmts, v.visitStatement(item))
+		}
+
+		ast.default_ = stmts
+	}
+
+	v.labels.Pop()
+	v.index++
+
+	return ast
 }

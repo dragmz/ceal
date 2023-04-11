@@ -67,7 +67,47 @@ func (v *BaseCVisitor) VisitBlockStmt(ctx *BlockStmtContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCVisitor) VisitGotoStmt(ctx *GotoStmtContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitLabelStmt(ctx *LabelStmtContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitForStmt(ctx *ForStmtContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitWhileStmt(ctx *WhileStmtContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitDoWhileStmt(ctx *DoWhileStmtContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitSwitchStmt(ctx *SwitchStmtContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitBreakStmt(ctx *BreakStmtContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCVisitor) VisitAndExpr(ctx *AndExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitConstantExpr(ctx *ConstantExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitEqNeqExpr(ctx *EqNeqExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitOrExpr(ctx *OrExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -79,7 +119,11 @@ func (v *BaseCVisitor) VisitMemberExpr(ctx *MemberExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseCVisitor) VisitConstantExpr(ctx *ConstantExprContext) interface{} {
+func (v *BaseCVisitor) VisitPostIncDecExpr(ctx *PostIncDecExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitPreIncDecExpr(ctx *PreIncDecExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -95,19 +139,31 @@ func (v *BaseCVisitor) VisitNotExpr(ctx *NotExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseCVisitor) VisitEqNeqExpr(ctx *EqNeqExprContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BaseCVisitor) VisitAddSubExpr(ctx *AddSubExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseCVisitor) VisitOrExpr(ctx *OrExprContext) interface{} {
+func (v *BaseCVisitor) VisitMinusExpr(ctx *MinusExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseCVisitor) VisitMinusExpr(ctx *MinusExprContext) interface{} {
+func (v *BaseCVisitor) VisitCase(ctx *CaseContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitDefault(ctx *DefaultContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitForInit(ctx *ForInitContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitForCondition(ctx *ForConditionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitForIter(ctx *ForIterContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -144,5 +200,9 @@ func (v *BaseCVisitor) VisitAddsub(ctx *AddsubContext) interface{} {
 }
 
 func (v *BaseCVisitor) VisitEqneq(ctx *EqneqContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitIncdec(ctx *IncdecContext) interface{} {
 	return v.VisitChildren(ctx)
 }

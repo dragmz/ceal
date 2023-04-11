@@ -1,0 +1,28 @@
+#pragma version 8
+// function avm_main
+avm_main:
+int 0
+store 0
+for_1:
+load 0
+int 10
+<
+bz for_1_end
+load 0
+itob
+log
+load 0
+int 5
+==
+bz if_end_0
+b for_1_end
+if_end_0:
+
+load 0
+int 1
++
+store 0
+load 0
+pop
+b for_1
+for_1_end:

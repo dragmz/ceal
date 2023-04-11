@@ -82,6 +82,30 @@ type Variable struct {
 	fields map[string]*Variable
 }
 
+type LabelScope struct {
+	labels []string
+}
+
+func (l *LabelScope) Get() string {
+	if len(l.labels) == 0 {
+		return ""
+	}
+
+	return l.labels[len(l.labels)-1]
+}
+
+func (l *LabelScope) Push(label string) {
+	l.labels = append(l.labels, label)
+}
+
+func (l *LabelScope) Pop() {
+	if len(l.labels) == 0 {
+		return
+	}
+
+	l.labels = l.labels[:len(l.labels)-1]
+}
+
 type Scope struct {
 	types     map[string]*Type
 	functions map[string]*Function
@@ -331,6 +355,7 @@ func Compile(src string) string {
 		},
 		global:  global,
 		program: program,
+		labels:  &LabelScope{},
 	}
 
 	stream.Seek(0)

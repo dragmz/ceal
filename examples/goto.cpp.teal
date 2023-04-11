@@ -1,0 +1,9 @@
+#pragma version 8
+// function avm_main
+avm_main:
+b label_Quit
+int 0
+return
+label_Quit:
+int 1
+return

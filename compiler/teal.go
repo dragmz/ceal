@@ -18,6 +18,199 @@ func atoi(v string) int {
 	return i
 }
 
+type AstBreak struct {
+	label string
+	index int
+}
+
+func (a *AstBreak) String() string {
+	return fmt.Sprintf("b %s_%d_end", a.label, a.index)
+}
+
+type AstSwitchCase struct {
+	value      AstStatement
+	statements []AstStatement
+}
+
+type AstSwitch struct {
+	index int
+
+	value AstStatement
+	cases []*AstSwitchCase
+
+	default_ []AstStatement
+}
+
+func (a *AstSwitch) String() string {
+	res := strings.Builder{}
+
+	labels := []string{}
+
+	for i, c := range a.cases {
+		label := fmt.Sprintf("switch_%d_%d", a.index, i)
+		labels = append(labels, label)
+
+		res.WriteString(fmt.Sprintf("%s\n", c.value.String()))
+	}
+
+	res.WriteString(fmt.Sprintf("%s\n", a.value.String()))
+	res.WriteString(fmt.Sprintf("match %s\n", strings.Join(labels, " ")))
+
+	if len(a.default_) > 0 {
+		res.WriteString("// default\n")
+
+		for _, stmt := range a.default_ {
+			res.WriteString(fmt.Sprintf("%s\n", stmt.String()))
+		}
+	}
+
+	for i, c := range a.cases {
+		label := labels[i]
+
+		res.WriteString(fmt.Sprintf("%s:\n", label))
+
+		for _, stmt := range c.statements {
+			res.WriteString(fmt.Sprintf("%s\n", stmt.String()))
+		}
+	}
+
+	res.WriteString(fmt.Sprintf("switch_%d_end:\n", a.index))
+
+	return res.String()
+}
+
+type AstPop struct {
+	s AstStatement
+}
+
+func (a *AstPop) String() string {
+	return fmt.Sprintf("%s\n%s", a.s.String(), "pop")
+}
+
+type AstDoWhile struct {
+	index     int
+	condition AstStatement
+	s         AstStatement
+}
+
+func (a *AstDoWhile) String() string {
+	res := strings.Builder{}
+	res.WriteString(fmt.Sprintf("do_%d:\n", a.index))
+	res.WriteString(fmt.Sprintf("%s\n", a.s.String()))
+	res.WriteString(fmt.Sprintf("%s\n", a.condition.String()))
+	res.WriteString(fmt.Sprintf("bnz do_%d", a.index))
+
+	return res.String()
+}
+
+type AstWhile struct {
+	index     int
+	condition AstStatement
+	s         AstStatement
+}
+
+func (a *AstWhile) String() string {
+	res := strings.Builder{}
+
+	res.WriteString(fmt.Sprintf("while_%d:\n", a.index))
+	res.WriteString(a.condition.String())
+	res.WriteString("\n")
+	res.WriteString(fmt.Sprintf("bz while_%d_end\n", a.index))
+	res.WriteString(a.s.String())
+	res.WriteString("\n")
+	res.WriteString(fmt.Sprintf("b while_%d\n", a.index))
+	res.WriteString(fmt.Sprintf("while_%d_end:", a.index))
+
+	return res.String()
+}
+
+type AstFor struct {
+	index     int
+	init      []AstStatement
+	condition AstStatement
+	s         AstStatement
+	iter      []AstStatement
+}
+
+func (a *AstFor) String() string {
+	res := strings.Builder{}
+
+	for _, stmt := range a.init {
+		res.WriteString(stmt.String())
+		res.WriteString("\n")
+	}
+
+	res.WriteString(fmt.Sprintf("for_%d:\n", a.index))
+	res.WriteString(fmt.Sprintf("%s\n", a.condition.String()))
+	res.WriteString(fmt.Sprintf("bz for_%d_end\n", a.index))
+	res.WriteString(fmt.Sprintf("%s\n", a.s.String()))
+
+	for _, stmt := range a.iter {
+		res.WriteString(fmt.Sprintf("%s\n", stmt.String()))
+	}
+
+	res.WriteString(fmt.Sprintf("b for_%d\n", a.index))
+	res.WriteString(fmt.Sprintf("for_%d_end:", a.index))
+
+	return res.String()
+}
+
+type AstPrefix struct {
+	v  *Variable
+	op string
+}
+
+func (a *AstPrefix) String() string {
+	var op string
+
+	switch a.op {
+	case "++":
+		op = "+"
+	case "--":
+		op = "-"
+	default:
+		panic(fmt.Sprintf("prefix operator not supported: '%s'", a.op))
+	}
+
+	return fmt.Sprintf("load %d\nint 1\n%s\nstore %d\nload %d", a.v.local.slot, op, a.v.local.slot, a.v.local.slot)
+}
+
+type AstPostfix struct {
+	v  *Variable
+	op string
+}
+
+func (a *AstPostfix) String() string {
+	var op string
+
+	switch a.op {
+	case "++":
+		op = "+"
+	case "--":
+		op = "-"
+	default:
+		panic(fmt.Sprintf("postfix operator not supported: '%s'", a.op))
+	}
+
+	return fmt.Sprintf("load %d\ndup\nint 1\n%s\nstore %d", a.v.local.slot, op, a.v.local.slot)
+}
+
+type AstLabel struct {
+	name string
+}
+
+func (a *AstLabel) String() string {
+	return fmt.Sprintf("label_%s:", a.name)
+}
+
+type AstGoto struct {
+	label string
+}
+
+func (a *AstGoto) String() string {
+	return fmt.Sprintf("b label_%s", a.label)
+}
+
 type AstVariable struct {
 	v *Variable
 }
@@ -177,6 +370,10 @@ type AstIsReturn interface {
 	IsReturn()
 }
 
+type AstIsBreak interface {
+	IsBreak()
+}
+
 type AstIntConstant struct {
 	value string
 }
@@ -243,7 +440,7 @@ type AstIfAlternative struct {
 }
 
 type AstIf struct {
-	label        int
+	index        int
 	alternatives []*AstIfAlternative
 }
 
@@ -256,9 +453,9 @@ func (a *AstIf) String() string {
 			res.WriteString("\n")
 
 			if i < len(a.alternatives)-1 {
-				res.WriteString(fmt.Sprintf("bz skip_%d_%d\n", a.label, i))
+				res.WriteString(fmt.Sprintf("bz if_skip_%d_%d\n", a.index, i))
 			} else {
-				res.WriteString(fmt.Sprintf("bz end_%d\n", a.label))
+				res.WriteString(fmt.Sprintf("bz if_end_%d\n", a.index))
 			}
 		}
 
@@ -268,17 +465,17 @@ func (a *AstIf) String() string {
 		}
 
 		if i < len(a.alternatives)-1 {
-			res.WriteString(fmt.Sprintf("b end_%d\n", a.label))
+			res.WriteString(fmt.Sprintf("b if_end_%d\n", a.index))
 		}
 
 		if alt.condition != nil {
 			if i < len(a.alternatives)-1 {
-				res.WriteString(fmt.Sprintf("skip_%d_%d:\n", a.label, i))
+				res.WriteString(fmt.Sprintf("if_skip_%d_%d:\n", a.index, i))
 			}
 		}
 	}
 
-	res.WriteString(fmt.Sprintf("end_%d:", a.label))
+	res.WriteString(fmt.Sprintf("if_end_%d:", a.index))
 
 	return res.String()
 }
@@ -295,13 +492,15 @@ func (a *AstFunction) String() string {
 	res.WriteString(fmt.Sprintf("%s:\n", a.fun.name))
 
 	if a.fun.user.sub {
-		ast := avm_proto_Ast{
-			i1: itoa(a.fun.user.args),
-			i2: itoa(a.fun.user.returns),
-		}
+		if a.fun.user.args != 0 || a.fun.user.returns != 0 {
+			ast := avm_proto_Ast{
+				i1: itoa(a.fun.user.args),
+				i2: itoa(a.fun.user.returns),
+			}
 
-		res.WriteString(ast.String())
-		res.WriteString("\n")
+			res.WriteString(ast.String())
+			res.WriteString("\n")
+		}
 	}
 
 	for _, stmt := range a.statements {
