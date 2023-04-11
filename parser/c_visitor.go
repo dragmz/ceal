@@ -52,6 +52,9 @@ type CVisitor interface {
 	// Visit a parse tree produced by CParser#BlockStmt.
 	VisitBlockStmt(ctx *BlockStmtContext) interface{}
 
+	// Visit a parse tree produced by CParser#AndExpr.
+	VisitAndExpr(ctx *AndExprContext) interface{}
+
 	// Visit a parse tree produced by CParser#MulDivExpr.
 	VisitMulDivExpr(ctx *MulDivExprContext) interface{}
 
@@ -67,11 +70,17 @@ type CVisitor interface {
 	// Visit a parse tree produced by CParser#CallExpr.
 	VisitCallExpr(ctx *CallExprContext) interface{}
 
+	// Visit a parse tree produced by CParser#NotExpr.
+	VisitNotExpr(ctx *NotExprContext) interface{}
+
 	// Visit a parse tree produced by CParser#EqNeqExpr.
 	VisitEqNeqExpr(ctx *EqNeqExprContext) interface{}
 
 	// Visit a parse tree produced by CParser#AddSubExpr.
 	VisitAddSubExpr(ctx *AddSubExprContext) interface{}
+
+	// Visit a parse tree produced by CParser#OrExpr.
+	VisitOrExpr(ctx *OrExprContext) interface{}
 
 	// Visit a parse tree produced by CParser#MinusExpr.
 	VisitMinusExpr(ctx *MinusExprContext) interface{}

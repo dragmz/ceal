@@ -40,6 +40,15 @@ func (a *AstVariable) String() string {
 	return fmt.Sprintf("byte %s", a.v.name)
 }
 
+type AstUnaryOp struct {
+	op string
+	s  AstStatement
+}
+
+func (a *AstUnaryOp) String() string {
+	return fmt.Sprintf("%s\n%s", a.s.String(), a.op)
+}
+
 type AstBinop struct {
 	l  AstStatement
 	op string

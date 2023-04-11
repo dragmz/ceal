@@ -52,6 +52,9 @@ type CListener interface {
 	// EnterBlockStmt is called when entering the BlockStmt production.
 	EnterBlockStmt(c *BlockStmtContext)
 
+	// EnterAndExpr is called when entering the AndExpr production.
+	EnterAndExpr(c *AndExprContext)
+
 	// EnterMulDivExpr is called when entering the MulDivExpr production.
 	EnterMulDivExpr(c *MulDivExprContext)
 
@@ -67,11 +70,17 @@ type CListener interface {
 	// EnterCallExpr is called when entering the CallExpr production.
 	EnterCallExpr(c *CallExprContext)
 
+	// EnterNotExpr is called when entering the NotExpr production.
+	EnterNotExpr(c *NotExprContext)
+
 	// EnterEqNeqExpr is called when entering the EqNeqExpr production.
 	EnterEqNeqExpr(c *EqNeqExprContext)
 
 	// EnterAddSubExpr is called when entering the AddSubExpr production.
 	EnterAddSubExpr(c *AddSubExprContext)
+
+	// EnterOrExpr is called when entering the OrExpr production.
+	EnterOrExpr(c *OrExprContext)
 
 	// EnterMinusExpr is called when entering the MinusExpr production.
 	EnterMinusExpr(c *MinusExprContext)
@@ -148,6 +157,9 @@ type CListener interface {
 	// ExitBlockStmt is called when exiting the BlockStmt production.
 	ExitBlockStmt(c *BlockStmtContext)
 
+	// ExitAndExpr is called when exiting the AndExpr production.
+	ExitAndExpr(c *AndExprContext)
+
 	// ExitMulDivExpr is called when exiting the MulDivExpr production.
 	ExitMulDivExpr(c *MulDivExprContext)
 
@@ -163,11 +175,17 @@ type CListener interface {
 	// ExitCallExpr is called when exiting the CallExpr production.
 	ExitCallExpr(c *CallExprContext)
 
+	// ExitNotExpr is called when exiting the NotExpr production.
+	ExitNotExpr(c *NotExprContext)
+
 	// ExitEqNeqExpr is called when exiting the EqNeqExpr production.
 	ExitEqNeqExpr(c *EqNeqExprContext)
 
 	// ExitAddSubExpr is called when exiting the AddSubExpr production.
 	ExitAddSubExpr(c *AddSubExprContext)
+
+	// ExitOrExpr is called when exiting the OrExpr production.
+	ExitOrExpr(c *OrExprContext)
 
 	// ExitMinusExpr is called when exiting the MinusExpr production.
 	ExitMinusExpr(c *MinusExprContext)

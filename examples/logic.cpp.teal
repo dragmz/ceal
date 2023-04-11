@@ -1,0 +1,59 @@
+#pragma version 8
+b avm_main
+// function a_eq_b
+a_eq_b:
+proto 2 1
+frame_dig -2
+frame_dig -1
+==
+retsub
+
+// function a_neq_b
+a_neq_b:
+proto 2 1
+frame_dig -2
+frame_dig -1
+!=
+retsub
+
+// function a_lt_b
+a_lt_b:
+proto 2 1
+frame_dig -2
+frame_dig -1
+<
+retsub
+
+// function a_gt_b
+a_gt_b:
+proto 2 1
+frame_dig -2
+frame_dig -1
+>
+retsub
+
+// function a_lteq_b
+a_lteq_b:
+proto 2 1
+frame_dig -2
+frame_dig -1
+<=
+retsub
+
+// function a_gteq_b
+a_gteq_b:
+proto 2 1
+frame_dig -2
+frame_dig -1
+>=
+retsub
+
+// function not_a
+not_a:
+proto 1 1
+frame_dig -1
+!
+retsub
+
+// function avm_main
+avm_main:

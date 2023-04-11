@@ -111,6 +111,25 @@ func (v *AstVisitor) VisitAddSubExpr(ctx *parser.AddSubExprContext) interface{} 
 		op: ctx.Addsub().GetText(),
 	}
 }
+
+func (v *AstVisitor) VisitOrExpr(ctx *parser.OrExprContext) interface{} {
+	exprs := ctx.AllExpr()
+	return &AstBinop{
+		l:  v.visitStatement(exprs[0]),
+		r:  v.visitStatement(exprs[1]),
+		op: "||",
+	}
+}
+
+func (v *AstVisitor) VisitAndExpr(ctx *parser.AndExprContext) interface{} {
+	exprs := ctx.AllExpr()
+	return &AstBinop{
+		l:  v.visitStatement(exprs[0]),
+		r:  v.visitStatement(exprs[1]),
+		op: "&&",
+	}
+}
+
 func (v *AstVisitor) VisitMulDivExpr(ctx *parser.MulDivExprContext) interface{} {
 	exprs := ctx.AllExpr()
 	return &AstBinop{
@@ -126,6 +145,13 @@ func (v *AstVisitor) VisitEqNeqExpr(ctx *parser.EqNeqExprContext) interface{} {
 		l:  v.visitStatement(exprs[0]),
 		r:  v.visitStatement(exprs[1]),
 		op: ctx.Eqneq().GetText(),
+	}
+}
+
+func (v *AstVisitor) VisitNotExpr(ctx *parser.NotExprContext) interface{} {
+	return &AstUnaryOp{
+		s:  v.visitStatement(ctx.Expr()),
+		op: "!",
 	}
 }
 

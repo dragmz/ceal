@@ -67,6 +67,10 @@ func (v *BaseCVisitor) VisitBlockStmt(ctx *BlockStmtContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCVisitor) VisitAndExpr(ctx *AndExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCVisitor) VisitMulDivExpr(ctx *MulDivExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -87,11 +91,19 @@ func (v *BaseCVisitor) VisitCallExpr(ctx *CallExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCVisitor) VisitNotExpr(ctx *NotExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCVisitor) VisitEqNeqExpr(ctx *EqNeqExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
 func (v *BaseCVisitor) VisitAddSubExpr(ctx *AddSubExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitOrExpr(ctx *OrExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
