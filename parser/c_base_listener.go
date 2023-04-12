@@ -194,6 +194,12 @@ func (s *BaseCListener) EnterOrExpr(ctx *OrExprContext) {}
 // ExitOrExpr is called when production OrExpr is exited.
 func (s *BaseCListener) ExitOrExpr(ctx *OrExprContext) {}
 
+// EnterGroupExpr is called when production GroupExpr is entered.
+func (s *BaseCListener) EnterGroupExpr(ctx *GroupExprContext) {}
+
+// ExitGroupExpr is called when production GroupExpr is exited.
+func (s *BaseCListener) ExitGroupExpr(ctx *GroupExprContext) {}
+
 // EnterMulDivExpr is called when production MulDivExpr is entered.
 func (s *BaseCListener) EnterMulDivExpr(ctx *MulDivExprContext) {}
 

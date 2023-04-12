@@ -228,6 +228,10 @@ func (v *AstVisitor) VisitConstantExpr(ctx *parser.ConstantExprContext) interfac
 	return res
 }
 
+func (v *AstVisitor) VisitGroupExpr(ctx *parser.GroupExprContext) interface{} {
+	return v.Visit(ctx.Expr())
+}
+
 func (v *AstVisitor) VisitCallExpr(ctx *parser.CallExprContext) interface{} {
 	return v.Visit(ctx.Call_expr())
 }

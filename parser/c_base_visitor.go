@@ -123,6 +123,10 @@ func (v *BaseCVisitor) VisitOrExpr(ctx *OrExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCVisitor) VisitGroupExpr(ctx *GroupExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCVisitor) VisitMulDivExpr(ctx *MulDivExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }

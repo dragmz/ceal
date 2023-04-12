@@ -52,6 +52,7 @@ expr:
     | (INT | STRING)            # ConstantExpr
     | ID '.' ID ('.' ID)*       # MemberExpr
     | call_expr                 # CallExpr
+    | '(' expr ')'              # GroupExpr
     ;
 
 asdexpr: ID ('.' ID)* asd expr;

@@ -94,6 +94,9 @@ type CListener interface {
 	// EnterOrExpr is called when entering the OrExpr production.
 	EnterOrExpr(c *OrExprContext)
 
+	// EnterGroupExpr is called when entering the GroupExpr production.
+	EnterGroupExpr(c *GroupExprContext)
+
 	// EnterMulDivExpr is called when entering the MulDivExpr production.
 	EnterMulDivExpr(c *MulDivExprContext)
 
@@ -264,6 +267,9 @@ type CListener interface {
 
 	// ExitOrExpr is called when exiting the OrExpr production.
 	ExitOrExpr(c *OrExprContext)
+
+	// ExitGroupExpr is called when exiting the GroupExpr production.
+	ExitGroupExpr(c *GroupExprContext)
 
 	// ExitMulDivExpr is called when exiting the MulDivExpr production.
 	ExitMulDivExpr(c *MulDivExprContext)
