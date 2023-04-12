@@ -12,7 +12,6 @@ load 1
 store 2
 load 2
 retsub
-
 avm_main:
 int 1
 store 3

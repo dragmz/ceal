@@ -3,7 +3,6 @@ int 0
 int 1
 txn Fee
 match switch_0_0 switch_0_1
-// default
 byte "call"
 log
 b switch_0_end
@@ -16,4 +15,3 @@ byte "1"
 log
 b switch_0_end
 switch_0_end:
-

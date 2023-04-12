@@ -18,6 +18,22 @@ func atoi(v string) int {
 	return i
 }
 
+type Lines struct {
+	lines []string
+}
+
+func (l *Lines) WriteLine(s string) {
+	if s == "" {
+		return
+	}
+
+	l.lines = append(l.lines, s)
+}
+
+func (l *Lines) String() string {
+	return strings.Join(l.lines, "\n")
+}
+
 type AstBreak struct {
 	label string
 	index int
@@ -42,7 +58,7 @@ type AstSwitch struct {
 }
 
 func (a *AstSwitch) String() string {
-	res := strings.Builder{}
+	res := Lines{}
 
 	labels := []string{}
 
@@ -50,31 +66,29 @@ func (a *AstSwitch) String() string {
 		label := fmt.Sprintf("switch_%d_%d", a.index, i)
 		labels = append(labels, label)
 
-		res.WriteString(fmt.Sprintf("%s\n", c.value.String()))
+		res.WriteLine(c.value.String())
 	}
 
-	res.WriteString(fmt.Sprintf("%s\n", a.value.String()))
-	res.WriteString(fmt.Sprintf("match %s\n", strings.Join(labels, " ")))
+	res.WriteLine(a.value.String())
+	res.WriteLine(fmt.Sprintf("match %s", strings.Join(labels, " ")))
 
 	if len(a.default_) > 0 {
-		res.WriteString("// default\n")
-
 		for _, stmt := range a.default_ {
-			res.WriteString(fmt.Sprintf("%s\n", stmt.String()))
+			res.WriteLine(stmt.String())
 		}
 	}
 
 	for i, c := range a.cases {
 		label := labels[i]
 
-		res.WriteString(fmt.Sprintf("%s:\n", label))
+		res.WriteLine(fmt.Sprintf("%s:", label))
 
 		for _, stmt := range c.statements {
-			res.WriteString(fmt.Sprintf("%s\n", stmt.String()))
+			res.WriteLine(stmt.String())
 		}
 	}
 
-	res.WriteString(fmt.Sprintf("switch_%d_end:\n", a.index))
+	res.WriteLine(fmt.Sprintf("switch_%d_end:", a.index))
 
 	return res.String()
 }
@@ -94,11 +108,11 @@ type AstDoWhile struct {
 }
 
 func (a *AstDoWhile) String() string {
-	res := strings.Builder{}
-	res.WriteString(fmt.Sprintf("do_%d:\n", a.index))
-	res.WriteString(fmt.Sprintf("%s\n", a.s.String()))
-	res.WriteString(fmt.Sprintf("%s\n", a.condition.String()))
-	res.WriteString(fmt.Sprintf("bnz do_%d", a.index))
+	res := Lines{}
+	res.WriteLine(fmt.Sprintf("do_%d:", a.index))
+	res.WriteLine(a.s.String())
+	res.WriteLine(a.condition.String())
+	res.WriteLine(fmt.Sprintf("bnz do_%d", a.index))
 
 	return res.String()
 }
@@ -110,16 +124,14 @@ type AstWhile struct {
 }
 
 func (a *AstWhile) String() string {
-	res := strings.Builder{}
+	res := Lines{}
 
-	res.WriteString(fmt.Sprintf("while_%d:\n", a.index))
-	res.WriteString(a.condition.String())
-	res.WriteString("\n")
-	res.WriteString(fmt.Sprintf("bz while_%d_end\n", a.index))
-	res.WriteString(a.s.String())
-	res.WriteString("\n")
-	res.WriteString(fmt.Sprintf("b while_%d\n", a.index))
-	res.WriteString(fmt.Sprintf("while_%d_end:", a.index))
+	res.WriteLine(fmt.Sprintf("while_%d:", a.index))
+	res.WriteLine(a.condition.String())
+	res.WriteLine(fmt.Sprintf("bz while_%d_end", a.index))
+	res.WriteLine(a.s.String())
+	res.WriteLine(fmt.Sprintf("b while_%d", a.index))
+	res.WriteLine(fmt.Sprintf("while_%d_end:", a.index))
 
 	return res.String()
 }
@@ -133,24 +145,23 @@ type AstFor struct {
 }
 
 func (a *AstFor) String() string {
-	res := strings.Builder{}
+	res := Lines{}
 
 	for _, stmt := range a.init {
-		res.WriteString(stmt.String())
-		res.WriteString("\n")
+		res.WriteLine(stmt.String())
 	}
 
-	res.WriteString(fmt.Sprintf("for_%d:\n", a.index))
-	res.WriteString(fmt.Sprintf("%s\n", a.condition.String()))
-	res.WriteString(fmt.Sprintf("bz for_%d_end\n", a.index))
-	res.WriteString(fmt.Sprintf("%s\n", a.s.String()))
+	res.WriteLine(fmt.Sprintf("for_%d:", a.index))
+	res.WriteLine(a.condition.String())
+	res.WriteLine(fmt.Sprintf("bz for_%d_end", a.index))
+	res.WriteLine(a.s.String())
 
 	for _, stmt := range a.iter {
-		res.WriteString(fmt.Sprintf("%s\n", stmt.String()))
+		res.WriteLine(stmt.String())
 	}
 
-	res.WriteString(fmt.Sprintf("b for_%d\n", a.index))
-	res.WriteString(fmt.Sprintf("for_%d_end:", a.index))
+	res.WriteLine(fmt.Sprintf("b for_%d", a.index))
+	res.WriteLine(fmt.Sprintf("for_%d_end:", a.index))
 
 	return res.String()
 }
@@ -182,15 +193,15 @@ func (a *AstPrefix) String() string {
 		panic(fmt.Sprintf("prefix operator not supported: '%s'", a.op))
 	}
 
-	res := strings.Builder{}
+	res := Lines{}
 
-	res.WriteString(fmt.Sprintf("load %d\n", a.v.local.slot))
-	res.WriteString("int 1\n")
-	res.WriteString(fmt.Sprintf("%s\n", op))
-	res.WriteString(fmt.Sprintf("store %d", a.v.local.slot))
+	res.WriteLine(fmt.Sprintf("load %d", a.v.local.slot))
+	res.WriteLine("int 1")
+	res.WriteLine(op)
+	res.WriteLine(fmt.Sprintf("store %d", a.v.local.slot))
 
 	if !a.stmt {
-		res.WriteString(fmt.Sprintf("\nload %d\n", a.v.local.slot))
+		res.WriteLine(fmt.Sprintf("load %d", a.v.local.slot))
 	}
 
 	return res.String()
@@ -218,12 +229,12 @@ func (a *AstPostfix) String() string {
 		panic(fmt.Sprintf("postfix operator not supported: '%s'", a.op))
 	}
 
-	res := strings.Builder{}
-	res.WriteString(fmt.Sprintf("load %d\n", a.v.local.slot))
+	res := Lines{}
+	res.WriteLine(fmt.Sprintf("load %d", a.v.local.slot))
 	if !a.stmt {
-		res.WriteString("dup\n")
+		res.WriteLine("dup")
 	}
-	res.WriteString(fmt.Sprintf("int 1\n%s\nstore %d", op, a.v.local.slot))
+	res.WriteLine(fmt.Sprintf("int 1\n%s\nstore %d", op, a.v.local.slot))
 
 	return res.String()
 }
@@ -286,7 +297,7 @@ type AstAssignSumDiff struct {
 }
 
 func (a *AstAssignSumDiff) String() string {
-	res := strings.Builder{}
+	res := Lines{}
 
 	var op string
 
@@ -306,13 +317,13 @@ func (a *AstAssignSumDiff) String() string {
 		slot = a.v.local.slot
 	}
 
-	res.WriteString(fmt.Sprintf("load %d\n", slot))
-	res.WriteString(fmt.Sprintf("%s\n", a.value.String()))
-	res.WriteString(fmt.Sprintf("%s\n", op))
+	res.WriteLine(fmt.Sprintf("load %d", slot))
+	res.WriteLine(a.value.String())
+	res.WriteLine(op)
 	if !a.stmt {
-		res.WriteString("dup\n")
+		res.WriteLine("dup")
 	}
-	res.WriteString(fmt.Sprintf("store %d", slot))
+	res.WriteLine(fmt.Sprintf("store %d", slot))
 
 	return res.String()
 }
@@ -409,33 +420,33 @@ type AstCall struct {
 }
 
 func (a *AstCall) String() string {
-	s := strings.Builder{}
+	s := Lines{}
 
 	if a.fun.builtin != nil {
 		i := 0
 
 		for ; i < len(a.fun.builtin.stack); i++ {
 			arg := a.args[i]
-			s.WriteString(arg.String())
-			s.WriteString("\n")
+			s.WriteLine(arg.String())
 		}
 
-		s.WriteString(a.fun.builtin.op)
+		args := []string{}
+		args = append(args, a.fun.builtin.op)
 
 		for ; i < len(a.fun.builtin.stack)+len(a.fun.builtin.imm); i++ {
 			arg := a.args[i]
-			s.WriteString(" ")
-			s.WriteString(arg.String())
+			args = append(args, arg.String())
 		}
+
+		s.WriteLine(strings.Join(args, " "))
 	}
 
 	if a.fun.user != nil {
 		for _, arg := range a.args {
-			s.WriteString(arg.String())
-			s.WriteString("\n")
+			s.WriteLine(arg.String())
 		}
 
-		s.WriteString(fmt.Sprintf("callsub %s", a.fun.name))
+		s.WriteLine(fmt.Sprintf("callsub %s", a.fun.name))
 	}
 
 	return s.String()
@@ -474,21 +485,20 @@ func (a *AstReturn) IsReturn() {
 }
 
 func (a *AstReturn) String() string {
-	s := strings.Builder{}
+	s := Lines{}
 
 	if a.value != nil {
-		s.WriteString(a.value.String())
-		s.WriteString("\n")
+		s.WriteLine(a.value.String())
 	}
 
 	if a.function != nil {
 		if a.function.user.sub {
-			s.WriteString("retsub")
+			s.WriteLine("retsub")
 		} else {
-			s.WriteString("return")
+			s.WriteLine("return")
 		}
 	} else {
-		s.WriteString("return")
+		s.WriteLine("return")
 	}
 
 	return s.String()
@@ -499,11 +509,10 @@ type AstBlock struct {
 }
 
 func (a *AstBlock) String() string {
-	ops := strings.Builder{}
+	ops := Lines{}
 
 	for _, stmt := range a.statements {
-		ops.WriteString(stmt.String())
-		ops.WriteString("\n")
+		ops.WriteLine(stmt.String())
 	}
 
 	return ops.String()
@@ -520,37 +529,35 @@ type AstIf struct {
 }
 
 func (a *AstIf) String() string {
-	res := strings.Builder{}
+	res := Lines{}
 
 	for i, alt := range a.alternatives {
 		if alt.condition != nil {
-			res.WriteString(alt.condition.String())
-			res.WriteString("\n")
+			res.WriteLine(alt.condition.String())
 
 			if i < len(a.alternatives)-1 {
-				res.WriteString(fmt.Sprintf("bz if_skip_%d_%d\n", a.index, i))
+				res.WriteLine(fmt.Sprintf("bz if_skip_%d_%d", a.index, i))
 			} else {
-				res.WriteString(fmt.Sprintf("bz if_end_%d\n", a.index))
+				res.WriteLine(fmt.Sprintf("bz if_end_%d", a.index))
 			}
 		}
 
 		for _, stmt := range alt.statements {
-			res.WriteString(stmt.String())
-			res.WriteString("\n")
+			res.WriteLine(stmt.String())
 		}
 
 		if i < len(a.alternatives)-1 {
-			res.WriteString(fmt.Sprintf("b if_end_%d\n", a.index))
+			res.WriteLine(fmt.Sprintf("b if_end_%d", a.index))
 		}
 
 		if alt.condition != nil {
 			if i < len(a.alternatives)-1 {
-				res.WriteString(fmt.Sprintf("if_skip_%d_%d:\n", a.index, i))
+				res.WriteLine(fmt.Sprintf("if_skip_%d_%d:", a.index, i))
 			}
 		}
 	}
 
-	res.WriteString(fmt.Sprintf("if_end_%d:", a.index))
+	res.WriteLine(fmt.Sprintf("if_end_%d:", a.index))
 
 	return res.String()
 }
@@ -561,7 +568,7 @@ type AstFunction struct {
 }
 
 func (a *AstFunction) String() string {
-	res := strings.Builder{}
+	res := Lines{}
 
 	if a.fun.user.sub {
 		if a.fun.user.args != 0 || a.fun.user.returns != 0 {
@@ -570,21 +577,19 @@ func (a *AstFunction) String() string {
 				i2: itoa(a.fun.user.returns),
 			}
 
-			res.WriteString(ast.String())
-			res.WriteString("\n")
+			res.WriteLine(ast.String())
 		}
 	}
 
 	for _, stmt := range a.statements {
-		res.WriteString(stmt.String())
-		res.WriteString("\n")
+		res.WriteLine(stmt.String())
 	}
 
 	if a.fun.user.sub {
 		if len(a.statements) > 0 {
 			last := a.statements[len(a.statements)-1]
 			if _, ok := last.(AstIsReturn); !ok {
-				res.WriteString("retsub")
+				res.WriteLine("retsub")
 			}
 		}
 	}

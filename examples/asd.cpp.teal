@@ -16,7 +16,6 @@ load 1
 int 10
 <
 bz for_0_end
-
 load 1
 int 2
 +

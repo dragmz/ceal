@@ -6,48 +6,41 @@ frame_dig -2
 frame_dig -1
 ==
 retsub
-
 a_neq_b:
 proto 2 1
 frame_dig -2
 frame_dig -1
 !=
 retsub
-
 a_lt_b:
 proto 2 1
 frame_dig -2
 frame_dig -1
 <
 retsub
-
 a_gt_b:
 proto 2 1
 frame_dig -2
 frame_dig -1
 >
 retsub
-
 a_lteq_b:
 proto 2 1
 frame_dig -2
 frame_dig -1
 <=
 retsub
-
 a_gteq_b:
 proto 2 1
 frame_dig -2
 frame_dig -1
 >=
 retsub
-
 not_a:
 proto 1 1
 frame_dig -1
 !
 retsub
-
 avm_main:
 int 1
 int 2
