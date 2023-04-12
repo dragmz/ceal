@@ -2,7 +2,9 @@
 
 uint64 avm_main()
 {
-    goto Quit;
+    if(avm_txn.ApplicationID == 0)
+        goto Quit;
+        
     return 0;
 
 Quit:

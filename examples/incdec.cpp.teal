@@ -1,6 +1,5 @@
 #pragma version 8
 b avm_main
-// function preinc
 preinc:
 int 1
 store 0
@@ -11,7 +10,6 @@ store 0
 load 0
 store 1
 retsub
-// function predec
 predec:
 int 1
 store 2
@@ -22,7 +20,6 @@ store 2
 load 2
 store 3
 retsub
-// function postinc
 postinc:
 int 1
 store 4
@@ -33,7 +30,6 @@ int 1
 store 4
 store 5
 retsub
-// function postdec
 postdec:
 int 1
 store 6
@@ -44,5 +40,4 @@ store 6
 load 6
 store 7
 retsub
-// function avm_main
 avm_main:

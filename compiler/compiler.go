@@ -214,14 +214,20 @@ func (a *AstProgram) String() string {
 	}
 
 	for _, name := range a.functionsNames {
-		fun := a.functions[name]
+		ast := a.functions[name]
 
 		if name == AvmMainName {
 			continue
 		}
 
-		res.WriteString(fun.String())
+		res.WriteString(fmt.Sprintf("%s:\n", ast.fun.name))
+
+		res.WriteString(ast.String())
 		res.WriteString("\n")
+	}
+
+	if len(a.functions) > 1 {
+		res.WriteString(fmt.Sprintf("%s:\n", main.fun.name))
 	}
 
 	res.WriteString(main.String())

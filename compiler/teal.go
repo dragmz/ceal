@@ -488,9 +488,6 @@ type AstFunction struct {
 func (a *AstFunction) String() string {
 	res := strings.Builder{}
 
-	res.WriteString(fmt.Sprintf("// function %s\n", a.fun.name))
-	res.WriteString(fmt.Sprintf("%s:\n", a.fun.name))
-
 	if a.fun.user.sub {
 		if a.fun.user.args != 0 || a.fun.user.returns != 0 {
 			ast := avm_proto_Ast{

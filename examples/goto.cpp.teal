@@ -1,7 +1,10 @@
 #pragma version 8
-// function avm_main
-avm_main:
+txn ApplicationID
+int 0
+==
+bz if_end_0
 b label_Quit
+if_end_0:
 int 0
 return
 label_Quit:

@@ -1,6 +1,5 @@
 #pragma version 8
 b avm_main
-// function add
 add:
 proto 2 1
 frame_dig -2
@@ -12,7 +11,6 @@ load 1
 +
 retsub
 
-// function avm_main
 avm_main:
 int 1
 store 2

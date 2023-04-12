@@ -1,6 +1,5 @@
 #pragma version 8
 b avm_main
-// function init
 init:
 proto 2 0
 frame_dig -2
@@ -11,7 +10,6 @@ frame_dig -1
 itob
 box_put
 retsub
-// function noop
 noop:
 txn Sender
 int 0
@@ -21,7 +19,6 @@ store 0
 load 0
 log
 retsub
-// function avm_main
 avm_main:
 txn ApplicationID
 int 0
