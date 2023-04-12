@@ -36,6 +36,8 @@ stmt:
 expr:
     ID incdec                   # PostIncDecExpr
     | incdec ID                 # PreIncDecExpr
+    | '-' expr                  # MinusExpr
+    | '!' expr                  # NotExpr
     | expr muldiv expr          # MulDivExpr
     | expr addsub expr          # AddSubExpr
     | expr eqneq expr           # EqNeqExpr
@@ -44,8 +46,6 @@ expr:
     | expr '|' expr             # BitOrExpr
     | expr '&&' expr            # AndExpr
     | expr '||' expr            # OrExpr
-    | '-' expr                  # MinusExpr
-    | '!' expr                  # NotExpr
     | ID                        # VariableExpr
     | (INT | STRING)            # ConstantExpr
     | ID '.' ID ('.' ID)*       # MemberExpr
