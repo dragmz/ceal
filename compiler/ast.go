@@ -124,6 +124,7 @@ func (v *AstVisitor) VisitAssignSumDiffStmt(ctx *parser.AssignSumDiffStmtContext
 		t:     t,
 		value: v.visitStatement(ctx.Asdexpr().Expr()),
 		op:    ctx.Asdexpr().Asd().GetText(),
+		stmt:  true,
 	}
 }
 func (v *AstVisitor) VisitAssignSumDiffExpr(ctx *parser.AssignSumDiffExprContext) interface{} {
@@ -136,7 +137,6 @@ func (v *AstVisitor) VisitAssignSumDiffExpr(ctx *parser.AssignSumDiffExprContext
 		t:     t,
 		value: v.visitStatement(ctx.Asdexpr().Expr()),
 		op:    ctx.Asdexpr().Asd().GetText(),
-		expr:  true,
 	}
 }
 
@@ -517,9 +517,9 @@ func (v *AstVisitor) VisitForStmt(ctx *parser.ForStmtContext) interface{} {
 	iter := []AstStatement{}
 
 	for _, e := range ctx.ForIter().AllExpr() {
-		// TODO: pop is just a temporary solution; should not push onto the stack at all
-		ast := &AstPop{
-			s: v.visitStatement(e),
+		ast := v.visitStatement(e)
+		if e, ok := ast.(AstExpr); ok {
+			e.ToStmt()
 		}
 
 		iter = append(iter, ast)

@@ -22,6 +22,5 @@ int 2
 +
 dup
 store 1
-pop
 b for_0
 for_0_end:

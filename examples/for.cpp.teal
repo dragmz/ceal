@@ -20,7 +20,5 @@ load 0
 int 1
 +
 store 0
-load 0
-pop
 b for_1
 for_1_end:

@@ -155,9 +155,19 @@ func (a *AstFor) String() string {
 	return res.String()
 }
 
+type AstExpr interface {
+	// ToStmt converts the expression to a statement so it does not push a value onto the stack
+	ToStmt()
+}
+
 type AstPrefix struct {
-	v  *Variable
-	op string
+	v    *Variable
+	op   string
+	stmt bool
+}
+
+func (a *AstPrefix) ToStmt() {
+	a.stmt = true
 }
 
 func (a *AstPrefix) String() string {
@@ -172,12 +182,28 @@ func (a *AstPrefix) String() string {
 		panic(fmt.Sprintf("prefix operator not supported: '%s'", a.op))
 	}
 
-	return fmt.Sprintf("load %d\nint 1\n%s\nstore %d\nload %d", a.v.local.slot, op, a.v.local.slot, a.v.local.slot)
+	res := strings.Builder{}
+
+	res.WriteString(fmt.Sprintf("load %d\n", a.v.local.slot))
+	res.WriteString("int 1\n")
+	res.WriteString(fmt.Sprintf("%s\n", op))
+	res.WriteString(fmt.Sprintf("store %d", a.v.local.slot))
+
+	if !a.stmt {
+		res.WriteString(fmt.Sprintf("\nload %d\n", a.v.local.slot))
+	}
+
+	return res.String()
 }
 
 type AstPostfix struct {
-	v  *Variable
-	op string
+	v    *Variable
+	op   string
+	stmt bool
+}
+
+func (a *AstPostfix) ToStmt() {
+	a.stmt = true
 }
 
 func (a *AstPostfix) String() string {
@@ -192,7 +218,14 @@ func (a *AstPostfix) String() string {
 		panic(fmt.Sprintf("postfix operator not supported: '%s'", a.op))
 	}
 
-	return fmt.Sprintf("load %d\ndup\nint 1\n%s\nstore %d", a.v.local.slot, op, a.v.local.slot)
+	res := strings.Builder{}
+	res.WriteString(fmt.Sprintf("load %d\n", a.v.local.slot))
+	if !a.stmt {
+		res.WriteString("dup\n")
+	}
+	res.WriteString(fmt.Sprintf("int 1\n%s\nstore %d", op, a.v.local.slot))
+
+	return res.String()
 }
 
 type AstLabel struct {
@@ -249,7 +282,7 @@ type AstAssignSumDiff struct {
 	value AstStatement
 	op    string
 
-	expr bool
+	stmt bool
 }
 
 func (a *AstAssignSumDiff) String() string {
@@ -276,7 +309,7 @@ func (a *AstAssignSumDiff) String() string {
 	res.WriteString(fmt.Sprintf("load %d\n", slot))
 	res.WriteString(fmt.Sprintf("%s\n", a.value.String()))
 	res.WriteString(fmt.Sprintf("%s\n", op))
-	if a.expr {
+	if !a.stmt {
 		res.WriteString("dup\n")
 	}
 	res.WriteString(fmt.Sprintf("store %d", slot))
