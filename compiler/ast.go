@@ -114,6 +114,32 @@ func (v *AstVisitor) VisitAddSubExpr(ctx *parser.AddSubExprContext) interface{} 
 	}
 }
 
+func (v *AstVisitor) VisitAssignSumDiffStmt(ctx *parser.AssignSumDiffStmtContext) interface{} {
+	vr, f := v.mustResolve(ctx.Asdexpr().AllID())
+	t := v.scope.resolveType(vr.t)
+
+	return &AstAssignSumDiff{
+		v:     vr,
+		f:     f,
+		t:     t,
+		value: v.visitStatement(ctx.Asdexpr().Expr()),
+		op:    ctx.Asdexpr().Asd().GetText(),
+	}
+}
+func (v *AstVisitor) VisitAssignSumDiffExpr(ctx *parser.AssignSumDiffExprContext) interface{} {
+	vr, f := v.mustResolve(ctx.Asdexpr().AllID())
+	t := v.scope.resolveType(vr.t)
+
+	return &AstAssignSumDiff{
+		v:     vr,
+		f:     f,
+		t:     t,
+		value: v.visitStatement(ctx.Asdexpr().Expr()),
+		op:    ctx.Asdexpr().Asd().GetText(),
+		expr:  true,
+	}
+}
+
 func (v *AstVisitor) VisitOrExpr(ctx *parser.OrExprContext) interface{} {
 	exprs := ctx.AllExpr()
 	return &AstBinop{

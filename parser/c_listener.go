@@ -40,6 +40,9 @@ type CListener interface {
 	// EnterAssignmentStmt is called when entering the AssignmentStmt production.
 	EnterAssignmentStmt(c *AssignmentStmtContext)
 
+	// EnterAssignSumDiffStmt is called when entering the AssignSumDiffStmt production.
+	EnterAssignSumDiffStmt(c *AssignSumDiffStmtContext)
+
 	// EnterCallStmt is called when entering the CallStmt production.
 	EnterCallStmt(c *CallStmtContext)
 
@@ -94,6 +97,9 @@ type CListener interface {
 	// EnterMulDivExpr is called when entering the MulDivExpr production.
 	EnterMulDivExpr(c *MulDivExprContext)
 
+	// EnterAssignSumDiffExpr is called when entering the AssignSumDiffExpr production.
+	EnterAssignSumDiffExpr(c *AssignSumDiffExprContext)
+
 	// EnterMemberExpr is called when entering the MemberExpr production.
 	EnterMemberExpr(c *MemberExprContext)
 
@@ -120,6 +126,12 @@ type CListener interface {
 
 	// EnterMinusExpr is called when entering the MinusExpr production.
 	EnterMinusExpr(c *MinusExprContext)
+
+	// EnterAsdexpr is called when entering the asdexpr production.
+	EnterAsdexpr(c *AsdexprContext)
+
+	// EnterAsd is called when entering the asd production.
+	EnterAsd(c *AsdContext)
 
 	// EnterCase is called when entering the case production.
 	EnterCase(c *CaseContext)
@@ -199,6 +211,9 @@ type CListener interface {
 	// ExitAssignmentStmt is called when exiting the AssignmentStmt production.
 	ExitAssignmentStmt(c *AssignmentStmtContext)
 
+	// ExitAssignSumDiffStmt is called when exiting the AssignSumDiffStmt production.
+	ExitAssignSumDiffStmt(c *AssignSumDiffStmtContext)
+
 	// ExitCallStmt is called when exiting the CallStmt production.
 	ExitCallStmt(c *CallStmtContext)
 
@@ -253,6 +268,9 @@ type CListener interface {
 	// ExitMulDivExpr is called when exiting the MulDivExpr production.
 	ExitMulDivExpr(c *MulDivExprContext)
 
+	// ExitAssignSumDiffExpr is called when exiting the AssignSumDiffExpr production.
+	ExitAssignSumDiffExpr(c *AssignSumDiffExprContext)
+
 	// ExitMemberExpr is called when exiting the MemberExpr production.
 	ExitMemberExpr(c *MemberExprContext)
 
@@ -279,6 +297,12 @@ type CListener interface {
 
 	// ExitMinusExpr is called when exiting the MinusExpr production.
 	ExitMinusExpr(c *MinusExprContext)
+
+	// ExitAsdexpr is called when exiting the asdexpr production.
+	ExitAsdexpr(c *AsdexprContext)
+
+	// ExitAsd is called when exiting the asd production.
+	ExitAsd(c *AsdContext)
 
 	// ExitCase is called when exiting the case production.
 	ExitCase(c *CaseContext)

@@ -20,6 +20,7 @@ stmt:
     declaration ';'                                                 # DeclarationStmt
     | definition ';'                                                # DefinitionStmt
     | ID ('.' ID)* '=' expr ';'                                     # AssignmentStmt
+    | asdexpr ';'                                                   # AssignSumDiffStmt
     | call_expr ';'                                                 # CallStmt
     | 'if' '(' expr ')' (('{' stmt* '}') | stmt) elseif* else?      # IfStmt
     | 'return' expr? ';'                                            # ReturnStmt
@@ -46,12 +47,15 @@ expr:
     | expr '|' expr             # BitOrExpr
     | expr '&&' expr            # AndExpr
     | expr '||' expr            # OrExpr
+    | asdexpr                   # AssignSumDiffExpr
     | ID                        # VariableExpr
     | (INT | STRING)            # ConstantExpr
     | ID '.' ID ('.' ID)*       # MemberExpr
     | call_expr                 # CallExpr
     ;
 
+asdexpr: ID ('.' ID)* asd expr;
+asd: '+=' | '-=';
 case: 'case' expr ':' stmt*;
 default: 'default' ':' stmt*;
 

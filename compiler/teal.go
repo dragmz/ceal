@@ -242,6 +242,48 @@ func (a *AstUnaryOp) String() string {
 	return fmt.Sprintf("%s\n%s", a.s.String(), a.op)
 }
 
+type AstAssignSumDiff struct {
+	v     *Variable
+	f     *StructField
+	t     *Type
+	value AstStatement
+	op    string
+
+	expr bool
+}
+
+func (a *AstAssignSumDiff) String() string {
+	res := strings.Builder{}
+
+	var op string
+
+	switch a.op {
+	case "+=":
+		op = "+"
+	case "-=":
+		op = "-"
+	}
+
+	var slot int
+
+	if a.t.complex != nil {
+		v := a.v.fields[a.f.name]
+		slot = v.local.slot
+	} else {
+		slot = a.v.local.slot
+	}
+
+	res.WriteString(fmt.Sprintf("load %d\n", slot))
+	res.WriteString(fmt.Sprintf("%s\n", a.value.String()))
+	res.WriteString(fmt.Sprintf("%s\n", op))
+	if a.expr {
+		res.WriteString("dup\n")
+	}
+	res.WriteString(fmt.Sprintf("store %d", slot))
+
+	return res.String()
+}
+
 type AstBinop struct {
 	l  AstStatement
 	op string

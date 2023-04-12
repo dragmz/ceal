@@ -86,6 +86,12 @@ func (s *BaseCListener) EnterAssignmentStmt(ctx *AssignmentStmtContext) {}
 // ExitAssignmentStmt is called when production AssignmentStmt is exited.
 func (s *BaseCListener) ExitAssignmentStmt(ctx *AssignmentStmtContext) {}
 
+// EnterAssignSumDiffStmt is called when production AssignSumDiffStmt is entered.
+func (s *BaseCListener) EnterAssignSumDiffStmt(ctx *AssignSumDiffStmtContext) {}
+
+// ExitAssignSumDiffStmt is called when production AssignSumDiffStmt is exited.
+func (s *BaseCListener) ExitAssignSumDiffStmt(ctx *AssignSumDiffStmtContext) {}
+
 // EnterCallStmt is called when production CallStmt is entered.
 func (s *BaseCListener) EnterCallStmt(ctx *CallStmtContext) {}
 
@@ -194,6 +200,12 @@ func (s *BaseCListener) EnterMulDivExpr(ctx *MulDivExprContext) {}
 // ExitMulDivExpr is called when production MulDivExpr is exited.
 func (s *BaseCListener) ExitMulDivExpr(ctx *MulDivExprContext) {}
 
+// EnterAssignSumDiffExpr is called when production AssignSumDiffExpr is entered.
+func (s *BaseCListener) EnterAssignSumDiffExpr(ctx *AssignSumDiffExprContext) {}
+
+// ExitAssignSumDiffExpr is called when production AssignSumDiffExpr is exited.
+func (s *BaseCListener) ExitAssignSumDiffExpr(ctx *AssignSumDiffExprContext) {}
+
 // EnterMemberExpr is called when production MemberExpr is entered.
 func (s *BaseCListener) EnterMemberExpr(ctx *MemberExprContext) {}
 
@@ -247,6 +259,18 @@ func (s *BaseCListener) EnterMinusExpr(ctx *MinusExprContext) {}
 
 // ExitMinusExpr is called when production MinusExpr is exited.
 func (s *BaseCListener) ExitMinusExpr(ctx *MinusExprContext) {}
+
+// EnterAsdexpr is called when production asdexpr is entered.
+func (s *BaseCListener) EnterAsdexpr(ctx *AsdexprContext) {}
+
+// ExitAsdexpr is called when production asdexpr is exited.
+func (s *BaseCListener) ExitAsdexpr(ctx *AsdexprContext) {}
+
+// EnterAsd is called when production asd is entered.
+func (s *BaseCListener) EnterAsd(ctx *AsdContext) {}
+
+// ExitAsd is called when production asd is exited.
+func (s *BaseCListener) ExitAsd(ctx *AsdContext) {}
 
 // EnterCase is called when production case is entered.
 func (s *BaseCListener) EnterCase(ctx *CaseContext) {}

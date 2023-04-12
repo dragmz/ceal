@@ -1,0 +1,27 @@
+#pragma version 8
+int 1
+store 0
+load 0
+int 1
++
+store 0
+load 0
+int 1
+-
+store 0
+int 0
+store 1
+for_0:
+load 1
+int 10
+<
+bz for_0_end
+
+load 1
+int 2
++
+dup
+store 1
+pop
+b for_0
+for_0_end:

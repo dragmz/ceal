@@ -51,6 +51,10 @@ func (v *BaseCVisitor) VisitAssignmentStmt(ctx *AssignmentStmtContext) interface
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCVisitor) VisitAssignSumDiffStmt(ctx *AssignSumDiffStmtContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCVisitor) VisitCallStmt(ctx *CallStmtContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -123,6 +127,10 @@ func (v *BaseCVisitor) VisitMulDivExpr(ctx *MulDivExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCVisitor) VisitAssignSumDiffExpr(ctx *AssignSumDiffExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCVisitor) VisitMemberExpr(ctx *MemberExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -156,6 +164,14 @@ func (v *BaseCVisitor) VisitBitXorExpr(ctx *BitXorExprContext) interface{} {
 }
 
 func (v *BaseCVisitor) VisitMinusExpr(ctx *MinusExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitAsdexpr(ctx *AsdexprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitAsd(ctx *AsdContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
