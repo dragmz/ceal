@@ -150,6 +150,33 @@ func (v *AstVisitor) VisitEqNeqExpr(ctx *parser.EqNeqExprContext) interface{} {
 	}
 }
 
+func (v *AstVisitor) VisitBitAndExpr(ctx *parser.BitAndExprContext) interface{} {
+	exprs := ctx.AllExpr()
+	return &AstBinop{
+		l:  v.visitStatement(exprs[0]),
+		r:  v.visitStatement(exprs[1]),
+		op: "&",
+	}
+}
+
+func (v *AstVisitor) VisitBitXorExpr(ctx *parser.BitXorExprContext) interface{} {
+	exprs := ctx.AllExpr()
+	return &AstBinop{
+		l:  v.visitStatement(exprs[0]),
+		r:  v.visitStatement(exprs[1]),
+		op: "^",
+	}
+}
+
+func (v *AstVisitor) VisitBitOrExpr(ctx *parser.BitOrExprContext) interface{} {
+	exprs := ctx.AllExpr()
+	return &AstBinop{
+		l:  v.visitStatement(exprs[0]),
+		r:  v.visitStatement(exprs[1]),
+		op: "|",
+	}
+}
+
 func (v *AstVisitor) VisitNotExpr(ctx *parser.NotExprContext) interface{} {
 	return &AstUnaryOp{
 		s:  v.visitStatement(ctx.Expr()),

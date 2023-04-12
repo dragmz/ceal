@@ -39,6 +39,9 @@ expr:
     | expr muldiv expr          # MulDivExpr
     | expr addsub expr          # AddSubExpr
     | expr eqneq expr           # EqNeqExpr
+    | expr '&' expr             # BitAndExpr
+    | expr '^' expr             # BitXorExpr
+    | expr '|' expr             # BitOrExpr
     | expr '&&' expr            # AndExpr
     | expr '||' expr            # OrExpr
     | '-' expr                  # MinusExpr

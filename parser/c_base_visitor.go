@@ -103,7 +103,15 @@ func (v *BaseCVisitor) VisitConstantExpr(ctx *ConstantExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCVisitor) VisitBitAndExpr(ctx *BitAndExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCVisitor) VisitEqNeqExpr(ctx *EqNeqExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitBitOrExpr(ctx *BitOrExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -140,6 +148,10 @@ func (v *BaseCVisitor) VisitNotExpr(ctx *NotExprContext) interface{} {
 }
 
 func (v *BaseCVisitor) VisitAddSubExpr(ctx *AddSubExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitBitXorExpr(ctx *BitXorExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

@@ -79,8 +79,14 @@ type CListener interface {
 	// EnterConstantExpr is called when entering the ConstantExpr production.
 	EnterConstantExpr(c *ConstantExprContext)
 
+	// EnterBitAndExpr is called when entering the BitAndExpr production.
+	EnterBitAndExpr(c *BitAndExprContext)
+
 	// EnterEqNeqExpr is called when entering the EqNeqExpr production.
 	EnterEqNeqExpr(c *EqNeqExprContext)
+
+	// EnterBitOrExpr is called when entering the BitOrExpr production.
+	EnterBitOrExpr(c *BitOrExprContext)
 
 	// EnterOrExpr is called when entering the OrExpr production.
 	EnterOrExpr(c *OrExprContext)
@@ -108,6 +114,9 @@ type CListener interface {
 
 	// EnterAddSubExpr is called when entering the AddSubExpr production.
 	EnterAddSubExpr(c *AddSubExprContext)
+
+	// EnterBitXorExpr is called when entering the BitXorExpr production.
+	EnterBitXorExpr(c *BitXorExprContext)
 
 	// EnterMinusExpr is called when entering the MinusExpr production.
 	EnterMinusExpr(c *MinusExprContext)
@@ -229,8 +238,14 @@ type CListener interface {
 	// ExitConstantExpr is called when exiting the ConstantExpr production.
 	ExitConstantExpr(c *ConstantExprContext)
 
+	// ExitBitAndExpr is called when exiting the BitAndExpr production.
+	ExitBitAndExpr(c *BitAndExprContext)
+
 	// ExitEqNeqExpr is called when exiting the EqNeqExpr production.
 	ExitEqNeqExpr(c *EqNeqExprContext)
+
+	// ExitBitOrExpr is called when exiting the BitOrExpr production.
+	ExitBitOrExpr(c *BitOrExprContext)
 
 	// ExitOrExpr is called when exiting the OrExpr production.
 	ExitOrExpr(c *OrExprContext)
@@ -258,6 +273,9 @@ type CListener interface {
 
 	// ExitAddSubExpr is called when exiting the AddSubExpr production.
 	ExitAddSubExpr(c *AddSubExprContext)
+
+	// ExitBitXorExpr is called when exiting the BitXorExpr production.
+	ExitBitXorExpr(c *BitXorExprContext)
 
 	// ExitMinusExpr is called when exiting the MinusExpr production.
 	ExitMinusExpr(c *MinusExprContext)

@@ -79,8 +79,14 @@ type CVisitor interface {
 	// Visit a parse tree produced by CParser#ConstantExpr.
 	VisitConstantExpr(ctx *ConstantExprContext) interface{}
 
+	// Visit a parse tree produced by CParser#BitAndExpr.
+	VisitBitAndExpr(ctx *BitAndExprContext) interface{}
+
 	// Visit a parse tree produced by CParser#EqNeqExpr.
 	VisitEqNeqExpr(ctx *EqNeqExprContext) interface{}
+
+	// Visit a parse tree produced by CParser#BitOrExpr.
+	VisitBitOrExpr(ctx *BitOrExprContext) interface{}
 
 	// Visit a parse tree produced by CParser#OrExpr.
 	VisitOrExpr(ctx *OrExprContext) interface{}
@@ -108,6 +114,9 @@ type CVisitor interface {
 
 	// Visit a parse tree produced by CParser#AddSubExpr.
 	VisitAddSubExpr(ctx *AddSubExprContext) interface{}
+
+	// Visit a parse tree produced by CParser#BitXorExpr.
+	VisitBitXorExpr(ctx *BitXorExprContext) interface{}
 
 	// Visit a parse tree produced by CParser#MinusExpr.
 	VisitMinusExpr(ctx *MinusExprContext) interface{}

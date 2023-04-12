@@ -164,11 +164,23 @@ func (s *BaseCListener) EnterConstantExpr(ctx *ConstantExprContext) {}
 // ExitConstantExpr is called when production ConstantExpr is exited.
 func (s *BaseCListener) ExitConstantExpr(ctx *ConstantExprContext) {}
 
+// EnterBitAndExpr is called when production BitAndExpr is entered.
+func (s *BaseCListener) EnterBitAndExpr(ctx *BitAndExprContext) {}
+
+// ExitBitAndExpr is called when production BitAndExpr is exited.
+func (s *BaseCListener) ExitBitAndExpr(ctx *BitAndExprContext) {}
+
 // EnterEqNeqExpr is called when production EqNeqExpr is entered.
 func (s *BaseCListener) EnterEqNeqExpr(ctx *EqNeqExprContext) {}
 
 // ExitEqNeqExpr is called when production EqNeqExpr is exited.
 func (s *BaseCListener) ExitEqNeqExpr(ctx *EqNeqExprContext) {}
+
+// EnterBitOrExpr is called when production BitOrExpr is entered.
+func (s *BaseCListener) EnterBitOrExpr(ctx *BitOrExprContext) {}
+
+// ExitBitOrExpr is called when production BitOrExpr is exited.
+func (s *BaseCListener) ExitBitOrExpr(ctx *BitOrExprContext) {}
 
 // EnterOrExpr is called when production OrExpr is entered.
 func (s *BaseCListener) EnterOrExpr(ctx *OrExprContext) {}
@@ -223,6 +235,12 @@ func (s *BaseCListener) EnterAddSubExpr(ctx *AddSubExprContext) {}
 
 // ExitAddSubExpr is called when production AddSubExpr is exited.
 func (s *BaseCListener) ExitAddSubExpr(ctx *AddSubExprContext) {}
+
+// EnterBitXorExpr is called when production BitXorExpr is entered.
+func (s *BaseCListener) EnterBitXorExpr(ctx *BitXorExprContext) {}
+
+// ExitBitXorExpr is called when production BitXorExpr is exited.
+func (s *BaseCListener) ExitBitXorExpr(ctx *BitXorExprContext) {}
 
 // EnterMinusExpr is called when production MinusExpr is entered.
 func (s *BaseCListener) EnterMinusExpr(ctx *MinusExprContext) {}
