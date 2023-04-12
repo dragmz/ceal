@@ -71,7 +71,7 @@ elseif: 'else if' '(' expr ')' (('{' stmt* '}') | stmt);
 else: 'else' (('{' stmt* '}') | stmt);
 args: (expr (',' expr)*)?;
 call_expr: ID ('.' ID)* '(' args ')';
-muldiv: '*' | '/';
+muldiv: '*' | '/' | '%';
 addsub: ('+' | '-');
 eqneq: ('==' | '!=' | '<' | '>' | '<=' | '>=');
 incdec: ('++' | '--');
