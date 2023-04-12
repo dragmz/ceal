@@ -39,6 +39,8 @@ uint64 avm_main()
 go run cmd/ceal/main -path contract.cpp
 ```
 
+See [examples](examples) for more.
+
 ## Binaries
 
 See 'dev' tag for the latest build artifacts ->
