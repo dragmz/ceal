@@ -26,4 +26,8 @@ void postdec()
 
 uint64 avm_main()
 {
+    preinc();
+    predec();
+    postinc();
+    postdec();
 }

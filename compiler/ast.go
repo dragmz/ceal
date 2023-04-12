@@ -232,6 +232,7 @@ func (v *AstVisitor) VisitCallExpr(ctx *parser.CallExprContext) interface{} {
 	return v.Visit(ctx.Call_expr())
 }
 func (v *AstVisitor) VisitCallStmt(ctx *parser.CallStmtContext) interface{} {
+	// TODO: pop returned values for call statement (because not an expr)
 	return v.Visit(ctx.Call_expr())
 }
 

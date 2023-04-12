@@ -44,3 +44,7 @@ load 6
 store 7
 retsub
 avm_main:
+callsub preinc
+callsub predec
+callsub postinc
+callsub postdec

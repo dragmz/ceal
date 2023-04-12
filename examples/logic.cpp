@@ -37,4 +37,11 @@ uint64 not_a(const uint64 a)
 
 uint64 avm_main()
 {
+    a_eq_b(1, 2);
+    a_neq_b(1, 2);
+    a_lt_b(1, 2);
+    a_gt_b(1, 2);
+    a_lteq_b(1, 2);
+    a_gteq_b(1, 2);
+    not_a(1);
 }

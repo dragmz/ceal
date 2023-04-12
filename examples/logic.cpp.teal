@@ -49,3 +49,23 @@ frame_dig -1
 retsub
 
 avm_main:
+int 1
+int 2
+callsub a_eq_b
+int 1
+int 2
+callsub a_neq_b
+int 1
+int 2
+callsub a_lt_b
+int 1
+int 2
+callsub a_gt_b
+int 1
+int 2
+callsub a_lteq_b
+int 1
+int 2
+callsub a_gteq_b
+int 1
+callsub not_a
