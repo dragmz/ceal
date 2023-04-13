@@ -34,6 +34,15 @@ func (l *Lines) String() string {
 	return strings.Join(l.lines, "\n")
 }
 
+type AstContinue struct {
+	label string
+	index int
+}
+
+func (a *AstContinue) String() string {
+	return fmt.Sprintf("b %s_%d_continue", a.label, a.index)
+}
+
 type AstBreak struct {
 	label string
 	index int
@@ -111,8 +120,10 @@ func (a *AstDoWhile) String() string {
 	res := Lines{}
 	res.WriteLine(fmt.Sprintf("do_%d:", a.index))
 	res.WriteLine(a.s.String())
+	res.WriteLine(fmt.Sprintf("do_%d_continue:", a.index))
 	res.WriteLine(a.condition.String())
 	res.WriteLine(fmt.Sprintf("bnz do_%d", a.index))
+	res.WriteLine(fmt.Sprintf("do_%d_end:", a.index))
 
 	return res.String()
 }
@@ -130,6 +141,7 @@ func (a *AstWhile) String() string {
 	res.WriteLine(a.condition.String())
 	res.WriteLine(fmt.Sprintf("bz while_%d_end", a.index))
 	res.WriteLine(a.s.String())
+	res.WriteLine(fmt.Sprintf("while_%d_continue:", a.index))
 	res.WriteLine(fmt.Sprintf("b while_%d", a.index))
 	res.WriteLine(fmt.Sprintf("while_%d_end:", a.index))
 
@@ -156,6 +168,7 @@ func (a *AstFor) String() string {
 	res.WriteLine(fmt.Sprintf("bz for_%d_end", a.index))
 	res.WriteLine(a.s.String())
 
+	res.WriteLine(fmt.Sprintf("for_%d_continue:", a.index))
 	for _, stmt := range a.iter {
 		res.WriteLine(stmt.String())
 	}

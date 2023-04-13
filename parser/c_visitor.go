@@ -76,6 +76,9 @@ type CVisitor interface {
 	// Visit a parse tree produced by CParser#BreakStmt.
 	VisitBreakStmt(ctx *BreakStmtContext) interface{}
 
+	// Visit a parse tree produced by CParser#ContinueStmt.
+	VisitContinueStmt(ctx *ContinueStmtContext) interface{}
+
 	// Visit a parse tree produced by CParser#AndExpr.
 	VisitAndExpr(ctx *AndExprContext) interface{}
 

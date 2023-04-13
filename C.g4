@@ -32,6 +32,7 @@ stmt:
     | 'do' stmt 'while' '(' expr ')' ';'                            # DoWhileStmt
     | 'switch' '(' expr ')' '{' case* default? '}'                  # SwitchStmt
     | 'break' ';'                                                   # BreakStmt
+    | 'continue' ';'                                                # ContinueStmt
     ;
 
 expr:

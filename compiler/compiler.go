@@ -84,11 +84,11 @@ type Variable struct {
 	fields map[string]*Variable
 }
 
-type LabelScope struct {
+type LoopScope struct {
 	labels []string
 }
 
-func (l *LabelScope) Get() string {
+func (l *LoopScope) Get() string {
 	if len(l.labels) == 0 {
 		return ""
 	}
@@ -96,11 +96,11 @@ func (l *LabelScope) Get() string {
 	return l.labels[len(l.labels)-1]
 }
 
-func (l *LabelScope) Push(label string) {
+func (l *LoopScope) Push(label string) {
 	l.labels = append(l.labels, label)
 }
 
-func (l *LabelScope) Pop() {
+func (l *LoopScope) Pop() {
 	if len(l.labels) == 0 {
 		return
 	}
@@ -363,7 +363,7 @@ func Compile(src string) string {
 		},
 		global:  global,
 		program: program,
-		labels:  &LabelScope{},
+		loops:   &LoopScope{},
 	}
 
 	stream.Seek(0)

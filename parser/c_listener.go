@@ -76,6 +76,9 @@ type CListener interface {
 	// EnterBreakStmt is called when entering the BreakStmt production.
 	EnterBreakStmt(c *BreakStmtContext)
 
+	// EnterContinueStmt is called when entering the ContinueStmt production.
+	EnterContinueStmt(c *ContinueStmtContext)
+
 	// EnterAndExpr is called when entering the AndExpr production.
 	EnterAndExpr(c *AndExprContext)
 
@@ -252,6 +255,9 @@ type CListener interface {
 
 	// ExitBreakStmt is called when exiting the BreakStmt production.
 	ExitBreakStmt(c *BreakStmtContext)
+
+	// ExitContinueStmt is called when exiting the ContinueStmt production.
+	ExitContinueStmt(c *ContinueStmtContext)
 
 	// ExitAndExpr is called when exiting the AndExpr production.
 	ExitAndExpr(c *AndExprContext)

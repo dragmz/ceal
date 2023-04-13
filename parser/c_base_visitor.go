@@ -99,6 +99,10 @@ func (v *BaseCVisitor) VisitBreakStmt(ctx *BreakStmtContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCVisitor) VisitContinueStmt(ctx *ContinueStmtContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCVisitor) VisitAndExpr(ctx *AndExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }

@@ -18,7 +18,7 @@ type AstVisitor struct {
 	index int
 	slot  int
 
-	labels *LabelScope
+	loops *LoopScope
 }
 
 func (v *AstVisitor) Visit(tree antlr.ParseTree) interface{} {
@@ -503,7 +503,7 @@ func (v *AstVisitor) VisitPreIncDecExpr(ctx *parser.PreIncDecExprContext) interf
 
 func (v *AstVisitor) VisitForStmt(ctx *parser.ForStmtContext) interface{} {
 	v.scope = v.scope.enter()
-	v.labels.Push("for")
+	v.loops.Push("for")
 
 	init := []AstStatement{}
 
@@ -542,13 +542,15 @@ func (v *AstVisitor) VisitForStmt(ctx *parser.ForStmtContext) interface{} {
 
 	v.index++
 
-	v.labels.Pop()
+	v.loops.Pop()
 	v.scope = v.scope.exit()
 
 	return ast
 }
 
 func (v *AstVisitor) VisitWhileStmt(ctx *parser.WhileStmtContext) interface{} {
+	v.loops.Push("while")
+
 	ast := &AstWhile{
 		index:     v.index,
 		condition: v.visitStatement(ctx.Expr()),
@@ -557,10 +559,14 @@ func (v *AstVisitor) VisitWhileStmt(ctx *parser.WhileStmtContext) interface{} {
 
 	v.index++
 
+	v.loops.Pop()
+
 	return ast
 }
 
 func (v *AstVisitor) VisitDoWhileStmt(ctx *parser.DoWhileStmtContext) interface{} {
+	v.loops.Push("do")
+
 	ast := &AstDoWhile{
 		index:     v.index,
 		condition: v.visitStatement(ctx.Expr()),
@@ -569,12 +575,21 @@ func (v *AstVisitor) VisitDoWhileStmt(ctx *parser.DoWhileStmtContext) interface{
 
 	v.index++
 
+	v.loops.Pop()
+
 	return ast
 }
 
 func (v *AstVisitor) VisitBreakStmt(ctx *parser.BreakStmtContext) interface{} {
 	return &AstBreak{
-		label: v.labels.Get(),
+		label: v.loops.Get(),
+		index: v.index,
+	}
+}
+
+func (v *AstVisitor) VisitContinueStmt(ctx *parser.ContinueStmtContext) interface{} {
+	return &AstContinue{
+		label: v.loops.Get(),
 		index: v.index,
 	}
 }
@@ -585,7 +600,7 @@ func (v *AstVisitor) VisitSwitchStmt(ctx *parser.SwitchStmtContext) interface{} 
 		value: v.visitStatement(ctx.Expr()),
 	}
 
-	v.labels.Push("switch")
+	v.loops.Push("switch")
 
 	for _, c := range ctx.AllCase_() {
 		stmts := []AstStatement{}
@@ -612,7 +627,7 @@ func (v *AstVisitor) VisitSwitchStmt(ctx *parser.SwitchStmtContext) interface{} 
 		ast.default_ = stmts
 	}
 
-	v.labels.Pop()
+	v.loops.Pop()
 	v.index++
 
 	return ast
