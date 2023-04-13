@@ -182,6 +182,10 @@ func (a *AstPrefix) ToStmt() {
 }
 
 func (a *AstPrefix) String() string {
+	if a.v.constant {
+		panic("cannot modify const var")
+	}
+
 	var op string
 
 	switch a.op {
@@ -218,6 +222,10 @@ func (a *AstPostfix) ToStmt() {
 }
 
 func (a *AstPostfix) String() string {
+	if a.v.constant {
+		panic("cannot modify const var")
+	}
+
 	var op string
 
 	switch a.op {
@@ -346,17 +354,40 @@ func (a *AstMinusOp) String() string {
 	return fmt.Sprintf("int 0\n%s\n-", a.value.String())
 }
 
+type AstDefine struct {
+	v *Variable
+	t *Type
+
+	value AstStatement
+}
+
+func (a *AstDefine) String() string {
+	if a.t.complex != nil {
+		panic("defining complex variable is not supported yet")
+	}
+
+	ast := avm_store_Ast{
+		s1: a.value,
+		i1: itoa(a.v.local.slot),
+	}
+
+	return ast.String()
+}
+
 type AstAssign struct {
-	slot int
-	v    *Variable
-	t    *Type
-	f    *StructField
-	fun  *Function
+	v   *Variable
+	t   *Type
+	f   *StructField
+	fun *Function
 
 	value AstStatement
 }
 
 func (a *AstAssign) String() string {
+	if a.v.constant {
+		panic("cannot assign to a const var")
+	}
+
 	if a.v.param != nil {
 		// TODO: add param var assignment support
 		panic("cannot assign param var")

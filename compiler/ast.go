@@ -409,7 +409,7 @@ func (v *AstVisitor) VisitDefinitionStmt(ctx *parser.DefinitionStmtContext) inte
 	t := v.scope.resolveType(vr.t)
 	e := ctx.Definition().Expr()
 
-	ast := &AstAssign{
+	ast := &AstDefine{
 		v:     vr,
 		t:     t,
 		value: v.visitStatement(e),

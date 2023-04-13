@@ -13,7 +13,7 @@ function: type ID '(' params ')' '{' stmt* '}';
 struct: 'struct' ID '{' field* '}';
 field: type ID ';';
 
-type: 'const'? ID;
+type: const? ID;
 params: (param (',' param)*)?;
 param: type ID;
 stmt:
@@ -55,6 +55,7 @@ expr:
     | '(' expr ')'              # GroupExpr
     ;
 
+const: 'const';
 asdexpr: ID ('.' ID)* asd expr;
 asd: '+=' | '-=';
 case: 'case' expr ':' stmt*;

@@ -171,6 +171,10 @@ func (v *BaseCVisitor) VisitMinusExpr(ctx *MinusExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCVisitor) VisitConst(ctx *ConstContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCVisitor) VisitAsdexpr(ctx *AsdexprContext) interface{} {
 	return v.VisitChildren(ctx)
 }

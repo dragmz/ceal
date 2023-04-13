@@ -2,10 +2,13 @@ package ceal
 
 import (
 	"ceal/compiler"
+	"fmt"
 	"io/fs"
 	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestExamplesCompileWithoutPanic(t *testing.T) {
@@ -24,14 +27,24 @@ func TestExamplesCompileWithoutPanic(t *testing.T) {
 		t.Error(err)
 	}
 
-	for _, path := range paths {
-		bs, err := os.ReadFile(path)
+	for _, p := range paths {
+		bs, err := os.ReadFile(p)
 		if err != nil {
 			t.Error(err)
 		}
 
 		src := string(bs)
 
-		compiler.Compile(src)
+		actual := compiler.Compile(src)
+
+		tp := fmt.Sprintf("%s.teal", p)
+		tbs, err := os.ReadFile(tp)
+		if err != nil {
+			t.Error(err)
+		}
+
+		expected := string(tbs)
+
+		assert.Equal(t, expected, actual, fmt.Sprintf("compiled '%s' does not match '%s'", p, tp))
 	}
 }

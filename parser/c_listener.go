@@ -130,6 +130,9 @@ type CListener interface {
 	// EnterMinusExpr is called when entering the MinusExpr production.
 	EnterMinusExpr(c *MinusExprContext)
 
+	// EnterConst is called when entering the const production.
+	EnterConst(c *ConstContext)
+
 	// EnterAsdexpr is called when entering the asdexpr production.
 	EnterAsdexpr(c *AsdexprContext)
 
@@ -303,6 +306,9 @@ type CListener interface {
 
 	// ExitMinusExpr is called when exiting the MinusExpr production.
 	ExitMinusExpr(c *MinusExprContext)
+
+	// ExitConst is called when exiting the const production.
+	ExitConst(c *ConstContext)
 
 	// ExitAsdexpr is called when exiting the asdexpr production.
 	ExitAsdexpr(c *AsdexprContext)

@@ -71,6 +71,8 @@ type ParameterVariable struct {
 }
 
 type Variable struct {
+	constant bool
+
 	t    string
 	name string
 

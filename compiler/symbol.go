@@ -86,9 +86,10 @@ func (v *SymbolTableVisitor) VisitDefinitionStmt(ctx *parser.DefinitionStmtConte
 	local := &LocalVariable{}
 
 	vr := &Variable{
-		t:     ctx.Definition().Type_().ID().GetText(),
-		name:  id,
-		local: local,
+		constant: ctx.Definition().Type_().Const_() != nil,
+		t:        ctx.Definition().Type_().ID().GetText(),
+		name:     id,
+		local:    local,
 	}
 
 	v.initVariable(vr)
