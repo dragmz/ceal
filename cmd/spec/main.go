@@ -6,6 +6,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/pkg/errors"
 )
@@ -96,21 +97,44 @@ func readReturns(op LangSpecOp) []ceal.CealReturn {
 }
 
 func readImms(op LangSpecOp) []ceal.CealArg {
-	imms := op.Size - 1
+	imms := len(op.ImmediateNote)
 
-	ps := []ceal.CealArg{}
-
-	for i := 0; i < imms; i++ {
-		t := "uint64"
-
-		p := ceal.CealArg{
-			Type: t,
-			Name: fmt.Sprintf("i%d", i+1),
-		}
-
-		ps = append(ps, p)
+	ps := make([]ceal.CealArg, imms)
+	if imms == 0 {
+		return ps
 	}
 
+	for i := 0; i < imms; i++ {
+		imm := op.ImmediateNote[i]
+
+		t := "uint64"
+		switch imm.Encoding {
+		case "uint8":
+			t = "uint8"
+		case "int8":
+			t = "int8"
+		case "int16 (big-endian)":
+			t = "int16"
+		case "varuint":
+			t = "bytes"
+		case "varuint count, [int16 (big-endian) ...]":
+			t = "bytes"
+		case "varuint count, [varuint ...]":
+			t = "bytes"
+		case "varuint count, [varuint length, bytes ...]":
+			t = "bytes"
+		case "varuint length, bytes":
+			t = "bytes"
+		default:
+			panic(fmt.Sprintf("Unsupported immediate type: %s", imm.Encoding))
+		}
+
+		name := fmt.Sprintf("%s%d", strings.Trim(imm.Name, " ."), i+1)
+		ps[i] = ceal.CealArg{
+			Type: t,
+			Name: name,
+		}
+	}
 	return ps
 }
 
