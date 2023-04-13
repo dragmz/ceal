@@ -133,6 +133,9 @@ type CVisitor interface {
 	// Visit a parse tree produced by CParser#MinusExpr.
 	VisitMinusExpr(ctx *MinusExprContext) interface{}
 
+	// Visit a parse tree produced by CParser#alt.
+	VisitAlt(ctx *AltContext) interface{}
+
 	// Visit a parse tree produced by CParser#const.
 	VisitConst(ctx *ConstContext) interface{}
 

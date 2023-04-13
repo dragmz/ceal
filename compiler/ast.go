@@ -141,21 +141,48 @@ func (v *AstVisitor) VisitAssignSumDiffExpr(ctx *parser.AssignSumDiffExprContext
 }
 
 func (v *AstVisitor) VisitOrExpr(ctx *parser.OrExprContext) interface{} {
-	exprs := ctx.AllExpr()
-	return &AstBinop{
-		l:  v.visitStatement(exprs[0]),
-		r:  v.visitStatement(exprs[1]),
-		op: "||",
+	ors := []AstStatement{}
+	ors = append(ors, v.visitStatement(ctx.Expr()))
+
+	for _, e := range ctx.AllAlt() {
+		ands := []AstStatement{}
+		for _, o := range e.AllExpr() {
+			ands = append(ands, v.visitStatement(o))
+		}
+
+		ors = append(ors, &AstAnd{
+			index:    v.index,
+			operands: ands,
+		})
+
+		v.index++
 	}
+
+	ast := &AstOr{
+		index:    v.index,
+		operands: ors,
+	}
+
+	v.index++
+
+	return ast
 }
 
 func (v *AstVisitor) VisitAndExpr(ctx *parser.AndExprContext) interface{} {
-	exprs := ctx.AllExpr()
-	return &AstBinop{
-		l:  v.visitStatement(exprs[0]),
-		r:  v.visitStatement(exprs[1]),
-		op: "&&",
+	alts := []AstStatement{}
+
+	for _, e := range ctx.AllExpr() {
+		alts = append(alts, v.visitStatement(e))
 	}
+
+	ast := &AstAnd{
+		index:    v.index,
+		operands: alts,
+	}
+
+	v.index++
+
+	return ast
 }
 
 func (v *AstVisitor) VisitMulDivExpr(ctx *parser.MulDivExprContext) interface{} {
