@@ -50,10 +50,10 @@ func readType(t string) string {
 		return "bytes"
 	case "uint64", "bool":
 		return "uint64"
-	case ".":
+	case "any":
 		return "any"
 	default:
-		return t
+		panic(fmt.Sprintf("unsupported type: '%s'", t))
 	}
 }
 
