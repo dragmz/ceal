@@ -1,0 +1,26 @@
+#pragma version 8
+int 0
+store 0
+load 0
+int 1
++
+store 0
+load 0
+int 0
+>
+load 0
+int 10
+<
+&&
+load 0
+int 5
+!=
+&&
+bz if_skip_0_0
+int 1
+return
+b if_end_0
+if_skip_0_0:
+int 0
+return
+if_end_0:

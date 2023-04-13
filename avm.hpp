@@ -866,7 +866,7 @@ extern avm_json_ref_t avm_json_ref;
 /*
 balance - balance for account A, in microalgos. The balance is observed after the effects of previous transactions in the group, and after the fee for the current transaction is deducted. Changes caused by inner transactions are observable immediately following `itxn_submit`
 
-params: Txn.Accounts offset (or, since v4, an _available_ account address), _available_ application id (or, since v4, a Txn.ForeignApps offset). Return: value.
+params: Txn.Accounts offset (or, since v4, an _available_ account address). Return: value.
 */
 uint64 avm_balance(STACK any s1);
 /*
@@ -1027,7 +1027,7 @@ extern avm_acct_params_get_t avm_acct_params_get;
 /*
 min_balance - minimum required balance for account A, in microalgos. Required balance is affected by ASA, App, and Box usage. When creating or opting into an app, the minimum balance grows before the app code runs, therefore the increase is visible there. When deleting or closing out, the minimum balance decreases after the app executes. Changes caused by inner transactions or box usage are observable immediately following the opcode effecting the change.
 
-params: Txn.Accounts offset (or, since v4, an _available_ account address), _available_ application id (or, since v4, a Txn.ForeignApps offset). Return: value.
+params: Txn.Accounts offset (or, since v4, an _available_ account address). Return: value.
 */
 uint64 avm_min_balance(STACK any s1);
 /*

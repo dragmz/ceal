@@ -15,18 +15,28 @@ type LangSpec struct {
 	Ops            []LangSpecOp `json:"ops"`
 }
 
+type OpImmediateDetails struct {
+	Comment   string `json:",omitempty"`
+	Encoding  string `json:",omitempty"`
+	Name      string `json:",omitempty"`
+	Reference string `json:",omitempty"`
+}
+
 type LangSpecOp struct {
-	Name     string `json:"Name"`
-	Size     int    `json:"Size"`
-	Args     string `json:"Args"`
-	Returns  string `json:"Returns"`
-	Doc      string `json:"Doc"`
-	DocExtra string `json:"DocExtra"`
+	Opcode  byte
+	Name    string
+	Args    []string `json:",omitempty"`
+	Returns []string `json:",omitempty"`
+	Size    int
 
-	ArgEnum      []string `json:"ArgEnum,omitempty"`
-	ArgEnumTypes string   `json:"ArgEnumTypes,omitempty"`
+	ArgEnum      []string `json:",omitempty"`
+	ArgEnumTypes []string `json:",omitempty"`
 
-	ImmediateNote string `json:"ImmediateNote"`
+	Doc               string
+	DocExtra          string               `json:",omitempty"`
+	ImmediateNote     []OpImmediateDetails `json:",omitempty"`
+	IntroducedVersion uint64
+	Groups            []string
 }
 
 type args struct {
@@ -34,16 +44,16 @@ type args struct {
 	Out  string
 }
 
-func readType(b byte) string {
-	switch b {
-	case 'B':
+func readType(t string) string {
+	switch t {
+	case "[]byte", "addr", "[32]byte", "key", "bigint":
 		return "bytes"
-	case 'U':
+	case "uint64", "bool":
 		return "uint64"
-	case '.':
+	case ".":
 		return "any"
 	default:
-		panic(fmt.Sprintf("unsupported type: '%s'", string(b)))
+		return t
 	}
 }
 
