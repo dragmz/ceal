@@ -48,20 +48,6 @@ func formatParams(op ceal.CealSpecOp, skipImmsCount int) string {
 	return b.String()
 }
 
-func getType(r byte) string {
-	switch r {
-	case '.':
-		return "any"
-	case 'U':
-		return "uint64"
-	case 'B':
-		return "bytes"
-	default:
-		panic(fmt.Sprintf("unhandled: %s", string(r)))
-	}
-
-}
-
 func run(a args) error {
 	r, err := os.Open(a.Spec)
 	if err != nil {
