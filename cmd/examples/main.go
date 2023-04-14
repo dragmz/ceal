@@ -29,6 +29,10 @@ func run(a args) error {
 		return err
 	}
 
+	c := compiler.CealCompiler{
+		Includes: []string{a.Path},
+	}
+
 	for _, p := range paths {
 		bs, err := os.ReadFile(p)
 		if err != nil {
@@ -37,7 +41,7 @@ func run(a args) error {
 
 		src := string(bs)
 
-		compiled := compiler.Compile(src)
+		compiled := c.Compile(src)
 
 		out := fmt.Sprintf("%s.teal", p)
 		err = os.WriteFile(out, []byte(compiled), os.ModePerm)

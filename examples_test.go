@@ -27,6 +27,10 @@ func TestExamplesCompileWithoutPanic(t *testing.T) {
 		t.Error(err)
 	}
 
+	c := compiler.CealCompiler{
+		Includes: []string{"examples"},
+	}
+
 	for _, p := range paths {
 		bs, err := os.ReadFile(p)
 		if err != nil {
@@ -35,7 +39,7 @@ func TestExamplesCompileWithoutPanic(t *testing.T) {
 
 		src := string(bs)
 
-		actual := compiler.Compile(src)
+		actual := c.Compile(src)
 
 		tp := fmt.Sprintf("%s.teal", p)
 		tbs, err := os.ReadFile(tp)

@@ -3,10 +3,16 @@ package compiler
 import (
 	"ceal/parser"
 	"fmt"
+	"os"
+	"path"
 	"strings"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 )
+
+type CealCompiler struct {
+	Includes []string
+}
 
 type FunctionParam struct {
 	t    string
@@ -237,11 +243,43 @@ func (a *AstProgram) String() string {
 	return res.String()
 }
 
-func Compile(src string) string {
+func (c *CealCompiler) Compile(src string) string {
 	input := antlr.NewInputStream(src)
 	lexer := parser.NewCLexer(input)
 	stream := antlr.NewCommonTokenStream(lexer, 0)
 	p := parser.NewCParser(stream)
+
+	includes := p.Program().AllInclude()
+
+	for i := len(includes) - 1; i >= 0; i-- {
+		include := includes[i]
+		str := includes[i].STRING().GetText()
+		name := str[1 : len(str)-1]
+
+		// TODO: is a hardcoded avm.hpp okay?
+		if name == "avm.hpp" {
+			continue
+		}
+
+		ip := path.Join(c.Includes[0], name)
+
+		bs, err := os.ReadFile(ip)
+		if err != nil {
+			panic(fmt.Sprintf("failed to read #include file: '%s'", name))
+		}
+
+		incsrc := string(bs)
+
+		prefix := src[:include.GetStart().GetStart()]
+		suffix := src[include.GetStop().GetStop()+1:]
+
+		src = prefix + incsrc + suffix
+	}
+
+	input = antlr.NewInputStream(src)
+	lexer = parser.NewCLexer(input)
+	stream = antlr.NewCommonTokenStream(lexer, 0)
+	p = parser.NewCParser(stream)
 
 	global := NewScope(nil)
 

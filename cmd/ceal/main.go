@@ -6,6 +6,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/joe-p/tealfmt"
 	"github.com/pkg/errors"
@@ -26,8 +27,13 @@ func run(a args) error {
 	}
 
 	src := string(bs)
+	c := compiler.CealCompiler{
+		Includes: []string{
+			filepath.Dir(a.Path),
+		},
+	}
 
-	teal := compiler.Compile(src)
+	teal := c.Compile(src)
 
 	if a.Format {
 		teal = tealfmt.Format(bytes.NewBufferString(teal))
