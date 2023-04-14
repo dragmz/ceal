@@ -425,7 +425,7 @@ func (a *AstDefine) String() string {
 
 	ast := avm_store_Ast{
 		s1: a.value,
-		i1: itoa(a.v.local.slot),
+		I1: itoa(a.v.local.slot),
 	}
 
 	return ast.String()
@@ -485,7 +485,7 @@ func (a *AstAssign) String() string {
 
 	if !a.stmt {
 		load := avm_load_Ast{
-			i1: itoa(a.v.local.slot),
+			I1: itoa(a.v.local.slot),
 		}
 
 		res.WriteLine(load.String())

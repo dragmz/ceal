@@ -1,26 +1,30 @@
 #pragma version 8
-int 0
-store 0
-load 0
-int 1
-+
+int 5
 store 0
 load 0
 int 0
 >
+dup
+bz and_1_end
 load 0
 int 10
 <
 &&
+dup
+bz and_1_end
+and_1_end:
+dup
+bz and_2_end
 load 0
 int 5
 !=
 &&
-bz if_skip_0_0
+dup
+bz and_2_end
+and_2_end:
+bz if_end_0
 int 1
 return
-b if_end_0
-if_skip_0_0:
+if_end_0:
 int 0
 return
-if_end_0:
