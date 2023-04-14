@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"path"
-	"strings"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 )
@@ -247,56 +246,7 @@ type UserFunction struct {
 	scope *Scope
 }
 
-type AstProgram struct {
-	constints  []int
-	constbytes [][]byte
-
-	functions      map[string]*AstFunction
-	functionsNames []string
-}
-
-func (a *AstProgram) String() string {
-	res := strings.Builder{}
-
-	res.WriteString(fmt.Sprintf("#pragma version %d\n", AvmVersion))
-
-	if len(a.constints) > 0 {
-		constints := []string{}
-		for _, v := range a.constints {
-			constints = append(constints, itoa(v))
-		}
-		res.WriteString(fmt.Sprintf("intcblock %s\n", strings.Join(constints, " ")))
-	}
-
-	main := a.functions[AvmMainName]
-
-	if len(a.functions) > 1 {
-		res.WriteString(fmt.Sprintf("b %s\n", main.fun.name))
-	}
-
-	for _, name := range a.functionsNames {
-		ast := a.functions[name]
-
-		if name == AvmMainName {
-			continue
-		}
-
-		res.WriteString(fmt.Sprintf("%s:\n", ast.fun.name))
-
-		res.WriteString(ast.String())
-		res.WriteString("\n")
-	}
-
-	if len(a.functions) > 1 {
-		res.WriteString(fmt.Sprintf("%s:\n", main.fun.name))
-	}
-
-	res.WriteString(main.String())
-
-	return res.String()
-}
-
-func (c *CealCompiler) Compile(src string) string {
+func (c *CealCompiler) Compile(src string) *CealProgram {
 	input := antlr.NewInputStream(src)
 	lexer := parser.NewCLexer(input)
 	stream := antlr.NewCommonTokenStream(lexer, 0)
@@ -437,8 +387,8 @@ func (c *CealCompiler) Compile(src string) string {
 		global.variables[v.name] = v
 	}
 
-	program := &AstProgram{
-		functions: map[string]*AstFunction{},
+	program := &CealProgram{
+		Functions: map[string]*CealFunction{},
 	}
 
 	sv := &SymbolTableVisitor{
@@ -466,5 +416,5 @@ func (c *CealCompiler) Compile(src string) string {
 	stream.Seek(0)
 	av.Visit(p.Program())
 
-	return program.String()
+	return program
 }

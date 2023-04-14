@@ -247,7 +247,7 @@ type TealExpr interface
 
 	for _, op := range cs.Ops {
 		name := ceal.FormatOpName(op.Name)
-		fmt.Fprintf(bw, "type avm_%s_Ast struct {\n", name)
+		fmt.Fprintf(bw, "type Teal_%s struct {\n", name)
 		for _, arg := range op.Stacks {
 			fmt.Fprintf(bw, "\t%s AstStatement\n", arg.Name)
 		}
@@ -257,7 +257,7 @@ type TealExpr interface
 
 		bw.WriteString("}\n")
 
-		fmt.Fprintf(bw, "func (a *avm_%s_Ast) String() string {\n", name)
+		fmt.Fprintf(bw, "func (a *Teal_%s) String() string {\n", name)
 		bw.WriteString("\tres := strings.Builder{}\n")
 
 		for _, arg := range op.Stacks {

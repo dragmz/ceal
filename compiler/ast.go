@@ -13,7 +13,7 @@ type AstVisitor struct {
 	global *Scope
 	scope  *Scope
 
-	program *AstProgram
+	program *CealProgram
 
 	index int
 	slot  int
@@ -45,11 +45,11 @@ func (v *AstVisitor) VisitMemberExpr(ctx *parser.MemberExprContext) interface{} 
 	vr, f := v.mustResolve(ctx.AllID())
 	fun := v.global.functions[f.fun]
 
-	ast := &AstStructField{
-		v:   vr,
-		t:   v.scope.resolveType(vr.t),
-		f:   f,
-		fun: fun,
+	ast := &CealStructField{
+		V:   vr,
+		T:   v.scope.resolveType(vr.t),
+		F:   f,
+		Fun: fun,
 	}
 
 	return ast
@@ -61,7 +61,7 @@ func (v *AstVisitor) VisitAssignExpr(ctx *parser.AssignExprContext) interface{} 
 
 func (v *AstVisitor) VisitAssignStmt(ctx *parser.AssignStmtContext) interface{} {
 	res := v.Visit(ctx.Assign_expr())
-	if e, ok := res.(AstExpr); ok {
+	if e, ok := res.(CealExpr); ok {
 		e.ToStmt()
 	}
 	return res
@@ -79,11 +79,11 @@ func (v *AstVisitor) VisitAssign_expr(ctx *parser.Assign_exprContext) interface{
 		panic(fmt.Sprintf("variable '%s' is read only", vr.name))
 	}
 
-	ast := &AstAssign{
-		v:     vr,
-		t:     v.scope.resolveType(vr.t),
-		f:     f,
-		value: v.visitStatement(ctx.Expr()),
+	ast := &CealAssign{
+		V:     vr,
+		T:     v.scope.resolveType(vr.t),
+		F:     f,
+		Value: v.visitStatement(ctx.Expr()),
 	}
 
 	return ast
@@ -104,25 +104,25 @@ func (v *AstVisitor) VisitVariableExpr(ctx *parser.VariableExprContext) interfac
 	id := ctx.ID().GetText()
 	vr := v.mustResolveVariable(id)
 
-	ast := &AstVariable{
-		v: vr,
+	ast := &CealVariable{
+		V: vr,
 	}
 
 	return ast
 }
 
 func (v *AstVisitor) VisitMinusExpr(ctx *parser.MinusExprContext) interface{} {
-	return &AstMinusOp{
-		value: v.visitStatement(ctx.Expr()),
+	return &CealMinusOp{
+		Value: v.visitStatement(ctx.Expr()),
 	}
 }
 
 func (v *AstVisitor) VisitAddSubExpr(ctx *parser.AddSubExprContext) interface{} {
 	exprs := ctx.AllExpr()
-	return &AstBinop{
-		l:  v.visitStatement(exprs[0]),
-		r:  v.visitStatement(exprs[1]),
-		op: ctx.Addsub().GetText(),
+	return &CealBinop{
+		Left:  v.visitStatement(exprs[0]),
+		Right: v.visitStatement(exprs[1]),
+		Op:    ctx.Addsub().GetText(),
 	}
 }
 
@@ -130,33 +130,33 @@ func (v *AstVisitor) VisitAssignSumDiffStmt(ctx *parser.AssignSumDiffStmtContext
 	vr, f := v.mustResolve(ctx.Asdexpr().AllID())
 	t := v.scope.resolveType(vr.t)
 
-	return &AstAssignSumDiff{
-		v:     vr,
-		f:     f,
-		t:     t,
-		value: v.visitStatement(ctx.Asdexpr().Expr()),
-		op:    ctx.Asdexpr().Asd().GetText(),
-		stmt:  true,
+	return &CealAssignSumDiff{
+		V:      vr,
+		F:      f,
+		T:      t,
+		Value:  v.visitStatement(ctx.Asdexpr().Expr()),
+		Op:     ctx.Asdexpr().Asd().GetText(),
+		IsStmt: true,
 	}
 }
 func (v *AstVisitor) VisitAssignSumDiffExpr(ctx *parser.AssignSumDiffExprContext) interface{} {
 	vr, f := v.mustResolve(ctx.Asdexpr().AllID())
 	t := v.scope.resolveType(vr.t)
 
-	return &AstAssignSumDiff{
-		v:     vr,
-		f:     f,
-		t:     t,
-		value: v.visitStatement(ctx.Asdexpr().Expr()),
-		op:    ctx.Asdexpr().Asd().GetText(),
+	return &CealAssignSumDiff{
+		V:     vr,
+		F:     f,
+		T:     t,
+		Value: v.visitStatement(ctx.Asdexpr().Expr()),
+		Op:    ctx.Asdexpr().Asd().GetText(),
 	}
 }
 
 func (v *AstVisitor) VisitOrExpr(ctx *parser.OrExprContext) interface{} {
-	ast := &AstOr{
-		index: v.index,
-		l:     v.visitStatement(ctx.GetL()),
-		r:     v.visitStatement(ctx.GetR()),
+	ast := &CealOr{
+		Index: v.index,
+		Left:  v.visitStatement(ctx.GetL()),
+		Right: v.visitStatement(ctx.GetR()),
 	}
 
 	v.index++
@@ -165,10 +165,10 @@ func (v *AstVisitor) VisitOrExpr(ctx *parser.OrExprContext) interface{} {
 }
 
 func (v *AstVisitor) VisitAndExpr(ctx *parser.AndExprContext) interface{} {
-	ast := &AstAnd{
-		index: v.index,
-		l:     v.visitStatement(ctx.GetL()),
-		r:     v.visitStatement(ctx.GetR()),
+	ast := &CealAnd{
+		Index: v.index,
+		Left:  v.visitStatement(ctx.GetL()),
+		Right: v.visitStatement(ctx.GetR()),
 	}
 
 	v.index++
@@ -178,53 +178,53 @@ func (v *AstVisitor) VisitAndExpr(ctx *parser.AndExprContext) interface{} {
 
 func (v *AstVisitor) VisitMulDivExpr(ctx *parser.MulDivExprContext) interface{} {
 	exprs := ctx.AllExpr()
-	return &AstBinop{
-		l:  v.visitStatement(exprs[0]),
-		r:  v.visitStatement(exprs[1]),
-		op: ctx.Muldiv().GetText(),
+	return &CealBinop{
+		Left:  v.visitStatement(exprs[0]),
+		Right: v.visitStatement(exprs[1]),
+		Op:    ctx.Muldiv().GetText(),
 	}
 }
 
 func (v *AstVisitor) VisitEqNeqExpr(ctx *parser.EqNeqExprContext) interface{} {
 	exprs := ctx.AllExpr()
-	return &AstBinop{
-		l:  v.visitStatement(exprs[0]),
-		r:  v.visitStatement(exprs[1]),
-		op: ctx.Eqneq().GetText(),
+	return &CealBinop{
+		Left:  v.visitStatement(exprs[0]),
+		Right: v.visitStatement(exprs[1]),
+		Op:    ctx.Eqneq().GetText(),
 	}
 }
 
 func (v *AstVisitor) VisitBitAndExpr(ctx *parser.BitAndExprContext) interface{} {
 	exprs := ctx.AllExpr()
-	return &AstBinop{
-		l:  v.visitStatement(exprs[0]),
-		r:  v.visitStatement(exprs[1]),
-		op: "&",
+	return &CealBinop{
+		Left:  v.visitStatement(exprs[0]),
+		Right: v.visitStatement(exprs[1]),
+		Op:    "&",
 	}
 }
 
 func (v *AstVisitor) VisitBitXorExpr(ctx *parser.BitXorExprContext) interface{} {
 	exprs := ctx.AllExpr()
-	return &AstBinop{
-		l:  v.visitStatement(exprs[0]),
-		r:  v.visitStatement(exprs[1]),
-		op: "^",
+	return &CealBinop{
+		Left:  v.visitStatement(exprs[0]),
+		Right: v.visitStatement(exprs[1]),
+		Op:    "^",
 	}
 }
 
 func (v *AstVisitor) VisitBitOrExpr(ctx *parser.BitOrExprContext) interface{} {
 	exprs := ctx.AllExpr()
-	return &AstBinop{
-		l:  v.visitStatement(exprs[0]),
-		r:  v.visitStatement(exprs[1]),
-		op: "|",
+	return &CealBinop{
+		Left:  v.visitStatement(exprs[0]),
+		Right: v.visitStatement(exprs[1]),
+		Op:    "|",
 	}
 }
 
 func (v *AstVisitor) VisitNotExpr(ctx *parser.NotExprContext) interface{} {
-	return &AstUnaryOp{
-		s:  v.visitStatement(ctx.Expr()),
-		op: "!",
+	return &CealUnaryOp{
+		Statement: v.visitStatement(ctx.Expr()),
+		Op:        "!",
 	}
 }
 
@@ -234,14 +234,14 @@ func (v *AstVisitor) VisitConstantExpr(ctx *parser.ConstantExprContext) interfac
 	c := ctx.Constant()
 
 	if c.INT() != nil {
-		res = &AstIntConstant{
-			value: c.INT().GetText(),
+		res = &CealIntConstant{
+			Value: c.INT().GetText(),
 		}
 	}
 
 	if c.STRING() != nil {
-		res = &AstByteConstant{
-			value: c.STRING().GetText(),
+		res = &CealByteConstant{
+			Value: c.STRING().GetText(),
 		}
 	}
 
@@ -259,7 +259,7 @@ func (v *AstVisitor) VisitCallExpr(ctx *parser.CallExprContext) interface{} {
 func (v *AstVisitor) VisitCallStmt(ctx *parser.CallStmtContext) interface{} {
 	ast := v.Visit(ctx.Call_expr())
 
-	if e, ok := ast.(AstExpr); ok {
+	if e, ok := ast.(CealExpr); ok {
 		e.ToStmt()
 	}
 
@@ -289,68 +289,68 @@ func (v *AstVisitor) VisitCall_expr(ctx *parser.Call_exprContext) interface{} {
 
 		// TODO: currently supports just a single level of fields
 
-		imms = append(imms, &AstRaw{
-			value: ids[1].GetText(),
+		imms = append(imms, &CealRaw{
+			Value: ids[1].GetText(),
 		})
 	}
 
 	fun := v.global.functions[id]
 
-	ast := &AstCall{
-		fun: fun,
+	ast := &CealCall{
+		Fun: fun,
 	}
 
 	for _, arg := range ctx.Args().AllExpr() {
 		stmt := v.visitStatement(arg)
-		ast.args = append(ast.args, stmt)
+		ast.Args = append(ast.Args, stmt)
 	}
 
-	ast.args = append(ast.args, imms...)
+	ast.Args = append(ast.Args, imms...)
 
 	return ast
 }
 
 func (v *AstVisitor) VisitReturnStmt(ctx *parser.ReturnStmtContext) interface{} {
-	ast := &AstReturn{
-		function: v.scope.function,
+	ast := &CealReturn{
+		Fun: v.scope.function,
 	}
 
 	if ctx.Expr() != nil {
-		ast.value = v.visitStatement(ctx.Expr())
+		ast.Value = v.visitStatement(ctx.Expr())
 	}
 
 	return ast
 }
 
 func (v *AstVisitor) VisitIfStmt(ctx *parser.IfStmtContext) interface{} {
-	alts := []*AstIfAlternative{}
+	alts := []*CealIfAlternative{}
 
-	ast := &AstIf{
-		index: v.index,
+	ast := &CealIf{
+		Index: v.index,
 	}
 
 	v.index++
 
-	alt := &AstIfAlternative{
-		condition: v.visitStatement(ctx.Expr()),
+	alt := &CealIfAlternative{
+		Condition: v.visitStatement(ctx.Expr()),
 	}
 
 	for _, item := range ctx.AllStmt() {
 		if stmt := v.visitStatement(item); stmt != nil {
-			alt.statements = append(alt.statements, stmt)
+			alt.Statements = append(alt.Statements, stmt)
 		}
 	}
 
 	alts = append(alts, alt)
 
 	for _, elif := range ctx.AllElseif() {
-		alt := &AstIfAlternative{
-			condition: v.visitStatement(elif.Expr()),
+		alt := &CealIfAlternative{
+			Condition: v.visitStatement(elif.Expr()),
 		}
 
 		for _, item := range elif.AllStmt() {
 			if stmt := v.visitStatement(item); stmt != nil {
-				alt.statements = append(alt.statements, stmt)
+				alt.Statements = append(alt.Statements, stmt)
 			}
 		}
 
@@ -358,17 +358,17 @@ func (v *AstVisitor) VisitIfStmt(ctx *parser.IfStmtContext) interface{} {
 	}
 
 	if ctx.Else_() != nil {
-		alt := &AstIfAlternative{}
+		alt := &CealIfAlternative{}
 
 		for _, item := range ctx.Else_().AllStmt() {
 			stmt := v.visitStatement(item)
-			alt.statements = append(alt.statements, stmt)
+			alt.Statements = append(alt.Statements, stmt)
 		}
 
 		alts = append(alts, alt)
 	}
 
-	ast.alternatives = alts
+	ast.Alternatives = alts
 
 	return ast
 }
@@ -420,10 +420,10 @@ func (v *AstVisitor) VisitDefinition(ctx *parser.DefinitionContext) interface{} 
 	t := v.scope.resolveType(vr.t)
 	e := ctx.Expr()
 
-	ast := &AstAssign{
-		v:     vr,
-		t:     t,
-		value: v.visitStatement(e),
+	ast := &CealAssign{
+		V:     vr,
+		T:     t,
+		Value: v.visitStatement(e),
 	}
 
 	return ast
@@ -435,10 +435,10 @@ func (v *AstVisitor) VisitDefinitionStmt(ctx *parser.DefinitionStmtContext) inte
 	t := v.scope.resolveType(vr.t)
 	e := ctx.Definition().Expr()
 
-	ast := &AstDefine{
-		v:     vr,
-		t:     t,
-		value: v.visitStatement(e),
+	ast := &CealDefine{
+		V:     vr,
+		T:     t,
+		Value: v.visitStatement(e),
 	}
 
 	return ast
@@ -450,20 +450,20 @@ func (v *AstVisitor) VisitFunction(ctx *parser.FunctionContext) interface{} {
 
 	v.scope = fun.user.scope
 
-	ast := &AstFunction{
-		fun: fun,
+	ast := &CealFunction{
+		Fun: fun,
 	}
 
 	for _, item := range ctx.AllStmt() {
 		if stmt := v.visitStatement(item); stmt != nil {
-			ast.statements = append(ast.statements, stmt)
+			ast.Statements = append(ast.Statements, stmt)
 		}
 	}
 
 	v.scope = v.scope.exit()
 
-	v.program.functions[id] = ast
-	v.program.functionsNames = append(v.program.functionsNames, ast.fun.name)
+	v.program.Functions[id] = ast
+	v.program.FunctionNames = append(v.program.FunctionNames, ast.Fun.name)
 
 	return nil
 }
@@ -471,12 +471,12 @@ func (v *AstVisitor) VisitFunction(ctx *parser.FunctionContext) interface{} {
 func (v *AstVisitor) VisitBlockStmt(ctx *parser.BlockStmtContext) interface{} {
 	v.scope = v.scope.enter()
 
-	ast := &AstBlock{}
+	ast := &CealBlock{}
 
 	for _, item := range ctx.AllStmt() {
 		stmt := v.visitStatement(item)
 		if stmt != nil {
-			ast.statements = append(ast.statements, stmt)
+			ast.Statements = append(ast.Statements, stmt)
 		}
 	}
 
@@ -494,34 +494,34 @@ func (v *AstVisitor) VisitProgram(ctx *parser.ProgramContext) interface{} {
 }
 
 func (v *AstVisitor) VisitGotoStmt(ctx *parser.GotoStmtContext) interface{} {
-	ast := &AstGoto{
-		label: ctx.ID().GetText(),
+	ast := &CealGoto{
+		Label: ctx.ID().GetText(),
 	}
 
 	return ast
 }
 
 func (v *AstVisitor) VisitLabelStmt(ctx *parser.LabelStmtContext) interface{} {
-	ast := &AstLabel{
-		name: ctx.ID().GetText(),
+	ast := &CealLabel{
+		Name: ctx.ID().GetText(),
 	}
 
 	return ast
 }
 
 func (v *AstVisitor) VisitPostIncDecExpr(ctx *parser.PostIncDecExprContext) interface{} {
-	ast := &AstPostfix{
-		v:  v.mustResolveVariable(ctx.ID().GetText()),
-		op: ctx.Incdec().GetText(),
+	ast := &CealPostfix{
+		V:  v.mustResolveVariable(ctx.ID().GetText()),
+		Op: ctx.Incdec().GetText(),
 	}
 
 	return ast
 }
 
 func (v *AstVisitor) VisitPreIncDecExpr(ctx *parser.PreIncDecExprContext) interface{} {
-	ast := &AstPrefix{
-		v:  v.mustResolveVariable(ctx.ID().GetText()),
-		op: ctx.Incdec().GetText(),
+	ast := &CealPrefix{
+		V:  v.mustResolveVariable(ctx.ID().GetText()),
+		Op: ctx.Incdec().GetText(),
 	}
 
 	return ast
@@ -535,7 +535,7 @@ func (v *AstVisitor) VisitForStmt(ctx *parser.ForStmtContext) interface{} {
 
 	if ctx.ForInit().Definition() != nil {
 		ast := v.visitStatement(ctx.ForInit().Definition())
-		if e, ok := ast.(AstExpr); ok {
+		if e, ok := ast.(CealExpr); ok {
 			e.ToStmt()
 		}
 		init = append(init, ast)
@@ -543,7 +543,7 @@ func (v *AstVisitor) VisitForStmt(ctx *parser.ForStmtContext) interface{} {
 
 	for _, e := range ctx.ForInit().AllExpr() {
 		ast := v.visitStatement(e)
-		if e, ok := ast.(AstExpr); ok {
+		if e, ok := ast.(CealExpr); ok {
 			e.ToStmt()
 		}
 
@@ -556,7 +556,7 @@ func (v *AstVisitor) VisitForStmt(ctx *parser.ForStmtContext) interface{} {
 
 	for _, e := range ctx.ForIter().AllExpr() {
 		ast := v.visitStatement(e)
-		if e, ok := ast.(AstExpr); ok {
+		if e, ok := ast.(CealExpr); ok {
 			e.ToStmt()
 		}
 
@@ -565,13 +565,13 @@ func (v *AstVisitor) VisitForStmt(ctx *parser.ForStmtContext) interface{} {
 
 	stmt := v.visitStatement(ctx.Stmt())
 
-	ast := &AstFor{
-		index:     v.index,
-		loop:      loop,
-		init:      init,
-		condition: condition,
-		iter:      iter,
-		s:         stmt,
+	ast := &CealFor{
+		Index:     v.index,
+		Loop:      loop,
+		Init:      init,
+		Condition: condition,
+		Iter:      iter,
+		Statement: stmt,
 	}
 
 	v.index++
@@ -583,11 +583,11 @@ func (v *AstVisitor) VisitForStmt(ctx *parser.ForStmtContext) interface{} {
 }
 
 func (v *AstVisitor) VisitWhileStmt(ctx *parser.WhileStmtContext) interface{} {
-	ast := &AstWhile{
-		index:     v.index,
-		loop:      v.loops.Push("while"),
-		condition: v.visitStatement(ctx.Expr()),
-		s:         v.visitStatement(ctx.Stmt()),
+	ast := &CealWhile{
+		Index:     v.index,
+		Loop:      v.loops.Push("while"),
+		Condition: v.visitStatement(ctx.Expr()),
+		Statement: v.visitStatement(ctx.Stmt()),
 	}
 
 	v.index++
@@ -598,11 +598,11 @@ func (v *AstVisitor) VisitWhileStmt(ctx *parser.WhileStmtContext) interface{} {
 }
 
 func (v *AstVisitor) VisitDoWhileStmt(ctx *parser.DoWhileStmtContext) interface{} {
-	ast := &AstDoWhile{
-		index:     v.index,
-		loop:      v.loops.Push("do"),
-		condition: v.visitStatement(ctx.Expr()),
-		s:         v.visitStatement(ctx.Stmt()),
+	ast := &CealDoWhile{
+		Index:     v.index,
+		Loop:      v.loops.Push("do"),
+		Condition: v.visitStatement(ctx.Expr()),
+		Statement: v.visitStatement(ctx.Stmt()),
 	}
 
 	v.index++
@@ -613,24 +613,24 @@ func (v *AstVisitor) VisitDoWhileStmt(ctx *parser.DoWhileStmtContext) interface{
 }
 
 func (v *AstVisitor) VisitBreakStmt(ctx *parser.BreakStmtContext) interface{} {
-	return &AstBreak{
-		label: v.loops.Break(),
-		index: v.index,
+	return &CealBreak{
+		Label: v.loops.Break(),
+		Index: v.index,
 	}
 }
 
 func (v *AstVisitor) VisitContinueStmt(ctx *parser.ContinueStmtContext) interface{} {
-	return &AstContinue{
-		label: v.loops.Continue(),
-		index: v.index,
+	return &CealContinue{
+		Label: v.loops.Continue(),
+		Index: v.index,
 	}
 }
 
 func (v *AstVisitor) VisitSwitchStmt(ctx *parser.SwitchStmtContext) interface{} {
-	ast := &AstSwitch{
-		index: v.index,
-		loop:  v.loops.Push("switch"),
-		value: v.visitStatement(ctx.Expr()),
+	ast := &CealSwitch{
+		Index: v.index,
+		Loop:  v.loops.Push("switch"),
+		Value: v.visitStatement(ctx.Expr()),
 	}
 
 	for _, c := range ctx.AllCase_() {
@@ -640,12 +640,12 @@ func (v *AstVisitor) VisitSwitchStmt(ctx *parser.SwitchStmtContext) interface{} 
 			stmts = append(stmts, v.visitStatement(item))
 		}
 
-		sc := &AstSwitchCase{
-			value:      v.visitStatement(c.Expr()),
-			statements: stmts,
+		sc := &CealSwitchCase{
+			Value:      v.visitStatement(c.Expr()),
+			Statements: stmts,
 		}
 
-		ast.cases = append(ast.cases, sc)
+		ast.Cases = append(ast.Cases, sc)
 	}
 
 	if ctx.Default_() != nil {
@@ -655,7 +655,7 @@ func (v *AstVisitor) VisitSwitchStmt(ctx *parser.SwitchStmtContext) interface{} 
 			stmts = append(stmts, v.visitStatement(item))
 		}
 
-		ast.default_ = stmts
+		ast.Default = stmts
 	}
 
 	v.loops.Pop()
@@ -665,11 +665,11 @@ func (v *AstVisitor) VisitSwitchStmt(ctx *parser.SwitchStmtContext) interface{} 
 }
 
 func (v *AstVisitor) VisitConditionalExpr(ctx *parser.ConditionalExprContext) interface{} {
-	ast := &AstConditional{
-		index:     v.index,
-		condition: v.visitStatement(ctx.GetCondition()),
-		t:         v.visitStatement(ctx.GetTrue_()),
-		f:         v.visitStatement(ctx.GetFalse_()),
+	ast := &CealConditional{
+		Index:     v.index,
+		Condition: v.visitStatement(ctx.GetCondition()),
+		True:      v.visitStatement(ctx.GetTrue_()),
+		False:     v.visitStatement(ctx.GetFalse_()),
 	}
 
 	v.index++

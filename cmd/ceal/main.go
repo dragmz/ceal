@@ -33,7 +33,8 @@ func run(a args) error {
 		},
 	}
 
-	teal := c.Compile(src)
+	program := c.Compile(src)
+	teal := program.String()
 
 	if a.Format {
 		teal = tealfmt.Format(bytes.NewBufferString(teal))

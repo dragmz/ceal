@@ -41,10 +41,11 @@ func run(a args) error {
 
 		src := string(bs)
 
-		compiled := c.Compile(src)
+		program := c.Compile(src)
+		teal := program.String()
 
 		out := fmt.Sprintf("%s.teal", p)
-		err = os.WriteFile(out, []byte(compiled), os.ModePerm)
+		err = os.WriteFile(out, []byte(teal), os.ModePerm)
 		if err != nil {
 			return err
 		}

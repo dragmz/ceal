@@ -47,7 +47,7 @@ func (v *SymbolTableVisitor) initVariable(vr *Variable) {
 type SymbolTableVisitor struct {
 	*parser.BaseCVisitor
 
-	program *AstProgram
+	program *CealProgram
 
 	global *Scope
 	scope  *Scope
@@ -306,8 +306,8 @@ func (v *SymbolTableVisitor) VisitGlobal(ctx *parser.GlobalContext) interface{} 
 
 	switch t.simple.kind {
 	case SimpleTypeInt:
-		vr.const_.index = len(v.program.constints)
-		v.program.constints = append(v.program.constints, atoi(ctx.Constant().GetText()))
+		vr.const_.index = len(v.program.ConstInts)
+		v.program.ConstInts = append(v.program.ConstInts, atoi(ctx.Constant().GetText()))
 	default:
 		panic("global variable of this simple type kind isn't supported yet")
 	}

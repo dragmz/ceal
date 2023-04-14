@@ -3351,20 +3351,20 @@ type TealExpr interface {
 	String() string
 }
 
-type avm_err_Ast struct {
+type Teal_err struct {
 }
 
-func (a *avm_err_Ast) String() string {
+func (a *Teal_err) String() string {
 	res := strings.Builder{}
 	res.WriteString("err")
 	return res.String()
 }
 
-type avm_sha256_Ast struct {
+type Teal_sha256 struct {
 	s1 AstStatement
 }
 
-func (a *avm_sha256_Ast) String() string {
+func (a *Teal_sha256) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3372,11 +3372,11 @@ func (a *avm_sha256_Ast) String() string {
 	return res.String()
 }
 
-type avm_keccak256_Ast struct {
+type Teal_keccak256 struct {
 	s1 AstStatement
 }
 
-func (a *avm_keccak256_Ast) String() string {
+func (a *Teal_keccak256) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3384,11 +3384,11 @@ func (a *avm_keccak256_Ast) String() string {
 	return res.String()
 }
 
-type avm_sha512_256_Ast struct {
+type Teal_sha512_256 struct {
 	s1 AstStatement
 }
 
-func (a *avm_sha512_256_Ast) String() string {
+func (a *Teal_sha512_256) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3396,13 +3396,13 @@ func (a *avm_sha512_256_Ast) String() string {
 	return res.String()
 }
 
-type avm_ed25519verify_Ast struct {
+type Teal_ed25519verify struct {
 	s1 AstStatement
 	s2 AstStatement
 	s3 AstStatement
 }
 
-func (a *avm_ed25519verify_Ast) String() string {
+func (a *Teal_ed25519verify) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3414,7 +3414,7 @@ func (a *avm_ed25519verify_Ast) String() string {
 	return res.String()
 }
 
-type avm_ecdsa_verify_Ast struct {
+type Teal_ecdsa_verify struct {
 	s1 AstStatement
 	s2 AstStatement
 	s3 AstStatement
@@ -3423,7 +3423,7 @@ type avm_ecdsa_verify_Ast struct {
 	V1 string
 }
 
-func (a *avm_ecdsa_verify_Ast) String() string {
+func (a *Teal_ecdsa_verify) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3441,12 +3441,12 @@ func (a *avm_ecdsa_verify_Ast) String() string {
 	return res.String()
 }
 
-type avm_ecdsa_pk_decompress_Ast struct {
+type Teal_ecdsa_pk_decompress struct {
 	s1 AstStatement
 	V1 string
 }
 
-func (a *avm_ecdsa_pk_decompress_Ast) String() string {
+func (a *Teal_ecdsa_pk_decompress) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3456,7 +3456,7 @@ func (a *avm_ecdsa_pk_decompress_Ast) String() string {
 	return res.String()
 }
 
-type avm_ecdsa_pk_recover_Ast struct {
+type Teal_ecdsa_pk_recover struct {
 	s1 AstStatement
 	s2 AstStatement
 	s3 AstStatement
@@ -3464,7 +3464,7 @@ type avm_ecdsa_pk_recover_Ast struct {
 	V1 string
 }
 
-func (a *avm_ecdsa_pk_recover_Ast) String() string {
+func (a *Teal_ecdsa_pk_recover) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3480,12 +3480,12 @@ func (a *avm_ecdsa_pk_recover_Ast) String() string {
 	return res.String()
 }
 
-type avm_plus_Ast struct {
+type Teal_plus struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_plus_Ast) String() string {
+func (a *Teal_plus) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3495,12 +3495,12 @@ func (a *avm_plus_Ast) String() string {
 	return res.String()
 }
 
-type avm_minus_Ast struct {
+type Teal_minus struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_minus_Ast) String() string {
+func (a *Teal_minus) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3510,12 +3510,12 @@ func (a *avm_minus_Ast) String() string {
 	return res.String()
 }
 
-type avm_div_Ast struct {
+type Teal_div struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_div_Ast) String() string {
+func (a *Teal_div) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3525,12 +3525,12 @@ func (a *avm_div_Ast) String() string {
 	return res.String()
 }
 
-type avm_mul_Ast struct {
+type Teal_mul struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_mul_Ast) String() string {
+func (a *Teal_mul) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3540,12 +3540,12 @@ func (a *avm_mul_Ast) String() string {
 	return res.String()
 }
 
-type avm_lt_Ast struct {
+type Teal_lt struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_lt_Ast) String() string {
+func (a *Teal_lt) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3555,12 +3555,12 @@ func (a *avm_lt_Ast) String() string {
 	return res.String()
 }
 
-type avm_gt_Ast struct {
+type Teal_gt struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_gt_Ast) String() string {
+func (a *Teal_gt) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3570,12 +3570,12 @@ func (a *avm_gt_Ast) String() string {
 	return res.String()
 }
 
-type avm_lteq_Ast struct {
+type Teal_lteq struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_lteq_Ast) String() string {
+func (a *Teal_lteq) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3585,12 +3585,12 @@ func (a *avm_lteq_Ast) String() string {
 	return res.String()
 }
 
-type avm_gteq_Ast struct {
+type Teal_gteq struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_gteq_Ast) String() string {
+func (a *Teal_gteq) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3600,12 +3600,12 @@ func (a *avm_gteq_Ast) String() string {
 	return res.String()
 }
 
-type avm_andand_Ast struct {
+type Teal_andand struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_andand_Ast) String() string {
+func (a *Teal_andand) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3615,12 +3615,12 @@ func (a *avm_andand_Ast) String() string {
 	return res.String()
 }
 
-type avm_oror_Ast struct {
+type Teal_oror struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_oror_Ast) String() string {
+func (a *Teal_oror) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3630,12 +3630,12 @@ func (a *avm_oror_Ast) String() string {
 	return res.String()
 }
 
-type avm_eqeq_Ast struct {
+type Teal_eqeq struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_eqeq_Ast) String() string {
+func (a *Teal_eqeq) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3645,12 +3645,12 @@ func (a *avm_eqeq_Ast) String() string {
 	return res.String()
 }
 
-type avm_noteq_Ast struct {
+type Teal_noteq struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_noteq_Ast) String() string {
+func (a *Teal_noteq) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3660,11 +3660,11 @@ func (a *avm_noteq_Ast) String() string {
 	return res.String()
 }
 
-type avm_not_Ast struct {
+type Teal_not struct {
 	s1 AstStatement
 }
 
-func (a *avm_not_Ast) String() string {
+func (a *Teal_not) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3672,11 +3672,11 @@ func (a *avm_not_Ast) String() string {
 	return res.String()
 }
 
-type avm_len_Ast struct {
+type Teal_len struct {
 	s1 AstStatement
 }
 
-func (a *avm_len_Ast) String() string {
+func (a *Teal_len) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3684,11 +3684,11 @@ func (a *avm_len_Ast) String() string {
 	return res.String()
 }
 
-type avm_itob_Ast struct {
+type Teal_itob struct {
 	s1 AstStatement
 }
 
-func (a *avm_itob_Ast) String() string {
+func (a *Teal_itob) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3696,11 +3696,11 @@ func (a *avm_itob_Ast) String() string {
 	return res.String()
 }
 
-type avm_btoi_Ast struct {
+type Teal_btoi struct {
 	s1 AstStatement
 }
 
-func (a *avm_btoi_Ast) String() string {
+func (a *Teal_btoi) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3708,12 +3708,12 @@ func (a *avm_btoi_Ast) String() string {
 	return res.String()
 }
 
-type avm_mod_Ast struct {
+type Teal_mod struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_mod_Ast) String() string {
+func (a *Teal_mod) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3723,12 +3723,12 @@ func (a *avm_mod_Ast) String() string {
 	return res.String()
 }
 
-type avm_or_Ast struct {
+type Teal_or struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_or_Ast) String() string {
+func (a *Teal_or) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3738,12 +3738,12 @@ func (a *avm_or_Ast) String() string {
 	return res.String()
 }
 
-type avm_and_Ast struct {
+type Teal_and struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_and_Ast) String() string {
+func (a *Teal_and) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3753,12 +3753,12 @@ func (a *avm_and_Ast) String() string {
 	return res.String()
 }
 
-type avm_xor_Ast struct {
+type Teal_xor struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_xor_Ast) String() string {
+func (a *Teal_xor) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3768,11 +3768,11 @@ func (a *avm_xor_Ast) String() string {
 	return res.String()
 }
 
-type avm_inv_Ast struct {
+type Teal_inv struct {
 	s1 AstStatement
 }
 
-func (a *avm_inv_Ast) String() string {
+func (a *Teal_inv) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3780,12 +3780,12 @@ func (a *avm_inv_Ast) String() string {
 	return res.String()
 }
 
-type avm_mulw_Ast struct {
+type Teal_mulw struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_mulw_Ast) String() string {
+func (a *Teal_mulw) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3795,12 +3795,12 @@ func (a *avm_mulw_Ast) String() string {
 	return res.String()
 }
 
-type avm_addw_Ast struct {
+type Teal_addw struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_addw_Ast) String() string {
+func (a *Teal_addw) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3810,14 +3810,14 @@ func (a *avm_addw_Ast) String() string {
 	return res.String()
 }
 
-type avm_divmodw_Ast struct {
+type Teal_divmodw struct {
 	s1 AstStatement
 	s2 AstStatement
 	s3 AstStatement
 	s4 AstStatement
 }
 
-func (a *avm_divmodw_Ast) String() string {
+func (a *Teal_divmodw) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -3831,11 +3831,11 @@ func (a *avm_divmodw_Ast) String() string {
 	return res.String()
 }
 
-type avm_intcblock_Ast struct {
+type Teal_intcblock struct {
 	UINT1 string
 }
 
-func (a *avm_intcblock_Ast) String() string {
+func (a *Teal_intcblock) String() string {
 	res := strings.Builder{}
 	res.WriteString("intcblock")
 	res.WriteString(" ")
@@ -3843,11 +3843,11 @@ func (a *avm_intcblock_Ast) String() string {
 	return res.String()
 }
 
-type avm_intc_Ast struct {
+type Teal_intc struct {
 	I1 string
 }
 
-func (a *avm_intc_Ast) String() string {
+func (a *Teal_intc) String() string {
 	res := strings.Builder{}
 	res.WriteString("intc")
 	res.WriteString(" ")
@@ -3855,47 +3855,47 @@ func (a *avm_intc_Ast) String() string {
 	return res.String()
 }
 
-type avm_intc_0_Ast struct {
+type Teal_intc_0 struct {
 }
 
-func (a *avm_intc_0_Ast) String() string {
+func (a *Teal_intc_0) String() string {
 	res := strings.Builder{}
 	res.WriteString("intc_0")
 	return res.String()
 }
 
-type avm_intc_1_Ast struct {
+type Teal_intc_1 struct {
 }
 
-func (a *avm_intc_1_Ast) String() string {
+func (a *Teal_intc_1) String() string {
 	res := strings.Builder{}
 	res.WriteString("intc_1")
 	return res.String()
 }
 
-type avm_intc_2_Ast struct {
+type Teal_intc_2 struct {
 }
 
-func (a *avm_intc_2_Ast) String() string {
+func (a *Teal_intc_2) String() string {
 	res := strings.Builder{}
 	res.WriteString("intc_2")
 	return res.String()
 }
 
-type avm_intc_3_Ast struct {
+type Teal_intc_3 struct {
 }
 
-func (a *avm_intc_3_Ast) String() string {
+func (a *Teal_intc_3) String() string {
 	res := strings.Builder{}
 	res.WriteString("intc_3")
 	return res.String()
 }
 
-type avm_bytecblock_Ast struct {
+type Teal_bytecblock struct {
 	BYTES1 string
 }
 
-func (a *avm_bytecblock_Ast) String() string {
+func (a *Teal_bytecblock) String() string {
 	res := strings.Builder{}
 	res.WriteString("bytecblock")
 	res.WriteString(" ")
@@ -3903,11 +3903,11 @@ func (a *avm_bytecblock_Ast) String() string {
 	return res.String()
 }
 
-type avm_bytec_Ast struct {
+type Teal_bytec struct {
 	I1 string
 }
 
-func (a *avm_bytec_Ast) String() string {
+func (a *Teal_bytec) String() string {
 	res := strings.Builder{}
 	res.WriteString("bytec")
 	res.WriteString(" ")
@@ -3915,47 +3915,47 @@ func (a *avm_bytec_Ast) String() string {
 	return res.String()
 }
 
-type avm_bytec_0_Ast struct {
+type Teal_bytec_0 struct {
 }
 
-func (a *avm_bytec_0_Ast) String() string {
+func (a *Teal_bytec_0) String() string {
 	res := strings.Builder{}
 	res.WriteString("bytec_0")
 	return res.String()
 }
 
-type avm_bytec_1_Ast struct {
+type Teal_bytec_1 struct {
 }
 
-func (a *avm_bytec_1_Ast) String() string {
+func (a *Teal_bytec_1) String() string {
 	res := strings.Builder{}
 	res.WriteString("bytec_1")
 	return res.String()
 }
 
-type avm_bytec_2_Ast struct {
+type Teal_bytec_2 struct {
 }
 
-func (a *avm_bytec_2_Ast) String() string {
+func (a *Teal_bytec_2) String() string {
 	res := strings.Builder{}
 	res.WriteString("bytec_2")
 	return res.String()
 }
 
-type avm_bytec_3_Ast struct {
+type Teal_bytec_3 struct {
 }
 
-func (a *avm_bytec_3_Ast) String() string {
+func (a *Teal_bytec_3) String() string {
 	res := strings.Builder{}
 	res.WriteString("bytec_3")
 	return res.String()
 }
 
-type avm_arg_Ast struct {
+type Teal_arg struct {
 	N1 string
 }
 
-func (a *avm_arg_Ast) String() string {
+func (a *Teal_arg) String() string {
 	res := strings.Builder{}
 	res.WriteString("arg")
 	res.WriteString(" ")
@@ -3963,47 +3963,47 @@ func (a *avm_arg_Ast) String() string {
 	return res.String()
 }
 
-type avm_arg_0_Ast struct {
+type Teal_arg_0 struct {
 }
 
-func (a *avm_arg_0_Ast) String() string {
+func (a *Teal_arg_0) String() string {
 	res := strings.Builder{}
 	res.WriteString("arg_0")
 	return res.String()
 }
 
-type avm_arg_1_Ast struct {
+type Teal_arg_1 struct {
 }
 
-func (a *avm_arg_1_Ast) String() string {
+func (a *Teal_arg_1) String() string {
 	res := strings.Builder{}
 	res.WriteString("arg_1")
 	return res.String()
 }
 
-type avm_arg_2_Ast struct {
+type Teal_arg_2 struct {
 }
 
-func (a *avm_arg_2_Ast) String() string {
+func (a *Teal_arg_2) String() string {
 	res := strings.Builder{}
 	res.WriteString("arg_2")
 	return res.String()
 }
 
-type avm_arg_3_Ast struct {
+type Teal_arg_3 struct {
 }
 
-func (a *avm_arg_3_Ast) String() string {
+func (a *Teal_arg_3) String() string {
 	res := strings.Builder{}
 	res.WriteString("arg_3")
 	return res.String()
 }
 
-type avm_txn_Ast struct {
+type Teal_txn struct {
 	F1 string
 }
 
-func (a *avm_txn_Ast) String() string {
+func (a *Teal_txn) String() string {
 	res := strings.Builder{}
 	res.WriteString("txn")
 	res.WriteString(" ")
@@ -4011,11 +4011,11 @@ func (a *avm_txn_Ast) String() string {
 	return res.String()
 }
 
-type avm_global_Ast struct {
+type Teal_global struct {
 	F1 string
 }
 
-func (a *avm_global_Ast) String() string {
+func (a *Teal_global) String() string {
 	res := strings.Builder{}
 	res.WriteString("global")
 	res.WriteString(" ")
@@ -4023,12 +4023,12 @@ func (a *avm_global_Ast) String() string {
 	return res.String()
 }
 
-type avm_gtxn_Ast struct {
+type Teal_gtxn struct {
 	T1 string
 	F2 string
 }
 
-func (a *avm_gtxn_Ast) String() string {
+func (a *Teal_gtxn) String() string {
 	res := strings.Builder{}
 	res.WriteString("gtxn")
 	res.WriteString(" ")
@@ -4038,11 +4038,11 @@ func (a *avm_gtxn_Ast) String() string {
 	return res.String()
 }
 
-type avm_load_Ast struct {
+type Teal_load struct {
 	I1 string
 }
 
-func (a *avm_load_Ast) String() string {
+func (a *Teal_load) String() string {
 	res := strings.Builder{}
 	res.WriteString("load")
 	res.WriteString(" ")
@@ -4050,12 +4050,12 @@ func (a *avm_load_Ast) String() string {
 	return res.String()
 }
 
-type avm_store_Ast struct {
+type Teal_store struct {
 	s1 AstStatement
 	I1 string
 }
 
-func (a *avm_store_Ast) String() string {
+func (a *Teal_store) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4065,12 +4065,12 @@ func (a *avm_store_Ast) String() string {
 	return res.String()
 }
 
-type avm_txna_Ast struct {
+type Teal_txna struct {
 	F1 string
 	I2 string
 }
 
-func (a *avm_txna_Ast) String() string {
+func (a *Teal_txna) String() string {
 	res := strings.Builder{}
 	res.WriteString("txna")
 	res.WriteString(" ")
@@ -4080,13 +4080,13 @@ func (a *avm_txna_Ast) String() string {
 	return res.String()
 }
 
-type avm_gtxna_Ast struct {
+type Teal_gtxna struct {
 	T1 string
 	F2 string
 	I3 string
 }
 
-func (a *avm_gtxna_Ast) String() string {
+func (a *Teal_gtxna) String() string {
 	res := strings.Builder{}
 	res.WriteString("gtxna")
 	res.WriteString(" ")
@@ -4098,12 +4098,12 @@ func (a *avm_gtxna_Ast) String() string {
 	return res.String()
 }
 
-type avm_gtxns_Ast struct {
+type Teal_gtxns struct {
 	s1 AstStatement
 	F1 string
 }
 
-func (a *avm_gtxns_Ast) String() string {
+func (a *Teal_gtxns) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4113,13 +4113,13 @@ func (a *avm_gtxns_Ast) String() string {
 	return res.String()
 }
 
-type avm_gtxnsa_Ast struct {
+type Teal_gtxnsa struct {
 	s1 AstStatement
 	F1 string
 	I2 string
 }
 
-func (a *avm_gtxnsa_Ast) String() string {
+func (a *Teal_gtxnsa) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4131,12 +4131,12 @@ func (a *avm_gtxnsa_Ast) String() string {
 	return res.String()
 }
 
-type avm_gload_Ast struct {
+type Teal_gload struct {
 	T1 string
 	I2 string
 }
 
-func (a *avm_gload_Ast) String() string {
+func (a *Teal_gload) String() string {
 	res := strings.Builder{}
 	res.WriteString("gload")
 	res.WriteString(" ")
@@ -4146,12 +4146,12 @@ func (a *avm_gload_Ast) String() string {
 	return res.String()
 }
 
-type avm_gloads_Ast struct {
+type Teal_gloads struct {
 	s1 AstStatement
 	I1 string
 }
 
-func (a *avm_gloads_Ast) String() string {
+func (a *Teal_gloads) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4161,11 +4161,11 @@ func (a *avm_gloads_Ast) String() string {
 	return res.String()
 }
 
-type avm_gaid_Ast struct {
+type Teal_gaid struct {
 	T1 string
 }
 
-func (a *avm_gaid_Ast) String() string {
+func (a *Teal_gaid) String() string {
 	res := strings.Builder{}
 	res.WriteString("gaid")
 	res.WriteString(" ")
@@ -4173,11 +4173,11 @@ func (a *avm_gaid_Ast) String() string {
 	return res.String()
 }
 
-type avm_gaids_Ast struct {
+type Teal_gaids struct {
 	s1 AstStatement
 }
 
-func (a *avm_gaids_Ast) String() string {
+func (a *Teal_gaids) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4185,11 +4185,11 @@ func (a *avm_gaids_Ast) String() string {
 	return res.String()
 }
 
-type avm_loads_Ast struct {
+type Teal_loads struct {
 	s1 AstStatement
 }
 
-func (a *avm_loads_Ast) String() string {
+func (a *Teal_loads) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4197,12 +4197,12 @@ func (a *avm_loads_Ast) String() string {
 	return res.String()
 }
 
-type avm_stores_Ast struct {
+type Teal_stores struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_stores_Ast) String() string {
+func (a *Teal_stores) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4212,12 +4212,12 @@ func (a *avm_stores_Ast) String() string {
 	return res.String()
 }
 
-type avm_bnz_Ast struct {
+type Teal_bnz struct {
 	s1      AstStatement
 	TARGET1 string
 }
 
-func (a *avm_bnz_Ast) String() string {
+func (a *Teal_bnz) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4227,12 +4227,12 @@ func (a *avm_bnz_Ast) String() string {
 	return res.String()
 }
 
-type avm_bz_Ast struct {
+type Teal_bz struct {
 	s1      AstStatement
 	TARGET1 string
 }
 
-func (a *avm_bz_Ast) String() string {
+func (a *Teal_bz) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4242,11 +4242,11 @@ func (a *avm_bz_Ast) String() string {
 	return res.String()
 }
 
-type avm_b_Ast struct {
+type Teal_b struct {
 	TARGET1 string
 }
 
-func (a *avm_b_Ast) String() string {
+func (a *Teal_b) String() string {
 	res := strings.Builder{}
 	res.WriteString("b")
 	res.WriteString(" ")
@@ -4254,11 +4254,11 @@ func (a *avm_b_Ast) String() string {
 	return res.String()
 }
 
-type avm_return__Ast struct {
+type Teal_return_ struct {
 	s1 AstStatement
 }
 
-func (a *avm_return__Ast) String() string {
+func (a *Teal_return_) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4266,11 +4266,11 @@ func (a *avm_return__Ast) String() string {
 	return res.String()
 }
 
-type avm_assert_Ast struct {
+type Teal_assert struct {
 	s1 AstStatement
 }
 
-func (a *avm_assert_Ast) String() string {
+func (a *Teal_assert) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4278,12 +4278,12 @@ func (a *avm_assert_Ast) String() string {
 	return res.String()
 }
 
-type avm_bury_Ast struct {
+type Teal_bury struct {
 	s1 AstStatement
 	N1 string
 }
 
-func (a *avm_bury_Ast) String() string {
+func (a *Teal_bury) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4293,11 +4293,11 @@ func (a *avm_bury_Ast) String() string {
 	return res.String()
 }
 
-type avm_popn_Ast struct {
+type Teal_popn struct {
 	N1 string
 }
 
-func (a *avm_popn_Ast) String() string {
+func (a *Teal_popn) String() string {
 	res := strings.Builder{}
 	res.WriteString("popn")
 	res.WriteString(" ")
@@ -4305,12 +4305,12 @@ func (a *avm_popn_Ast) String() string {
 	return res.String()
 }
 
-type avm_dupn_Ast struct {
+type Teal_dupn struct {
 	s1 AstStatement
 	N1 string
 }
 
-func (a *avm_dupn_Ast) String() string {
+func (a *Teal_dupn) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4320,11 +4320,11 @@ func (a *avm_dupn_Ast) String() string {
 	return res.String()
 }
 
-type avm_pop_Ast struct {
+type Teal_pop struct {
 	s1 AstStatement
 }
 
-func (a *avm_pop_Ast) String() string {
+func (a *Teal_pop) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4332,11 +4332,11 @@ func (a *avm_pop_Ast) String() string {
 	return res.String()
 }
 
-type avm_dup_Ast struct {
+type Teal_dup struct {
 	s1 AstStatement
 }
 
-func (a *avm_dup_Ast) String() string {
+func (a *Teal_dup) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4344,12 +4344,12 @@ func (a *avm_dup_Ast) String() string {
 	return res.String()
 }
 
-type avm_dup2_Ast struct {
+type Teal_dup2 struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_dup2_Ast) String() string {
+func (a *Teal_dup2) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4359,12 +4359,12 @@ func (a *avm_dup2_Ast) String() string {
 	return res.String()
 }
 
-type avm_dig_Ast struct {
+type Teal_dig struct {
 	s1 AstStatement
 	N1 string
 }
 
-func (a *avm_dig_Ast) String() string {
+func (a *Teal_dig) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4374,12 +4374,12 @@ func (a *avm_dig_Ast) String() string {
 	return res.String()
 }
 
-type avm_swap_Ast struct {
+type Teal_swap struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_swap_Ast) String() string {
+func (a *Teal_swap) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4389,13 +4389,13 @@ func (a *avm_swap_Ast) String() string {
 	return res.String()
 }
 
-type avm_select_Ast struct {
+type Teal_select struct {
 	s1 AstStatement
 	s2 AstStatement
 	s3 AstStatement
 }
 
-func (a *avm_select_Ast) String() string {
+func (a *Teal_select) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4407,12 +4407,12 @@ func (a *avm_select_Ast) String() string {
 	return res.String()
 }
 
-type avm_cover_Ast struct {
+type Teal_cover struct {
 	s1 AstStatement
 	N1 string
 }
 
-func (a *avm_cover_Ast) String() string {
+func (a *Teal_cover) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4422,12 +4422,12 @@ func (a *avm_cover_Ast) String() string {
 	return res.String()
 }
 
-type avm_uncover_Ast struct {
+type Teal_uncover struct {
 	s1 AstStatement
 	N1 string
 }
 
-func (a *avm_uncover_Ast) String() string {
+func (a *Teal_uncover) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4437,12 +4437,12 @@ func (a *avm_uncover_Ast) String() string {
 	return res.String()
 }
 
-type avm_concat_Ast struct {
+type Teal_concat struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_concat_Ast) String() string {
+func (a *Teal_concat) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4452,13 +4452,13 @@ func (a *avm_concat_Ast) String() string {
 	return res.String()
 }
 
-type avm_substring_Ast struct {
+type Teal_substring struct {
 	s1 AstStatement
 	S1 string
 	E2 string
 }
 
-func (a *avm_substring_Ast) String() string {
+func (a *Teal_substring) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4470,13 +4470,13 @@ func (a *avm_substring_Ast) String() string {
 	return res.String()
 }
 
-type avm_substring3_Ast struct {
+type Teal_substring3 struct {
 	s1 AstStatement
 	s2 AstStatement
 	s3 AstStatement
 }
 
-func (a *avm_substring3_Ast) String() string {
+func (a *Teal_substring3) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4488,12 +4488,12 @@ func (a *avm_substring3_Ast) String() string {
 	return res.String()
 }
 
-type avm_getbit_Ast struct {
+type Teal_getbit struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_getbit_Ast) String() string {
+func (a *Teal_getbit) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4503,13 +4503,13 @@ func (a *avm_getbit_Ast) String() string {
 	return res.String()
 }
 
-type avm_setbit_Ast struct {
+type Teal_setbit struct {
 	s1 AstStatement
 	s2 AstStatement
 	s3 AstStatement
 }
 
-func (a *avm_setbit_Ast) String() string {
+func (a *Teal_setbit) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4521,12 +4521,12 @@ func (a *avm_setbit_Ast) String() string {
 	return res.String()
 }
 
-type avm_getbyte_Ast struct {
+type Teal_getbyte struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_getbyte_Ast) String() string {
+func (a *Teal_getbyte) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4536,13 +4536,13 @@ func (a *avm_getbyte_Ast) String() string {
 	return res.String()
 }
 
-type avm_setbyte_Ast struct {
+type Teal_setbyte struct {
 	s1 AstStatement
 	s2 AstStatement
 	s3 AstStatement
 }
 
-func (a *avm_setbyte_Ast) String() string {
+func (a *Teal_setbyte) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4554,13 +4554,13 @@ func (a *avm_setbyte_Ast) String() string {
 	return res.String()
 }
 
-type avm_extract_Ast struct {
+type Teal_extract struct {
 	s1 AstStatement
 	S1 string
 	L2 string
 }
 
-func (a *avm_extract_Ast) String() string {
+func (a *Teal_extract) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4572,13 +4572,13 @@ func (a *avm_extract_Ast) String() string {
 	return res.String()
 }
 
-type avm_extract3_Ast struct {
+type Teal_extract3 struct {
 	s1 AstStatement
 	s2 AstStatement
 	s3 AstStatement
 }
 
-func (a *avm_extract3_Ast) String() string {
+func (a *Teal_extract3) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4590,12 +4590,12 @@ func (a *avm_extract3_Ast) String() string {
 	return res.String()
 }
 
-type avm_extract_uint16_Ast struct {
+type Teal_extract_uint16 struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_extract_uint16_Ast) String() string {
+func (a *Teal_extract_uint16) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4605,12 +4605,12 @@ func (a *avm_extract_uint16_Ast) String() string {
 	return res.String()
 }
 
-type avm_extract_uint32_Ast struct {
+type Teal_extract_uint32 struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_extract_uint32_Ast) String() string {
+func (a *Teal_extract_uint32) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4620,12 +4620,12 @@ func (a *avm_extract_uint32_Ast) String() string {
 	return res.String()
 }
 
-type avm_extract_uint64_Ast struct {
+type Teal_extract_uint64 struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_extract_uint64_Ast) String() string {
+func (a *Teal_extract_uint64) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4635,13 +4635,13 @@ func (a *avm_extract_uint64_Ast) String() string {
 	return res.String()
 }
 
-type avm_replace2_Ast struct {
+type Teal_replace2 struct {
 	s1 AstStatement
 	s2 AstStatement
 	S1 string
 }
 
-func (a *avm_replace2_Ast) String() string {
+func (a *Teal_replace2) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4653,13 +4653,13 @@ func (a *avm_replace2_Ast) String() string {
 	return res.String()
 }
 
-type avm_replace3_Ast struct {
+type Teal_replace3 struct {
 	s1 AstStatement
 	s2 AstStatement
 	s3 AstStatement
 }
 
-func (a *avm_replace3_Ast) String() string {
+func (a *Teal_replace3) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4671,12 +4671,12 @@ func (a *avm_replace3_Ast) String() string {
 	return res.String()
 }
 
-type avm_base64_decode_Ast struct {
+type Teal_base64_decode struct {
 	s1 AstStatement
 	E1 string
 }
 
-func (a *avm_base64_decode_Ast) String() string {
+func (a *Teal_base64_decode) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4686,13 +4686,13 @@ func (a *avm_base64_decode_Ast) String() string {
 	return res.String()
 }
 
-type avm_json_ref_Ast struct {
+type Teal_json_ref struct {
 	s1 AstStatement
 	s2 AstStatement
 	R1 string
 }
 
-func (a *avm_json_ref_Ast) String() string {
+func (a *Teal_json_ref) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4704,11 +4704,11 @@ func (a *avm_json_ref_Ast) String() string {
 	return res.String()
 }
 
-type avm_balance_Ast struct {
+type Teal_balance struct {
 	s1 AstStatement
 }
 
-func (a *avm_balance_Ast) String() string {
+func (a *Teal_balance) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4716,12 +4716,12 @@ func (a *avm_balance_Ast) String() string {
 	return res.String()
 }
 
-type avm_app_opted_in_Ast struct {
+type Teal_app_opted_in struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_app_opted_in_Ast) String() string {
+func (a *Teal_app_opted_in) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4731,12 +4731,12 @@ func (a *avm_app_opted_in_Ast) String() string {
 	return res.String()
 }
 
-type avm_app_local_get_Ast struct {
+type Teal_app_local_get struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_app_local_get_Ast) String() string {
+func (a *Teal_app_local_get) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4746,13 +4746,13 @@ func (a *avm_app_local_get_Ast) String() string {
 	return res.String()
 }
 
-type avm_app_local_get_ex_Ast struct {
+type Teal_app_local_get_ex struct {
 	s1 AstStatement
 	s2 AstStatement
 	s3 AstStatement
 }
 
-func (a *avm_app_local_get_ex_Ast) String() string {
+func (a *Teal_app_local_get_ex) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4764,11 +4764,11 @@ func (a *avm_app_local_get_ex_Ast) String() string {
 	return res.String()
 }
 
-type avm_app_global_get_Ast struct {
+type Teal_app_global_get struct {
 	s1 AstStatement
 }
 
-func (a *avm_app_global_get_Ast) String() string {
+func (a *Teal_app_global_get) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4776,12 +4776,12 @@ func (a *avm_app_global_get_Ast) String() string {
 	return res.String()
 }
 
-type avm_app_global_get_ex_Ast struct {
+type Teal_app_global_get_ex struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_app_global_get_ex_Ast) String() string {
+func (a *Teal_app_global_get_ex) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4791,13 +4791,13 @@ func (a *avm_app_global_get_ex_Ast) String() string {
 	return res.String()
 }
 
-type avm_app_local_put_Ast struct {
+type Teal_app_local_put struct {
 	s1 AstStatement
 	s2 AstStatement
 	s3 AstStatement
 }
 
-func (a *avm_app_local_put_Ast) String() string {
+func (a *Teal_app_local_put) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4809,12 +4809,12 @@ func (a *avm_app_local_put_Ast) String() string {
 	return res.String()
 }
 
-type avm_app_global_put_Ast struct {
+type Teal_app_global_put struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_app_global_put_Ast) String() string {
+func (a *Teal_app_global_put) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4824,12 +4824,12 @@ func (a *avm_app_global_put_Ast) String() string {
 	return res.String()
 }
 
-type avm_app_local_del_Ast struct {
+type Teal_app_local_del struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_app_local_del_Ast) String() string {
+func (a *Teal_app_local_del) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4839,11 +4839,11 @@ func (a *avm_app_local_del_Ast) String() string {
 	return res.String()
 }
 
-type avm_app_global_del_Ast struct {
+type Teal_app_global_del struct {
 	s1 AstStatement
 }
 
-func (a *avm_app_global_del_Ast) String() string {
+func (a *Teal_app_global_del) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4851,13 +4851,13 @@ func (a *avm_app_global_del_Ast) String() string {
 	return res.String()
 }
 
-type avm_asset_holding_get_Ast struct {
+type Teal_asset_holding_get struct {
 	s1 AstStatement
 	s2 AstStatement
 	F1 string
 }
 
-func (a *avm_asset_holding_get_Ast) String() string {
+func (a *Teal_asset_holding_get) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4869,12 +4869,12 @@ func (a *avm_asset_holding_get_Ast) String() string {
 	return res.String()
 }
 
-type avm_asset_params_get_Ast struct {
+type Teal_asset_params_get struct {
 	s1 AstStatement
 	F1 string
 }
 
-func (a *avm_asset_params_get_Ast) String() string {
+func (a *Teal_asset_params_get) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4884,12 +4884,12 @@ func (a *avm_asset_params_get_Ast) String() string {
 	return res.String()
 }
 
-type avm_app_params_get_Ast struct {
+type Teal_app_params_get struct {
 	s1 AstStatement
 	F1 string
 }
 
-func (a *avm_app_params_get_Ast) String() string {
+func (a *Teal_app_params_get) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4899,12 +4899,12 @@ func (a *avm_app_params_get_Ast) String() string {
 	return res.String()
 }
 
-type avm_acct_params_get_Ast struct {
+type Teal_acct_params_get struct {
 	s1 AstStatement
 	F1 string
 }
 
-func (a *avm_acct_params_get_Ast) String() string {
+func (a *Teal_acct_params_get) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4914,11 +4914,11 @@ func (a *avm_acct_params_get_Ast) String() string {
 	return res.String()
 }
 
-type avm_min_balance_Ast struct {
+type Teal_min_balance struct {
 	s1 AstStatement
 }
 
-func (a *avm_min_balance_Ast) String() string {
+func (a *Teal_min_balance) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4926,11 +4926,11 @@ func (a *avm_min_balance_Ast) String() string {
 	return res.String()
 }
 
-type avm_pushbytes_Ast struct {
+type Teal_pushbytes struct {
 	BYTES1 string
 }
 
-func (a *avm_pushbytes_Ast) String() string {
+func (a *Teal_pushbytes) String() string {
 	res := strings.Builder{}
 	res.WriteString("pushbytes")
 	res.WriteString(" ")
@@ -4938,11 +4938,11 @@ func (a *avm_pushbytes_Ast) String() string {
 	return res.String()
 }
 
-type avm_pushint_Ast struct {
+type Teal_pushint struct {
 	UINT1 string
 }
 
-func (a *avm_pushint_Ast) String() string {
+func (a *Teal_pushint) String() string {
 	res := strings.Builder{}
 	res.WriteString("pushint")
 	res.WriteString(" ")
@@ -4950,11 +4950,11 @@ func (a *avm_pushint_Ast) String() string {
 	return res.String()
 }
 
-type avm_pushbytess_Ast struct {
+type Teal_pushbytess struct {
 	BYTES1 string
 }
 
-func (a *avm_pushbytess_Ast) String() string {
+func (a *Teal_pushbytess) String() string {
 	res := strings.Builder{}
 	res.WriteString("pushbytess")
 	res.WriteString(" ")
@@ -4962,11 +4962,11 @@ func (a *avm_pushbytess_Ast) String() string {
 	return res.String()
 }
 
-type avm_pushints_Ast struct {
+type Teal_pushints struct {
 	UINT1 string
 }
 
-func (a *avm_pushints_Ast) String() string {
+func (a *Teal_pushints) String() string {
 	res := strings.Builder{}
 	res.WriteString("pushints")
 	res.WriteString(" ")
@@ -4974,13 +4974,13 @@ func (a *avm_pushints_Ast) String() string {
 	return res.String()
 }
 
-type avm_ed25519verify_bare_Ast struct {
+type Teal_ed25519verify_bare struct {
 	s1 AstStatement
 	s2 AstStatement
 	s3 AstStatement
 }
 
-func (a *avm_ed25519verify_bare_Ast) String() string {
+func (a *Teal_ed25519verify_bare) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -4992,11 +4992,11 @@ func (a *avm_ed25519verify_bare_Ast) String() string {
 	return res.String()
 }
 
-type avm_callsub_Ast struct {
+type Teal_callsub struct {
 	TARGET1 string
 }
 
-func (a *avm_callsub_Ast) String() string {
+func (a *Teal_callsub) String() string {
 	res := strings.Builder{}
 	res.WriteString("callsub")
 	res.WriteString(" ")
@@ -5004,21 +5004,21 @@ func (a *avm_callsub_Ast) String() string {
 	return res.String()
 }
 
-type avm_retsub_Ast struct {
+type Teal_retsub struct {
 }
 
-func (a *avm_retsub_Ast) String() string {
+func (a *Teal_retsub) String() string {
 	res := strings.Builder{}
 	res.WriteString("retsub")
 	return res.String()
 }
 
-type avm_proto_Ast struct {
+type Teal_proto struct {
 	A1 string
 	R2 string
 }
 
-func (a *avm_proto_Ast) String() string {
+func (a *Teal_proto) String() string {
 	res := strings.Builder{}
 	res.WriteString("proto")
 	res.WriteString(" ")
@@ -5028,11 +5028,11 @@ func (a *avm_proto_Ast) String() string {
 	return res.String()
 }
 
-type avm_frame_dig_Ast struct {
+type Teal_frame_dig struct {
 	I1 string
 }
 
-func (a *avm_frame_dig_Ast) String() string {
+func (a *Teal_frame_dig) String() string {
 	res := strings.Builder{}
 	res.WriteString("frame_dig")
 	res.WriteString(" ")
@@ -5040,12 +5040,12 @@ func (a *avm_frame_dig_Ast) String() string {
 	return res.String()
 }
 
-type avm_frame_bury_Ast struct {
+type Teal_frame_bury struct {
 	s1 AstStatement
 	I1 string
 }
 
-func (a *avm_frame_bury_Ast) String() string {
+func (a *Teal_frame_bury) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5055,12 +5055,12 @@ func (a *avm_frame_bury_Ast) String() string {
 	return res.String()
 }
 
-type avm_switch__Ast struct {
+type Teal_switch_ struct {
 	s1      AstStatement
 	TARGET1 string
 }
 
-func (a *avm_switch__Ast) String() string {
+func (a *Teal_switch_) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5070,11 +5070,11 @@ func (a *avm_switch__Ast) String() string {
 	return res.String()
 }
 
-type avm_match_Ast struct {
+type Teal_match struct {
 	TARGET1 string
 }
 
-func (a *avm_match_Ast) String() string {
+func (a *Teal_match) String() string {
 	res := strings.Builder{}
 	res.WriteString("match")
 	res.WriteString(" ")
@@ -5082,12 +5082,12 @@ func (a *avm_match_Ast) String() string {
 	return res.String()
 }
 
-type avm_shl_Ast struct {
+type Teal_shl struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_shl_Ast) String() string {
+func (a *Teal_shl) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5097,12 +5097,12 @@ func (a *avm_shl_Ast) String() string {
 	return res.String()
 }
 
-type avm_shr_Ast struct {
+type Teal_shr struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_shr_Ast) String() string {
+func (a *Teal_shr) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5112,11 +5112,11 @@ func (a *avm_shr_Ast) String() string {
 	return res.String()
 }
 
-type avm_sqrt_Ast struct {
+type Teal_sqrt struct {
 	s1 AstStatement
 }
 
-func (a *avm_sqrt_Ast) String() string {
+func (a *Teal_sqrt) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5124,11 +5124,11 @@ func (a *avm_sqrt_Ast) String() string {
 	return res.String()
 }
 
-type avm_bitlen_Ast struct {
+type Teal_bitlen struct {
 	s1 AstStatement
 }
 
-func (a *avm_bitlen_Ast) String() string {
+func (a *Teal_bitlen) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5136,12 +5136,12 @@ func (a *avm_bitlen_Ast) String() string {
 	return res.String()
 }
 
-type avm_exp_Ast struct {
+type Teal_exp struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_exp_Ast) String() string {
+func (a *Teal_exp) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5151,12 +5151,12 @@ func (a *avm_exp_Ast) String() string {
 	return res.String()
 }
 
-type avm_expw_Ast struct {
+type Teal_expw struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_expw_Ast) String() string {
+func (a *Teal_expw) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5166,11 +5166,11 @@ func (a *avm_expw_Ast) String() string {
 	return res.String()
 }
 
-type avm_bsqrt_Ast struct {
+type Teal_bsqrt struct {
 	s1 AstStatement
 }
 
-func (a *avm_bsqrt_Ast) String() string {
+func (a *Teal_bsqrt) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5178,13 +5178,13 @@ func (a *avm_bsqrt_Ast) String() string {
 	return res.String()
 }
 
-type avm_divw_Ast struct {
+type Teal_divw struct {
 	s1 AstStatement
 	s2 AstStatement
 	s3 AstStatement
 }
 
-func (a *avm_divw_Ast) String() string {
+func (a *Teal_divw) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5196,11 +5196,11 @@ func (a *avm_divw_Ast) String() string {
 	return res.String()
 }
 
-type avm_sha3_256_Ast struct {
+type Teal_sha3_256 struct {
 	s1 AstStatement
 }
 
-func (a *avm_sha3_256_Ast) String() string {
+func (a *Teal_sha3_256) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5208,12 +5208,12 @@ func (a *avm_sha3_256_Ast) String() string {
 	return res.String()
 }
 
-type avm_bplus_Ast struct {
+type Teal_bplus struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_bplus_Ast) String() string {
+func (a *Teal_bplus) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5223,12 +5223,12 @@ func (a *avm_bplus_Ast) String() string {
 	return res.String()
 }
 
-type avm_bminus_Ast struct {
+type Teal_bminus struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_bminus_Ast) String() string {
+func (a *Teal_bminus) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5238,12 +5238,12 @@ func (a *avm_bminus_Ast) String() string {
 	return res.String()
 }
 
-type avm_bdiv_Ast struct {
+type Teal_bdiv struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_bdiv_Ast) String() string {
+func (a *Teal_bdiv) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5253,12 +5253,12 @@ func (a *avm_bdiv_Ast) String() string {
 	return res.String()
 }
 
-type avm_bmul_Ast struct {
+type Teal_bmul struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_bmul_Ast) String() string {
+func (a *Teal_bmul) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5268,12 +5268,12 @@ func (a *avm_bmul_Ast) String() string {
 	return res.String()
 }
 
-type avm_blt_Ast struct {
+type Teal_blt struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_blt_Ast) String() string {
+func (a *Teal_blt) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5283,12 +5283,12 @@ func (a *avm_blt_Ast) String() string {
 	return res.String()
 }
 
-type avm_bgt_Ast struct {
+type Teal_bgt struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_bgt_Ast) String() string {
+func (a *Teal_bgt) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5298,12 +5298,12 @@ func (a *avm_bgt_Ast) String() string {
 	return res.String()
 }
 
-type avm_blteq_Ast struct {
+type Teal_blteq struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_blteq_Ast) String() string {
+func (a *Teal_blteq) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5313,12 +5313,12 @@ func (a *avm_blteq_Ast) String() string {
 	return res.String()
 }
 
-type avm_bgteq_Ast struct {
+type Teal_bgteq struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_bgteq_Ast) String() string {
+func (a *Teal_bgteq) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5328,12 +5328,12 @@ func (a *avm_bgteq_Ast) String() string {
 	return res.String()
 }
 
-type avm_beqeq_Ast struct {
+type Teal_beqeq struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_beqeq_Ast) String() string {
+func (a *Teal_beqeq) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5343,12 +5343,12 @@ func (a *avm_beqeq_Ast) String() string {
 	return res.String()
 }
 
-type avm_bnoteq_Ast struct {
+type Teal_bnoteq struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_bnoteq_Ast) String() string {
+func (a *Teal_bnoteq) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5358,12 +5358,12 @@ func (a *avm_bnoteq_Ast) String() string {
 	return res.String()
 }
 
-type avm_bmod_Ast struct {
+type Teal_bmod struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_bmod_Ast) String() string {
+func (a *Teal_bmod) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5373,12 +5373,12 @@ func (a *avm_bmod_Ast) String() string {
 	return res.String()
 }
 
-type avm_bor_Ast struct {
+type Teal_bor struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_bor_Ast) String() string {
+func (a *Teal_bor) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5388,12 +5388,12 @@ func (a *avm_bor_Ast) String() string {
 	return res.String()
 }
 
-type avm_band_Ast struct {
+type Teal_band struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_band_Ast) String() string {
+func (a *Teal_band) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5403,12 +5403,12 @@ func (a *avm_band_Ast) String() string {
 	return res.String()
 }
 
-type avm_bxor_Ast struct {
+type Teal_bxor struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_bxor_Ast) String() string {
+func (a *Teal_bxor) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5418,11 +5418,11 @@ func (a *avm_bxor_Ast) String() string {
 	return res.String()
 }
 
-type avm_binv_Ast struct {
+type Teal_binv struct {
 	s1 AstStatement
 }
 
-func (a *avm_binv_Ast) String() string {
+func (a *Teal_binv) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5430,11 +5430,11 @@ func (a *avm_binv_Ast) String() string {
 	return res.String()
 }
 
-type avm_bzero_Ast struct {
+type Teal_bzero struct {
 	s1 AstStatement
 }
 
-func (a *avm_bzero_Ast) String() string {
+func (a *Teal_bzero) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5442,11 +5442,11 @@ func (a *avm_bzero_Ast) String() string {
 	return res.String()
 }
 
-type avm_log_Ast struct {
+type Teal_log struct {
 	s1 AstStatement
 }
 
-func (a *avm_log_Ast) String() string {
+func (a *Teal_log) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5454,21 +5454,21 @@ func (a *avm_log_Ast) String() string {
 	return res.String()
 }
 
-type avm_itxn_begin_Ast struct {
+type Teal_itxn_begin struct {
 }
 
-func (a *avm_itxn_begin_Ast) String() string {
+func (a *Teal_itxn_begin) String() string {
 	res := strings.Builder{}
 	res.WriteString("itxn_begin")
 	return res.String()
 }
 
-type avm_itxn_field_Ast struct {
+type Teal_itxn_field struct {
 	s1 AstStatement
 	F1 string
 }
 
-func (a *avm_itxn_field_Ast) String() string {
+func (a *Teal_itxn_field) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5478,20 +5478,20 @@ func (a *avm_itxn_field_Ast) String() string {
 	return res.String()
 }
 
-type avm_itxn_submit_Ast struct {
+type Teal_itxn_submit struct {
 }
 
-func (a *avm_itxn_submit_Ast) String() string {
+func (a *Teal_itxn_submit) String() string {
 	res := strings.Builder{}
 	res.WriteString("itxn_submit")
 	return res.String()
 }
 
-type avm_itxn_Ast struct {
+type Teal_itxn struct {
 	F1 string
 }
 
-func (a *avm_itxn_Ast) String() string {
+func (a *Teal_itxn) String() string {
 	res := strings.Builder{}
 	res.WriteString("itxn")
 	res.WriteString(" ")
@@ -5499,12 +5499,12 @@ func (a *avm_itxn_Ast) String() string {
 	return res.String()
 }
 
-type avm_itxna_Ast struct {
+type Teal_itxna struct {
 	F1 string
 	I2 string
 }
 
-func (a *avm_itxna_Ast) String() string {
+func (a *Teal_itxna) String() string {
 	res := strings.Builder{}
 	res.WriteString("itxna")
 	res.WriteString(" ")
@@ -5514,21 +5514,21 @@ func (a *avm_itxna_Ast) String() string {
 	return res.String()
 }
 
-type avm_itxn_next_Ast struct {
+type Teal_itxn_next struct {
 }
 
-func (a *avm_itxn_next_Ast) String() string {
+func (a *Teal_itxn_next) String() string {
 	res := strings.Builder{}
 	res.WriteString("itxn_next")
 	return res.String()
 }
 
-type avm_gitxn_Ast struct {
+type Teal_gitxn struct {
 	T1 string
 	F2 string
 }
 
-func (a *avm_gitxn_Ast) String() string {
+func (a *Teal_gitxn) String() string {
 	res := strings.Builder{}
 	res.WriteString("gitxn")
 	res.WriteString(" ")
@@ -5538,13 +5538,13 @@ func (a *avm_gitxn_Ast) String() string {
 	return res.String()
 }
 
-type avm_gitxna_Ast struct {
+type Teal_gitxna struct {
 	T1 string
 	F2 string
 	I3 string
 }
 
-func (a *avm_gitxna_Ast) String() string {
+func (a *Teal_gitxna) String() string {
 	res := strings.Builder{}
 	res.WriteString("gitxna")
 	res.WriteString(" ")
@@ -5556,12 +5556,12 @@ func (a *avm_gitxna_Ast) String() string {
 	return res.String()
 }
 
-type avm_box_create_Ast struct {
+type Teal_box_create struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_box_create_Ast) String() string {
+func (a *Teal_box_create) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5571,13 +5571,13 @@ func (a *avm_box_create_Ast) String() string {
 	return res.String()
 }
 
-type avm_box_extract_Ast struct {
+type Teal_box_extract struct {
 	s1 AstStatement
 	s2 AstStatement
 	s3 AstStatement
 }
 
-func (a *avm_box_extract_Ast) String() string {
+func (a *Teal_box_extract) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5589,13 +5589,13 @@ func (a *avm_box_extract_Ast) String() string {
 	return res.String()
 }
 
-type avm_box_replace_Ast struct {
+type Teal_box_replace struct {
 	s1 AstStatement
 	s2 AstStatement
 	s3 AstStatement
 }
 
-func (a *avm_box_replace_Ast) String() string {
+func (a *Teal_box_replace) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5607,11 +5607,11 @@ func (a *avm_box_replace_Ast) String() string {
 	return res.String()
 }
 
-type avm_box_del_Ast struct {
+type Teal_box_del struct {
 	s1 AstStatement
 }
 
-func (a *avm_box_del_Ast) String() string {
+func (a *Teal_box_del) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5619,11 +5619,11 @@ func (a *avm_box_del_Ast) String() string {
 	return res.String()
 }
 
-type avm_box_len_Ast struct {
+type Teal_box_len struct {
 	s1 AstStatement
 }
 
-func (a *avm_box_len_Ast) String() string {
+func (a *Teal_box_len) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5631,11 +5631,11 @@ func (a *avm_box_len_Ast) String() string {
 	return res.String()
 }
 
-type avm_box_get_Ast struct {
+type Teal_box_get struct {
 	s1 AstStatement
 }
 
-func (a *avm_box_get_Ast) String() string {
+func (a *Teal_box_get) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5643,12 +5643,12 @@ func (a *avm_box_get_Ast) String() string {
 	return res.String()
 }
 
-type avm_box_put_Ast struct {
+type Teal_box_put struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_box_put_Ast) String() string {
+func (a *Teal_box_put) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5658,12 +5658,12 @@ func (a *avm_box_put_Ast) String() string {
 	return res.String()
 }
 
-type avm_txnas_Ast struct {
+type Teal_txnas struct {
 	s1 AstStatement
 	F1 string
 }
 
-func (a *avm_txnas_Ast) String() string {
+func (a *Teal_txnas) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5673,13 +5673,13 @@ func (a *avm_txnas_Ast) String() string {
 	return res.String()
 }
 
-type avm_gtxnas_Ast struct {
+type Teal_gtxnas struct {
 	s1 AstStatement
 	T1 string
 	F2 string
 }
 
-func (a *avm_gtxnas_Ast) String() string {
+func (a *Teal_gtxnas) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5691,13 +5691,13 @@ func (a *avm_gtxnas_Ast) String() string {
 	return res.String()
 }
 
-type avm_gtxnsas_Ast struct {
+type Teal_gtxnsas struct {
 	s1 AstStatement
 	s2 AstStatement
 	F1 string
 }
 
-func (a *avm_gtxnsas_Ast) String() string {
+func (a *Teal_gtxnsas) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5709,11 +5709,11 @@ func (a *avm_gtxnsas_Ast) String() string {
 	return res.String()
 }
 
-type avm_args_Ast struct {
+type Teal_args struct {
 	s1 AstStatement
 }
 
-func (a *avm_args_Ast) String() string {
+func (a *Teal_args) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5721,12 +5721,12 @@ func (a *avm_args_Ast) String() string {
 	return res.String()
 }
 
-type avm_gloadss_Ast struct {
+type Teal_gloadss struct {
 	s1 AstStatement
 	s2 AstStatement
 }
 
-func (a *avm_gloadss_Ast) String() string {
+func (a *Teal_gloadss) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5736,12 +5736,12 @@ func (a *avm_gloadss_Ast) String() string {
 	return res.String()
 }
 
-type avm_itxnas_Ast struct {
+type Teal_itxnas struct {
 	s1 AstStatement
 	F1 string
 }
 
-func (a *avm_itxnas_Ast) String() string {
+func (a *Teal_itxnas) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5751,13 +5751,13 @@ func (a *avm_itxnas_Ast) String() string {
 	return res.String()
 }
 
-type avm_gitxnas_Ast struct {
+type Teal_gitxnas struct {
 	s1 AstStatement
 	T1 string
 	F2 string
 }
 
-func (a *avm_gitxnas_Ast) String() string {
+func (a *Teal_gitxnas) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5769,14 +5769,14 @@ func (a *avm_gitxnas_Ast) String() string {
 	return res.String()
 }
 
-type avm_vrf_verify_Ast struct {
+type Teal_vrf_verify struct {
 	s1 AstStatement
 	s2 AstStatement
 	s3 AstStatement
 	S1 string
 }
 
-func (a *avm_vrf_verify_Ast) String() string {
+func (a *Teal_vrf_verify) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
@@ -5790,12 +5790,12 @@ func (a *avm_vrf_verify_Ast) String() string {
 	return res.String()
 }
 
-type avm_block_Ast struct {
+type Teal_block struct {
 	s1 AstStatement
 	F1 string
 }
 
-func (a *avm_block_Ast) String() string {
+func (a *Teal_block) String() string {
 	res := strings.Builder{}
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
