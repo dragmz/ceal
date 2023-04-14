@@ -84,6 +84,7 @@ func run(a args) error {
 #define STACK
 
 using uint64 = unsigned long long;
+using uint8 = unsigned char;
 using bytes = std::variant<const char*, const unsigned char*>;
 
 const uint64 NoOp = 0;
