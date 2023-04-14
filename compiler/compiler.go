@@ -408,54 +408,20 @@ func (c *CealCompiler) Compile(src string) string {
 		global.variables[v.name] = v
 	}
 
-	sv := &SymbolTableVisitor{
-		BaseCVisitor: &parser.BaseCVisitor{
-			BaseParseTreeVisitor: &antlr.BaseParseTreeVisitor{},
-		},
-		global: global,
-	}
-
-	stream.Seek(0)
-	sv.Visit(p.Program())
-
 	program := &AstProgram{
 		functions: map[string]*AstFunction{},
 	}
 
-	stream.Seek(0)
-	for _, d := range p.Program().AllGlobal() {
-		id := d.ID().GetText()
-		tn := d.Type_().ID().GetText()
-
-		t := global.resolveType(tn)
-
-		if t.simple == nil {
-			panic(fmt.Sprintf("global variables of non built-in type '%s' are not supported yet", t.name))
-		}
-
-		vr := &Variable{
-			constant: d.Type_().Const_() != nil,
-			name:     id,
-			t:        tn,
-			const_: &ConstVariable{
-				kind: t.simple.kind,
-			},
-		}
-
-		if !vr.constant {
-			panic("non-const global variables are not supported yet")
-		}
-
-		global.variables[id] = vr
-
-		switch t.simple.kind {
-		case SimpleTypeInt:
-			vr.const_.index = len(program.constints)
-			program.constints = append(program.constints, atoi(d.Constant().GetText()))
-		default:
-			panic("global variable of this simple type kind isn't supported yet")
-		}
+	sv := &SymbolTableVisitor{
+		BaseCVisitor: &parser.BaseCVisitor{
+			BaseParseTreeVisitor: &antlr.BaseParseTreeVisitor{},
+		},
+		program: program,
+		global:  global,
 	}
+
+	stream.Seek(0)
+	sv.Visit(p.Program())
 
 	global.readonly()
 

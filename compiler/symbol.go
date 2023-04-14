@@ -47,6 +47,8 @@ func (v *SymbolTableVisitor) initVariable(vr *Variable) {
 type SymbolTableVisitor struct {
 	*parser.BaseCVisitor
 
+	program *AstProgram
+
 	global *Scope
 	scope  *Scope
 
@@ -270,5 +272,45 @@ func (v *SymbolTableVisitor) VisitChildren(node antlr.RuleNode) interface{} {
 	for _, child := range node.GetChildren() {
 		child.(antlr.ParseTree).Accept(v)
 	}
+	return nil
+}
+
+func (v *SymbolTableVisitor) VisitGlobal(ctx *parser.GlobalContext) interface{} {
+	id := ctx.ID().GetText()
+	if _, ok := v.scope.variables[id]; ok {
+		panic(fmt.Sprintf("variable '%s' is already defined", id))
+	}
+
+	tn := ctx.Type_().ID().GetText()
+
+	t := v.scope.resolveType(tn)
+
+	if t.simple == nil {
+		panic(fmt.Sprintf("global variables of non built-in type '%s' are not supported yet", t.name))
+	}
+
+	vr := &Variable{
+		constant: ctx.Type_().Const_() != nil,
+		name:     id,
+		t:        tn,
+		const_: &ConstVariable{
+			kind: t.simple.kind,
+		},
+	}
+
+	if !vr.constant {
+		panic("non-const global variables are not supported yet")
+	}
+
+	v.scope.variables[id] = vr
+
+	switch t.simple.kind {
+	case SimpleTypeInt:
+		vr.const_.index = len(v.program.constints)
+		v.program.constints = append(v.program.constints, atoi(ctx.Constant().GetText()))
+	default:
+		panic("global variable of this simple type kind isn't supported yet")
+	}
+
 	return nil
 }
