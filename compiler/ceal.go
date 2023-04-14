@@ -19,11 +19,20 @@ func (a *CealProgram) String() string {
 	res.WriteString(fmt.Sprintf("#pragma version %d\n", AvmVersion))
 
 	if len(a.ConstInts) > 0 {
-		constints := []string{}
+		items := []string{}
 		for _, v := range a.ConstInts {
-			constints = append(constints, itoa(v))
+			items = append(items, itoa(v))
 		}
-		res.WriteString(fmt.Sprintf("intcblock %s\n", strings.Join(constints, " ")))
+		res.WriteString(fmt.Sprintf("intcblock %s\n", strings.Join(items, " ")))
+	}
+
+	if len(a.ConstBytes) > 0 {
+		items := []string{}
+		for _, v := range a.ConstBytes {
+			// TODO: may need other formatting than just string for non-printable bytes
+			items = append(items, string(v))
+		}
+		res.WriteString(fmt.Sprintf("bytecblock %s\n", strings.Join(items, " ")))
 	}
 
 	main := a.Functions[AvmMainName]

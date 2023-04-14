@@ -308,6 +308,9 @@ func (v *SymbolTableVisitor) VisitGlobal(ctx *parser.GlobalContext) interface{} 
 	case SimpleTypeInt:
 		vr.const_.index = len(v.program.ConstInts)
 		v.program.ConstInts = append(v.program.ConstInts, atoi(ctx.Constant().GetText()))
+	case SimpleTypeBytes:
+		vr.const_.index = len(v.program.ConstBytes)
+		v.program.ConstBytes = append(v.program.ConstBytes, []byte(ctx.Constant().GetText()))
 	default:
 		panic("global variable of this simple type kind isn't supported yet")
 	}

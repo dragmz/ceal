@@ -1,5 +1,10 @@
 #pragma version 8
 intcblock 123 234
+bytecblock "CValue" "DValue"
+bytec 0
+log
+bytec 1
+log
 intc 0
 intc 1
 +
