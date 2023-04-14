@@ -96,7 +96,16 @@ const uint64 DeleteApplication = 5;
 
 struct any
 {
-	bool operator==(const any);
+	any() = default;
+
+	template<typename T>
+	any(T);
+
+	template<typename T>
+	any operator=(T);
+
+	template<typename T>
+	bool operator==(T);
 };
 
 `)

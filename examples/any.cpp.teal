@@ -1,0 +1,19 @@
+#pragma version 8
+int 1
+bitlen
+store 0
+byte "test"
+bitlen
+store 1
+byte "test"
+int 0
+int 4
+box_extract
+bitlen
+store 2
+int 0
+loads
+int 1
+loads
+==
+store 3
