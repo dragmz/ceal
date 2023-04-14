@@ -104,28 +104,55 @@ type Variable struct {
 	fields map[string]*Variable
 }
 
-type LoopScope struct {
-	labels []string
+type LoopScopeItem struct {
+	name string
+
+	breaks    bool
+	continues bool
 }
 
-func (l *LoopScope) Get() string {
-	if len(l.labels) == 0 {
+type LoopScope struct {
+	stack []*LoopScopeItem
+}
+
+func (l *LoopScope) Break() string {
+	if len(l.stack) == 0 {
 		return ""
 	}
 
-	return l.labels[len(l.labels)-1]
+	item := l.stack[len(l.stack)-1]
+	item.breaks = true
+
+	return item.name
 }
 
-func (l *LoopScope) Push(label string) {
-	l.labels = append(l.labels, label)
+func (l *LoopScope) Continue() string {
+	if len(l.stack) == 0 {
+		return ""
+	}
+
+	item := l.stack[len(l.stack)-1]
+	item.continues = true
+
+	return item.name
+}
+
+func (l *LoopScope) Push(name string) *LoopScopeItem {
+	item := &LoopScopeItem{
+		name: name,
+	}
+
+	l.stack = append(l.stack, item)
+
+	return item
 }
 
 func (l *LoopScope) Pop() {
-	if len(l.labels) == 0 {
+	if len(l.stack) == 0 {
 		return
 	}
 
-	l.labels = l.labels[:len(l.labels)-1]
+	l.stack = l.stack[:len(l.stack)-1]
 }
 
 type Scope struct {

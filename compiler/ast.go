@@ -523,7 +523,7 @@ func (v *AstVisitor) VisitPreIncDecExpr(ctx *parser.PreIncDecExprContext) interf
 
 func (v *AstVisitor) VisitForStmt(ctx *parser.ForStmtContext) interface{} {
 	v.scope = v.scope.enter()
-	v.loops.Push("for")
+	loop := v.loops.Push("for")
 
 	init := []AstStatement{}
 
@@ -561,6 +561,7 @@ func (v *AstVisitor) VisitForStmt(ctx *parser.ForStmtContext) interface{} {
 
 	ast := &AstFor{
 		index:     v.index,
+		loop:      loop,
 		init:      init,
 		condition: condition,
 		iter:      iter,
@@ -576,10 +577,9 @@ func (v *AstVisitor) VisitForStmt(ctx *parser.ForStmtContext) interface{} {
 }
 
 func (v *AstVisitor) VisitWhileStmt(ctx *parser.WhileStmtContext) interface{} {
-	v.loops.Push("while")
-
 	ast := &AstWhile{
 		index:     v.index,
+		loop:      v.loops.Push("while"),
 		condition: v.visitStatement(ctx.Expr()),
 		s:         v.visitStatement(ctx.Stmt()),
 	}
@@ -592,10 +592,9 @@ func (v *AstVisitor) VisitWhileStmt(ctx *parser.WhileStmtContext) interface{} {
 }
 
 func (v *AstVisitor) VisitDoWhileStmt(ctx *parser.DoWhileStmtContext) interface{} {
-	v.loops.Push("do")
-
 	ast := &AstDoWhile{
 		index:     v.index,
+		loop:      v.loops.Push("do"),
 		condition: v.visitStatement(ctx.Expr()),
 		s:         v.visitStatement(ctx.Stmt()),
 	}
@@ -609,14 +608,14 @@ func (v *AstVisitor) VisitDoWhileStmt(ctx *parser.DoWhileStmtContext) interface{
 
 func (v *AstVisitor) VisitBreakStmt(ctx *parser.BreakStmtContext) interface{} {
 	return &AstBreak{
-		label: v.loops.Get(),
+		label: v.loops.Break(),
 		index: v.index,
 	}
 }
 
 func (v *AstVisitor) VisitContinueStmt(ctx *parser.ContinueStmtContext) interface{} {
 	return &AstContinue{
-		label: v.loops.Get(),
+		label: v.loops.Continue(),
 		index: v.index,
 	}
 }
@@ -624,10 +623,9 @@ func (v *AstVisitor) VisitContinueStmt(ctx *parser.ContinueStmtContext) interfac
 func (v *AstVisitor) VisitSwitchStmt(ctx *parser.SwitchStmtContext) interface{} {
 	ast := &AstSwitch{
 		index: v.index,
+		loop:  v.loops.Push("switch"),
 		value: v.visitStatement(ctx.Expr()),
 	}
-
-	v.loops.Push("switch")
 
 	for _, c := range ctx.AllCase_() {
 		stmts := []AstStatement{}

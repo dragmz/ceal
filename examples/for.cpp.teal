@@ -15,7 +15,6 @@ int 5
 bz if_end_0
 b for_1_end
 if_end_0:
-for_1_continue:
 load 0
 int 1
 +
@@ -32,7 +31,6 @@ bz for_2_end
 load 1
 itob
 log
-for_2_continue:
 load 1
 int 1
 +
@@ -49,7 +47,6 @@ bz for_3_end
 load 1
 itob
 log
-for_3_continue:
 load 1
 int 1
 +

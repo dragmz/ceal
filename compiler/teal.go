@@ -59,6 +59,7 @@ type AstSwitchCase struct {
 
 type AstSwitch struct {
 	index int
+	loop  *LoopScopeItem
 
 	value AstStatement
 	cases []*AstSwitchCase
@@ -97,7 +98,9 @@ func (a *AstSwitch) String() string {
 		}
 	}
 
-	res.WriteLine(fmt.Sprintf("switch_%d_end:", a.index))
+	if a.loop.breaks {
+		res.WriteLine(fmt.Sprintf("switch_%d_end:", a.index))
+	}
 
 	return res.String()
 }
@@ -112,6 +115,7 @@ func (a *AstPop) String() string {
 
 type AstDoWhile struct {
 	index     int
+	loop      *LoopScopeItem
 	condition AstStatement
 	s         AstStatement
 }
@@ -120,16 +124,24 @@ func (a *AstDoWhile) String() string {
 	res := Lines{}
 	res.WriteLine(fmt.Sprintf("do_%d:", a.index))
 	res.WriteLine(a.s.String())
-	res.WriteLine(fmt.Sprintf("do_%d_continue:", a.index))
+
+	if a.loop.continues {
+		res.WriteLine(fmt.Sprintf("do_%d_continue:", a.index))
+	}
+
 	res.WriteLine(a.condition.String())
 	res.WriteLine(fmt.Sprintf("bnz do_%d", a.index))
-	res.WriteLine(fmt.Sprintf("do_%d_end:", a.index))
+
+	if a.loop.breaks {
+		res.WriteLine(fmt.Sprintf("do_%d_end:", a.index))
+	}
 
 	return res.String()
 }
 
 type AstWhile struct {
 	index     int
+	loop      *LoopScopeItem
 	condition AstStatement
 	s         AstStatement
 }
@@ -141,7 +153,9 @@ func (a *AstWhile) String() string {
 	res.WriteLine(a.condition.String())
 	res.WriteLine(fmt.Sprintf("bz while_%d_end", a.index))
 	res.WriteLine(a.s.String())
-	res.WriteLine(fmt.Sprintf("while_%d_continue:", a.index))
+	if a.loop.continues {
+		res.WriteLine(fmt.Sprintf("while_%d_continue:", a.index))
+	}
 	res.WriteLine(fmt.Sprintf("b while_%d", a.index))
 	res.WriteLine(fmt.Sprintf("while_%d_end:", a.index))
 
@@ -150,6 +164,7 @@ func (a *AstWhile) String() string {
 
 type AstFor struct {
 	index     int
+	loop      *LoopScopeItem
 	init      []AstStatement
 	condition AstStatement
 	s         AstStatement
@@ -168,7 +183,10 @@ func (a *AstFor) String() string {
 	res.WriteLine(fmt.Sprintf("bz for_%d_end", a.index))
 	res.WriteLine(a.s.String())
 
-	res.WriteLine(fmt.Sprintf("for_%d_continue:", a.index))
+	if a.loop.continues {
+		res.WriteLine(fmt.Sprintf("for_%d_continue:", a.index))
+	}
+
 	for _, stmt := range a.iter {
 		res.WriteLine(stmt.String())
 	}
