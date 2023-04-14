@@ -47,7 +47,7 @@ expr:
     | expr '^' expr             # BitXorExpr
     | expr '|' expr             # BitOrExpr
     | expr '&&' expr            # AndExpr
-    | expr '||' expr            # OrExpr
+    | expr ('||' alt)+          # OrExpr
     | assign_expr               # AssignExpr
     | asdexpr                   # AssignSumDiffExpr
     | ID                        # VariableExpr
@@ -58,6 +58,7 @@ expr:
     ;
 
 assign_expr: ID ('.' ID)* '=' expr;
+alt: expr ('&&' expr)*;
 const: 'const';
 asdexpr: ID ('.' ID)* asd expr;
 asd: '+=' | '-=';

@@ -139,6 +139,9 @@ type CListener interface {
 	// EnterAssign_expr is called when entering the assign_expr production.
 	EnterAssign_expr(c *Assign_exprContext)
 
+	// EnterAlt is called when entering the alt production.
+	EnterAlt(c *AltContext)
+
 	// EnterConst is called when entering the const production.
 	EnterConst(c *ConstContext)
 
@@ -324,6 +327,9 @@ type CListener interface {
 
 	// ExitAssign_expr is called when exiting the assign_expr production.
 	ExitAssign_expr(c *Assign_exprContext)
+
+	// ExitAlt is called when exiting the alt production.
+	ExitAlt(c *AltContext)
 
 	// ExitConst is called when exiting the const production.
 	ExitConst(c *ConstContext)

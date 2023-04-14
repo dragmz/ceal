@@ -349,6 +349,50 @@ func (a *AstAssignSumDiff) String() string {
 	return res.String()
 }
 
+type AstAnd struct {
+	index    int
+	operands []AstStatement
+}
+
+func (a *AstAnd) String() string {
+	res := Lines{}
+
+	for i, alt := range a.operands {
+		res.WriteLine(alt.String())
+		if i > 0 {
+			res.WriteLine("&&")
+		}
+		res.WriteLine("dup")
+		res.WriteLine(fmt.Sprintf("bz and_%d_end", a.index))
+	}
+
+	res.WriteLine(fmt.Sprintf("and_%d_end:", a.index))
+
+	return res.String()
+}
+
+type AstOr struct {
+	index    int
+	operands []AstStatement
+}
+
+func (a *AstOr) String() string {
+	res := Lines{}
+
+	for i, alt := range a.operands {
+		res.WriteLine(alt.String())
+		if i > 0 {
+			res.WriteLine("||")
+		}
+		res.WriteLine("dup")
+		res.WriteLine(fmt.Sprintf("bnz or_%d_end", a.index))
+	}
+
+	res.WriteLine(fmt.Sprintf("or_%d_end:", a.index))
+
+	return res.String()
+}
+
 type AstBinop struct {
 	l  AstStatement
 	op string

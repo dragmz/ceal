@@ -284,6 +284,12 @@ func (s *BaseCListener) EnterAssign_expr(ctx *Assign_exprContext) {}
 // ExitAssign_expr is called when production assign_expr is exited.
 func (s *BaseCListener) ExitAssign_expr(ctx *Assign_exprContext) {}
 
+// EnterAlt is called when production alt is entered.
+func (s *BaseCListener) EnterAlt(ctx *AltContext) {}
+
+// ExitAlt is called when production alt is exited.
+func (s *BaseCListener) ExitAlt(ctx *AltContext) {}
+
 // EnterConst is called when production const is entered.
 func (s *BaseCListener) EnterConst(ctx *ConstContext) {}
 

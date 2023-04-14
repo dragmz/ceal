@@ -183,6 +183,10 @@ func (v *BaseCVisitor) VisitAssign_expr(ctx *Assign_exprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCVisitor) VisitAlt(ctx *AltContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCVisitor) VisitConst(ctx *ConstContext) interface{} {
 	return v.VisitChildren(ctx)
 }
