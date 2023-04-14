@@ -394,6 +394,12 @@ type AstAssign struct {
 	fun *Function
 
 	value AstStatement
+
+	stmt bool
+}
+
+func (a *AstAssign) ToStmt() {
+	a.stmt = true
 }
 
 func (a *AstAssign) String() string {
@@ -406,6 +412,8 @@ func (a *AstAssign) String() string {
 		panic("cannot assign param var")
 	}
 
+	res := Lines{}
+
 	if a.t.complex != nil {
 		if a.t.complex.builtin != nil {
 			return fmt.Sprintf("%s %s", a.fun.builtin.op, a.f.name)
@@ -415,13 +423,12 @@ func (a *AstAssign) String() string {
 			}
 
 			v := a.v.fields[a.f.name]
-
 			ast := avm_store_Ast{
 				s1: a.value,
 				i1: itoa(v.local.slot),
 			}
 
-			return ast.String()
+			res.WriteLine(ast.String())
 		}
 	} else {
 		ast := avm_store_Ast{
@@ -429,8 +436,18 @@ func (a *AstAssign) String() string {
 			i1: itoa(a.v.local.slot),
 		}
 
-		return ast.String()
+		res.WriteLine(ast.String())
 	}
+
+	if !a.stmt {
+		load := avm_load_Ast{
+			i1: itoa(a.v.local.slot),
+		}
+
+		res.WriteLine(load.String())
+	}
+
+	return res.String()
 }
 
 type AstStructField struct {

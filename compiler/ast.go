@@ -55,7 +55,19 @@ func (v *AstVisitor) VisitMemberExpr(ctx *parser.MemberExprContext) interface{} 
 	return ast
 }
 
-func (v *AstVisitor) VisitAssignmentStmt(ctx *parser.AssignmentStmtContext) interface{} {
+func (v *AstVisitor) VisitAssignExpr(ctx *parser.AssignExprContext) interface{} {
+	return v.Visit(ctx.Assign_expr())
+}
+
+func (v *AstVisitor) VisitAssignStmt(ctx *parser.AssignStmtContext) interface{} {
+	res := v.Visit(ctx.Assign_expr())
+	if e, ok := res.(AstExpr); ok {
+		e.ToStmt()
+	}
+	return res
+}
+
+func (v *AstVisitor) VisitAssign_expr(ctx *parser.Assign_exprContext) interface{} {
 	ids := ctx.AllID()
 
 	vr, f := v.mustResolve(ids)
@@ -509,11 +521,18 @@ func (v *AstVisitor) VisitForStmt(ctx *parser.ForStmtContext) interface{} {
 
 	if ctx.ForInit().Definition() != nil {
 		ast := v.visitStatement(ctx.ForInit().Definition())
+		if e, ok := ast.(AstExpr); ok {
+			e.ToStmt()
+		}
 		init = append(init, ast)
 	}
 
 	for _, e := range ctx.ForInit().AllExpr() {
 		ast := v.visitStatement(e)
+		if e, ok := ast.(AstExpr); ok {
+			e.ToStmt()
+		}
+
 		init = append(init, ast)
 	}
 

@@ -19,7 +19,7 @@ param: type ID;
 stmt:
     declaration ';'                                                 # DeclarationStmt
     | definition ';'                                                # DefinitionStmt
-    | ID ('.' ID)* '=' expr ';'                                     # AssignmentStmt
+    | assign_expr ';'                                               # AssignStmt
     | asdexpr ';'                                                   # AssignSumDiffStmt
     | call_expr ';'                                                 # CallStmt
     | 'if' '(' expr ')' (('{' stmt* '}') | stmt) elseif* else?      # IfStmt
@@ -48,6 +48,7 @@ expr:
     | expr '|' expr             # BitOrExpr
     | expr '&&' expr            # AndExpr
     | expr '||' expr            # OrExpr
+    | assign_expr               # AssignExpr
     | asdexpr                   # AssignSumDiffExpr
     | ID                        # VariableExpr
     | (INT | STRING)            # ConstantExpr
@@ -56,6 +57,7 @@ expr:
     | '(' expr ')'              # GroupExpr
     ;
 
+assign_expr: ID ('.' ID)* '=' expr;
 const: 'const';
 asdexpr: ID ('.' ID)* asd expr;
 asd: '+=' | '-=';

@@ -37,8 +37,8 @@ type CListener interface {
 	// EnterDefinitionStmt is called when entering the DefinitionStmt production.
 	EnterDefinitionStmt(c *DefinitionStmtContext)
 
-	// EnterAssignmentStmt is called when entering the AssignmentStmt production.
-	EnterAssignmentStmt(c *AssignmentStmtContext)
+	// EnterAssignStmt is called when entering the AssignStmt production.
+	EnterAssignStmt(c *AssignStmtContext)
 
 	// EnterAssignSumDiffStmt is called when entering the AssignSumDiffStmt production.
 	EnterAssignSumDiffStmt(c *AssignSumDiffStmtContext)
@@ -97,6 +97,9 @@ type CListener interface {
 	// EnterOrExpr is called when entering the OrExpr production.
 	EnterOrExpr(c *OrExprContext)
 
+	// EnterAssignExpr is called when entering the AssignExpr production.
+	EnterAssignExpr(c *AssignExprContext)
+
 	// EnterGroupExpr is called when entering the GroupExpr production.
 	EnterGroupExpr(c *GroupExprContext)
 
@@ -132,6 +135,9 @@ type CListener interface {
 
 	// EnterMinusExpr is called when entering the MinusExpr production.
 	EnterMinusExpr(c *MinusExprContext)
+
+	// EnterAssign_expr is called when entering the assign_expr production.
+	EnterAssign_expr(c *Assign_exprContext)
 
 	// EnterConst is called when entering the const production.
 	EnterConst(c *ConstContext)
@@ -217,8 +223,8 @@ type CListener interface {
 	// ExitDefinitionStmt is called when exiting the DefinitionStmt production.
 	ExitDefinitionStmt(c *DefinitionStmtContext)
 
-	// ExitAssignmentStmt is called when exiting the AssignmentStmt production.
-	ExitAssignmentStmt(c *AssignmentStmtContext)
+	// ExitAssignStmt is called when exiting the AssignStmt production.
+	ExitAssignStmt(c *AssignStmtContext)
 
 	// ExitAssignSumDiffStmt is called when exiting the AssignSumDiffStmt production.
 	ExitAssignSumDiffStmt(c *AssignSumDiffStmtContext)
@@ -277,6 +283,9 @@ type CListener interface {
 	// ExitOrExpr is called when exiting the OrExpr production.
 	ExitOrExpr(c *OrExprContext)
 
+	// ExitAssignExpr is called when exiting the AssignExpr production.
+	ExitAssignExpr(c *AssignExprContext)
+
 	// ExitGroupExpr is called when exiting the GroupExpr production.
 	ExitGroupExpr(c *GroupExprContext)
 
@@ -312,6 +321,9 @@ type CListener interface {
 
 	// ExitMinusExpr is called when exiting the MinusExpr production.
 	ExitMinusExpr(c *MinusExprContext)
+
+	// ExitAssign_expr is called when exiting the assign_expr production.
+	ExitAssign_expr(c *Assign_exprContext)
 
 	// ExitConst is called when exiting the const production.
 	ExitConst(c *ConstContext)

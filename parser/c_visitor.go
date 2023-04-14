@@ -37,8 +37,8 @@ type CVisitor interface {
 	// Visit a parse tree produced by CParser#DefinitionStmt.
 	VisitDefinitionStmt(ctx *DefinitionStmtContext) interface{}
 
-	// Visit a parse tree produced by CParser#AssignmentStmt.
-	VisitAssignmentStmt(ctx *AssignmentStmtContext) interface{}
+	// Visit a parse tree produced by CParser#AssignStmt.
+	VisitAssignStmt(ctx *AssignStmtContext) interface{}
 
 	// Visit a parse tree produced by CParser#AssignSumDiffStmt.
 	VisitAssignSumDiffStmt(ctx *AssignSumDiffStmtContext) interface{}
@@ -97,6 +97,9 @@ type CVisitor interface {
 	// Visit a parse tree produced by CParser#OrExpr.
 	VisitOrExpr(ctx *OrExprContext) interface{}
 
+	// Visit a parse tree produced by CParser#AssignExpr.
+	VisitAssignExpr(ctx *AssignExprContext) interface{}
+
 	// Visit a parse tree produced by CParser#GroupExpr.
 	VisitGroupExpr(ctx *GroupExprContext) interface{}
 
@@ -132,6 +135,9 @@ type CVisitor interface {
 
 	// Visit a parse tree produced by CParser#MinusExpr.
 	VisitMinusExpr(ctx *MinusExprContext) interface{}
+
+	// Visit a parse tree produced by CParser#assign_expr.
+	VisitAssign_expr(ctx *Assign_exprContext) interface{}
 
 	// Visit a parse tree produced by CParser#const.
 	VisitConst(ctx *ConstContext) interface{}

@@ -47,7 +47,7 @@ func (v *BaseCVisitor) VisitDefinitionStmt(ctx *DefinitionStmtContext) interface
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseCVisitor) VisitAssignmentStmt(ctx *AssignmentStmtContext) interface{} {
+func (v *BaseCVisitor) VisitAssignStmt(ctx *AssignStmtContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -127,6 +127,10 @@ func (v *BaseCVisitor) VisitOrExpr(ctx *OrExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCVisitor) VisitAssignExpr(ctx *AssignExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCVisitor) VisitGroupExpr(ctx *GroupExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -172,6 +176,10 @@ func (v *BaseCVisitor) VisitBitXorExpr(ctx *BitXorExprContext) interface{} {
 }
 
 func (v *BaseCVisitor) VisitMinusExpr(ctx *MinusExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitAssign_expr(ctx *Assign_exprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

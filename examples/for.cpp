@@ -9,4 +9,15 @@ uint64 avm_main()
         if (i == 5)
             break;
     }
+
+    uint64 i;
+    for(i = 0; i < 10; ++i)
+    {
+        avm_log(avm_itob(i));
+    }
+    
+    for(i = 0; i < 10; ++i)
+    {
+        avm_log(avm_itob(i));
+    }
 }
