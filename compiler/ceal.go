@@ -14,16 +14,16 @@ type CealProgram struct {
 }
 
 func (a *CealProgram) String() string {
-	res := strings.Builder{}
+	res := Lines{}
 
-	res.WriteString(fmt.Sprintf("#pragma version %d\n", AvmVersion))
+	res.WriteLine(fmt.Sprintf("#pragma version %d", AvmVersion))
 
 	if len(a.ConstInts) > 0 {
 		items := []string{}
 		for _, v := range a.ConstInts {
 			items = append(items, itoa(v))
 		}
-		res.WriteString(fmt.Sprintf("intcblock %s\n", strings.Join(items, " ")))
+		res.WriteLine(fmt.Sprintf("intcblock %s", strings.Join(items, " ")))
 	}
 
 	if len(a.ConstBytes) > 0 {
@@ -32,13 +32,13 @@ func (a *CealProgram) String() string {
 			// TODO: may need other formatting than just string for non-printable bytes
 			items = append(items, string(v))
 		}
-		res.WriteString(fmt.Sprintf("bytecblock %s\n", strings.Join(items, " ")))
+		res.WriteLine(fmt.Sprintf("bytecblock %s", strings.Join(items, " ")))
 	}
 
 	main := a.Functions[AvmMainName]
 
 	if len(a.Functions) > 1 {
-		res.WriteString(fmt.Sprintf("b %s\n", main.Fun.name))
+		res.WriteLine(fmt.Sprintf("b %s", main.Fun.name))
 	}
 
 	for _, name := range a.FunctionNames {
@@ -48,17 +48,15 @@ func (a *CealProgram) String() string {
 			continue
 		}
 
-		res.WriteString(fmt.Sprintf("%s:\n", ast.Fun.name))
-
-		res.WriteString(ast.String())
-		res.WriteString("\n")
+		res.WriteLine(fmt.Sprintf("%s:", ast.Fun.name))
+		res.WriteLine(ast.String())
 	}
 
 	if len(a.Functions) > 1 {
-		res.WriteString(fmt.Sprintf("%s:\n", main.Fun.name))
+		res.WriteLine(fmt.Sprintf("%s:", main.Fun.name))
 	}
 
-	res.WriteString(main.String())
+	res.WriteLine(main.String())
 
 	return res.String()
 }
