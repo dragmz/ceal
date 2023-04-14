@@ -6,6 +6,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/pkg/errors"
 )
@@ -15,18 +16,28 @@ type LangSpec struct {
 	Ops            []LangSpecOp `json:"ops"`
 }
 
+type OpImmediateDetails struct {
+	Comment   string `json:",omitempty"`
+	Encoding  string `json:",omitempty"`
+	Name      string `json:",omitempty"`
+	Reference string `json:",omitempty"`
+}
+
 type LangSpecOp struct {
-	Name     string `json:"Name"`
-	Size     int    `json:"Size"`
-	Args     string `json:"Args"`
-	Returns  string `json:"Returns"`
-	Doc      string `json:"Doc"`
-	DocExtra string `json:"DocExtra"`
+	Opcode  byte
+	Name    string
+	Args    []string `json:",omitempty"`
+	Returns []string `json:",omitempty"`
+	Size    int
 
-	ArgEnum      []string `json:"ArgEnum,omitempty"`
-	ArgEnumTypes string   `json:"ArgEnumTypes,omitempty"`
+	ArgEnum      []string `json:",omitempty"`
+	ArgEnumTypes []string `json:",omitempty"`
 
-	ImmediateNote string `json:"ImmediateNote"`
+	Doc               string
+	DocExtra          string               `json:",omitempty"`
+	ImmediateNote     []OpImmediateDetails `json:",omitempty"`
+	IntroducedVersion uint64
+	Groups            []string
 }
 
 type args struct {
@@ -34,16 +45,16 @@ type args struct {
 	Out  string
 }
 
-func readType(b byte) string {
-	switch b {
-	case 'B':
+func readType(t string) string {
+	switch t {
+	case "[]byte", "addr", "[32]byte", "key", "bigint":
 		return "bytes"
-	case 'U':
+	case "uint64", "bool":
 		return "uint64"
-	case '.':
+	case "any":
 		return "any"
 	default:
-		panic(fmt.Sprintf("unsupported type: '%s'", string(b)))
+		panic(fmt.Sprintf("unsupported type: '%s'", t))
 	}
 }
 
@@ -86,21 +97,44 @@ func readReturns(op LangSpecOp) []ceal.CealReturn {
 }
 
 func readImms(op LangSpecOp) []ceal.CealArg {
-	imms := op.Size - 1
+	imms := len(op.ImmediateNote)
 
-	ps := []ceal.CealArg{}
-
-	for i := 0; i < imms; i++ {
-		t := "uint64"
-
-		p := ceal.CealArg{
-			Type: t,
-			Name: fmt.Sprintf("i%d", i+1),
-		}
-
-		ps = append(ps, p)
+	ps := make([]ceal.CealArg, imms)
+	if imms == 0 {
+		return ps
 	}
 
+	for i := 0; i < imms; i++ {
+		imm := op.ImmediateNote[i]
+
+		t := "uint64"
+		switch imm.Encoding {
+		case "uint8":
+			t = "uint8"
+		case "int8":
+			t = "int8"
+		case "int16 (big-endian)":
+			t = "int16"
+		case "varuint":
+			t = "bytes"
+		case "varuint count, [int16 (big-endian) ...]":
+			t = "bytes"
+		case "varuint count, [varuint ...]":
+			t = "bytes"
+		case "varuint count, [varuint length, bytes ...]":
+			t = "bytes"
+		case "varuint length, bytes":
+			t = "bytes"
+		default:
+			panic(fmt.Sprintf("Unsupported immediate type: %s", imm.Encoding))
+		}
+
+		name := fmt.Sprintf("%s%d", strings.Trim(imm.Name, " ."), i+1)
+		ps[i] = ceal.CealArg{
+			Type: t,
+			Name: name,
+		}
+	}
 	return ps
 }
 

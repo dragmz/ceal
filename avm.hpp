@@ -214,7 +214,10 @@ intcblock - prepare block of uint64 constants for use by intc
 
 `intcblock` loads following program bytes into an array of integer constants in the evaluator. These integer constants can be referred to by `intc` and `intc_*` which will push the value onto the stack. Subsequent calls to `intcblock` reset and replace the integer constants available to the script.
 */
-void avm_intcblock();
+struct avm_intcblock_t
+{
+};
+extern avm_intcblock_t avm_intcblock;
 /*
 intc - Ith constant from intcblock
 */
@@ -243,7 +246,10 @@ bytecblock - prepare block of byte-array constants for use by bytec
 
 `bytecblock` loads the following program bytes into an array of byte-array constants in the evaluator. These constants can be referred to by `bytec` and `bytec_*` which will push the value onto the stack. Subsequent calls to `bytecblock` reset and replace the bytes constants available to the script.
 */
-void avm_bytecblock();
+struct avm_bytecblock_t
+{
+};
+extern avm_bytecblock_t avm_bytecblock;
 /*
 bytec - Ith constant from bytecblock
 */
@@ -394,74 +400,74 @@ for notes on transaction fields available, see `txn`. If this transaction is _i_
 */
 struct avm_gtxn_t
 {
-	bytes Sender(IMMEDIATE uint64 i2);
-	uint64 Fee(IMMEDIATE uint64 i2);
-	uint64 FirstValid(IMMEDIATE uint64 i2);
-	uint64 FirstValidTime(IMMEDIATE uint64 i2);
-	uint64 LastValid(IMMEDIATE uint64 i2);
-	bytes Note(IMMEDIATE uint64 i2);
-	bytes Lease(IMMEDIATE uint64 i2);
-	bytes Receiver(IMMEDIATE uint64 i2);
-	uint64 Amount(IMMEDIATE uint64 i2);
-	bytes CloseRemainderTo(IMMEDIATE uint64 i2);
-	bytes VotePK(IMMEDIATE uint64 i2);
-	bytes SelectionPK(IMMEDIATE uint64 i2);
-	uint64 VoteFirst(IMMEDIATE uint64 i2);
-	uint64 VoteLast(IMMEDIATE uint64 i2);
-	uint64 VoteKeyDilution(IMMEDIATE uint64 i2);
-	bytes Type(IMMEDIATE uint64 i2);
-	uint64 TypeEnum(IMMEDIATE uint64 i2);
-	uint64 XferAsset(IMMEDIATE uint64 i2);
-	uint64 AssetAmount(IMMEDIATE uint64 i2);
-	bytes AssetSender(IMMEDIATE uint64 i2);
-	bytes AssetReceiver(IMMEDIATE uint64 i2);
-	bytes AssetCloseTo(IMMEDIATE uint64 i2);
-	uint64 GroupIndex(IMMEDIATE uint64 i2);
-	bytes TxID(IMMEDIATE uint64 i2);
-	uint64 ApplicationID(IMMEDIATE uint64 i2);
-	uint64 OnCompletion(IMMEDIATE uint64 i2);
-	bytes ApplicationArgs(IMMEDIATE uint64 i2);
-	uint64 NumAppArgs(IMMEDIATE uint64 i2);
-	bytes Accounts(IMMEDIATE uint64 i2);
-	uint64 NumAccounts(IMMEDIATE uint64 i2);
-	bytes ApprovalProgram(IMMEDIATE uint64 i2);
-	bytes ClearStateProgram(IMMEDIATE uint64 i2);
-	bytes RekeyTo(IMMEDIATE uint64 i2);
-	uint64 ConfigAsset(IMMEDIATE uint64 i2);
-	uint64 ConfigAssetTotal(IMMEDIATE uint64 i2);
-	uint64 ConfigAssetDecimals(IMMEDIATE uint64 i2);
-	uint64 ConfigAssetDefaultFrozen(IMMEDIATE uint64 i2);
-	bytes ConfigAssetUnitName(IMMEDIATE uint64 i2);
-	bytes ConfigAssetName(IMMEDIATE uint64 i2);
-	bytes ConfigAssetURL(IMMEDIATE uint64 i2);
-	bytes ConfigAssetMetadataHash(IMMEDIATE uint64 i2);
-	bytes ConfigAssetManager(IMMEDIATE uint64 i2);
-	bytes ConfigAssetReserve(IMMEDIATE uint64 i2);
-	bytes ConfigAssetFreeze(IMMEDIATE uint64 i2);
-	bytes ConfigAssetClawback(IMMEDIATE uint64 i2);
-	uint64 FreezeAsset(IMMEDIATE uint64 i2);
-	bytes FreezeAssetAccount(IMMEDIATE uint64 i2);
-	uint64 FreezeAssetFrozen(IMMEDIATE uint64 i2);
-	uint64 Assets(IMMEDIATE uint64 i2);
-	uint64 NumAssets(IMMEDIATE uint64 i2);
-	uint64 Applications(IMMEDIATE uint64 i2);
-	uint64 NumApplications(IMMEDIATE uint64 i2);
-	uint64 GlobalNumUint(IMMEDIATE uint64 i2);
-	uint64 GlobalNumByteSlice(IMMEDIATE uint64 i2);
-	uint64 LocalNumUint(IMMEDIATE uint64 i2);
-	uint64 LocalNumByteSlice(IMMEDIATE uint64 i2);
-	uint64 ExtraProgramPages(IMMEDIATE uint64 i2);
-	uint64 Nonparticipation(IMMEDIATE uint64 i2);
-	bytes Logs(IMMEDIATE uint64 i2);
-	uint64 NumLogs(IMMEDIATE uint64 i2);
-	uint64 CreatedAssetID(IMMEDIATE uint64 i2);
-	uint64 CreatedApplicationID(IMMEDIATE uint64 i2);
-	bytes LastLog(IMMEDIATE uint64 i2);
-	bytes StateProofPK(IMMEDIATE uint64 i2);
-	bytes ApprovalProgramPages(IMMEDIATE uint64 i2);
-	uint64 NumApprovalProgramPages(IMMEDIATE uint64 i2);
-	bytes ClearStateProgramPages(IMMEDIATE uint64 i2);
-	uint64 NumClearStateProgramPages(IMMEDIATE uint64 i2);
+	bytes Sender(IMMEDIATE uint8 F2);
+	uint64 Fee(IMMEDIATE uint8 F2);
+	uint64 FirstValid(IMMEDIATE uint8 F2);
+	uint64 FirstValidTime(IMMEDIATE uint8 F2);
+	uint64 LastValid(IMMEDIATE uint8 F2);
+	bytes Note(IMMEDIATE uint8 F2);
+	bytes Lease(IMMEDIATE uint8 F2);
+	bytes Receiver(IMMEDIATE uint8 F2);
+	uint64 Amount(IMMEDIATE uint8 F2);
+	bytes CloseRemainderTo(IMMEDIATE uint8 F2);
+	bytes VotePK(IMMEDIATE uint8 F2);
+	bytes SelectionPK(IMMEDIATE uint8 F2);
+	uint64 VoteFirst(IMMEDIATE uint8 F2);
+	uint64 VoteLast(IMMEDIATE uint8 F2);
+	uint64 VoteKeyDilution(IMMEDIATE uint8 F2);
+	bytes Type(IMMEDIATE uint8 F2);
+	uint64 TypeEnum(IMMEDIATE uint8 F2);
+	uint64 XferAsset(IMMEDIATE uint8 F2);
+	uint64 AssetAmount(IMMEDIATE uint8 F2);
+	bytes AssetSender(IMMEDIATE uint8 F2);
+	bytes AssetReceiver(IMMEDIATE uint8 F2);
+	bytes AssetCloseTo(IMMEDIATE uint8 F2);
+	uint64 GroupIndex(IMMEDIATE uint8 F2);
+	bytes TxID(IMMEDIATE uint8 F2);
+	uint64 ApplicationID(IMMEDIATE uint8 F2);
+	uint64 OnCompletion(IMMEDIATE uint8 F2);
+	bytes ApplicationArgs(IMMEDIATE uint8 F2);
+	uint64 NumAppArgs(IMMEDIATE uint8 F2);
+	bytes Accounts(IMMEDIATE uint8 F2);
+	uint64 NumAccounts(IMMEDIATE uint8 F2);
+	bytes ApprovalProgram(IMMEDIATE uint8 F2);
+	bytes ClearStateProgram(IMMEDIATE uint8 F2);
+	bytes RekeyTo(IMMEDIATE uint8 F2);
+	uint64 ConfigAsset(IMMEDIATE uint8 F2);
+	uint64 ConfigAssetTotal(IMMEDIATE uint8 F2);
+	uint64 ConfigAssetDecimals(IMMEDIATE uint8 F2);
+	uint64 ConfigAssetDefaultFrozen(IMMEDIATE uint8 F2);
+	bytes ConfigAssetUnitName(IMMEDIATE uint8 F2);
+	bytes ConfigAssetName(IMMEDIATE uint8 F2);
+	bytes ConfigAssetURL(IMMEDIATE uint8 F2);
+	bytes ConfigAssetMetadataHash(IMMEDIATE uint8 F2);
+	bytes ConfigAssetManager(IMMEDIATE uint8 F2);
+	bytes ConfigAssetReserve(IMMEDIATE uint8 F2);
+	bytes ConfigAssetFreeze(IMMEDIATE uint8 F2);
+	bytes ConfigAssetClawback(IMMEDIATE uint8 F2);
+	uint64 FreezeAsset(IMMEDIATE uint8 F2);
+	bytes FreezeAssetAccount(IMMEDIATE uint8 F2);
+	uint64 FreezeAssetFrozen(IMMEDIATE uint8 F2);
+	uint64 Assets(IMMEDIATE uint8 F2);
+	uint64 NumAssets(IMMEDIATE uint8 F2);
+	uint64 Applications(IMMEDIATE uint8 F2);
+	uint64 NumApplications(IMMEDIATE uint8 F2);
+	uint64 GlobalNumUint(IMMEDIATE uint8 F2);
+	uint64 GlobalNumByteSlice(IMMEDIATE uint8 F2);
+	uint64 LocalNumUint(IMMEDIATE uint8 F2);
+	uint64 LocalNumByteSlice(IMMEDIATE uint8 F2);
+	uint64 ExtraProgramPages(IMMEDIATE uint8 F2);
+	uint64 Nonparticipation(IMMEDIATE uint8 F2);
+	bytes Logs(IMMEDIATE uint8 F2);
+	uint64 NumLogs(IMMEDIATE uint8 F2);
+	uint64 CreatedAssetID(IMMEDIATE uint8 F2);
+	uint64 CreatedApplicationID(IMMEDIATE uint8 F2);
+	bytes LastLog(IMMEDIATE uint8 F2);
+	bytes StateProofPK(IMMEDIATE uint8 F2);
+	bytes ApprovalProgramPages(IMMEDIATE uint8 F2);
+	uint64 NumApprovalProgramPages(IMMEDIATE uint8 F2);
+	bytes ClearStateProgramPages(IMMEDIATE uint8 F2);
+	uint64 NumClearStateProgramPages(IMMEDIATE uint8 F2);
 };
 extern avm_gtxn_t avm_gtxn;
 /*
@@ -484,13 +490,13 @@ txna - Ith value of the array field F of the current transaction
 */
 struct avm_txna_t
 {
-	bytes ApplicationArgs(IMMEDIATE uint64 i2);
-	bytes Accounts(IMMEDIATE uint64 i2);
-	uint64 Assets(IMMEDIATE uint64 i2);
-	uint64 Applications(IMMEDIATE uint64 i2);
-	bytes Logs(IMMEDIATE uint64 i2);
-	bytes ApprovalProgramPages(IMMEDIATE uint64 i2);
-	bytes ClearStateProgramPages(IMMEDIATE uint64 i2);
+	bytes ApplicationArgs(IMMEDIATE uint8 I2);
+	bytes Accounts(IMMEDIATE uint8 I2);
+	uint64 Assets(IMMEDIATE uint8 I2);
+	uint64 Applications(IMMEDIATE uint8 I2);
+	bytes Logs(IMMEDIATE uint8 I2);
+	bytes ApprovalProgramPages(IMMEDIATE uint8 I2);
+	bytes ClearStateProgramPages(IMMEDIATE uint8 I2);
 };
 extern avm_txna_t avm_txna;
 /*
@@ -499,13 +505,13 @@ gtxna - Ith value of the array field F from the Tth transaction in the current g
 */
 struct avm_gtxna_t
 {
-	bytes ApplicationArgs(IMMEDIATE uint64 i2, IMMEDIATE uint64 i3);
-	bytes Accounts(IMMEDIATE uint64 i2, IMMEDIATE uint64 i3);
-	uint64 Assets(IMMEDIATE uint64 i2, IMMEDIATE uint64 i3);
-	uint64 Applications(IMMEDIATE uint64 i2, IMMEDIATE uint64 i3);
-	bytes Logs(IMMEDIATE uint64 i2, IMMEDIATE uint64 i3);
-	bytes ApprovalProgramPages(IMMEDIATE uint64 i2, IMMEDIATE uint64 i3);
-	bytes ClearStateProgramPages(IMMEDIATE uint64 i2, IMMEDIATE uint64 i3);
+	bytes ApplicationArgs(IMMEDIATE uint8 F2, IMMEDIATE uint8 I3);
+	bytes Accounts(IMMEDIATE uint8 F2, IMMEDIATE uint8 I3);
+	uint64 Assets(IMMEDIATE uint8 F2, IMMEDIATE uint8 I3);
+	uint64 Applications(IMMEDIATE uint8 F2, IMMEDIATE uint8 I3);
+	bytes Logs(IMMEDIATE uint8 F2, IMMEDIATE uint8 I3);
+	bytes ApprovalProgramPages(IMMEDIATE uint8 F2, IMMEDIATE uint8 I3);
+	bytes ClearStateProgramPages(IMMEDIATE uint8 F2, IMMEDIATE uint8 I3);
 };
 extern avm_gtxna_t avm_gtxna;
 /*
@@ -591,13 +597,13 @@ gtxnsa - Ith value of the array field F from the Ath transaction in the current 
 */
 struct avm_gtxnsa_t
 {
-	bytes ApplicationArgs(STACK uint64 s1, IMMEDIATE uint64 i2);
-	bytes Accounts(STACK uint64 s1, IMMEDIATE uint64 i2);
-	uint64 Assets(STACK uint64 s1, IMMEDIATE uint64 i2);
-	uint64 Applications(STACK uint64 s1, IMMEDIATE uint64 i2);
-	bytes Logs(STACK uint64 s1, IMMEDIATE uint64 i2);
-	bytes ApprovalProgramPages(STACK uint64 s1, IMMEDIATE uint64 i2);
-	bytes ClearStateProgramPages(STACK uint64 s1, IMMEDIATE uint64 i2);
+	bytes ApplicationArgs(STACK uint64 s1, IMMEDIATE uint8 I2);
+	bytes Accounts(STACK uint64 s1, IMMEDIATE uint8 I2);
+	uint64 Assets(STACK uint64 s1, IMMEDIATE uint8 I2);
+	uint64 Applications(STACK uint64 s1, IMMEDIATE uint8 I2);
+	bytes Logs(STACK uint64 s1, IMMEDIATE uint8 I2);
+	bytes ApprovalProgramPages(STACK uint64 s1, IMMEDIATE uint8 I2);
+	bytes ClearStateProgramPages(STACK uint64 s1, IMMEDIATE uint8 I2);
 };
 extern avm_gtxnsa_t avm_gtxnsa;
 /*
@@ -866,7 +872,7 @@ extern avm_json_ref_t avm_json_ref;
 /*
 balance - balance for account A, in microalgos. The balance is observed after the effects of previous transactions in the group, and after the fee for the current transaction is deducted. Changes caused by inner transactions are observable immediately following `itxn_submit`
 
-params: Txn.Accounts offset (or, since v4, an _available_ account address), _available_ application id (or, since v4, a Txn.ForeignApps offset). Return: value.
+params: Txn.Accounts offset (or, since v4, an _available_ account address). Return: value.
 */
 uint64 avm_balance(STACK any s1);
 /*
@@ -1027,7 +1033,7 @@ extern avm_acct_params_get_t avm_acct_params_get;
 /*
 min_balance - minimum required balance for account A, in microalgos. Required balance is affected by ASA, App, and Box usage. When creating or opting into an app, the minimum balance grows before the app code runs, therefore the increase is visible there. When deleting or closing out, the minimum balance decreases after the app executes. Changes caused by inner transactions or box usage are observable immediately following the opcode effecting the change.
 
-params: Txn.Accounts offset (or, since v4, an _available_ account address), _available_ application id (or, since v4, a Txn.ForeignApps offset). Return: value.
+params: Txn.Accounts offset (or, since v4, an _available_ account address). Return: value.
 */
 uint64 avm_min_balance(STACK any s1);
 /*
@@ -1035,25 +1041,37 @@ pushbytes - immediate BYTES
 
 pushbytes args are not added to the bytecblock during assembly processes
 */
-bytes avm_pushbytes();
+struct avm_pushbytes_t
+{
+};
+extern avm_pushbytes_t avm_pushbytes;
 /*
 pushint - immediate UINT
 
 pushint args are not added to the intcblock during assembly processes
 */
-uint64 avm_pushint();
+struct avm_pushint_t
+{
+};
+extern avm_pushint_t avm_pushint;
 /*
 pushbytess - push sequences of immediate byte arrays to stack (first byte array being deepest)
 
 pushbytess args are not added to the bytecblock during assembly processes
 */
-void avm_pushbytess();
+struct avm_pushbytess_t
+{
+};
+extern avm_pushbytess_t avm_pushbytess;
 /*
 pushints - push sequence of immediate uints to stack in the order they appear (first uint being deepest)
 
 pushints args are not added to the intcblock during assembly processes
 */
-void avm_pushints();
+struct avm_pushints_t
+{
+};
+extern avm_pushints_t avm_pushints;
 /*
 ed25519verify_bare - for (data A, signature B, pubkey C) verify the signature of the data against the pubkey => {0 or 1}
 */
@@ -1099,13 +1117,19 @@ extern avm_frame_bury_t avm_frame_bury;
 /*
 switch - branch to the Ath label. Continue at following instruction if index A exceeds the number of labels.
 */
-void avm_switch_(STACK uint64 s1);
+struct avm_switch__t
+{
+};
+extern avm_switch__t avm_switch_;
 /*
 match - given match cases from A[1] to A[N], branch to the Ith label where A[I] = B. Continue to the following instruction if no matches are found.
 
 `match` consumes N+1 values from the stack. Let the top stack value be B. The following N values represent an ordered list of match cases/constants (A), where the first value (A[0]) is the deepest in the stack. The immediate arguments are an ordered list of N labels (T). `match` will branch to target T[I], where A[I] = B. If there are no matches then execution continues on to the next instruction.
 */
-void avm_match();
+struct avm_match_t
+{
+};
+extern avm_match_t avm_match;
 /*
 shl - A times 2^B, modulo 2^64
 */
@@ -1373,13 +1397,13 @@ itxna - Ith value of the array field F of the last inner transaction
 */
 struct avm_itxna_t
 {
-	bytes ApplicationArgs(IMMEDIATE uint64 i2);
-	bytes Accounts(IMMEDIATE uint64 i2);
-	uint64 Assets(IMMEDIATE uint64 i2);
-	uint64 Applications(IMMEDIATE uint64 i2);
-	bytes Logs(IMMEDIATE uint64 i2);
-	bytes ApprovalProgramPages(IMMEDIATE uint64 i2);
-	bytes ClearStateProgramPages(IMMEDIATE uint64 i2);
+	bytes ApplicationArgs(IMMEDIATE uint8 I2);
+	bytes Accounts(IMMEDIATE uint8 I2);
+	uint64 Assets(IMMEDIATE uint8 I2);
+	uint64 Applications(IMMEDIATE uint8 I2);
+	bytes Logs(IMMEDIATE uint8 I2);
+	bytes ApprovalProgramPages(IMMEDIATE uint8 I2);
+	bytes ClearStateProgramPages(IMMEDIATE uint8 I2);
 };
 extern avm_itxna_t avm_itxna;
 /*
@@ -1393,74 +1417,74 @@ gitxn - field F of the Tth transaction in the last inner group submitted
 */
 struct avm_gitxn_t
 {
-	bytes Sender(IMMEDIATE uint64 i2);
-	uint64 Fee(IMMEDIATE uint64 i2);
-	uint64 FirstValid(IMMEDIATE uint64 i2);
-	uint64 FirstValidTime(IMMEDIATE uint64 i2);
-	uint64 LastValid(IMMEDIATE uint64 i2);
-	bytes Note(IMMEDIATE uint64 i2);
-	bytes Lease(IMMEDIATE uint64 i2);
-	bytes Receiver(IMMEDIATE uint64 i2);
-	uint64 Amount(IMMEDIATE uint64 i2);
-	bytes CloseRemainderTo(IMMEDIATE uint64 i2);
-	bytes VotePK(IMMEDIATE uint64 i2);
-	bytes SelectionPK(IMMEDIATE uint64 i2);
-	uint64 VoteFirst(IMMEDIATE uint64 i2);
-	uint64 VoteLast(IMMEDIATE uint64 i2);
-	uint64 VoteKeyDilution(IMMEDIATE uint64 i2);
-	bytes Type(IMMEDIATE uint64 i2);
-	uint64 TypeEnum(IMMEDIATE uint64 i2);
-	uint64 XferAsset(IMMEDIATE uint64 i2);
-	uint64 AssetAmount(IMMEDIATE uint64 i2);
-	bytes AssetSender(IMMEDIATE uint64 i2);
-	bytes AssetReceiver(IMMEDIATE uint64 i2);
-	bytes AssetCloseTo(IMMEDIATE uint64 i2);
-	uint64 GroupIndex(IMMEDIATE uint64 i2);
-	bytes TxID(IMMEDIATE uint64 i2);
-	uint64 ApplicationID(IMMEDIATE uint64 i2);
-	uint64 OnCompletion(IMMEDIATE uint64 i2);
-	bytes ApplicationArgs(IMMEDIATE uint64 i2);
-	uint64 NumAppArgs(IMMEDIATE uint64 i2);
-	bytes Accounts(IMMEDIATE uint64 i2);
-	uint64 NumAccounts(IMMEDIATE uint64 i2);
-	bytes ApprovalProgram(IMMEDIATE uint64 i2);
-	bytes ClearStateProgram(IMMEDIATE uint64 i2);
-	bytes RekeyTo(IMMEDIATE uint64 i2);
-	uint64 ConfigAsset(IMMEDIATE uint64 i2);
-	uint64 ConfigAssetTotal(IMMEDIATE uint64 i2);
-	uint64 ConfigAssetDecimals(IMMEDIATE uint64 i2);
-	uint64 ConfigAssetDefaultFrozen(IMMEDIATE uint64 i2);
-	bytes ConfigAssetUnitName(IMMEDIATE uint64 i2);
-	bytes ConfigAssetName(IMMEDIATE uint64 i2);
-	bytes ConfigAssetURL(IMMEDIATE uint64 i2);
-	bytes ConfigAssetMetadataHash(IMMEDIATE uint64 i2);
-	bytes ConfigAssetManager(IMMEDIATE uint64 i2);
-	bytes ConfigAssetReserve(IMMEDIATE uint64 i2);
-	bytes ConfigAssetFreeze(IMMEDIATE uint64 i2);
-	bytes ConfigAssetClawback(IMMEDIATE uint64 i2);
-	uint64 FreezeAsset(IMMEDIATE uint64 i2);
-	bytes FreezeAssetAccount(IMMEDIATE uint64 i2);
-	uint64 FreezeAssetFrozen(IMMEDIATE uint64 i2);
-	uint64 Assets(IMMEDIATE uint64 i2);
-	uint64 NumAssets(IMMEDIATE uint64 i2);
-	uint64 Applications(IMMEDIATE uint64 i2);
-	uint64 NumApplications(IMMEDIATE uint64 i2);
-	uint64 GlobalNumUint(IMMEDIATE uint64 i2);
-	uint64 GlobalNumByteSlice(IMMEDIATE uint64 i2);
-	uint64 LocalNumUint(IMMEDIATE uint64 i2);
-	uint64 LocalNumByteSlice(IMMEDIATE uint64 i2);
-	uint64 ExtraProgramPages(IMMEDIATE uint64 i2);
-	uint64 Nonparticipation(IMMEDIATE uint64 i2);
-	bytes Logs(IMMEDIATE uint64 i2);
-	uint64 NumLogs(IMMEDIATE uint64 i2);
-	uint64 CreatedAssetID(IMMEDIATE uint64 i2);
-	uint64 CreatedApplicationID(IMMEDIATE uint64 i2);
-	bytes LastLog(IMMEDIATE uint64 i2);
-	bytes StateProofPK(IMMEDIATE uint64 i2);
-	bytes ApprovalProgramPages(IMMEDIATE uint64 i2);
-	uint64 NumApprovalProgramPages(IMMEDIATE uint64 i2);
-	bytes ClearStateProgramPages(IMMEDIATE uint64 i2);
-	uint64 NumClearStateProgramPages(IMMEDIATE uint64 i2);
+	bytes Sender(IMMEDIATE uint8 F2);
+	uint64 Fee(IMMEDIATE uint8 F2);
+	uint64 FirstValid(IMMEDIATE uint8 F2);
+	uint64 FirstValidTime(IMMEDIATE uint8 F2);
+	uint64 LastValid(IMMEDIATE uint8 F2);
+	bytes Note(IMMEDIATE uint8 F2);
+	bytes Lease(IMMEDIATE uint8 F2);
+	bytes Receiver(IMMEDIATE uint8 F2);
+	uint64 Amount(IMMEDIATE uint8 F2);
+	bytes CloseRemainderTo(IMMEDIATE uint8 F2);
+	bytes VotePK(IMMEDIATE uint8 F2);
+	bytes SelectionPK(IMMEDIATE uint8 F2);
+	uint64 VoteFirst(IMMEDIATE uint8 F2);
+	uint64 VoteLast(IMMEDIATE uint8 F2);
+	uint64 VoteKeyDilution(IMMEDIATE uint8 F2);
+	bytes Type(IMMEDIATE uint8 F2);
+	uint64 TypeEnum(IMMEDIATE uint8 F2);
+	uint64 XferAsset(IMMEDIATE uint8 F2);
+	uint64 AssetAmount(IMMEDIATE uint8 F2);
+	bytes AssetSender(IMMEDIATE uint8 F2);
+	bytes AssetReceiver(IMMEDIATE uint8 F2);
+	bytes AssetCloseTo(IMMEDIATE uint8 F2);
+	uint64 GroupIndex(IMMEDIATE uint8 F2);
+	bytes TxID(IMMEDIATE uint8 F2);
+	uint64 ApplicationID(IMMEDIATE uint8 F2);
+	uint64 OnCompletion(IMMEDIATE uint8 F2);
+	bytes ApplicationArgs(IMMEDIATE uint8 F2);
+	uint64 NumAppArgs(IMMEDIATE uint8 F2);
+	bytes Accounts(IMMEDIATE uint8 F2);
+	uint64 NumAccounts(IMMEDIATE uint8 F2);
+	bytes ApprovalProgram(IMMEDIATE uint8 F2);
+	bytes ClearStateProgram(IMMEDIATE uint8 F2);
+	bytes RekeyTo(IMMEDIATE uint8 F2);
+	uint64 ConfigAsset(IMMEDIATE uint8 F2);
+	uint64 ConfigAssetTotal(IMMEDIATE uint8 F2);
+	uint64 ConfigAssetDecimals(IMMEDIATE uint8 F2);
+	uint64 ConfigAssetDefaultFrozen(IMMEDIATE uint8 F2);
+	bytes ConfigAssetUnitName(IMMEDIATE uint8 F2);
+	bytes ConfigAssetName(IMMEDIATE uint8 F2);
+	bytes ConfigAssetURL(IMMEDIATE uint8 F2);
+	bytes ConfigAssetMetadataHash(IMMEDIATE uint8 F2);
+	bytes ConfigAssetManager(IMMEDIATE uint8 F2);
+	bytes ConfigAssetReserve(IMMEDIATE uint8 F2);
+	bytes ConfigAssetFreeze(IMMEDIATE uint8 F2);
+	bytes ConfigAssetClawback(IMMEDIATE uint8 F2);
+	uint64 FreezeAsset(IMMEDIATE uint8 F2);
+	bytes FreezeAssetAccount(IMMEDIATE uint8 F2);
+	uint64 FreezeAssetFrozen(IMMEDIATE uint8 F2);
+	uint64 Assets(IMMEDIATE uint8 F2);
+	uint64 NumAssets(IMMEDIATE uint8 F2);
+	uint64 Applications(IMMEDIATE uint8 F2);
+	uint64 NumApplications(IMMEDIATE uint8 F2);
+	uint64 GlobalNumUint(IMMEDIATE uint8 F2);
+	uint64 GlobalNumByteSlice(IMMEDIATE uint8 F2);
+	uint64 LocalNumUint(IMMEDIATE uint8 F2);
+	uint64 LocalNumByteSlice(IMMEDIATE uint8 F2);
+	uint64 ExtraProgramPages(IMMEDIATE uint8 F2);
+	uint64 Nonparticipation(IMMEDIATE uint8 F2);
+	bytes Logs(IMMEDIATE uint8 F2);
+	uint64 NumLogs(IMMEDIATE uint8 F2);
+	uint64 CreatedAssetID(IMMEDIATE uint8 F2);
+	uint64 CreatedApplicationID(IMMEDIATE uint8 F2);
+	bytes LastLog(IMMEDIATE uint8 F2);
+	bytes StateProofPK(IMMEDIATE uint8 F2);
+	bytes ApprovalProgramPages(IMMEDIATE uint8 F2);
+	uint64 NumApprovalProgramPages(IMMEDIATE uint8 F2);
+	bytes ClearStateProgramPages(IMMEDIATE uint8 F2);
+	uint64 NumClearStateProgramPages(IMMEDIATE uint8 F2);
 };
 extern avm_gitxn_t avm_gitxn;
 /*
@@ -1468,13 +1492,13 @@ gitxna - Ith value of the array field F from the Tth transaction in the last inn
 */
 struct avm_gitxna_t
 {
-	bytes ApplicationArgs(IMMEDIATE uint64 i2, IMMEDIATE uint64 i3);
-	bytes Accounts(IMMEDIATE uint64 i2, IMMEDIATE uint64 i3);
-	uint64 Assets(IMMEDIATE uint64 i2, IMMEDIATE uint64 i3);
-	uint64 Applications(IMMEDIATE uint64 i2, IMMEDIATE uint64 i3);
-	bytes Logs(IMMEDIATE uint64 i2, IMMEDIATE uint64 i3);
-	bytes ApprovalProgramPages(IMMEDIATE uint64 i2, IMMEDIATE uint64 i3);
-	bytes ClearStateProgramPages(IMMEDIATE uint64 i2, IMMEDIATE uint64 i3);
+	bytes ApplicationArgs(IMMEDIATE uint8 F2, IMMEDIATE uint8 I3);
+	bytes Accounts(IMMEDIATE uint8 F2, IMMEDIATE uint8 I3);
+	uint64 Assets(IMMEDIATE uint8 F2, IMMEDIATE uint8 I3);
+	uint64 Applications(IMMEDIATE uint8 F2, IMMEDIATE uint8 I3);
+	bytes Logs(IMMEDIATE uint8 F2, IMMEDIATE uint8 I3);
+	bytes ApprovalProgramPages(IMMEDIATE uint8 F2, IMMEDIATE uint8 I3);
+	bytes ClearStateProgramPages(IMMEDIATE uint8 F2, IMMEDIATE uint8 I3);
 };
 extern avm_gitxna_t avm_gitxna;
 /*
@@ -1540,13 +1564,13 @@ gtxnas - Ath value of the array field F from the Tth transaction in the current 
 */
 struct avm_gtxnas_t
 {
-	bytes ApplicationArgs(STACK uint64 s1, IMMEDIATE uint64 i2);
-	bytes Accounts(STACK uint64 s1, IMMEDIATE uint64 i2);
-	uint64 Assets(STACK uint64 s1, IMMEDIATE uint64 i2);
-	uint64 Applications(STACK uint64 s1, IMMEDIATE uint64 i2);
-	bytes Logs(STACK uint64 s1, IMMEDIATE uint64 i2);
-	bytes ApprovalProgramPages(STACK uint64 s1, IMMEDIATE uint64 i2);
-	bytes ClearStateProgramPages(STACK uint64 s1, IMMEDIATE uint64 i2);
+	bytes ApplicationArgs(STACK uint64 s1, IMMEDIATE uint8 F2);
+	bytes Accounts(STACK uint64 s1, IMMEDIATE uint8 F2);
+	uint64 Assets(STACK uint64 s1, IMMEDIATE uint8 F2);
+	uint64 Applications(STACK uint64 s1, IMMEDIATE uint8 F2);
+	bytes Logs(STACK uint64 s1, IMMEDIATE uint8 F2);
+	bytes ApprovalProgramPages(STACK uint64 s1, IMMEDIATE uint8 F2);
+	bytes ClearStateProgramPages(STACK uint64 s1, IMMEDIATE uint8 F2);
 };
 extern avm_gtxnas_t avm_gtxnas;
 /*
