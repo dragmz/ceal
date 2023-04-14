@@ -1,0 +1,35 @@
+#pragma version 8
+int 0
+store 0
+for_2:
+load 0
+int 2
+<
+bz for_2_end
+int 0
+store 1
+for_1:
+load 1
+int 3
+<
+bz for_1_end
+load 1
+int 0
+>
+bz if_end_0
+b for_1_end
+if_end_0:
+for_1_continue:
+load 1
+int 1
++
+store 1
+b for_1
+for_1_end:
+for_2_continue:
+load 0
+int 1
++
+store 0
+b for_2
+for_2_end:
