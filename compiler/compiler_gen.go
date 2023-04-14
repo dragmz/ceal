@@ -69,7 +69,7 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "bytes", name: "s5"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "V1"},
 		},
 	},
 	{
@@ -78,7 +78,7 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "bytes", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "V1"},
 		},
 	},
 	{
@@ -90,7 +90,7 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "bytes", name: "s4"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "V1"},
 		},
 	},
 	{
@@ -285,13 +285,15 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "void", name: "avm_intcblock", op: "intcblock",
 		stack: []BuiltinFunctionParamData{},
-		imm:   []BuiltinFunctionParamData{},
+		imm: []BuiltinFunctionParamData{
+			{t: "bytes", name: "UINT1"},
+		},
 	},
 	{
 		t: "uint64", name: "avm_intc", op: "intc",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "I1"},
 		},
 	},
 	{
@@ -317,13 +319,15 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "void", name: "avm_bytecblock", op: "bytecblock",
 		stack: []BuiltinFunctionParamData{},
-		imm:   []BuiltinFunctionParamData{},
+		imm: []BuiltinFunctionParamData{
+			{t: "bytes", name: "BYTES1"},
+		},
 	},
 	{
 		t: "bytes", name: "avm_bytec", op: "bytec",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "I1"},
 		},
 	},
 	{
@@ -350,7 +354,7 @@ var builtin_functions = []BuiltinFunctionData{
 		t: "bytes", name: "avm_arg", op: "arg",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "N1"},
 		},
 	},
 	{
@@ -377,29 +381,29 @@ var builtin_functions = []BuiltinFunctionData{
 		t: "any", name: "avm_txn", op: "txn",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "F1"},
 		},
 	},
 	{
 		t: "any", name: "avm_global", op: "global",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "F1"},
 		},
 	},
 	{
 		t: "any", name: "avm_gtxn", op: "gtxn",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
-			{t: "uint64", name: "i2"},
+			{t: "uint8", name: "T1"},
+			{t: "uint8", name: "F2"},
 		},
 	},
 	{
 		t: "any", name: "avm_load", op: "load",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "I1"},
 		},
 	},
 	{
@@ -408,24 +412,24 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "any", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "I1"},
 		},
 	},
 	{
 		t: "any", name: "avm_txna", op: "txna",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
-			{t: "uint64", name: "i2"},
+			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "I2"},
 		},
 	},
 	{
 		t: "any", name: "avm_gtxna", op: "gtxna",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
-			{t: "uint64", name: "i2"},
-			{t: "uint64", name: "i3"},
+			{t: "uint8", name: "T1"},
+			{t: "uint8", name: "F2"},
+			{t: "uint8", name: "I3"},
 		},
 	},
 	{
@@ -434,7 +438,7 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "uint64", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "F1"},
 		},
 	},
 	{
@@ -443,16 +447,16 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "uint64", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
-			{t: "uint64", name: "i2"},
+			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "I2"},
 		},
 	},
 	{
 		t: "any", name: "avm_gload", op: "gload",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
-			{t: "uint64", name: "i2"},
+			{t: "uint8", name: "T1"},
+			{t: "uint8", name: "I2"},
 		},
 	},
 	{
@@ -461,14 +465,14 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "uint64", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "I1"},
 		},
 	},
 	{
 		t: "uint64", name: "avm_gaid", op: "gaid",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "T1"},
 		},
 	},
 	{
@@ -499,8 +503,7 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "uint64", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
-			{t: "uint64", name: "i2"},
+			{t: "int16", name: "TARGET1"},
 		},
 	},
 	{
@@ -509,16 +512,14 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "uint64", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
-			{t: "uint64", name: "i2"},
+			{t: "int16", name: "TARGET1"},
 		},
 	},
 	{
 		t: "void", name: "avm_b", op: "b",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
-			{t: "uint64", name: "i2"},
+			{t: "int16", name: "TARGET1"},
 		},
 	},
 	{
@@ -541,14 +542,14 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "any", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "N1"},
 		},
 	},
 	{
 		t: "void", name: "avm_popn", op: "popn",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "N1"},
 		},
 	},
 	{
@@ -557,7 +558,7 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "any", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "N1"},
 		},
 	},
 	{
@@ -588,7 +589,7 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "any", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "N1"},
 		},
 	},
 	{
@@ -614,7 +615,7 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "any", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "N1"},
 		},
 	},
 	{
@@ -623,7 +624,7 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "any", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "N1"},
 		},
 	},
 	{
@@ -640,8 +641,8 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "bytes", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
-			{t: "uint64", name: "i2"},
+			{t: "uint8", name: "S1"},
+			{t: "uint8", name: "E2"},
 		},
 	},
 	{
@@ -693,8 +694,8 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "bytes", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
-			{t: "uint64", name: "i2"},
+			{t: "uint8", name: "S1"},
+			{t: "uint8", name: "L2"},
 		},
 	},
 	{
@@ -737,7 +738,7 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "bytes", name: "s2"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "S1"},
 		},
 	},
 	{
@@ -755,7 +756,7 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "bytes", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "E1"},
 		},
 	},
 	{
@@ -765,7 +766,7 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "bytes", name: "s2"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "R1"},
 		},
 	},
 	{
@@ -854,7 +855,7 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "uint64", name: "s2"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "F1"},
 		},
 	},
 	{
@@ -863,7 +864,7 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "uint64", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "F1"},
 		},
 	},
 	{
@@ -872,7 +873,7 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "uint64", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "F1"},
 		},
 	},
 	{
@@ -881,7 +882,7 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "any", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "F1"},
 		},
 	},
 	{
@@ -894,22 +895,30 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "bytes", name: "avm_pushbytes", op: "pushbytes",
 		stack: []BuiltinFunctionParamData{},
-		imm:   []BuiltinFunctionParamData{},
+		imm: []BuiltinFunctionParamData{
+			{t: "bytes", name: "BYTES1"},
+		},
 	},
 	{
 		t: "uint64", name: "avm_pushint", op: "pushint",
 		stack: []BuiltinFunctionParamData{},
-		imm:   []BuiltinFunctionParamData{},
+		imm: []BuiltinFunctionParamData{
+			{t: "bytes", name: "UINT1"},
+		},
 	},
 	{
 		t: "void", name: "avm_pushbytess", op: "pushbytess",
 		stack: []BuiltinFunctionParamData{},
-		imm:   []BuiltinFunctionParamData{},
+		imm: []BuiltinFunctionParamData{
+			{t: "bytes", name: "BYTES1"},
+		},
 	},
 	{
 		t: "void", name: "avm_pushints", op: "pushints",
 		stack: []BuiltinFunctionParamData{},
-		imm:   []BuiltinFunctionParamData{},
+		imm: []BuiltinFunctionParamData{
+			{t: "bytes", name: "UINT1"},
+		},
 	},
 	{
 		t: "uint64", name: "avm_ed25519verify_bare", op: "ed25519verify_bare",
@@ -924,8 +933,7 @@ var builtin_functions = []BuiltinFunctionData{
 		t: "void", name: "avm_callsub", op: "callsub",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
-			{t: "uint64", name: "i2"},
+			{t: "int16", name: "TARGET1"},
 		},
 	},
 	{
@@ -937,15 +945,15 @@ var builtin_functions = []BuiltinFunctionData{
 		t: "void", name: "avm_proto", op: "proto",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
-			{t: "uint64", name: "i2"},
+			{t: "uint8", name: "A1"},
+			{t: "uint8", name: "R2"},
 		},
 	},
 	{
 		t: "any", name: "avm_frame_dig", op: "frame_dig",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "int8", name: "I1"},
 		},
 	},
 	{
@@ -954,7 +962,7 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "any", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "int8", name: "I1"},
 		},
 	},
 	{
@@ -962,12 +970,16 @@ var builtin_functions = []BuiltinFunctionData{
 		stack: []BuiltinFunctionParamData{
 			{t: "uint64", name: "s1"},
 		},
-		imm: []BuiltinFunctionParamData{},
+		imm: []BuiltinFunctionParamData{
+			{t: "bytes", name: "TARGET1"},
+		},
 	},
 	{
 		t: "void", name: "avm_match", op: "match",
 		stack: []BuiltinFunctionParamData{},
-		imm:   []BuiltinFunctionParamData{},
+		imm: []BuiltinFunctionParamData{
+			{t: "bytes", name: "TARGET1"},
+		},
 	},
 	{
 		t: "uint64", name: "avm_shl", op: "shl",
@@ -1182,7 +1194,7 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "any", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "F1"},
 		},
 	},
 	{
@@ -1194,15 +1206,15 @@ var builtin_functions = []BuiltinFunctionData{
 		t: "any", name: "avm_itxn", op: "itxn",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "F1"},
 		},
 	},
 	{
 		t: "any", name: "avm_itxna", op: "itxna",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
-			{t: "uint64", name: "i2"},
+			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "I2"},
 		},
 	},
 	{
@@ -1214,17 +1226,17 @@ var builtin_functions = []BuiltinFunctionData{
 		t: "any", name: "avm_gitxn", op: "gitxn",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
-			{t: "uint64", name: "i2"},
+			{t: "uint8", name: "T1"},
+			{t: "uint8", name: "F2"},
 		},
 	},
 	{
 		t: "any", name: "avm_gitxna", op: "gitxna",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
-			{t: "uint64", name: "i2"},
-			{t: "uint64", name: "i3"},
+			{t: "uint8", name: "T1"},
+			{t: "uint8", name: "F2"},
+			{t: "uint8", name: "I3"},
 		},
 	},
 	{
@@ -1288,7 +1300,7 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "uint64", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "F1"},
 		},
 	},
 	{
@@ -1297,8 +1309,8 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "uint64", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
-			{t: "uint64", name: "i2"},
+			{t: "uint8", name: "T1"},
+			{t: "uint8", name: "F2"},
 		},
 	},
 	{
@@ -1308,7 +1320,7 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "uint64", name: "s2"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "F1"},
 		},
 	},
 	{
@@ -1332,7 +1344,7 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "uint64", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "F1"},
 		},
 	},
 	{
@@ -1341,8 +1353,8 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "uint64", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
-			{t: "uint64", name: "i2"},
+			{t: "uint8", name: "T1"},
+			{t: "uint8", name: "F2"},
 		},
 	},
 	{
@@ -1353,7 +1365,7 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "bytes", name: "s3"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "S1"},
 		},
 	},
 	{
@@ -1362,7 +1374,7 @@ var builtin_functions = []BuiltinFunctionData{
 			{t: "uint64", name: "s1"},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint64", name: "i1"},
+			{t: "uint8", name: "F1"},
 		},
 	},
 }
@@ -1560,409 +1572,409 @@ var builtin_structs = []BuiltinStructData{
 			{
 				t: "bytes", name: "Sender", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "Fee", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "FirstValid", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "FirstValidTime", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "LastValid", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "Note", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "Lease", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "Receiver", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "Amount", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "CloseRemainderTo", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "VotePK", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "SelectionPK", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "VoteFirst", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "VoteLast", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "VoteKeyDilution", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "Type", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "TypeEnum", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "XferAsset", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "AssetAmount", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "AssetSender", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "AssetReceiver", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "AssetCloseTo", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "GroupIndex", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "TxID", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "ApplicationID", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "OnCompletion", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ApplicationArgs", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "NumAppArgs", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "Accounts", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "NumAccounts", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ApprovalProgram", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ClearStateProgram", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "RekeyTo", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "ConfigAsset", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "ConfigAssetTotal", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "ConfigAssetDecimals", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "ConfigAssetDefaultFrozen", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ConfigAssetUnitName", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ConfigAssetName", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ConfigAssetURL", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ConfigAssetMetadataHash", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ConfigAssetManager", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ConfigAssetReserve", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ConfigAssetFreeze", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ConfigAssetClawback", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "FreezeAsset", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "FreezeAssetAccount", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "FreezeAssetFrozen", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "Assets", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "NumAssets", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "Applications", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "NumApplications", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "GlobalNumUint", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "GlobalNumByteSlice", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "LocalNumUint", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "LocalNumByteSlice", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "ExtraProgramPages", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "Nonparticipation", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "Logs", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "NumLogs", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "CreatedAssetID", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "CreatedApplicationID", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "LastLog", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "StateProofPK", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ApprovalProgramPages", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "NumApprovalProgramPages", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ClearStateProgramPages", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "NumClearStateProgramPages", fun: "avm_gtxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 		},
@@ -1974,43 +1986,43 @@ var builtin_structs = []BuiltinStructData{
 			{
 				t: "bytes", name: "ApplicationArgs", fun: "avm_txna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "I2"},
 				},
 			},
 			{
 				t: "bytes", name: "Accounts", fun: "avm_txna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "I2"},
 				},
 			},
 			{
 				t: "uint64", name: "Assets", fun: "avm_txna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "I2"},
 				},
 			},
 			{
 				t: "uint64", name: "Applications", fun: "avm_txna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "I2"},
 				},
 			},
 			{
 				t: "bytes", name: "Logs", fun: "avm_txna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "I2"},
 				},
 			},
 			{
 				t: "bytes", name: "ApprovalProgramPages", fun: "avm_txna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "I2"},
 				},
 			},
 			{
 				t: "bytes", name: "ClearStateProgramPages", fun: "avm_txna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "I2"},
 				},
 			},
 		},
@@ -2022,50 +2034,50 @@ var builtin_structs = []BuiltinStructData{
 			{
 				t: "bytes", name: "ApplicationArgs", fun: "avm_gtxna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
-					{t: "uint64", name: "i3"},
+					{t: "uint8", name: "F2"},
+					{t: "uint8", name: "I3"},
 				},
 			},
 			{
 				t: "bytes", name: "Accounts", fun: "avm_gtxna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
-					{t: "uint64", name: "i3"},
+					{t: "uint8", name: "F2"},
+					{t: "uint8", name: "I3"},
 				},
 			},
 			{
 				t: "uint64", name: "Assets", fun: "avm_gtxna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
-					{t: "uint64", name: "i3"},
+					{t: "uint8", name: "F2"},
+					{t: "uint8", name: "I3"},
 				},
 			},
 			{
 				t: "uint64", name: "Applications", fun: "avm_gtxna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
-					{t: "uint64", name: "i3"},
+					{t: "uint8", name: "F2"},
+					{t: "uint8", name: "I3"},
 				},
 			},
 			{
 				t: "bytes", name: "Logs", fun: "avm_gtxna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
-					{t: "uint64", name: "i3"},
+					{t: "uint8", name: "F2"},
+					{t: "uint8", name: "I3"},
 				},
 			},
 			{
 				t: "bytes", name: "ApprovalProgramPages", fun: "avm_gtxna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
-					{t: "uint64", name: "i3"},
+					{t: "uint8", name: "F2"},
+					{t: "uint8", name: "I3"},
 				},
 			},
 			{
 				t: "bytes", name: "ClearStateProgramPages", fun: "avm_gtxna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
-					{t: "uint64", name: "i3"},
+					{t: "uint8", name: "F2"},
+					{t: "uint8", name: "I3"},
 				},
 			},
 		},
@@ -2151,43 +2163,43 @@ var builtin_structs = []BuiltinStructData{
 			{
 				t: "bytes", name: "ApplicationArgs", fun: "avm_gtxnsa",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "I2"},
 				},
 			},
 			{
 				t: "bytes", name: "Accounts", fun: "avm_gtxnsa",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "I2"},
 				},
 			},
 			{
 				t: "uint64", name: "Assets", fun: "avm_gtxnsa",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "I2"},
 				},
 			},
 			{
 				t: "uint64", name: "Applications", fun: "avm_gtxnsa",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "I2"},
 				},
 			},
 			{
 				t: "bytes", name: "Logs", fun: "avm_gtxnsa",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "I2"},
 				},
 			},
 			{
 				t: "bytes", name: "ApprovalProgramPages", fun: "avm_gtxnsa",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "I2"},
 				},
 			},
 			{
 				t: "bytes", name: "ClearStateProgramPages", fun: "avm_gtxnsa",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "I2"},
 				},
 			},
 		},
@@ -2496,43 +2508,43 @@ var builtin_structs = []BuiltinStructData{
 			{
 				t: "bytes", name: "ApplicationArgs", fun: "avm_itxna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "I2"},
 				},
 			},
 			{
 				t: "bytes", name: "Accounts", fun: "avm_itxna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "I2"},
 				},
 			},
 			{
 				t: "uint64", name: "Assets", fun: "avm_itxna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "I2"},
 				},
 			},
 			{
 				t: "uint64", name: "Applications", fun: "avm_itxna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "I2"},
 				},
 			},
 			{
 				t: "bytes", name: "Logs", fun: "avm_itxna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "I2"},
 				},
 			},
 			{
 				t: "bytes", name: "ApprovalProgramPages", fun: "avm_itxna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "I2"},
 				},
 			},
 			{
 				t: "bytes", name: "ClearStateProgramPages", fun: "avm_itxna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "I2"},
 				},
 			},
 		},
@@ -2544,409 +2556,409 @@ var builtin_structs = []BuiltinStructData{
 			{
 				t: "bytes", name: "Sender", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "Fee", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "FirstValid", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "FirstValidTime", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "LastValid", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "Note", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "Lease", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "Receiver", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "Amount", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "CloseRemainderTo", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "VotePK", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "SelectionPK", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "VoteFirst", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "VoteLast", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "VoteKeyDilution", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "Type", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "TypeEnum", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "XferAsset", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "AssetAmount", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "AssetSender", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "AssetReceiver", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "AssetCloseTo", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "GroupIndex", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "TxID", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "ApplicationID", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "OnCompletion", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ApplicationArgs", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "NumAppArgs", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "Accounts", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "NumAccounts", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ApprovalProgram", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ClearStateProgram", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "RekeyTo", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "ConfigAsset", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "ConfigAssetTotal", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "ConfigAssetDecimals", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "ConfigAssetDefaultFrozen", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ConfigAssetUnitName", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ConfigAssetName", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ConfigAssetURL", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ConfigAssetMetadataHash", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ConfigAssetManager", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ConfigAssetReserve", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ConfigAssetFreeze", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ConfigAssetClawback", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "FreezeAsset", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "FreezeAssetAccount", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "FreezeAssetFrozen", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "Assets", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "NumAssets", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "Applications", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "NumApplications", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "GlobalNumUint", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "GlobalNumByteSlice", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "LocalNumUint", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "LocalNumByteSlice", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "ExtraProgramPages", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "Nonparticipation", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "Logs", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "NumLogs", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "CreatedAssetID", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "CreatedApplicationID", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "LastLog", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "StateProofPK", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ApprovalProgramPages", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "NumApprovalProgramPages", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ClearStateProgramPages", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "NumClearStateProgramPages", fun: "avm_gitxn",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 		},
@@ -2958,50 +2970,50 @@ var builtin_structs = []BuiltinStructData{
 			{
 				t: "bytes", name: "ApplicationArgs", fun: "avm_gitxna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
-					{t: "uint64", name: "i3"},
+					{t: "uint8", name: "F2"},
+					{t: "uint8", name: "I3"},
 				},
 			},
 			{
 				t: "bytes", name: "Accounts", fun: "avm_gitxna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
-					{t: "uint64", name: "i3"},
+					{t: "uint8", name: "F2"},
+					{t: "uint8", name: "I3"},
 				},
 			},
 			{
 				t: "uint64", name: "Assets", fun: "avm_gitxna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
-					{t: "uint64", name: "i3"},
+					{t: "uint8", name: "F2"},
+					{t: "uint8", name: "I3"},
 				},
 			},
 			{
 				t: "uint64", name: "Applications", fun: "avm_gitxna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
-					{t: "uint64", name: "i3"},
+					{t: "uint8", name: "F2"},
+					{t: "uint8", name: "I3"},
 				},
 			},
 			{
 				t: "bytes", name: "Logs", fun: "avm_gitxna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
-					{t: "uint64", name: "i3"},
+					{t: "uint8", name: "F2"},
+					{t: "uint8", name: "I3"},
 				},
 			},
 			{
 				t: "bytes", name: "ApprovalProgramPages", fun: "avm_gitxna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
-					{t: "uint64", name: "i3"},
+					{t: "uint8", name: "F2"},
+					{t: "uint8", name: "I3"},
 				},
 			},
 			{
 				t: "bytes", name: "ClearStateProgramPages", fun: "avm_gitxna",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
-					{t: "uint64", name: "i3"},
+					{t: "uint8", name: "F2"},
+					{t: "uint8", name: "I3"},
 				},
 			},
 		},
@@ -3042,43 +3054,43 @@ var builtin_structs = []BuiltinStructData{
 			{
 				t: "bytes", name: "ApplicationArgs", fun: "avm_gtxnas",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "Accounts", fun: "avm_gtxnas",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "Assets", fun: "avm_gtxnas",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "uint64", name: "Applications", fun: "avm_gtxnas",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "Logs", fun: "avm_gtxnas",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ApprovalProgramPages", fun: "avm_gtxnas",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 			{
 				t: "bytes", name: "ClearStateProgramPages", fun: "avm_gtxnas",
 				params: []BuiltinStructFunctionParamData{
-					{t: "uint64", name: "i2"},
+					{t: "uint8", name: "F2"},
 				},
 			},
 		},
@@ -3234,7 +3246,7 @@ type avm_ecdsa_verify_Ast struct {
 	s3 AstStatement
 	s4 AstStatement
 	s5 AstStatement
-	i1 string
+	V1 string
 }
 
 func (a *avm_ecdsa_verify_Ast) String() string {
@@ -3251,13 +3263,13 @@ func (a *avm_ecdsa_verify_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("ecdsa_verify")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.V1)
 	return res.String()
 }
 
 type avm_ecdsa_pk_decompress_Ast struct {
 	s1 AstStatement
-	i1 string
+	V1 string
 }
 
 func (a *avm_ecdsa_pk_decompress_Ast) String() string {
@@ -3266,7 +3278,7 @@ func (a *avm_ecdsa_pk_decompress_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("ecdsa_pk_decompress")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.V1)
 	return res.String()
 }
 
@@ -3275,7 +3287,7 @@ type avm_ecdsa_pk_recover_Ast struct {
 	s2 AstStatement
 	s3 AstStatement
 	s4 AstStatement
-	i1 string
+	V1 string
 }
 
 func (a *avm_ecdsa_pk_recover_Ast) String() string {
@@ -3290,7 +3302,7 @@ func (a *avm_ecdsa_pk_recover_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("ecdsa_pk_recover")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.V1)
 	return res.String()
 }
 
@@ -3646,23 +3658,26 @@ func (a *avm_divmodw_Ast) String() string {
 }
 
 type avm_intcblock_Ast struct {
+	UINT1 string
 }
 
 func (a *avm_intcblock_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("intcblock")
+	res.WriteString(" ")
+	res.WriteString(a.UINT1)
 	return res.String()
 }
 
 type avm_intc_Ast struct {
-	i1 string
+	I1 string
 }
 
 func (a *avm_intc_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("intc")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.I1)
 	return res.String()
 }
 
@@ -3703,23 +3718,26 @@ func (a *avm_intc_3_Ast) String() string {
 }
 
 type avm_bytecblock_Ast struct {
+	BYTES1 string
 }
 
 func (a *avm_bytecblock_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("bytecblock")
+	res.WriteString(" ")
+	res.WriteString(a.BYTES1)
 	return res.String()
 }
 
 type avm_bytec_Ast struct {
-	i1 string
+	I1 string
 }
 
 func (a *avm_bytec_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("bytec")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.I1)
 	return res.String()
 }
 
@@ -3760,14 +3778,14 @@ func (a *avm_bytec_3_Ast) String() string {
 }
 
 type avm_arg_Ast struct {
-	i1 string
+	N1 string
 }
 
 func (a *avm_arg_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("arg")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.N1)
 	return res.String()
 }
 
@@ -3808,59 +3826,59 @@ func (a *avm_arg_3_Ast) String() string {
 }
 
 type avm_txn_Ast struct {
-	i1 string
+	F1 string
 }
 
 func (a *avm_txn_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("txn")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.F1)
 	return res.String()
 }
 
 type avm_global_Ast struct {
-	i1 string
+	F1 string
 }
 
 func (a *avm_global_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("global")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.F1)
 	return res.String()
 }
 
 type avm_gtxn_Ast struct {
-	i1 string
-	i2 string
+	T1 string
+	F2 string
 }
 
 func (a *avm_gtxn_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("gtxn")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.T1)
 	res.WriteString(" ")
-	res.WriteString(a.i2)
+	res.WriteString(a.F2)
 	return res.String()
 }
 
 type avm_load_Ast struct {
-	i1 string
+	I1 string
 }
 
 func (a *avm_load_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("load")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.I1)
 	return res.String()
 }
 
 type avm_store_Ast struct {
 	s1 AstStatement
-	i1 string
+	I1 string
 }
 
 func (a *avm_store_Ast) String() string {
@@ -3869,46 +3887,46 @@ func (a *avm_store_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("store")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.I1)
 	return res.String()
 }
 
 type avm_txna_Ast struct {
-	i1 string
-	i2 string
+	F1 string
+	I2 string
 }
 
 func (a *avm_txna_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("txna")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.F1)
 	res.WriteString(" ")
-	res.WriteString(a.i2)
+	res.WriteString(a.I2)
 	return res.String()
 }
 
 type avm_gtxna_Ast struct {
-	i1 string
-	i2 string
-	i3 string
+	T1 string
+	F2 string
+	I3 string
 }
 
 func (a *avm_gtxna_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("gtxna")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.T1)
 	res.WriteString(" ")
-	res.WriteString(a.i2)
+	res.WriteString(a.F2)
 	res.WriteString(" ")
-	res.WriteString(a.i3)
+	res.WriteString(a.I3)
 	return res.String()
 }
 
 type avm_gtxns_Ast struct {
 	s1 AstStatement
-	i1 string
+	F1 string
 }
 
 func (a *avm_gtxns_Ast) String() string {
@@ -3917,14 +3935,14 @@ func (a *avm_gtxns_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("gtxns")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.F1)
 	return res.String()
 }
 
 type avm_gtxnsa_Ast struct {
 	s1 AstStatement
-	i1 string
-	i2 string
+	F1 string
+	I2 string
 }
 
 func (a *avm_gtxnsa_Ast) String() string {
@@ -3933,30 +3951,30 @@ func (a *avm_gtxnsa_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("gtxnsa")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.F1)
 	res.WriteString(" ")
-	res.WriteString(a.i2)
+	res.WriteString(a.I2)
 	return res.String()
 }
 
 type avm_gload_Ast struct {
-	i1 string
-	i2 string
+	T1 string
+	I2 string
 }
 
 func (a *avm_gload_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("gload")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.T1)
 	res.WriteString(" ")
-	res.WriteString(a.i2)
+	res.WriteString(a.I2)
 	return res.String()
 }
 
 type avm_gloads_Ast struct {
 	s1 AstStatement
-	i1 string
+	I1 string
 }
 
 func (a *avm_gloads_Ast) String() string {
@@ -3965,19 +3983,19 @@ func (a *avm_gloads_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("gloads")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.I1)
 	return res.String()
 }
 
 type avm_gaid_Ast struct {
-	i1 string
+	T1 string
 }
 
 func (a *avm_gaid_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("gaid")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.T1)
 	return res.String()
 }
 
@@ -4021,9 +4039,8 @@ func (a *avm_stores_Ast) String() string {
 }
 
 type avm_bnz_Ast struct {
-	s1 AstStatement
-	i1 string
-	i2 string
+	s1      AstStatement
+	TARGET1 string
 }
 
 func (a *avm_bnz_Ast) String() string {
@@ -4032,16 +4049,13 @@ func (a *avm_bnz_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("bnz")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
-	res.WriteString(" ")
-	res.WriteString(a.i2)
+	res.WriteString(a.TARGET1)
 	return res.String()
 }
 
 type avm_bz_Ast struct {
-	s1 AstStatement
-	i1 string
-	i2 string
+	s1      AstStatement
+	TARGET1 string
 }
 
 func (a *avm_bz_Ast) String() string {
@@ -4050,24 +4064,19 @@ func (a *avm_bz_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("bz")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
-	res.WriteString(" ")
-	res.WriteString(a.i2)
+	res.WriteString(a.TARGET1)
 	return res.String()
 }
 
 type avm_b_Ast struct {
-	i1 string
-	i2 string
+	TARGET1 string
 }
 
 func (a *avm_b_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("b")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
-	res.WriteString(" ")
-	res.WriteString(a.i2)
+	res.WriteString(a.TARGET1)
 	return res.String()
 }
 
@@ -4097,7 +4106,7 @@ func (a *avm_assert_Ast) String() string {
 
 type avm_bury_Ast struct {
 	s1 AstStatement
-	i1 string
+	N1 string
 }
 
 func (a *avm_bury_Ast) String() string {
@@ -4106,25 +4115,25 @@ func (a *avm_bury_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("bury")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.N1)
 	return res.String()
 }
 
 type avm_popn_Ast struct {
-	i1 string
+	N1 string
 }
 
 func (a *avm_popn_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("popn")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.N1)
 	return res.String()
 }
 
 type avm_dupn_Ast struct {
 	s1 AstStatement
-	i1 string
+	N1 string
 }
 
 func (a *avm_dupn_Ast) String() string {
@@ -4133,7 +4142,7 @@ func (a *avm_dupn_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("dupn")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.N1)
 	return res.String()
 }
 
@@ -4178,7 +4187,7 @@ func (a *avm_dup2_Ast) String() string {
 
 type avm_dig_Ast struct {
 	s1 AstStatement
-	i1 string
+	N1 string
 }
 
 func (a *avm_dig_Ast) String() string {
@@ -4187,7 +4196,7 @@ func (a *avm_dig_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("dig")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.N1)
 	return res.String()
 }
 
@@ -4226,7 +4235,7 @@ func (a *avm_select_Ast) String() string {
 
 type avm_cover_Ast struct {
 	s1 AstStatement
-	i1 string
+	N1 string
 }
 
 func (a *avm_cover_Ast) String() string {
@@ -4235,13 +4244,13 @@ func (a *avm_cover_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("cover")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.N1)
 	return res.String()
 }
 
 type avm_uncover_Ast struct {
 	s1 AstStatement
-	i1 string
+	N1 string
 }
 
 func (a *avm_uncover_Ast) String() string {
@@ -4250,7 +4259,7 @@ func (a *avm_uncover_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("uncover")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.N1)
 	return res.String()
 }
 
@@ -4271,8 +4280,8 @@ func (a *avm_concat_Ast) String() string {
 
 type avm_substring_Ast struct {
 	s1 AstStatement
-	i1 string
-	i2 string
+	S1 string
+	E2 string
 }
 
 func (a *avm_substring_Ast) String() string {
@@ -4281,9 +4290,9 @@ func (a *avm_substring_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("substring")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.S1)
 	res.WriteString(" ")
-	res.WriteString(a.i2)
+	res.WriteString(a.E2)
 	return res.String()
 }
 
@@ -4373,8 +4382,8 @@ func (a *avm_setbyte_Ast) String() string {
 
 type avm_extract_Ast struct {
 	s1 AstStatement
-	i1 string
-	i2 string
+	S1 string
+	L2 string
 }
 
 func (a *avm_extract_Ast) String() string {
@@ -4383,9 +4392,9 @@ func (a *avm_extract_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("extract")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.S1)
 	res.WriteString(" ")
-	res.WriteString(a.i2)
+	res.WriteString(a.L2)
 	return res.String()
 }
 
@@ -4455,7 +4464,7 @@ func (a *avm_extract_uint64_Ast) String() string {
 type avm_replace2_Ast struct {
 	s1 AstStatement
 	s2 AstStatement
-	i1 string
+	S1 string
 }
 
 func (a *avm_replace2_Ast) String() string {
@@ -4466,7 +4475,7 @@ func (a *avm_replace2_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("replace2")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.S1)
 	return res.String()
 }
 
@@ -4490,7 +4499,7 @@ func (a *avm_replace3_Ast) String() string {
 
 type avm_base64_decode_Ast struct {
 	s1 AstStatement
-	i1 string
+	E1 string
 }
 
 func (a *avm_base64_decode_Ast) String() string {
@@ -4499,14 +4508,14 @@ func (a *avm_base64_decode_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("base64_decode")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.E1)
 	return res.String()
 }
 
 type avm_json_ref_Ast struct {
 	s1 AstStatement
 	s2 AstStatement
-	i1 string
+	R1 string
 }
 
 func (a *avm_json_ref_Ast) String() string {
@@ -4517,7 +4526,7 @@ func (a *avm_json_ref_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("json_ref")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.R1)
 	return res.String()
 }
 
@@ -4671,7 +4680,7 @@ func (a *avm_app_global_del_Ast) String() string {
 type avm_asset_holding_get_Ast struct {
 	s1 AstStatement
 	s2 AstStatement
-	i1 string
+	F1 string
 }
 
 func (a *avm_asset_holding_get_Ast) String() string {
@@ -4682,13 +4691,13 @@ func (a *avm_asset_holding_get_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("asset_holding_get")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.F1)
 	return res.String()
 }
 
 type avm_asset_params_get_Ast struct {
 	s1 AstStatement
-	i1 string
+	F1 string
 }
 
 func (a *avm_asset_params_get_Ast) String() string {
@@ -4697,13 +4706,13 @@ func (a *avm_asset_params_get_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("asset_params_get")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.F1)
 	return res.String()
 }
 
 type avm_app_params_get_Ast struct {
 	s1 AstStatement
-	i1 string
+	F1 string
 }
 
 func (a *avm_app_params_get_Ast) String() string {
@@ -4712,13 +4721,13 @@ func (a *avm_app_params_get_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("app_params_get")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.F1)
 	return res.String()
 }
 
 type avm_acct_params_get_Ast struct {
 	s1 AstStatement
-	i1 string
+	F1 string
 }
 
 func (a *avm_acct_params_get_Ast) String() string {
@@ -4727,7 +4736,7 @@ func (a *avm_acct_params_get_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("acct_params_get")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.F1)
 	return res.String()
 }
 
@@ -4744,38 +4753,50 @@ func (a *avm_min_balance_Ast) String() string {
 }
 
 type avm_pushbytes_Ast struct {
+	BYTES1 string
 }
 
 func (a *avm_pushbytes_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("pushbytes")
+	res.WriteString(" ")
+	res.WriteString(a.BYTES1)
 	return res.String()
 }
 
 type avm_pushint_Ast struct {
+	UINT1 string
 }
 
 func (a *avm_pushint_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("pushint")
+	res.WriteString(" ")
+	res.WriteString(a.UINT1)
 	return res.String()
 }
 
 type avm_pushbytess_Ast struct {
+	BYTES1 string
 }
 
 func (a *avm_pushbytess_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("pushbytess")
+	res.WriteString(" ")
+	res.WriteString(a.BYTES1)
 	return res.String()
 }
 
 type avm_pushints_Ast struct {
+	UINT1 string
 }
 
 func (a *avm_pushints_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("pushints")
+	res.WriteString(" ")
+	res.WriteString(a.UINT1)
 	return res.String()
 }
 
@@ -4798,17 +4819,14 @@ func (a *avm_ed25519verify_bare_Ast) String() string {
 }
 
 type avm_callsub_Ast struct {
-	i1 string
-	i2 string
+	TARGET1 string
 }
 
 func (a *avm_callsub_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("callsub")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
-	res.WriteString(" ")
-	res.WriteString(a.i2)
+	res.WriteString(a.TARGET1)
 	return res.String()
 }
 
@@ -4822,35 +4840,35 @@ func (a *avm_retsub_Ast) String() string {
 }
 
 type avm_proto_Ast struct {
-	i1 string
-	i2 string
+	A1 string
+	R2 string
 }
 
 func (a *avm_proto_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("proto")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.A1)
 	res.WriteString(" ")
-	res.WriteString(a.i2)
+	res.WriteString(a.R2)
 	return res.String()
 }
 
 type avm_frame_dig_Ast struct {
-	i1 string
+	I1 string
 }
 
 func (a *avm_frame_dig_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("frame_dig")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.I1)
 	return res.String()
 }
 
 type avm_frame_bury_Ast struct {
 	s1 AstStatement
-	i1 string
+	I1 string
 }
 
 func (a *avm_frame_bury_Ast) String() string {
@@ -4859,12 +4877,13 @@ func (a *avm_frame_bury_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("frame_bury")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.I1)
 	return res.String()
 }
 
 type avm_switch__Ast struct {
-	s1 AstStatement
+	s1      AstStatement
+	TARGET1 string
 }
 
 func (a *avm_switch__Ast) String() string {
@@ -4872,15 +4891,20 @@ func (a *avm_switch__Ast) String() string {
 	res.WriteString(a.s1.String())
 	res.WriteString("\n")
 	res.WriteString("switch")
+	res.WriteString(" ")
+	res.WriteString(a.TARGET1)
 	return res.String()
 }
 
 type avm_match_Ast struct {
+	TARGET1 string
 }
 
 func (a *avm_match_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("match")
+	res.WriteString(" ")
+	res.WriteString(a.TARGET1)
 	return res.String()
 }
 
@@ -5267,7 +5291,7 @@ func (a *avm_itxn_begin_Ast) String() string {
 
 type avm_itxn_field_Ast struct {
 	s1 AstStatement
-	i1 string
+	F1 string
 }
 
 func (a *avm_itxn_field_Ast) String() string {
@@ -5276,7 +5300,7 @@ func (a *avm_itxn_field_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("itxn_field")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.F1)
 	return res.String()
 }
 
@@ -5290,29 +5314,29 @@ func (a *avm_itxn_submit_Ast) String() string {
 }
 
 type avm_itxn_Ast struct {
-	i1 string
+	F1 string
 }
 
 func (a *avm_itxn_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("itxn")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.F1)
 	return res.String()
 }
 
 type avm_itxna_Ast struct {
-	i1 string
-	i2 string
+	F1 string
+	I2 string
 }
 
 func (a *avm_itxna_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("itxna")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.F1)
 	res.WriteString(" ")
-	res.WriteString(a.i2)
+	res.WriteString(a.I2)
 	return res.String()
 }
 
@@ -5326,35 +5350,35 @@ func (a *avm_itxn_next_Ast) String() string {
 }
 
 type avm_gitxn_Ast struct {
-	i1 string
-	i2 string
+	T1 string
+	F2 string
 }
 
 func (a *avm_gitxn_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("gitxn")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.T1)
 	res.WriteString(" ")
-	res.WriteString(a.i2)
+	res.WriteString(a.F2)
 	return res.String()
 }
 
 type avm_gitxna_Ast struct {
-	i1 string
-	i2 string
-	i3 string
+	T1 string
+	F2 string
+	I3 string
 }
 
 func (a *avm_gitxna_Ast) String() string {
 	res := strings.Builder{}
 	res.WriteString("gitxna")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.T1)
 	res.WriteString(" ")
-	res.WriteString(a.i2)
+	res.WriteString(a.F2)
 	res.WriteString(" ")
-	res.WriteString(a.i3)
+	res.WriteString(a.I3)
 	return res.String()
 }
 
@@ -5462,7 +5486,7 @@ func (a *avm_box_put_Ast) String() string {
 
 type avm_txnas_Ast struct {
 	s1 AstStatement
-	i1 string
+	F1 string
 }
 
 func (a *avm_txnas_Ast) String() string {
@@ -5471,14 +5495,14 @@ func (a *avm_txnas_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("txnas")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.F1)
 	return res.String()
 }
 
 type avm_gtxnas_Ast struct {
 	s1 AstStatement
-	i1 string
-	i2 string
+	T1 string
+	F2 string
 }
 
 func (a *avm_gtxnas_Ast) String() string {
@@ -5487,16 +5511,16 @@ func (a *avm_gtxnas_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("gtxnas")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.T1)
 	res.WriteString(" ")
-	res.WriteString(a.i2)
+	res.WriteString(a.F2)
 	return res.String()
 }
 
 type avm_gtxnsas_Ast struct {
 	s1 AstStatement
 	s2 AstStatement
-	i1 string
+	F1 string
 }
 
 func (a *avm_gtxnsas_Ast) String() string {
@@ -5507,7 +5531,7 @@ func (a *avm_gtxnsas_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("gtxnsas")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.F1)
 	return res.String()
 }
 
@@ -5540,7 +5564,7 @@ func (a *avm_gloadss_Ast) String() string {
 
 type avm_itxnas_Ast struct {
 	s1 AstStatement
-	i1 string
+	F1 string
 }
 
 func (a *avm_itxnas_Ast) String() string {
@@ -5549,14 +5573,14 @@ func (a *avm_itxnas_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("itxnas")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.F1)
 	return res.String()
 }
 
 type avm_gitxnas_Ast struct {
 	s1 AstStatement
-	i1 string
-	i2 string
+	T1 string
+	F2 string
 }
 
 func (a *avm_gitxnas_Ast) String() string {
@@ -5565,9 +5589,9 @@ func (a *avm_gitxnas_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("gitxnas")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.T1)
 	res.WriteString(" ")
-	res.WriteString(a.i2)
+	res.WriteString(a.F2)
 	return res.String()
 }
 
@@ -5575,7 +5599,7 @@ type avm_vrf_verify_Ast struct {
 	s1 AstStatement
 	s2 AstStatement
 	s3 AstStatement
-	i1 string
+	S1 string
 }
 
 func (a *avm_vrf_verify_Ast) String() string {
@@ -5588,13 +5612,13 @@ func (a *avm_vrf_verify_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("vrf_verify")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.S1)
 	return res.String()
 }
 
 type avm_block_Ast struct {
 	s1 AstStatement
-	i1 string
+	F1 string
 }
 
 func (a *avm_block_Ast) String() string {
@@ -5603,6 +5627,6 @@ func (a *avm_block_Ast) String() string {
 	res.WriteString("\n")
 	res.WriteString("block")
 	res.WriteString(" ")
-	res.WriteString(a.i1)
+	res.WriteString(a.F1)
 	return res.String()
 }

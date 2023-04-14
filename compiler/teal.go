@@ -282,12 +282,12 @@ type AstVariable struct {
 
 func (a *AstVariable) String() string {
 	if a.v.local != nil {
-		ast := avm_load_Ast{i1: itoa(a.v.local.slot)}
+		ast := avm_load_Ast{I1: itoa(a.v.local.slot)}
 		return ast.String()
 	}
 
 	if a.v.param != nil {
-		ast := avm_frame_dig_Ast{i1: itoa(a.v.param.index)}
+		ast := avm_frame_dig_Ast{I1: itoa(a.v.param.index)}
 		return ast.String()
 	}
 
@@ -423,7 +423,7 @@ func (a *AstDefine) String() string {
 
 	ast := avm_store_Ast{
 		s1: a.value,
-		i1: itoa(a.v.local.slot),
+		I1: itoa(a.v.local.slot),
 	}
 
 	return ast.String()
@@ -467,7 +467,7 @@ func (a *AstAssign) String() string {
 			v := a.v.fields[a.f.name]
 			ast := avm_store_Ast{
 				s1: a.value,
-				i1: itoa(v.local.slot),
+				I1: itoa(v.local.slot),
 			}
 
 			res.WriteLine(ast.String())
@@ -475,7 +475,7 @@ func (a *AstAssign) String() string {
 	} else {
 		ast := avm_store_Ast{
 			s1: a.value,
-			i1: itoa(a.v.local.slot),
+			I1: itoa(a.v.local.slot),
 		}
 
 		res.WriteLine(ast.String())
@@ -483,7 +483,7 @@ func (a *AstAssign) String() string {
 
 	if !a.stmt {
 		load := avm_load_Ast{
-			i1: itoa(a.v.local.slot),
+			I1: itoa(a.v.local.slot),
 		}
 
 		res.WriteLine(load.String())
@@ -511,7 +511,7 @@ func (a *AstStructField) String() string {
 	v := a.v.fields[a.f.name]
 
 	ast := avm_load_Ast{
-		i1: itoa(v.local.slot),
+		I1: itoa(v.local.slot),
 	}
 
 	return ast.String()
@@ -676,8 +676,8 @@ func (a *AstFunction) String() string {
 	if a.fun.user.sub {
 		if a.fun.user.args != 0 || a.fun.user.returns != 0 {
 			ast := avm_proto_Ast{
-				i1: itoa(a.fun.user.args),
-				i2: itoa(a.fun.user.returns),
+				A1: itoa(a.fun.user.args),
+				R2: itoa(a.fun.user.returns),
 			}
 
 			res.WriteLine(ast.String())

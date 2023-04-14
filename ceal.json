@@ -98,8 +98,8 @@
 			"name": "ecdsa_verify",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "V1"
 				}
 			],
 			"stacks": [
@@ -147,8 +147,8 @@
 			"name": "ecdsa_pk_decompress",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "V1"
 				}
 			],
 			"stacks": [
@@ -184,8 +184,8 @@
 			"name": "ecdsa_pk_recover",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "V1"
 				}
 			],
 			"stacks": [
@@ -791,7 +791,12 @@
 		},
 		{
 			"name": "intcblock",
-			"imms": [],
+			"imms": [
+				{
+					"type": "bytes",
+					"name": "UINT1"
+				}
+			],
 			"stacks": [],
 			"returns": [],
 			"doc": "prepare block of uint64 constants for use by intc",
@@ -802,8 +807,8 @@
 			"name": "intc",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "I1"
 				}
 			],
 			"stacks": [],
@@ -875,7 +880,12 @@
 		},
 		{
 			"name": "bytecblock",
-			"imms": [],
+			"imms": [
+				{
+					"type": "bytes",
+					"name": "BYTES1"
+				}
+			],
 			"stacks": [],
 			"returns": [],
 			"doc": "prepare block of byte-array constants for use by bytec",
@@ -886,8 +896,8 @@
 			"name": "bytec",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "I1"
 				}
 			],
 			"stacks": [],
@@ -961,8 +971,8 @@
 			"name": "arg",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "N1"
 				}
 			],
 			"stacks": [],
@@ -1036,8 +1046,8 @@
 			"name": "txn",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "F1"
 				}
 			],
 			"stacks": [],
@@ -1328,8 +1338,8 @@
 			"name": "global",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "F1"
 				}
 			],
 			"stacks": [],
@@ -1408,12 +1418,12 @@
 			"name": "gtxn",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "T1"
 				},
 				{
-					"type": "uint64",
-					"name": "i2"
+					"type": "uint8",
+					"name": "F2"
 				}
 			],
 			"stacks": [],
@@ -1704,8 +1714,8 @@
 			"name": "load",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "I1"
 				}
 			],
 			"stacks": [],
@@ -1723,8 +1733,8 @@
 			"name": "store",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "I1"
 				}
 			],
 			"stacks": [
@@ -1742,12 +1752,12 @@
 			"name": "txna",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "F1"
 				},
 				{
-					"type": "uint64",
-					"name": "i2"
+					"type": "uint8",
+					"name": "I2"
 				}
 			],
 			"stacks": [],
@@ -1794,16 +1804,16 @@
 			"name": "gtxna",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "T1"
 				},
 				{
-					"type": "uint64",
-					"name": "i2"
+					"type": "uint8",
+					"name": "F2"
 				},
 				{
-					"type": "uint64",
-					"name": "i3"
+					"type": "uint8",
+					"name": "I3"
 				}
 			],
 			"stacks": [],
@@ -1850,8 +1860,8 @@
 			"name": "gtxns",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "F1"
 				}
 			],
 			"stacks": [
@@ -2147,12 +2157,12 @@
 			"name": "gtxnsa",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "F1"
 				},
 				{
-					"type": "uint64",
-					"name": "i2"
+					"type": "uint8",
+					"name": "I2"
 				}
 			],
 			"stacks": [
@@ -2204,12 +2214,12 @@
 			"name": "gload",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "T1"
 				},
 				{
-					"type": "uint64",
-					"name": "i2"
+					"type": "uint8",
+					"name": "I2"
 				}
 			],
 			"stacks": [],
@@ -2227,8 +2237,8 @@
 			"name": "gloads",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "I1"
 				}
 			],
 			"stacks": [
@@ -2251,8 +2261,8 @@
 			"name": "gaid",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "T1"
 				}
 			],
 			"stacks": [],
@@ -2326,12 +2336,8 @@
 			"name": "bnz",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
-				},
-				{
-					"type": "uint64",
-					"name": "i2"
+					"type": "int16",
+					"name": "TARGET1"
 				}
 			],
 			"stacks": [
@@ -2349,12 +2355,8 @@
 			"name": "bz",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
-				},
-				{
-					"type": "uint64",
-					"name": "i2"
+					"type": "int16",
+					"name": "TARGET1"
 				}
 			],
 			"stacks": [
@@ -2372,12 +2374,8 @@
 			"name": "b",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
-				},
-				{
-					"type": "uint64",
-					"name": "i2"
+					"type": "int16",
+					"name": "TARGET1"
 				}
 			],
 			"stacks": [],
@@ -2418,8 +2416,8 @@
 			"name": "bury",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "N1"
 				}
 			],
 			"stacks": [
@@ -2437,8 +2435,8 @@
 			"name": "popn",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "N1"
 				}
 			],
 			"stacks": [],
@@ -2451,8 +2449,8 @@
 			"name": "dupn",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "N1"
 				}
 			],
 			"stacks": [
@@ -2542,8 +2540,8 @@
 			"name": "dig",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "N1"
 				}
 			],
 			"stacks": [
@@ -2624,8 +2622,8 @@
 			"name": "cover",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "N1"
 				}
 			],
 			"stacks": [
@@ -2648,8 +2646,8 @@
 			"name": "uncover",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "N1"
 				}
 			],
 			"stacks": [
@@ -2695,12 +2693,12 @@
 			"name": "substring",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "S1"
 				},
 				{
-					"type": "uint64",
-					"name": "i2"
+					"type": "uint8",
+					"name": "E2"
 				}
 			],
 			"stacks": [
@@ -2850,12 +2848,12 @@
 			"name": "extract",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "S1"
 				},
 				{
-					"type": "uint64",
-					"name": "i2"
+					"type": "uint8",
+					"name": "L2"
 				}
 			],
 			"stacks": [
@@ -2974,8 +2972,8 @@
 			"name": "replace2",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "S1"
 				}
 			],
 			"stacks": [
@@ -3029,8 +3027,8 @@
 			"name": "base64_decode",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "E1"
 				}
 			],
 			"stacks": [
@@ -3062,8 +3060,8 @@
 			"name": "json_ref",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "R1"
 				}
 			],
 			"stacks": [
@@ -3115,7 +3113,7 @@
 				}
 			],
 			"doc": "balance for account A, in microalgos. The balance is observed after the effects of previous transactions in the group, and after the fee for the current transaction is deducted. Changes caused by inner transactions are observable immediately following `itxn_submit`",
-			"docExtra": "params: Txn.Accounts offset (or, since v4, an _available_ account address), _available_ application id (or, since v4, a Txn.ForeignApps offset). Return: value.",
+			"docExtra": "params: Txn.Accounts offset (or, since v4, an _available_ account address). Return: value.",
 			"enum": []
 		},
 		{
@@ -3317,8 +3315,8 @@
 			"name": "asset_holding_get",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "F1"
 				}
 			],
 			"stacks": [
@@ -3358,8 +3356,8 @@
 			"name": "asset_params_get",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "F1"
 				}
 			],
 			"stacks": [
@@ -3435,8 +3433,8 @@
 			"name": "app_params_get",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "F1"
 				}
 			],
 			"stacks": [
@@ -3500,8 +3498,8 @@
 			"name": "acct_params_get",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "F1"
 				}
 			],
 			"stacks": [
@@ -3589,12 +3587,17 @@
 				}
 			],
 			"doc": "minimum required balance for account A, in microalgos. Required balance is affected by ASA, App, and Box usage. When creating or opting into an app, the minimum balance grows before the app code runs, therefore the increase is visible there. When deleting or closing out, the minimum balance decreases after the app executes. Changes caused by inner transactions or box usage are observable immediately following the opcode effecting the change.",
-			"docExtra": "params: Txn.Accounts offset (or, since v4, an _available_ account address), _available_ application id (or, since v4, a Txn.ForeignApps offset). Return: value.",
+			"docExtra": "params: Txn.Accounts offset (or, since v4, an _available_ account address). Return: value.",
 			"enum": []
 		},
 		{
 			"name": "pushbytes",
-			"imms": [],
+			"imms": [
+				{
+					"type": "bytes",
+					"name": "BYTES1"
+				}
+			],
 			"stacks": [],
 			"returns": [
 				{
@@ -3608,7 +3611,12 @@
 		},
 		{
 			"name": "pushint",
-			"imms": [],
+			"imms": [
+				{
+					"type": "bytes",
+					"name": "UINT1"
+				}
+			],
 			"stacks": [],
 			"returns": [
 				{
@@ -3622,7 +3630,12 @@
 		},
 		{
 			"name": "pushbytess",
-			"imms": [],
+			"imms": [
+				{
+					"type": "bytes",
+					"name": "BYTES1"
+				}
+			],
 			"stacks": [],
 			"returns": [],
 			"doc": "push sequences of immediate byte arrays to stack (first byte array being deepest)",
@@ -3631,7 +3644,12 @@
 		},
 		{
 			"name": "pushints",
-			"imms": [],
+			"imms": [
+				{
+					"type": "bytes",
+					"name": "UINT1"
+				}
+			],
 			"stacks": [],
 			"returns": [],
 			"doc": "push sequence of immediate uints to stack in the order they appear (first uint being deepest)",
@@ -3669,12 +3687,8 @@
 			"name": "callsub",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
-				},
-				{
-					"type": "uint64",
-					"name": "i2"
+					"type": "int16",
+					"name": "TARGET1"
 				}
 			],
 			"stacks": [],
@@ -3696,12 +3710,12 @@
 			"name": "proto",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "A1"
 				},
 				{
-					"type": "uint64",
-					"name": "i2"
+					"type": "uint8",
+					"name": "R2"
 				}
 			],
 			"stacks": [],
@@ -3714,8 +3728,8 @@
 			"name": "frame_dig",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "int8",
+					"name": "I1"
 				}
 			],
 			"stacks": [],
@@ -3733,8 +3747,8 @@
 			"name": "frame_bury",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "int8",
+					"name": "I1"
 				}
 			],
 			"stacks": [
@@ -3750,7 +3764,12 @@
 		},
 		{
 			"name": "switch",
-			"imms": [],
+			"imms": [
+				{
+					"type": "bytes",
+					"name": "TARGET1"
+				}
+			],
 			"stacks": [
 				{
 					"type": "uint64",
@@ -3764,7 +3783,12 @@
 		},
 		{
 			"name": "match",
-			"imms": [],
+			"imms": [
+				{
+					"type": "bytes",
+					"name": "TARGET1"
+				}
+			],
 			"stacks": [],
 			"returns": [],
 			"doc": "given match cases from A[1] to A[N], branch to the Ith label where A[I] = B. Continue to the following instruction if no matches are found.",
@@ -4357,8 +4381,8 @@
 			"name": "itxn_field",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "F1"
 				}
 			],
 			"stacks": [
@@ -4590,8 +4614,8 @@
 			"name": "itxn",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "F1"
 				}
 			],
 			"stacks": [],
@@ -4882,12 +4906,12 @@
 			"name": "itxna",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "F1"
 				},
 				{
-					"type": "uint64",
-					"name": "i2"
+					"type": "uint8",
+					"name": "I2"
 				}
 			],
 			"stacks": [],
@@ -4943,12 +4967,12 @@
 			"name": "gitxn",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "T1"
 				},
 				{
-					"type": "uint64",
-					"name": "i2"
+					"type": "uint8",
+					"name": "F2"
 				}
 			],
 			"stacks": [],
@@ -5239,16 +5263,16 @@
 			"name": "gitxna",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "T1"
 				},
 				{
-					"type": "uint64",
-					"name": "i2"
+					"type": "uint8",
+					"name": "F2"
 				},
 				{
-					"type": "uint64",
-					"name": "i3"
+					"type": "uint8",
+					"name": "I3"
 				}
 			],
 			"stacks": [],
@@ -5450,8 +5474,8 @@
 			"name": "txnas",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "F1"
 				}
 			],
 			"stacks": [
@@ -5503,12 +5527,12 @@
 			"name": "gtxnas",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "T1"
 				},
 				{
-					"type": "uint64",
-					"name": "i2"
+					"type": "uint8",
+					"name": "F2"
 				}
 			],
 			"stacks": [
@@ -5560,8 +5584,8 @@
 			"name": "gtxnsas",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "F1"
 				}
 			],
 			"stacks": [
@@ -5659,8 +5683,8 @@
 			"name": "itxnas",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "F1"
 				}
 			],
 			"stacks": [
@@ -5683,12 +5707,12 @@
 			"name": "gitxnas",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "T1"
 				},
 				{
-					"type": "uint64",
-					"name": "i2"
+					"type": "uint8",
+					"name": "F2"
 				}
 			],
 			"stacks": [
@@ -5711,8 +5735,8 @@
 			"name": "vrf_verify",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "S1"
 				}
 			],
 			"stacks": [
@@ -5752,8 +5776,8 @@
 			"name": "block",
 			"imms": [
 				{
-					"type": "uint64",
-					"name": "i1"
+					"type": "uint8",
+					"name": "F1"
 				}
 			],
 			"stacks": [
