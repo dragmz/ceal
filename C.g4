@@ -3,6 +3,7 @@ grammar C;
 program:
     (
         include
+        | global ';'
         | function
         | struct ';'
     )* EOF;
@@ -51,12 +52,13 @@ expr:
     | assign_expr               # AssignExpr
     | asdexpr                   # AssignSumDiffExpr
     | ID                        # VariableExpr
-    | (INT | STRING)            # ConstantExpr
+    | constant                  # ConstantExpr
     | ID '.' ID ('.' ID)*       # MemberExpr
     | call_expr                 # CallExpr
     | '(' expr ')'              # GroupExpr
     ;
 
+constant: (INT | STRING);
 assign_expr: ID ('.' ID)* '=' expr;
 const: 'const';
 asdexpr: ID ('.' ID)* asd expr;
@@ -77,6 +79,7 @@ forIter:
     expr (',' expr)*
     ;
 
+global: type ID '=' constant;
 declaration: type ID;
 definition: type ID '=' expr;
 elseif: 'else if' '(' expr ')' (('{' stmt* '}') | stmt);

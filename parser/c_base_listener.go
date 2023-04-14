@@ -278,6 +278,12 @@ func (s *BaseCListener) EnterMinusExpr(ctx *MinusExprContext) {}
 // ExitMinusExpr is called when production MinusExpr is exited.
 func (s *BaseCListener) ExitMinusExpr(ctx *MinusExprContext) {}
 
+// EnterConstant is called when production constant is entered.
+func (s *BaseCListener) EnterConstant(ctx *ConstantContext) {}
+
+// ExitConstant is called when production constant is exited.
+func (s *BaseCListener) ExitConstant(ctx *ConstantContext) {}
+
 // EnterAssign_expr is called when production assign_expr is entered.
 func (s *BaseCListener) EnterAssign_expr(ctx *Assign_exprContext) {}
 
@@ -331,6 +337,12 @@ func (s *BaseCListener) EnterForIter(ctx *ForIterContext) {}
 
 // ExitForIter is called when production forIter is exited.
 func (s *BaseCListener) ExitForIter(ctx *ForIterContext) {}
+
+// EnterGlobal is called when production global is entered.
+func (s *BaseCListener) EnterGlobal(ctx *GlobalContext) {}
+
+// ExitGlobal is called when production global is exited.
+func (s *BaseCListener) ExitGlobal(ctx *GlobalContext) {}
 
 // EnterDeclaration is called when production declaration is entered.
 func (s *BaseCListener) EnterDeclaration(ctx *DeclarationContext) {}

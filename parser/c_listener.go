@@ -136,6 +136,9 @@ type CListener interface {
 	// EnterMinusExpr is called when entering the MinusExpr production.
 	EnterMinusExpr(c *MinusExprContext)
 
+	// EnterConstant is called when entering the constant production.
+	EnterConstant(c *ConstantContext)
+
 	// EnterAssign_expr is called when entering the assign_expr production.
 	EnterAssign_expr(c *Assign_exprContext)
 
@@ -162,6 +165,9 @@ type CListener interface {
 
 	// EnterForIter is called when entering the forIter production.
 	EnterForIter(c *ForIterContext)
+
+	// EnterGlobal is called when entering the global production.
+	EnterGlobal(c *GlobalContext)
 
 	// EnterDeclaration is called when entering the declaration production.
 	EnterDeclaration(c *DeclarationContext)
@@ -322,6 +328,9 @@ type CListener interface {
 	// ExitMinusExpr is called when exiting the MinusExpr production.
 	ExitMinusExpr(c *MinusExprContext)
 
+	// ExitConstant is called when exiting the constant production.
+	ExitConstant(c *ConstantContext)
+
 	// ExitAssign_expr is called when exiting the assign_expr production.
 	ExitAssign_expr(c *Assign_exprContext)
 
@@ -348,6 +357,9 @@ type CListener interface {
 
 	// ExitForIter is called when exiting the forIter production.
 	ExitForIter(c *ForIterContext)
+
+	// ExitGlobal is called when exiting the global production.
+	ExitGlobal(c *GlobalContext)
 
 	// ExitDeclaration is called when exiting the declaration production.
 	ExitDeclaration(c *DeclarationContext)

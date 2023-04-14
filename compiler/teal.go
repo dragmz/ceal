@@ -291,6 +291,21 @@ func (a *AstVariable) String() string {
 		return ast.String()
 	}
 
+	if a.v.const_ != nil {
+		switch a.v.const_.kind {
+		case SimpleTypeInt:
+			ast := avm_intc_Ast{
+				I1: itoa(a.v.const_.index),
+			}
+			return ast.String()
+		case SimpleTypeBytes:
+			ast := avm_bytec_Ast{
+				I1: itoa(a.v.const_.index),
+			}
+			return ast.String()
+		}
+	}
+
 	if a.v.t == "uint64" {
 		return fmt.Sprintf("int %s", a.v.name)
 	}

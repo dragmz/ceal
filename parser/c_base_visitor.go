@@ -179,6 +179,10 @@ func (v *BaseCVisitor) VisitMinusExpr(ctx *MinusExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCVisitor) VisitConstant(ctx *ConstantContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCVisitor) VisitAssign_expr(ctx *Assign_exprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -212,6 +216,10 @@ func (v *BaseCVisitor) VisitForCondition(ctx *ForConditionContext) interface{} {
 }
 
 func (v *BaseCVisitor) VisitForIter(ctx *ForIterContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitGlobal(ctx *GlobalContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

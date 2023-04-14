@@ -231,15 +231,17 @@ func (v *AstVisitor) VisitNotExpr(ctx *parser.NotExprContext) interface{} {
 func (v *AstVisitor) VisitConstantExpr(ctx *parser.ConstantExprContext) interface{} {
 	var res AstStatement
 
-	if ctx.INT() != nil {
+	c := ctx.Constant()
+
+	if c.INT() != nil {
 		res = &AstIntConstant{
-			value: ctx.INT().GetText(),
+			value: c.INT().GetText(),
 		}
 	}
 
-	if ctx.STRING() != nil {
+	if c.STRING() != nil {
 		res = &AstByteConstant{
-			value: ctx.STRING().GetText(),
+			value: c.STRING().GetText(),
 		}
 	}
 

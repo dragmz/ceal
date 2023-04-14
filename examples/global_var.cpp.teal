@@ -1,0 +1,6 @@
+#pragma version 8
+intcblock 123 234
+intc 0
+intc 1
++
+return

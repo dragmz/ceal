@@ -58,7 +58,15 @@ type Struct struct {
 	builtin *BuiltinStruct
 }
 
+type SimpleTypeKind int
+
+const (
+	SimpleTypeInt = SimpleTypeKind(iota)
+	SimpleTypeBytes
+)
+
 type SimpleType struct {
+	kind  SimpleTypeKind
 	empty bool
 }
 
@@ -76,6 +84,11 @@ type ParameterVariable struct {
 	index int
 }
 
+type ConstVariable struct {
+	kind  SimpleTypeKind
+	index int
+}
+
 type Variable struct {
 	constant bool
 
@@ -84,8 +97,9 @@ type Variable struct {
 
 	readonly bool
 
-	local *LocalVariable
-	param *ParameterVariable
+	local  *LocalVariable
+	param  *ParameterVariable
+	const_ *ConstVariable
 
 	fields map[string]*Variable
 }
@@ -206,6 +220,9 @@ type UserFunction struct {
 }
 
 type AstProgram struct {
+	constints  []int
+	constbytes [][]byte
+
 	functions      map[string]*AstFunction
 	functionsNames []string
 }
@@ -214,6 +231,14 @@ func (a *AstProgram) String() string {
 	res := strings.Builder{}
 
 	res.WriteString(fmt.Sprintf("#pragma version %d\n", AvmVersion))
+
+	if len(a.constints) > 0 {
+		constints := []string{}
+		for _, v := range a.constints {
+			constints = append(constints, itoa(v))
+		}
+		res.WriteString(fmt.Sprintf("intcblock %s\n", strings.Join(constints, " ")))
+	}
 
 	main := a.functions[AvmMainName]
 
@@ -291,13 +316,17 @@ func (c *CealCompiler) Compile(src string) string {
 	}
 
 	global.types["bytes"] = &Type{
-		name:   "bytes",
-		simple: &SimpleType{},
+		name: "bytes",
+		simple: &SimpleType{
+			kind: SimpleTypeBytes,
+		},
 	}
 
 	global.types["uint64"] = &Type{
-		name:   "uint64",
-		simple: &SimpleType{},
+		name: "uint64",
+		simple: &SimpleType{
+			kind: SimpleTypeInt,
+		},
 	}
 
 	global.types["any"] = &Type{
@@ -391,6 +420,41 @@ func (c *CealCompiler) Compile(src string) string {
 
 	program := &AstProgram{
 		functions: map[string]*AstFunction{},
+	}
+
+	stream.Seek(0)
+	for _, d := range p.Program().AllGlobal() {
+		id := d.ID().GetText()
+		tn := d.Type_().ID().GetText()
+
+		t := global.resolveType(tn)
+
+		if t.simple == nil {
+			panic(fmt.Sprintf("global variables of non built-in type '%s' are not supported yet", t.name))
+		}
+
+		vr := &Variable{
+			constant: d.Type_().Const_() != nil,
+			name:     id,
+			t:        tn,
+			const_: &ConstVariable{
+				kind: t.simple.kind,
+			},
+		}
+
+		if !vr.constant {
+			panic("non-const global variables are not supported yet")
+		}
+
+		global.variables[id] = vr
+
+		switch t.simple.kind {
+		case SimpleTypeInt:
+			vr.const_.index = len(program.constints)
+			program.constints = append(program.constints, atoi(d.Constant().GetText()))
+		default:
+			panic("global variable of this simple type kind isn't supported yet")
+		}
 	}
 
 	global.readonly()
