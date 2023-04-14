@@ -29,6 +29,8 @@ type Function struct {
 	t    string
 	name string
 
+	returns int
+
 	builtin *BuiltinFunction
 	user    *UserFunction
 }
@@ -238,8 +240,7 @@ func (s *Scope) readonly() {
 }
 
 type UserFunction struct {
-	args    int
-	returns int
+	args int
 
 	sub bool
 
@@ -363,8 +364,9 @@ func (c *CealCompiler) Compile(src string) string {
 
 	for _, item := range builtin_functions {
 		f := &Function{
-			t:    item.t,
-			name: item.name,
+			t:       item.t,
+			name:    item.name,
+			returns: item.returns,
 			builtin: &BuiltinFunction{
 				op: item.op,
 			},

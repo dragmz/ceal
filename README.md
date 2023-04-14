@@ -11,12 +11,12 @@ AKA use your favorite C++ IDE to write Algorand contracts
 
 void init()
 {
-	// TODO: initialize app
+	// initialize app
 }
 
 void noop()
 {
-	// TODO: insert NoOp logic here
+	// insert NoOp logic here
 }
 
 uint64 avm_main()

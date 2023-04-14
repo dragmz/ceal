@@ -170,23 +170,23 @@ func (v *SymbolTableVisitor) VisitFunction(ctx *parser.FunctionContext) interfac
 	ret := ctx.Type_().ID().GetText()
 	t := v.scope.resolveType(ret)
 
-	if t.complex != nil {
-		user.returns = len(t.complex.fields)
-	} else {
-		if t.simple.empty {
-			user.returns = 0
-		} else {
-			user.returns = 1
-		}
-	}
-
-	user.sub = id != AvmMainName
-
 	fun := &Function{
 		t:    ret,
 		name: id,
 		user: user,
 	}
+
+	if t.complex != nil {
+		fun.returns = len(t.complex.fields)
+	} else {
+		if t.simple.empty {
+			fun.returns = 0
+		} else {
+			fun.returns = 1
+		}
+	}
+
+	user.sub = id != AvmMainName
 
 	v.scope.functions[id] = fun
 

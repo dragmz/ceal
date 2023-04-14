@@ -553,6 +553,11 @@ func (a *AstStructField) String() string {
 type AstCall struct {
 	fun  *Function
 	args []AstStatement
+	stmt bool
+}
+
+func (a *AstCall) ToStmt() {
+	a.stmt = true
 }
 
 func (a *AstCall) String() string {
@@ -583,6 +588,13 @@ func (a *AstCall) String() string {
 		}
 
 		s.WriteLine(fmt.Sprintf("callsub %s", a.fun.name))
+	}
+
+	if a.stmt {
+		if a.fun.returns > 0 {
+			ast := avm_popn_Ast{N1: itoa(a.fun.returns)}
+			s.WriteLine(ast.String())
+		}
 	}
 
 	return s.String()
@@ -728,10 +740,10 @@ func (a *AstFunction) String() string {
 	res := Lines{}
 
 	if a.fun.user.sub {
-		if a.fun.user.args != 0 || a.fun.user.returns != 0 {
+		if a.fun.user.args != 0 || a.fun.returns != 0 {
 			ast := avm_proto_Ast{
 				A1: itoa(a.fun.user.args),
-				R2: itoa(a.fun.user.returns),
+				R2: itoa(a.fun.returns),
 			}
 
 			res.WriteLine(ast.String())

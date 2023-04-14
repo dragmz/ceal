@@ -72,6 +72,7 @@ type BuiltinFunctionData struct
 
 	stack []BuiltinFunctionParamData
 	imm []BuiltinFunctionParamData
+	returns int
 };
 `)
 
@@ -95,6 +96,7 @@ var builtin_functions = []BuiltinFunctionData {
 			fmt.Fprintf(bw, "\t\t\t{ t: \"%s\", name: \"%s\" },\n", arg.Type, arg.Name)
 		}
 		bw.WriteString("\t\t},\n")
+		fmt.Fprintf(bw, "\t\treturns: %d,\n", len(op.Returns))
 		bw.WriteString("\t},\n")
 	}
 

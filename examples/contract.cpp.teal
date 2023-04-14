@@ -5,6 +5,7 @@ proto 2 0
 frame_dig -2
 int 4
 box_create
+popn 1
 frame_dig -2
 frame_dig -1
 itob

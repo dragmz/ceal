@@ -6,6 +6,7 @@ bz if_skip_0_0
 txn Sender
 int 4
 box_create
+popn 1
 b if_end_0
 if_skip_0_0:
 txn OnCompletion
@@ -16,4 +17,5 @@ err
 if_end_1:
 txn Sender
 box_get
+popn 2
 if_end_0:

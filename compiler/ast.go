@@ -255,9 +255,15 @@ func (v *AstVisitor) VisitGroupExpr(ctx *parser.GroupExprContext) interface{} {
 func (v *AstVisitor) VisitCallExpr(ctx *parser.CallExprContext) interface{} {
 	return v.Visit(ctx.Call_expr())
 }
+
 func (v *AstVisitor) VisitCallStmt(ctx *parser.CallStmtContext) interface{} {
-	// TODO: pop returned values for call statement (because not an expr)
-	return v.Visit(ctx.Call_expr())
+	ast := v.Visit(ctx.Call_expr())
+
+	if e, ok := ast.(AstExpr); ok {
+		e.ToStmt()
+	}
+
+	return ast
 }
 
 func (v *AstVisitor) VisitCall_expr(ctx *parser.Call_exprContext) interface{} {
