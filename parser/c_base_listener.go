@@ -80,11 +80,11 @@ func (s *BaseCListener) EnterDefinitionStmt(ctx *DefinitionStmtContext) {}
 // ExitDefinitionStmt is called when production DefinitionStmt is exited.
 func (s *BaseCListener) ExitDefinitionStmt(ctx *DefinitionStmtContext) {}
 
-// EnterAssignmentStmt is called when production AssignmentStmt is entered.
-func (s *BaseCListener) EnterAssignmentStmt(ctx *AssignmentStmtContext) {}
+// EnterAssignStmt is called when production AssignStmt is entered.
+func (s *BaseCListener) EnterAssignStmt(ctx *AssignStmtContext) {}
 
-// ExitAssignmentStmt is called when production AssignmentStmt is exited.
-func (s *BaseCListener) ExitAssignmentStmt(ctx *AssignmentStmtContext) {}
+// ExitAssignStmt is called when production AssignStmt is exited.
+func (s *BaseCListener) ExitAssignStmt(ctx *AssignStmtContext) {}
 
 // EnterAssignSumDiffStmt is called when production AssignSumDiffStmt is entered.
 func (s *BaseCListener) EnterAssignSumDiffStmt(ctx *AssignSumDiffStmtContext) {}
@@ -158,6 +158,12 @@ func (s *BaseCListener) EnterBreakStmt(ctx *BreakStmtContext) {}
 // ExitBreakStmt is called when production BreakStmt is exited.
 func (s *BaseCListener) ExitBreakStmt(ctx *BreakStmtContext) {}
 
+// EnterContinueStmt is called when production ContinueStmt is entered.
+func (s *BaseCListener) EnterContinueStmt(ctx *ContinueStmtContext) {}
+
+// ExitContinueStmt is called when production ContinueStmt is exited.
+func (s *BaseCListener) ExitContinueStmt(ctx *ContinueStmtContext) {}
+
 // EnterAndExpr is called when production AndExpr is entered.
 func (s *BaseCListener) EnterAndExpr(ctx *AndExprContext) {}
 
@@ -193,6 +199,12 @@ func (s *BaseCListener) EnterOrExpr(ctx *OrExprContext) {}
 
 // ExitOrExpr is called when production OrExpr is exited.
 func (s *BaseCListener) ExitOrExpr(ctx *OrExprContext) {}
+
+// EnterAssignExpr is called when production AssignExpr is entered.
+func (s *BaseCListener) EnterAssignExpr(ctx *AssignExprContext) {}
+
+// ExitAssignExpr is called when production AssignExpr is exited.
+func (s *BaseCListener) ExitAssignExpr(ctx *AssignExprContext) {}
 
 // EnterGroupExpr is called when production GroupExpr is entered.
 func (s *BaseCListener) EnterGroupExpr(ctx *GroupExprContext) {}
@@ -265,6 +277,24 @@ func (s *BaseCListener) EnterMinusExpr(ctx *MinusExprContext) {}
 
 // ExitMinusExpr is called when production MinusExpr is exited.
 func (s *BaseCListener) ExitMinusExpr(ctx *MinusExprContext) {}
+
+// EnterAssign_expr is called when production assign_expr is entered.
+func (s *BaseCListener) EnterAssign_expr(ctx *Assign_exprContext) {}
+
+// ExitAssign_expr is called when production assign_expr is exited.
+func (s *BaseCListener) ExitAssign_expr(ctx *Assign_exprContext) {}
+
+// EnterAlt is called when production alt is entered.
+func (s *BaseCListener) EnterAlt(ctx *AltContext) {}
+
+// ExitAlt is called when production alt is exited.
+func (s *BaseCListener) ExitAlt(ctx *AltContext) {}
+
+// EnterConst is called when production const is entered.
+func (s *BaseCListener) EnterConst(ctx *ConstContext) {}
+
+// ExitConst is called when production const is exited.
+func (s *BaseCListener) ExitConst(ctx *ConstContext) {}
 
 // EnterAsdexpr is called when production asdexpr is entered.
 func (s *BaseCListener) EnterAsdexpr(ctx *AsdexprContext) {}

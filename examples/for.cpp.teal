@@ -15,9 +15,44 @@ int 5
 bz if_end_0
 b for_1_end
 if_end_0:
+for_1_continue:
 load 0
 int 1
 +
 store 0
 b for_1
 for_1_end:
+int 0
+store 1
+for_2:
+load 1
+int 10
+<
+bz for_2_end
+load 1
+itob
+log
+for_2_continue:
+load 1
+int 1
++
+store 1
+b for_2
+for_2_end:
+int 0
+store 1
+for_3:
+load 1
+int 10
+<
+bz for_3_end
+load 1
+itob
+log
+for_3_continue:
+load 1
+int 1
++
+store 1
+b for_3
+for_3_end:

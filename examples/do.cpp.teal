@@ -6,7 +6,9 @@ load 0
 int 1
 -
 store 0
+do_0_continue:
 load 0
 int 0
 >
 bnz do_0
+do_0_end:

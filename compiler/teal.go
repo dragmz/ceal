@@ -34,6 +34,15 @@ func (l *Lines) String() string {
 	return strings.Join(l.lines, "\n")
 }
 
+type AstContinue struct {
+	label string
+	index int
+}
+
+func (a *AstContinue) String() string {
+	return fmt.Sprintf("b %s_%d_continue", a.label, a.index)
+}
+
 type AstBreak struct {
 	label string
 	index int
@@ -111,8 +120,10 @@ func (a *AstDoWhile) String() string {
 	res := Lines{}
 	res.WriteLine(fmt.Sprintf("do_%d:", a.index))
 	res.WriteLine(a.s.String())
+	res.WriteLine(fmt.Sprintf("do_%d_continue:", a.index))
 	res.WriteLine(a.condition.String())
 	res.WriteLine(fmt.Sprintf("bnz do_%d", a.index))
+	res.WriteLine(fmt.Sprintf("do_%d_end:", a.index))
 
 	return res.String()
 }
@@ -130,6 +141,7 @@ func (a *AstWhile) String() string {
 	res.WriteLine(a.condition.String())
 	res.WriteLine(fmt.Sprintf("bz while_%d_end", a.index))
 	res.WriteLine(a.s.String())
+	res.WriteLine(fmt.Sprintf("while_%d_continue:", a.index))
 	res.WriteLine(fmt.Sprintf("b while_%d", a.index))
 	res.WriteLine(fmt.Sprintf("while_%d_end:", a.index))
 
@@ -156,6 +168,7 @@ func (a *AstFor) String() string {
 	res.WriteLine(fmt.Sprintf("bz for_%d_end", a.index))
 	res.WriteLine(a.s.String())
 
+	res.WriteLine(fmt.Sprintf("for_%d_continue:", a.index))
 	for _, stmt := range a.iter {
 		res.WriteLine(stmt.String())
 	}
@@ -182,6 +195,10 @@ func (a *AstPrefix) ToStmt() {
 }
 
 func (a *AstPrefix) String() string {
+	if a.v.constant {
+		panic("cannot modify const var")
+	}
+
 	var op string
 
 	switch a.op {
@@ -218,6 +235,10 @@ func (a *AstPostfix) ToStmt() {
 }
 
 func (a *AstPostfix) String() string {
+	if a.v.constant {
+		panic("cannot modify const var")
+	}
+
 	var op string
 
 	switch a.op {
@@ -328,6 +349,50 @@ func (a *AstAssignSumDiff) String() string {
 	return res.String()
 }
 
+type AstAnd struct {
+	index    int
+	operands []AstStatement
+}
+
+func (a *AstAnd) String() string {
+	res := Lines{}
+
+	for i, alt := range a.operands {
+		res.WriteLine(alt.String())
+		if i > 0 {
+			res.WriteLine("&&")
+		}
+		res.WriteLine("dup")
+		res.WriteLine(fmt.Sprintf("bz and_%d_end", a.index))
+	}
+
+	res.WriteLine(fmt.Sprintf("and_%d_end:", a.index))
+
+	return res.String()
+}
+
+type AstOr struct {
+	index    int
+	operands []AstStatement
+}
+
+func (a *AstOr) String() string {
+	res := Lines{}
+
+	for i, alt := range a.operands {
+		res.WriteLine(alt.String())
+		if i > 0 {
+			res.WriteLine("||")
+		}
+		res.WriteLine("dup")
+		res.WriteLine(fmt.Sprintf("bnz or_%d_end", a.index))
+	}
+
+	res.WriteLine(fmt.Sprintf("or_%d_end:", a.index))
+
+	return res.String()
+}
+
 type AstBinop struct {
 	l  AstStatement
 	op string
@@ -346,21 +411,52 @@ func (a *AstMinusOp) String() string {
 	return fmt.Sprintf("int 0\n%s\n-", a.value.String())
 }
 
-type AstAssign struct {
-	slot int
-	v    *Variable
-	t    *Type
-	f    *StructField
-	fun  *Function
+type AstDefine struct {
+	v *Variable
+	t *Type
 
 	value AstStatement
 }
 
+func (a *AstDefine) String() string {
+	if a.t.complex != nil {
+		panic("defining complex variable is not supported yet")
+	}
+
+	ast := avm_store_Ast{
+		s1: a.value,
+		i1: itoa(a.v.local.slot),
+	}
+
+	return ast.String()
+}
+
+type AstAssign struct {
+	v   *Variable
+	t   *Type
+	f   *StructField
+	fun *Function
+
+	value AstStatement
+
+	stmt bool
+}
+
+func (a *AstAssign) ToStmt() {
+	a.stmt = true
+}
+
 func (a *AstAssign) String() string {
+	if a.v.constant {
+		panic("cannot assign to a const var")
+	}
+
 	if a.v.param != nil {
 		// TODO: add param var assignment support
 		panic("cannot assign param var")
 	}
+
+	res := Lines{}
 
 	if a.t.complex != nil {
 		if a.t.complex.builtin != nil {
@@ -371,13 +467,12 @@ func (a *AstAssign) String() string {
 			}
 
 			v := a.v.fields[a.f.name]
-
 			ast := avm_store_Ast{
 				s1: a.value,
 				I1: itoa(v.local.slot),
 			}
 
-			return ast.String()
+			res.WriteLine(ast.String())
 		}
 	} else {
 		ast := avm_store_Ast{
@@ -385,8 +480,18 @@ func (a *AstAssign) String() string {
 			I1: itoa(a.v.local.slot),
 		}
 
-		return ast.String()
+		res.WriteLine(ast.String())
 	}
+
+	if !a.stmt {
+		load := avm_load_Ast{
+			i1: itoa(a.v.local.slot),
+		}
+
+		res.WriteLine(load.String())
+	}
+
+	return res.String()
 }
 
 type AstStructField struct {

@@ -1,0 +1,65 @@
+#pragma version 8
+int 0
+store 0
+for_1:
+load 0
+int 10
+<
+bz for_1_end
+load 0
+int 5
+<
+bz if_skip_0_0
+b for_1_continue
+b if_end_0
+if_skip_0_0:
+b for_1_end
+if_end_0:
+for_1_continue:
+load 0
+int 1
++
+store 0
+b for_1
+for_1_end:
+int 0
+store 1
+while_3:
+load 1
+int 10
+<
+bz while_3_end
+load 1
+dup
+int 1
++
+store 1
+int 5
+<
+bz if_skip_2_0
+b while_3_continue
+b if_end_2
+if_skip_2_0:
+b while_3_end
+if_end_2:
+while_3_continue:
+b while_3
+while_3_end:
+int 0
+store 1
+do_5:
+load 1
+int 5
+<
+bz if_skip_4_0
+b do_5_continue
+b if_end_4
+if_skip_4_0:
+b do_5_end
+if_end_4:
+do_5_continue:
+load 1
+int 10
+<
+bnz do_5
+do_5_end:
