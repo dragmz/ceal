@@ -636,6 +636,27 @@ func (a *AstBlock) String() string {
 	return ops.String()
 }
 
+type AstConditional struct {
+	index     int
+	condition AstStatement
+	t         AstStatement
+	f         AstStatement
+}
+
+func (a *AstConditional) String() string {
+	res := Lines{}
+
+	res.WriteLine(a.condition.String())
+	res.WriteLine(fmt.Sprintf("bz conditional_%d_false", a.index))
+	res.WriteLine(a.t.String())
+	res.WriteLine(fmt.Sprintf("b conditional_%d_end", a.index))
+	res.WriteLine(fmt.Sprintf("conditional_%d_false:", a.index))
+	res.WriteLine(a.f.String())
+	res.WriteLine(fmt.Sprintf("conditional_%d_end:", a.index))
+
+	return res.String()
+}
+
 type AstIfAlternative struct {
 	condition  AstStatement
 	statements []AstStatement

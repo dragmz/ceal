@@ -94,6 +94,9 @@ type CVisitor interface {
 	// Visit a parse tree produced by CParser#BitOrExpr.
 	VisitBitOrExpr(ctx *BitOrExprContext) interface{}
 
+	// Visit a parse tree produced by CParser#ConditionalExpr.
+	VisitConditionalExpr(ctx *ConditionalExprContext) interface{}
+
 	// Visit a parse tree produced by CParser#OrExpr.
 	VisitOrExpr(ctx *OrExprContext) interface{}
 

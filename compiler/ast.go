@@ -659,3 +659,17 @@ func (v *AstVisitor) VisitSwitchStmt(ctx *parser.SwitchStmtContext) interface{} 
 
 	return ast
 }
+
+func (v *AstVisitor) VisitConditionalExpr(ctx *parser.ConditionalExprContext) interface{} {
+	ast := &AstConditional{
+		index:     v.index,
+		condition: v.visitStatement(ctx.GetCondition()),
+		t:         v.visitStatement(ctx.GetTrue_()),
+		f:         v.visitStatement(ctx.GetFalse_()),
+	}
+
+	v.index++
+
+	return ast
+
+}

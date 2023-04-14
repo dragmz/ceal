@@ -194,6 +194,12 @@ func (s *BaseCListener) EnterBitOrExpr(ctx *BitOrExprContext) {}
 // ExitBitOrExpr is called when production BitOrExpr is exited.
 func (s *BaseCListener) ExitBitOrExpr(ctx *BitOrExprContext) {}
 
+// EnterConditionalExpr is called when production ConditionalExpr is entered.
+func (s *BaseCListener) EnterConditionalExpr(ctx *ConditionalExprContext) {}
+
+// ExitConditionalExpr is called when production ConditionalExpr is exited.
+func (s *BaseCListener) ExitConditionalExpr(ctx *ConditionalExprContext) {}
+
 // EnterOrExpr is called when production OrExpr is entered.
 func (s *BaseCListener) EnterOrExpr(ctx *OrExprContext) {}
 

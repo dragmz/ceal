@@ -123,6 +123,10 @@ func (v *BaseCVisitor) VisitBitOrExpr(ctx *BitOrExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCVisitor) VisitConditionalExpr(ctx *ConditionalExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCVisitor) VisitOrExpr(ctx *OrExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }

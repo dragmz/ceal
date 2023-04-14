@@ -1,0 +1,9 @@
+#pragma version 8
+int 1
+bz conditional_0_false
+int 2
+b conditional_0_end
+conditional_0_false:
+int 0
+conditional_0_end:
+return

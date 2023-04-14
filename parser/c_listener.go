@@ -94,6 +94,9 @@ type CListener interface {
 	// EnterBitOrExpr is called when entering the BitOrExpr production.
 	EnterBitOrExpr(c *BitOrExprContext)
 
+	// EnterConditionalExpr is called when entering the ConditionalExpr production.
+	EnterConditionalExpr(c *ConditionalExprContext)
+
 	// EnterOrExpr is called when entering the OrExpr production.
 	EnterOrExpr(c *OrExprContext)
 
@@ -285,6 +288,9 @@ type CListener interface {
 
 	// ExitBitOrExpr is called when exiting the BitOrExpr production.
 	ExitBitOrExpr(c *BitOrExprContext)
+
+	// ExitConditionalExpr is called when exiting the ConditionalExpr production.
+	ExitConditionalExpr(c *ConditionalExprContext)
 
 	// ExitOrExpr is called when exiting the OrExpr production.
 	ExitOrExpr(c *OrExprContext)

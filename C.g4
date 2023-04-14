@@ -51,6 +51,7 @@ expr:
     | l=expr '||' r=expr        # OrExpr
     | assign_expr               # AssignExpr
     | asdexpr                   # AssignSumDiffExpr
+    | condition=expr '?' true=expr ':' false=expr    # ConditionalExpr
     | ID                        # VariableExpr
     | constant                  # ConstantExpr
     | ID '.' ID ('.' ID)*       # MemberExpr
