@@ -10,8 +10,6 @@ load 0
 int 10
 <
 &&
-dup
-bz and_1_end
 and_1_end:
 dup
 bz and_2_end
@@ -19,8 +17,6 @@ load 0
 int 5
 !=
 &&
-dup
-bz and_2_end
 and_2_end:
 bz if_end_0
 int 1
