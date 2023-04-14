@@ -6,8 +6,9 @@ import (
 )
 
 type CealArg struct {
-	Type string `json:"type"`
-	Name string `json:"name"`
+	Type  string `json:"type"`
+	Name  string `json:"name"`
+	Array bool   `json:"array"`
 }
 
 type CealReturn struct {

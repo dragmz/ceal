@@ -108,6 +108,7 @@ func readImms(op LangSpecOp) []ceal.CealArg {
 		imm := op.ImmediateNote[i]
 
 		t := "uint64"
+		array := false
 		switch imm.Encoding {
 		case "uint8":
 			t = "uint8"
@@ -119,10 +120,13 @@ func readImms(op LangSpecOp) []ceal.CealArg {
 			t = "bytes"
 		case "varuint count, [int16 (big-endian) ...]":
 			t = "bytes"
+			array = true
 		case "varuint count, [varuint ...]":
 			t = "bytes"
+			array = true
 		case "varuint count, [varuint length, bytes ...]":
 			t = "bytes"
+			array = true
 		case "varuint length, bytes":
 			t = "bytes"
 		default:
@@ -131,8 +135,9 @@ func readImms(op LangSpecOp) []ceal.CealArg {
 
 		name := fmt.Sprintf("%s%d", strings.Trim(imm.Name, " ."), i+1)
 		ps[i] = ceal.CealArg{
-			Type: t,
-			Name: name,
+			Type:  t,
+			Name:  name,
+			Array: array,
 		}
 	}
 	return ps

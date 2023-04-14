@@ -18,6 +18,32 @@ type args struct {
 	Out  string
 }
 
+func readGoType(arg ceal.CealArg) string {
+	var t string
+	switch arg.Type {
+	case "uint8":
+		t = arg.Type
+	case "int8":
+		t = arg.Type
+	case "int16":
+		t = arg.Type
+	case "uint16":
+		t = arg.Type
+	case "uint64":
+		t = arg.Type
+	case "bytes":
+		t = "[]byte"
+	default:
+		panic(fmt.Sprintf("unsupported arg type: '%s'", arg.Type))
+	}
+
+	if arg.Array {
+		t = fmt.Sprintf("[]%s", t)
+	}
+
+	return t
+}
+
 func makeAvmCpp(cs ceal.CealSpec, bw *bufio.Writer) error {
 	defer bw.Flush()
 
@@ -46,7 +72,10 @@ func makeAvmCpp(cs ceal.CealSpec, bw *bufio.Writer) error {
 	bw.WriteString(`
 package compiler
 
-import "strings"
+import (
+	"strings"
+	"fmt"
+)
 
 const AvmMainName = "avm_main"
 `)
@@ -252,7 +281,7 @@ type TealExpr interface
 			fmt.Fprintf(bw, "\t%s AstStatement\n", arg.Name)
 		}
 		for _, arg := range op.Imms {
-			fmt.Fprintf(bw, "\t%s string\n", arg.Name)
+			fmt.Fprintf(bw, "\t%s %s\n", arg.Name, readGoType(arg))
 		}
 
 		bw.WriteString("}\n")
@@ -269,7 +298,9 @@ type TealExpr interface
 		if len(op.Imms) > 0 {
 			for _, arg := range op.Imms {
 				bw.WriteString("\tres.WriteString(\" \")\n")
-				fmt.Fprintf(bw, "\tres.WriteString(a.%s)\n", arg.Name)
+
+				// TODO: handle other types than just ints
+				fmt.Fprintf(bw, "\tres.WriteString(fmt.Sprintf(\"%%d\", a.%s))\n", arg.Name)
 			}
 		}
 

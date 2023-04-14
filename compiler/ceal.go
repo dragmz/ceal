@@ -314,12 +314,12 @@ type CealVariable struct {
 
 func (a *CealVariable) String() string {
 	if a.V.local != nil {
-		ast := Teal_load{I1: itoa(a.V.local.slot)}
+		ast := Teal_load{I1: uint8(a.V.local.slot)}
 		return ast.String()
 	}
 
 	if a.V.param != nil {
-		ast := Teal_frame_dig{I1: itoa(a.V.param.index)}
+		ast := Teal_frame_dig{I1: int8(a.V.param.index)}
 		return ast.String()
 	}
 
@@ -327,12 +327,12 @@ func (a *CealVariable) String() string {
 		switch a.V.const_.kind {
 		case SimpleTypeInt:
 			ast := Teal_intc{
-				I1: itoa(a.V.const_.index),
+				I1: uint8(a.V.const_.index),
 			}
 			return ast.String()
 		case SimpleTypeBytes:
 			ast := Teal_bytec{
-				I1: itoa(a.V.const_.index),
+				I1: uint8(a.V.const_.index),
 			}
 			return ast.String()
 		}
@@ -376,13 +376,13 @@ func (a *CealAssignSumDiff) String() string {
 		op = "-"
 	}
 
-	var slot int
+	var slot uint8
 
 	if a.T.complex != nil {
 		v := a.V.fields[a.F.name]
-		slot = v.local.slot
+		slot = uint8(v.local.slot)
 	} else {
-		slot = a.V.local.slot
+		slot = uint8(a.V.local.slot)
 	}
 
 	res.WriteLine(fmt.Sprintf("load %d", slot))
@@ -471,7 +471,7 @@ func (a *CealDefine) String() string {
 
 	ast := Teal_store{
 		s1: a.Value,
-		I1: itoa(a.V.local.slot),
+		I1: uint8(a.V.local.slot),
 	}
 
 	return ast.String()
@@ -515,7 +515,7 @@ func (a *CealAssign) String() string {
 			v := a.V.fields[a.F.name]
 			ast := Teal_store{
 				s1: a.Value,
-				I1: itoa(v.local.slot),
+				I1: uint8(v.local.slot),
 			}
 
 			res.WriteLine(ast.String())
@@ -523,7 +523,7 @@ func (a *CealAssign) String() string {
 	} else {
 		ast := Teal_store{
 			s1: a.Value,
-			I1: itoa(a.V.local.slot),
+			I1: uint8(a.V.local.slot),
 		}
 
 		res.WriteLine(ast.String())
@@ -531,7 +531,7 @@ func (a *CealAssign) String() string {
 
 	if !a.IsStmt {
 		load := Teal_load{
-			I1: itoa(a.V.local.slot),
+			I1: uint8(a.V.local.slot),
 		}
 
 		res.WriteLine(load.String())
@@ -559,7 +559,7 @@ func (a *CealStructField) String() string {
 	v := a.V.fields[a.F.name]
 
 	ast := Teal_load{
-		I1: itoa(v.local.slot),
+		I1: uint8(v.local.slot),
 	}
 
 	return ast.String()
@@ -608,7 +608,7 @@ func (a *CealCall) String() string {
 
 	if a.IsStmt {
 		if a.Fun.returns > 0 {
-			ast := Teal_popn{N1: itoa(a.Fun.returns)}
+			ast := Teal_popn{N1: uint8(a.Fun.returns)}
 			s.WriteLine(ast.String())
 		}
 	}
@@ -760,8 +760,8 @@ func (a *CealFunction) String() string {
 	if a.Fun.user.sub {
 		if a.Fun.user.args != 0 || a.Fun.returns != 0 {
 			ast := Teal_proto{
-				A1: itoa(a.Fun.user.args),
-				R2: itoa(a.Fun.returns),
+				A1: uint8(a.Fun.user.args),
+				R2: uint8(a.Fun.returns),
 			}
 
 			res.WriteLine(ast.String())
