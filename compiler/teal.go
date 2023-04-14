@@ -350,21 +350,20 @@ func (a *AstAssignSumDiff) String() string {
 }
 
 type AstAnd struct {
-	index    int
-	operands []AstStatement
+	index int
+	l     AstStatement
+	r     AstStatement
 }
 
 func (a *AstAnd) String() string {
 	res := Lines{}
 
-	for i, alt := range a.operands {
-		res.WriteLine(alt.String())
-		if i > 0 {
-			res.WriteLine("&&")
-		}
-		res.WriteLine("dup")
-		res.WriteLine(fmt.Sprintf("bz and_%d_end", a.index))
-	}
+	res.WriteLine(a.l.String())
+	res.WriteLine("dup")
+	res.WriteLine(fmt.Sprintf("bz and_%d_end", a.index))
+
+	res.WriteLine(a.r.String())
+	res.WriteLine("&&")
 
 	res.WriteLine(fmt.Sprintf("and_%d_end:", a.index))
 
@@ -372,21 +371,20 @@ func (a *AstAnd) String() string {
 }
 
 type AstOr struct {
-	index    int
-	operands []AstStatement
+	index int
+	l     AstStatement
+	r     AstStatement
 }
 
 func (a *AstOr) String() string {
 	res := Lines{}
 
-	for i, alt := range a.operands {
-		res.WriteLine(alt.String())
-		if i > 0 {
-			res.WriteLine("||")
-		}
-		res.WriteLine("dup")
-		res.WriteLine(fmt.Sprintf("bnz or_%d_end", a.index))
-	}
+	res.WriteLine(a.l.String())
+	res.WriteLine("dup")
+	res.WriteLine(fmt.Sprintf("bnz or_%d_end", a.index))
+
+	res.WriteLine(a.r.String())
+	res.WriteLine("||")
 
 	res.WriteLine(fmt.Sprintf("or_%d_end:", a.index))
 

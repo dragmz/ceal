@@ -1,57 +1,18 @@
 #pragma version 8
 int 0
 dup
-bnz or_9_end
+bnz or_1_end
 int 1
 dup
 bz and_0_end
 int 0
 &&
-dup
-bz and_0_end
 and_0_end:
+||
+or_1_end:
 dup
-bnz or_7_end
-int 2
-dup
-bz and_1_end
-int 0
-&&
-dup
-bz and_1_end
-and_1_end:
-dup
-bnz or_5_end
-int 0
-dup
-bnz or_3_end
+bnz or_2_end
 int 1
-dup
-bz and_2_end
-and_2_end:
 ||
-dup
-bnz or_3_end
-or_3_end:
-dup
-bz and_4_end
-and_4_end:
-||
-dup
-bnz or_5_end
-or_5_end:
-dup
-bz and_6_end
-and_6_end:
-||
-dup
-bnz or_7_end
-or_7_end:
-dup
-bz and_8_end
-and_8_end:
-||
-dup
-bnz or_9_end
-or_9_end:
+or_2_end:
 return

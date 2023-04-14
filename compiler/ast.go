@@ -153,26 +153,10 @@ func (v *AstVisitor) VisitAssignSumDiffExpr(ctx *parser.AssignSumDiffExprContext
 }
 
 func (v *AstVisitor) VisitOrExpr(ctx *parser.OrExprContext) interface{} {
-	ors := []AstStatement{}
-	ors = append(ors, v.visitStatement(ctx.Expr()))
-
-	for _, e := range ctx.AllAlt() {
-		ands := []AstStatement{}
-		for _, o := range e.AllExpr() {
-			ands = append(ands, v.visitStatement(o))
-		}
-
-		ors = append(ors, &AstAnd{
-			index:    v.index,
-			operands: ands,
-		})
-
-		v.index++
-	}
-
 	ast := &AstOr{
-		index:    v.index,
-		operands: ors,
+		index: v.index,
+		l:     v.visitStatement(ctx.GetL()),
+		r:     v.visitStatement(ctx.GetR()),
 	}
 
 	v.index++
@@ -181,15 +165,10 @@ func (v *AstVisitor) VisitOrExpr(ctx *parser.OrExprContext) interface{} {
 }
 
 func (v *AstVisitor) VisitAndExpr(ctx *parser.AndExprContext) interface{} {
-	alts := []AstStatement{}
-
-	for _, e := range ctx.AllExpr() {
-		alts = append(alts, v.visitStatement(e))
-	}
-
 	ast := &AstAnd{
-		index:    v.index,
-		operands: alts,
+		index: v.index,
+		l:     v.visitStatement(ctx.GetL()),
+		r:     v.visitStatement(ctx.GetR()),
 	}
 
 	v.index++

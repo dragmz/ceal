@@ -22,38 +22,24 @@ dup
 bz and_0_end
 int 2
 &&
-dup
-bz and_0_end
 and_0_end:
 dup
-bnz or_2_end
+bnz or_1_end
 int 3
-dup
-bz and_1_end
-and_1_end:
 ||
-dup
-bnz or_2_end
-or_2_end:
+or_1_end:
 store 3
 int 1
 dup
-bz and_5_end
+bz and_3_end
 int 2
 dup
-bnz or_4_end
+bnz or_2_end
 int 3
-dup
-bz and_3_end
-and_3_end:
 ||
-dup
-bnz or_4_end
-or_4_end:
+or_2_end:
 &&
-dup
-bz and_5_end
-and_5_end:
+and_3_end:
 store 4
 int 1
 int 2
