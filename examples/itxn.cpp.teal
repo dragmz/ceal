@@ -1,0 +1,7 @@
+#pragma version 8
+itxn_begin
+int 1
+itxn_field XferAsset
+int 2
+itxn_field AssetAmount
+itxn_submit
