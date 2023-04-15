@@ -280,19 +280,27 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 			continue
 		}
 
-		ip := path.Join(c.Includes[0], name)
+		for _, dir := range c.Includes {
+			ip := path.Join(dir, name)
 
-		bs, err := os.ReadFile(ip)
-		if err != nil {
-			panic(fmt.Sprintf("failed to read #include file: '%s'", name))
+			bs, err := os.ReadFile(ip)
+			if os.IsNotExist(err) {
+				continue
+			}
+
+			if err != nil {
+				panic(fmt.Sprintf("failed to read #include file: '%s'", name))
+			}
+
+			incsrc := string(bs)
+
+			prefix := src[:include.GetStart().GetStart()]
+			suffix := src[include.GetStop().GetStop()+1:]
+
+			src = prefix + incsrc + suffix
+
+			break
 		}
-
-		incsrc := string(bs)
-
-		prefix := src[:include.GetStart().GetStart()]
-		suffix := src[include.GetStop().GetStop()+1:]
-
-		src = prefix + incsrc + suffix
 	}
 
 	input = antlr.NewInputStream(src)
