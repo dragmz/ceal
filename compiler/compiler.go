@@ -59,6 +59,14 @@ type Struct struct {
 	builtin *BuiltinStruct
 }
 
+func (s *Struct) registerFunction(f *StructFunction) {
+	if _, ok := s.functions[f.name]; ok {
+		panic(fmt.Sprintf("function '%s' is already defined", f.name))
+	}
+
+	s.functions[f.name] = f
+}
+
 type SimpleTypeKind int
 
 const (
@@ -194,6 +202,14 @@ func NewScope(parent *Scope) *Scope {
 	}
 
 	return s
+}
+
+func (s *Scope) registerFunction(f *Function) {
+	if _, ok := s.functions[f.name]; ok {
+		panic(fmt.Sprintf("function '%s' is already defined", f.name))
+	}
+
+	s.functions[f.name] = f
 }
 
 func (s *Scope) enter() *Scope {
@@ -336,7 +352,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 			})
 		}
 
-		global.functions[f.name] = f
+		global.registerFunction(f)
 	}
 
 	for _, item := range builtin_structs {
@@ -367,7 +383,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 				})
 			}
 
-			s.functions[f.name] = f
+			s.registerFunction(f)
 		}
 
 		t := &Type{

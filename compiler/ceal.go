@@ -12,6 +12,16 @@ type CealProgram struct {
 	FunctionNames []string
 }
 
+func (a *CealProgram) registerFunction(f *CealFunction) {
+	if _, ok := a.Functions[f.Fun.name]; ok {
+		panic(fmt.Sprintf("function '%s' is already defined", f.Fun.name))
+	}
+
+	a.Functions[f.Fun.name] = f
+	a.FunctionNames = append(a.FunctionNames, f.Fun.name)
+
+}
+
 func (a *CealProgram) String() string {
 	res := Teal{}
 

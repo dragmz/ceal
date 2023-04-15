@@ -449,37 +449,34 @@ func (v *AstVisitor) VisitFunction(ctx *parser.FunctionContext) interface{} {
 	fun := v.global.functions[id]
 
 	v.scope = fun.user.scope
-
-	ast := &CealFunction{
-		Fun: fun,
-	}
-
-	for _, item := range ctx.AllStmt() {
-		if stmt := v.visitStatement(item); stmt != nil {
-			ast.Statements = append(ast.Statements, stmt)
+	{
+		ast := &CealFunction{
+			Fun: fun,
 		}
+		for _, item := range ctx.AllStmt() {
+			if stmt := v.visitStatement(item); stmt != nil {
+				ast.Statements = append(ast.Statements, stmt)
+			}
+		}
+		v.program.registerFunction(ast)
 	}
-
 	v.scope = v.scope.exit()
-
-	v.program.Functions[id] = ast
-	v.program.FunctionNames = append(v.program.FunctionNames, ast.Fun.name)
 
 	return nil
 }
 
 func (v *AstVisitor) VisitBlockStmt(ctx *parser.BlockStmtContext) interface{} {
-	v.scope = v.scope.enter()
-
 	ast := &CealBlock{}
 
-	for _, item := range ctx.AllStmt() {
-		stmt := v.visitStatement(item)
-		if stmt != nil {
-			ast.Statements = append(ast.Statements, stmt)
+	v.scope = v.scope.enter()
+	{
+		for _, item := range ctx.AllStmt() {
+			stmt := v.visitStatement(item)
+			if stmt != nil {
+				ast.Statements = append(ast.Statements, stmt)
+			}
 		}
 	}
-
 	v.scope = v.scope.exit()
 
 	return ast
@@ -487,7 +484,9 @@ func (v *AstVisitor) VisitBlockStmt(ctx *parser.BlockStmtContext) interface{} {
 
 func (v *AstVisitor) VisitProgram(ctx *parser.ProgramContext) interface{} {
 	v.scope = v.global
-	v.VisitChildren(ctx)
+	{
+		v.VisitChildren(ctx)
+	}
 	v.scope = nil
 
 	return nil

@@ -158,10 +158,6 @@ func (v *SymbolTableVisitor) VisitProgram(ctx *parser.ProgramContext) interface{
 func (v *SymbolTableVisitor) VisitFunction(ctx *parser.FunctionContext) interface{} {
 	id := ctx.ID().GetText()
 
-	if _, ok := v.scope.functions[id]; ok {
-		panic(fmt.Sprintf("function '%s' already defined", id))
-	}
-
 	user := &UserFunction{
 		scope: NewScope(v.scope),
 		args:  len(ctx.Params().AllParam()),
@@ -188,7 +184,7 @@ func (v *SymbolTableVisitor) VisitFunction(ctx *parser.FunctionContext) interfac
 
 	user.sub = id != AvmMainName
 
-	v.scope.functions[id] = fun
+	v.scope.registerFunction(fun)
 
 	v.scope = user.scope
 	v.scope.function = fun
