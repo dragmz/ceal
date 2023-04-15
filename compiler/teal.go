@@ -135,3 +135,79 @@ func (a *Teal_seq) String() string {
 	}
 	return res.String()
 }
+
+type Teal_retsub_fixed struct {
+	Values []TealOp
+}
+
+func (a *Teal_retsub_fixed) String() string {
+	res := Lines{}
+
+	for _, v := range a.Values {
+		res.WriteLine(v.String())
+	}
+
+	res.WriteLine("retsub")
+
+	return res.String()
+}
+
+type Teal_return_fixed struct {
+	Value TealOp
+}
+
+func (a *Teal_return_fixed) String() string {
+	res := Lines{}
+
+	if a.Value != nil {
+		res.WriteLine(a.Value.String())
+	}
+
+	res.WriteLine("return")
+
+	return res.String()
+}
+
+type Teal_callsub_fixed struct {
+	Args   []TealOp
+	Target string
+}
+
+func (a *Teal_callsub_fixed) String() string {
+	res := Lines{}
+
+	for _, a := range a.Args {
+		res.WriteLine(a.String())
+	}
+
+	res.WriteLine(fmt.Sprintf("callsub %s", a.Target))
+
+	return res.String()
+}
+
+type Teal_call_builtin struct {
+	Args []TealOp
+	Imms []TealOp
+
+	Name string
+}
+
+func (a *Teal_call_builtin) String() string {
+	res := Lines{}
+
+	for _, a := range a.Args {
+		res.WriteLine(a.String())
+	}
+
+	call := []string{
+		a.Name,
+	}
+
+	for _, i := range a.Imms {
+		call = append(call, i.String())
+	}
+
+	res.WriteLine(strings.Join(call, " "))
+
+	return res.String()
+}

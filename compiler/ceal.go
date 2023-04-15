@@ -2,7 +2,6 @@ package compiler
 
 import (
 	"fmt"
-	"strings"
 )
 
 type CealProgram struct {
@@ -598,39 +597,46 @@ func (a *CealCall) ToStmt() {
 }
 
 func (a *CealCall) String() string {
-	res := Lines{}
+	res := Teal{}
+
+	var args []TealOp
 
 	if a.Fun.builtin != nil {
 		i := 0
 
 		for ; i < len(a.Fun.builtin.stack); i++ {
 			arg := a.Args[i]
-			res.WriteLine(arg.String())
+			args = append(args, arg)
 		}
 
-		args := []string{}
-		args = append(args, a.Fun.builtin.op)
+		var imms []TealOp
 
 		for ; i < len(a.Fun.builtin.stack)+len(a.Fun.builtin.imm); i++ {
 			arg := a.Args[i]
-			args = append(args, arg.String())
+			imms = append(imms, arg)
 		}
 
-		res.WriteLine(strings.Join(args, " "))
+		res.Write(&Teal_call_builtin{
+			Args: args,
+			Imms: imms,
+			Name: a.Fun.builtin.op,
+		})
 	}
 
 	if a.Fun.user != nil {
 		for _, arg := range a.Args {
-			res.WriteLine(arg.String())
+			args = append(args, arg)
 		}
 
-		res.WriteLine(fmt.Sprintf("callsub %s", a.Fun.name))
+		res.Write(&Teal_callsub_fixed{
+			Args:   args,
+			Target: a.Fun.name,
+		})
 	}
 
 	if a.IsStmt {
 		if a.Fun.returns > 0 {
-			ast := Teal_popn{N1: uint8(a.Fun.returns)}
-			res.WriteLine(ast.String())
+			res.Write(&Teal_popn{N1: uint8(a.Fun.returns)})
 		}
 	}
 
@@ -670,23 +676,25 @@ func (a *CealReturn) IsReturn() {
 }
 
 func (a *CealReturn) String() string {
-	s := Lines{}
+	var op TealOp
 
-	if a.Value != nil {
-		s.WriteLine(a.Value.String())
-	}
+	if a.Fun != nil && a.Fun.user.sub {
+		var values []TealOp
 
-	if a.Fun != nil {
-		if a.Fun.user.sub {
-			s.WriteLine("retsub")
-		} else {
-			s.WriteLine("return")
+		if a.Value != nil {
+			values = append(values, a.Value)
+		}
+
+		op = &Teal_retsub_fixed{
+			Values: values,
 		}
 	} else {
-		s.WriteLine("return")
+		op = &Teal_return_fixed{
+			Value: a.Value,
+		}
 	}
 
-	return s.String()
+	return op.String()
 }
 
 type CealBlock struct {
@@ -715,15 +723,18 @@ type CealConditional struct {
 func (a *CealConditional) String() string {
 	res := Teal{}
 
+	false_label := fmt.Sprintf("conditional_%d_false", a.Index)
+	end_label := fmt.Sprintf("conditional_%d_end", a.Index)
+
 	res.Write(&Teal_bz_fixed{
 		s1:      a.Condition,
-		TARGET1: fmt.Sprintf("conditional_%d_false", a.Index),
+		TARGET1: false_label,
 	})
 	res.Write(a.True)
-	res.Write(&Teal_b_fixed{TARGET1: fmt.Sprintf("conditional_%d_end", a.Index)})
-	res.Write(&Teal_label{Name: fmt.Sprintf("conditional_%d_false", a.Index)})
+	res.Write(&Teal_b_fixed{TARGET1: end_label})
+	res.Write(&Teal_label{Name: false_label})
 	res.Write(a.False)
-	res.Write(&Teal_label{Name: fmt.Sprintf("conditional_%d_end", a.Index)})
+	res.Write(&Teal_label{Name: end_label})
 
 	return res.String()
 }
@@ -741,6 +752,8 @@ type CealIf struct {
 func (a *CealIf) String() string {
 	res := Teal{}
 
+	end_label := fmt.Sprintf("if_end_%d", a.Index)
+
 	for i, alt := range a.Alternatives {
 		if alt.Condition != nil {
 			if i < len(a.Alternatives)-1 {
@@ -751,7 +764,7 @@ func (a *CealIf) String() string {
 			} else {
 				res.Write(&Teal_bz_fixed{
 					s1:      alt.Condition,
-					TARGET1: fmt.Sprintf("if_end_%d", a.Index),
+					TARGET1: end_label,
 				})
 			}
 		}
@@ -761,7 +774,7 @@ func (a *CealIf) String() string {
 		}
 
 		if i < len(a.Alternatives)-1 {
-			res.Write(&Teal_b_fixed{TARGET1: fmt.Sprintf("if_end_%d", a.Index)})
+			res.Write(&Teal_b_fixed{TARGET1: end_label})
 		}
 
 		if alt.Condition != nil {
@@ -771,7 +784,7 @@ func (a *CealIf) String() string {
 		}
 	}
 
-	res.Write(&Teal_label{Name: fmt.Sprintf("if_end_%d", a.Index)})
+	res.Write(&Teal_label{Name: end_label})
 
 	return res.String()
 }
