@@ -92,6 +92,12 @@ func (s *BaseCListener) EnterAssignSumDiffStmt(ctx *AssignSumDiffStmtContext) {}
 // ExitAssignSumDiffStmt is called when production AssignSumDiffStmt is exited.
 func (s *BaseCListener) ExitAssignSumDiffStmt(ctx *AssignSumDiffStmtContext) {}
 
+// EnterAsmStmt is called when production AsmStmt is entered.
+func (s *BaseCListener) EnterAsmStmt(ctx *AsmStmtContext) {}
+
+// ExitAsmStmt is called when production AsmStmt is exited.
+func (s *BaseCListener) ExitAsmStmt(ctx *AsmStmtContext) {}
+
 // EnterCallStmt is called when production CallStmt is entered.
 func (s *BaseCListener) EnterCallStmt(ctx *CallStmtContext) {}
 

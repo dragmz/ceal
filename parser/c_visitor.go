@@ -43,6 +43,9 @@ type CVisitor interface {
 	// Visit a parse tree produced by CParser#AssignSumDiffStmt.
 	VisitAssignSumDiffStmt(ctx *AssignSumDiffStmtContext) interface{}
 
+	// Visit a parse tree produced by CParser#AsmStmt.
+	VisitAsmStmt(ctx *AsmStmtContext) interface{}
+
 	// Visit a parse tree produced by CParser#CallStmt.
 	VisitCallStmt(ctx *CallStmtContext) interface{}
 

@@ -22,6 +22,7 @@ stmt:
     | definition ';'                                                # DefinitionStmt
     | assign_expr ';'                                               # AssignStmt
     | asdexpr ';'                                                   # AssignSumDiffStmt
+    | 'asm' '(' STRING* ')' ';'                                     # AsmStmt
     | call_expr ';'                                                 # CallStmt
     | 'if' '(' expr ')' (('{' stmt* '}') | stmt) elseif* else?      # IfStmt
     | 'return' expr? ';'                                            # ReturnStmt

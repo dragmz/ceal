@@ -698,3 +698,13 @@ func (v *AstVisitor) VisitCommentStmt(ctx *parser.CommentStmtContext) interface{
 
 	return nil
 }
+
+func (v *AstVisitor) VisitAsmStmt(ctx *parser.AsmStmtContext) interface{} {
+	var ops []string
+	for _, s := range ctx.AllSTRING() {
+		ops = append(ops, strings.TrimSuffix(strings.TrimPrefix(s.GetText(), "\""), "\""))
+	}
+	return &CealRaw{
+		Value: strings.Join(ops, "\n"),
+	}
+}

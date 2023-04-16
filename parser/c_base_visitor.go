@@ -55,6 +55,10 @@ func (v *BaseCVisitor) VisitAssignSumDiffStmt(ctx *AssignSumDiffStmtContext) int
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCVisitor) VisitAsmStmt(ctx *AsmStmtContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCVisitor) VisitCallStmt(ctx *CallStmtContext) interface{} {
 	return v.VisitChildren(ctx)
 }

@@ -43,6 +43,9 @@ type CListener interface {
 	// EnterAssignSumDiffStmt is called when entering the AssignSumDiffStmt production.
 	EnterAssignSumDiffStmt(c *AssignSumDiffStmtContext)
 
+	// EnterAsmStmt is called when entering the AsmStmt production.
+	EnterAsmStmt(c *AsmStmtContext)
+
 	// EnterCallStmt is called when entering the CallStmt production.
 	EnterCallStmt(c *CallStmtContext)
 
@@ -240,6 +243,9 @@ type CListener interface {
 
 	// ExitAssignSumDiffStmt is called when exiting the AssignSumDiffStmt production.
 	ExitAssignSumDiffStmt(c *AssignSumDiffStmtContext)
+
+	// ExitAsmStmt is called when exiting the AsmStmt production.
+	ExitAsmStmt(c *AsmStmtContext)
 
 	// ExitCallStmt is called when exiting the CallStmt production.
 	ExitCallStmt(c *CallStmtContext)
