@@ -44,9 +44,7 @@ type Teal_pragma_version struct {
 }
 
 func (a *Teal_pragma_version) Teal() Teal {
-	res := TealBuilder{}
-	res.Write(a)
-	return res.ops
+	return Teal{a}
 }
 
 func (t *Teal_pragma_version) String() string {
@@ -58,9 +56,7 @@ type Teal_intcblock_fixed struct {
 }
 
 func (a *Teal_intcblock_fixed) Teal() Teal {
-	res := TealBuilder{}
-	res.Write(a)
-	return res.ops
+	return Teal{a}
 }
 
 func (a *Teal_intcblock_fixed) String() string {
@@ -80,9 +76,7 @@ type Teal_bytecblock_fixed struct {
 }
 
 func (a *Teal_bytecblock_fixed) Teal() Teal {
-	res := TealBuilder{}
-	res.Write(a)
-	return res.ops
+	return Teal{a}
 }
 
 func (a *Teal_bytecblock_fixed) String() string {
@@ -103,9 +97,7 @@ type Teal_b_fixed struct {
 }
 
 func (a *Teal_b_fixed) Teal() Teal {
-	res := TealBuilder{}
-	res.Write(a)
-	return res.ops
+	return Teal{a}
 }
 
 func (a *Teal_b_fixed) String() string {
@@ -118,9 +110,7 @@ type Teal_bnz_fixed struct {
 }
 
 func (a *Teal_bnz_fixed) Teal() Teal {
-	res := TealBuilder{}
-	res.Write(a)
-	return res.ops
+	return Teal{a}
 }
 
 func (a *Teal_bnz_fixed) String() string {
@@ -133,9 +123,7 @@ type Teal_bz_fixed struct {
 }
 
 func (a *Teal_bz_fixed) Teal() Teal {
-	res := TealBuilder{}
-	res.Write(a)
-	return res.ops
+	return Teal{a}
 }
 
 func (a *Teal_bz_fixed) String() string {
@@ -147,9 +135,7 @@ type Teal_label struct {
 }
 
 func (a *Teal_label) Teal() Teal {
-	res := TealBuilder{}
-	res.Write(a)
-	return res.ops
+	return Teal{a}
 }
 
 func (a *Teal_label) String() string {
@@ -161,9 +147,7 @@ type Teal_match_fixed struct {
 }
 
 func (a *Teal_match_fixed) Teal() Teal {
-	res := TealBuilder{}
-	res.Write(a)
-	return res.ops
+	return Teal{a}
 }
 
 func (a *Teal_match_fixed) String() string {
@@ -232,9 +216,7 @@ type Teal_int struct {
 }
 
 func (a *Teal_int) Teal() Teal {
-	res := TealBuilder{}
-	res.Write(a)
-	return res.ops
+	return Teal{a}
 }
 
 func (a *Teal_int) String() string {
@@ -246,9 +228,7 @@ type Teal_retsub_fixed struct {
 }
 
 func (a *Teal_retsub_fixed) Teal() Teal {
-	res := TealBuilder{}
-	res.Write(a)
-	return res.ops
+	return Teal{a}
 }
 
 func (a *Teal_retsub_fixed) String() string {
@@ -270,9 +250,7 @@ type Teal_return_fixed struct {
 }
 
 func (a *Teal_return_fixed) Teal() Teal {
-	res := TealBuilder{}
-	res.Write(a)
-	return res.ops
+	return Teal{a}
 }
 
 func (a *Teal_return_fixed) String() string {
@@ -295,9 +273,7 @@ type Teal_callsub_fixed struct {
 }
 
 func (a *Teal_callsub_fixed) Teal() Teal {
-	res := TealBuilder{}
-	res.Write(a)
-	return res.ops
+	return Teal{a}
 }
 
 func (a *Teal_callsub_fixed) String() string {
