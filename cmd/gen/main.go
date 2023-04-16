@@ -127,6 +127,15 @@ var builtin_functions = []BuiltinFunctionData {
 		bw.WriteString("\t\t},\n")
 		fmt.Fprintf(bw, "\t\treturns: %d,\n", len(op.Returns))
 		bw.WriteString("\t},\n")
+		//
+		bw.WriteString("\t{\n")
+		fmt.Fprintf(bw, "\t\tt: \"%s\", name: \"avm_%s_op\", op: \"%s\",\n", ret, name, op.Name)
+		bw.WriteString("\t\timm: []BuiltinFunctionParamData{\n")
+		for _, arg := range op.Imms {
+			fmt.Fprintf(bw, "\t\t\t{ t: \"%s\", name: \"%s\" },\n", arg.Type, arg.Name)
+		}
+		bw.WriteString("\t\t},\n")
+		bw.WriteString("\t},\n")
 	}
 
 	bw.WriteString(`};
@@ -165,13 +174,13 @@ var builtin_structs = []BuiltinStructData {
 `)
 
 	for _, op := range cs.Ops {
+		name := ceal.FormatOpName(op.Name)
+
 		switch len(op.Imms) {
 		case 1:
 			if len(op.Enum) == 0 {
 				break
 			}
-			name := ceal.FormatOpName(op.Name)
-
 			bw.WriteString("\t{\n")
 			fmt.Fprintf(bw, "\t\tname: \"avm_%s_t\",\n", name)
 			bw.WriteString("\t\tfields: []BuiltinStructFieldData{\n")

@@ -77,9 +77,7 @@ type CealContinue struct {
 }
 
 func (a *CealContinue) TealAst() TealAst {
-	res := &TealAstBuilder{}
-	res.Write(&Teal_b_fixed{TARGET1: fmt.Sprintf("%s_%d_continue", a.Label, a.Index)})
-	return res.Build()
+	return &Teal_b_fixed{TARGET1: fmt.Sprintf("%s_%d_continue", a.Label, a.Index)}
 }
 
 type CealBreak struct {
@@ -88,9 +86,7 @@ type CealBreak struct {
 }
 
 func (a *CealBreak) TealAst() TealAst {
-	res := &TealAstBuilder{}
-	res.Write(&Teal_b_fixed{TARGET1: fmt.Sprintf("%s_%d_end", a.Label, a.Index)})
-	return res.Build()
+	return &Teal_b_fixed{TARGET1: fmt.Sprintf("%s_%d_end", a.Label, a.Index)}
 }
 
 type CealSwitchCase struct {
@@ -244,6 +240,10 @@ type CealExpr interface {
 	ToStmt()
 }
 
+type CealValue interface {
+	ToValue()
+}
+
 type CealPrefix struct {
 	V  *Variable
 	Op string
@@ -322,10 +322,7 @@ func (a *CealPostfix) TealAst() TealAst {
 		panic(fmt.Sprintf("postfix operator not supported: '%s'", a.Op))
 	}
 
-	res := &TealAstBuilder{}
-	res.Write(&Teal_store{s1: op, I1: uint8(a.V.local.slot)})
-
-	return res.Build()
+	return &Teal_store{s1: op, I1: uint8(a.V.local.slot)}
 }
 
 type CealLabel struct {
@@ -333,9 +330,7 @@ type CealLabel struct {
 }
 
 func (a *CealLabel) TealAst() TealAst {
-	res := &TealAstBuilder{}
-	res.Write(&Teal_label{Name: fmt.Sprintf("label_%s", a.Name)})
-	return res.Build()
+	return &Teal_label{Name: fmt.Sprintf("label_%s", a.Name)}
 }
 
 type CealGoto struct {
@@ -343,9 +338,7 @@ type CealGoto struct {
 }
 
 func (a *CealGoto) TealAst() TealAst {
-	res := &TealAstBuilder{}
-	res.Write(&Teal_b_fixed{TARGET1: fmt.Sprintf("label_%s", a.Label)})
-	return res.Build()
+	return &Teal_b_fixed{TARGET1: fmt.Sprintf("label_%s", a.Label)}
 }
 
 type CealVariable struct {
@@ -389,7 +382,7 @@ func (a *CealVariable) TealAst() TealAst {
 		return res.Build()
 	}
 
-	res.Write(&Teal_byte{S: a.V.name})
+	res.Write(&Teal_byte{S: &Teal_byte_value{V: a.V.name}})
 	return res.Build()
 }
 
@@ -444,10 +437,7 @@ func (a *CealAssignSumDiff) TealAst() TealAst {
 		op = &Teal_dup{s1: op}
 	}
 
-	res := &TealAstBuilder{}
-	res.Write(&Teal_store{s1: op, I1: slot})
-
-	return res.Build()
+	return &Teal_store{s1: op, I1: slot}
 }
 
 type CealAnd struct {
@@ -540,9 +530,7 @@ func (a *CealBinop) TealAst() TealAst {
 		panic(fmt.Sprintf("binary op '%s' is not supported yet", a.Op))
 	}
 
-	res := &TealAstBuilder{}
-	res.Write(op)
-	return res.Build()
+	return op
 }
 
 type CealNegate struct {
@@ -550,12 +538,10 @@ type CealNegate struct {
 }
 
 func (a *CealNegate) TealAst() TealAst {
-	res := &TealAstBuilder{}
-	res.Write(&Teal_minus{
+	return &Teal_minus{
 		s1: &Teal_int{V: 0},
 		s2: a.Value.TealAst(),
-	})
-	return res.Build()
+	}
 }
 
 type CealDefine struct {
@@ -575,9 +561,7 @@ func (a *CealDefine) TealAst() TealAst {
 		I1: uint8(a.V.local.slot),
 	}
 
-	res := &TealAstBuilder{}
-	res.Write(ast)
-	return res.Build()
+	return ast
 }
 
 type CealAssign struct {
@@ -712,7 +696,12 @@ func (a *CealCall) TealAst() TealAst {
 
 		for ; i < len(a.Fun.builtin.stack)+len(a.Fun.builtin.imm); i++ {
 			arg := a.Args[i]
-			imms = append(imms, arg.TealAst())
+			if e, ok := arg.(CealValue); ok {
+				e.ToValue()
+			}
+
+			ast := arg.TealAst()
+			imms = append(imms, ast)
 		}
 
 		res.Write(&Teal_call_builtin{
@@ -752,22 +741,36 @@ type CealIsBreak interface {
 
 type CealIntConstant struct {
 	Value string
+	value bool
+}
+
+func (a *CealIntConstant) ToValue() {
+	a.value = true
 }
 
 func (a *CealIntConstant) TealAst() TealAst {
-	res := &TealAstBuilder{}
-	res.Write(&Teal_named_int{V: &Teal_named_int_value{V: a.Value}})
-	return res.Build()
+	var v TealAst = &Teal_named_int_value{V: a.Value}
+	if !a.value {
+		v = &Teal_named_int{V: v}
+	}
+	return v
 }
 
 type CealByteConstant struct {
 	Value string
+	value bool
+}
+
+func (a *CealByteConstant) ToValue() {
+	a.value = true
 }
 
 func (a *CealByteConstant) TealAst() TealAst {
-	res := &TealAstBuilder{}
-	res.Write(&Teal_byte{S: a.Value})
-	return res.Build()
+	var v TealAst = &Teal_byte_value{V: a.Value}
+	if !a.value {
+		v = &Teal_byte{S: v}
+	}
+	return v
 }
 
 type CealReturn struct {
@@ -797,10 +800,7 @@ func (a *CealReturn) TealAst() TealAst {
 		}
 	}
 
-	res := &TealAstBuilder{}
-	res.Write(op)
-
-	return res.Build()
+	return op
 }
 
 type CealBlock struct {

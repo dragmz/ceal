@@ -179,17 +179,27 @@ func (a *Teal_match_fixed) String() string {
 }
 
 type Teal_byte struct {
-	S string
+	S TealAst
 }
 
 func (a *Teal_byte) Teal() Teal {
-	res := TealBuilder{}
-	res.Write(a)
-	return res.ops
+	return Teal{a}
 }
 
 func (a *Teal_byte) String() string {
 	return fmt.Sprintf("byte %s", a.S)
+}
+
+type Teal_byte_value struct {
+	V string
+}
+
+func (a *Teal_byte_value) Teal() Teal {
+	return Teal{a}
+}
+
+func (a *Teal_byte_value) String() string {
+	return a.V
 }
 
 type Teal_named_int_value struct {
@@ -202,7 +212,6 @@ func (a *Teal_named_int_value) Teal() Teal {
 
 func (a *Teal_named_int_value) String() string {
 	return a.V
-
 }
 
 type Teal_named_int struct {

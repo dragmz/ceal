@@ -32,7 +32,13 @@ func formatParams(op ceal.CealSpecOp, skipImmsCount int) string {
 		b.WriteString(arg.Name)
 	}
 
-	for i := skipImmsCount; i < len(op.Imms); i++ {
+	formatImms(op, skipImmsCount, &b)
+
+	return b.String()
+}
+
+func formatImms(op ceal.CealSpecOp, skip int, b *strings.Builder) {
+	for i := skip; i < len(op.Imms); i++ {
 		arg := op.Imms[i]
 		if b.Len() > 0 {
 			b.WriteString(", ")
@@ -44,8 +50,6 @@ func formatParams(op ceal.CealSpecOp, skipImmsCount int) string {
 		b.WriteString(" ")
 		b.WriteString(arg.Name)
 	}
-
-	return b.String()
 }
 
 func run(a args) error {
@@ -84,7 +88,10 @@ func run(a args) error {
 #define STACK
 
 using uint64 = unsigned long long;
+using uint16 = unsigned short;
+using int16 = signed short;
 using uint8 = unsigned char;
+using int8 = signed char;
 using bytes = std::variant<const char*, const unsigned char*>;
 
 const uint64 NoOp = 0;
@@ -112,6 +119,10 @@ struct any
 
 	for _, op := range cs.Ops {
 		name := ceal.FormatOpName(op.Name)
+
+		b := strings.Builder{}
+		formatImms(op, 0, &b)
+		fmt.Fprintf(bw, "void avm_%s_op(%s);\n", name, b.String())
 
 		rt := ceal.ReadReturnTypeName(op)
 
