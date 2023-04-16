@@ -3,6 +3,7 @@ package compiler
 import (
 	"ceal/parser"
 	"fmt"
+	"strings"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 )
@@ -229,7 +230,7 @@ func (v *AstVisitor) VisitNotExpr(ctx *parser.NotExprContext) interface{} {
 }
 
 func (v *AstVisitor) VisitConstantExpr(ctx *parser.ConstantExprContext) interface{} {
-	var res AstStatement
+	var res CealStatement
 
 	c := ctx.Constant()
 
@@ -677,4 +678,23 @@ func (v *AstVisitor) VisitConditionalExpr(ctx *parser.ConditionalExprContext) in
 
 	return ast
 
+}
+
+func (v *AstVisitor) VisitCommentStmt(ctx *parser.CommentStmtContext) interface{} {
+	if ctx.SINGLE_COMMENT() != nil {
+		return &CealSingleLineComment{
+			Line: strings.TrimPrefix(
+				strings.Trim(ctx.SINGLE_COMMENT().GetText(), "\r\n"),
+				"//",
+			),
+		}
+	}
+
+	if ctx.MULTILINE_COMMENT() != nil {
+		return &CealMultiLineComment{
+			Text: strings.TrimSuffix(strings.TrimPrefix(ctx.MULTILINE_COMMENT().GetText(), "/*"), "*/"),
+		}
+	}
+
+	return nil
 }

@@ -1,6 +1,8 @@
 #pragma version 8
 int 5
 store 0
+// this should short-circuit
+// for any falsy conditions
 load 0
 int 0
 >

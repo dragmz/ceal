@@ -34,6 +34,7 @@ stmt:
     | 'switch' '(' expr ')' '{' case* default? '}'                  # SwitchStmt
     | 'break' ';'                                                   # BreakStmt
     | 'continue' ';'                                                # ContinueStmt
+    | (SINGLE_COMMENT | MULTILINE_COMMENT)                          # CommentStmt
     ;
 
 expr:
@@ -96,5 +97,5 @@ INT: [0-9]+;
 STRING: '"' ( ~["\\] | '\\' . )* '"' ;
 ID: [a-zA-Z_][a-zA-Z0-9_]*;
 WS: [ \t\r\n]+ -> skip;
-SINGLE_COMMENT: '//' .*? '\n' -> skip;
-MULTILINE_COMMENT: '/*' .*? '*/' -> skip;
+SINGLE_COMMENT: '//' .*? '\n';
+MULTILINE_COMMENT: '/*' .*? '*/';

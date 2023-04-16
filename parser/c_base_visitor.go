@@ -103,6 +103,10 @@ func (v *BaseCVisitor) VisitContinueStmt(ctx *ContinueStmtContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCVisitor) VisitCommentStmt(ctx *CommentStmtContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCVisitor) VisitAndExpr(ctx *AndExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }

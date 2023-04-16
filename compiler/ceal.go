@@ -2,6 +2,7 @@ package compiler
 
 import (
 	"fmt"
+	"strings"
 )
 
 type CealStatement interface {
@@ -753,10 +754,6 @@ type CealIntConstant struct {
 	Value string
 }
 
-func (a *CealIntConstant) String() string {
-	return fmt.Sprintf("int %s", a.Value)
-}
-
 func (a *CealIntConstant) TealAst() TealAst {
 	res := &TealAstBuilder{}
 	res.Write(&Teal_named_int{V: &Teal_named_int_value{V: a.Value}})
@@ -771,10 +768,6 @@ func (a *CealByteConstant) TealAst() TealAst {
 	res := &TealAstBuilder{}
 	res.Write(&Teal_byte{S: a.Value})
 	return res.Build()
-}
-
-func (a *CealByteConstant) String() string {
-	return fmt.Sprintf("byte %s", a.Value)
 }
 
 type CealReturn struct {
@@ -950,7 +943,22 @@ func (a *CealRaw) Teal() Teal {
 }
 
 func (a *CealRaw) TealAst() TealAst {
-	res := &TealAstBuilder{}
-	res.Write(a)
-	return res.Build()
+	return a
+}
+
+type CealSingleLineComment struct {
+	Line string
+}
+
+func (a *CealSingleLineComment) TealAst() TealAst {
+	return &Teal_comment{Lines: []string{a.Line}}
+}
+
+type CealMultiLineComment struct {
+	Text string
+}
+
+func (a *CealMultiLineComment) TealAst() TealAst {
+	lines := strings.Split(a.Text, "\n")
+	return &Teal_comment{Lines: lines}
 }

@@ -79,6 +79,9 @@ type CVisitor interface {
 	// Visit a parse tree produced by CParser#ContinueStmt.
 	VisitContinueStmt(ctx *ContinueStmtContext) interface{}
 
+	// Visit a parse tree produced by CParser#CommentStmt.
+	VisitCommentStmt(ctx *CommentStmtContext) interface{}
+
 	// Visit a parse tree produced by CParser#AndExpr.
 	VisitAndExpr(ctx *AndExprContext) interface{}
 

@@ -164,6 +164,12 @@ func (s *BaseCListener) EnterContinueStmt(ctx *ContinueStmtContext) {}
 // ExitContinueStmt is called when production ContinueStmt is exited.
 func (s *BaseCListener) ExitContinueStmt(ctx *ContinueStmtContext) {}
 
+// EnterCommentStmt is called when production CommentStmt is entered.
+func (s *BaseCListener) EnterCommentStmt(ctx *CommentStmtContext) {}
+
+// ExitCommentStmt is called when production CommentStmt is exited.
+func (s *BaseCListener) ExitCommentStmt(ctx *CommentStmtContext) {}
+
 // EnterAndExpr is called when production AndExpr is entered.
 func (s *BaseCListener) EnterAndExpr(ctx *AndExprContext) {}
 

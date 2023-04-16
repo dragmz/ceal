@@ -12,6 +12,7 @@ itob
 box_put
 retsub
 noop:
+// timestamp bytes
 txn Sender
 int 0
 int 4
@@ -21,6 +22,13 @@ load 0
 log
 retsub
 avm_main:
+//
+//		this is AVM entry point
+//
+//		it checks if the application already exists
+//		- initializes box if it doesn't
+//		- logs box contents if it does
+//	
 txn ApplicationID
 int 0
 ==

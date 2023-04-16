@@ -358,3 +358,33 @@ func (a Teal_seq) Teal() Teal {
 	}
 	return res.ops
 }
+
+type Teal_comment struct {
+	Lines []string
+}
+
+func (a *Teal_comment) Teal() Teal {
+	return Teal{a}
+}
+
+func (a *Teal_comment) String() string {
+	var lines []string
+
+	for _, line := range a.Lines {
+		lines = append(lines, fmt.Sprintf("//%s", line))
+	}
+
+	return strings.Join(lines, "\n")
+}
+
+type Teal_raw struct {
+	V string
+}
+
+func (a *Teal_raw) Teal() Teal {
+	return Teal{a}
+}
+
+func (a *Teal_raw) String() string {
+	return a.V
+}

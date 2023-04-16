@@ -79,6 +79,9 @@ type CListener interface {
 	// EnterContinueStmt is called when entering the ContinueStmt production.
 	EnterContinueStmt(c *ContinueStmtContext)
 
+	// EnterCommentStmt is called when entering the CommentStmt production.
+	EnterCommentStmt(c *CommentStmtContext)
+
 	// EnterAndExpr is called when entering the AndExpr production.
 	EnterAndExpr(c *AndExprContext)
 
@@ -273,6 +276,9 @@ type CListener interface {
 
 	// ExitContinueStmt is called when exiting the ContinueStmt production.
 	ExitContinueStmt(c *ContinueStmtContext)
+
+	// ExitCommentStmt is called when exiting the CommentStmt production.
+	ExitCommentStmt(c *CommentStmtContext)
 
 	// ExitAndExpr is called when exiting the AndExpr production.
 	ExitAndExpr(c *AndExprContext)
