@@ -34,13 +34,15 @@ func run(a args) error {
 	}
 
 	program := c.Compile(src)
-	teal := program.String()
+	ast := program.TealAst()
+	teal := ast.Teal()
+	source := teal.String()
 
 	if a.Format {
-		teal = tealfmt.Format(bytes.NewBufferString(teal))
+		source = tealfmt.Format(bytes.NewBufferString(source))
 	}
 
-	fmt.Print(teal)
+	fmt.Print(source)
 
 	return nil
 }

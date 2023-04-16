@@ -267,9 +267,9 @@ var builtin_variables = []BuiltinVariableData {
 `)
 
 	bw.WriteString(`
-type TealExpr interface
+type TealAst interface
 {
-	String() string
+	Teal() Teal
 };
 
 `)
@@ -278,7 +278,7 @@ type TealExpr interface
 		name := ceal.FormatOpName(op.Name)
 		fmt.Fprintf(bw, "type Teal_%s struct {\n", name)
 		for _, arg := range op.Stacks {
-			fmt.Fprintf(bw, "\t%s AstStatement\n", arg.Name)
+			fmt.Fprintf(bw, "\t%s TealAst\n", arg.Name)
 		}
 		for _, arg := range op.Imms {
 			fmt.Fprintf(bw, "\t%s %s\n", arg.Name, readGoType(arg))
@@ -286,12 +286,18 @@ type TealExpr interface
 
 		bw.WriteString("}\n")
 
+		fmt.Fprintf(bw, "func (a *Teal_%s) Teal() Teal {\n", name)
+		bw.WriteString("\treturn Teal{a}\n")
+		bw.WriteString("}\n")
+
 		fmt.Fprintf(bw, "func (a *Teal_%s) String() string {\n", name)
 		bw.WriteString("\tres := strings.Builder{}\n")
 
 		for _, arg := range op.Stacks {
-			fmt.Fprintf(bw, "\tres.WriteString(a.%s.String())\n", arg.Name)
-			bw.WriteString("\tres.WriteString(\"\\n\")\n")
+			fmt.Fprintf(bw, "\tfor _, op := range a.%s.Teal() {\n", arg.Name)
+			bw.WriteString("\t\tres.WriteString(op.String())\n")
+			bw.WriteString("\t\tres.WriteString(\"\\n\")\n")
+			bw.WriteString("\t}\n")
 		}
 
 		fmt.Fprintf(bw, "\tres.WriteString(\"%s\")\n", op.Name)

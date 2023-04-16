@@ -9,24 +9,44 @@ type TealOp interface {
 	String() string
 }
 
-type Teal struct {
-	Ops []TealOp
-}
+type Teal []TealOp
 
-func (t *Teal) Write(op TealOp) {
-	t.Ops = append(t.Ops, op)
-}
-
-func (t *Teal) String() string {
+func (t Teal) String() string {
 	res := Lines{}
-	for _, op := range t.Ops {
+	for _, op := range t {
 		res.WriteLine(op.String())
 	}
 	return res.String()
 }
 
+type TealAstBuilder struct {
+	items []TealAst
+}
+
+func (b *TealAstBuilder) Write(ast TealAst) {
+	b.items = append(b.items, ast)
+}
+
+func (b *TealAstBuilder) Build() TealAst {
+	return Teal_seq(b.items)
+}
+
+type TealBuilder struct {
+	ops []TealOp
+}
+
+func (b *TealBuilder) Write(ops ...TealOp) {
+	b.ops = append(b.ops, ops...)
+}
+
 type Teal_pragma_version struct {
 	Version int
+}
+
+func (a *Teal_pragma_version) Teal() Teal {
+	res := TealBuilder{}
+	res.Write(a)
+	return res.ops
 }
 
 func (t *Teal_pragma_version) String() string {
@@ -35,6 +55,12 @@ func (t *Teal_pragma_version) String() string {
 
 type Teal_intcblock_fixed struct {
 	UINT1 []uint64
+}
+
+func (a *Teal_intcblock_fixed) Teal() Teal {
+	res := TealBuilder{}
+	res.Write(a)
+	return res.ops
 }
 
 func (a *Teal_intcblock_fixed) String() string {
@@ -51,6 +77,12 @@ func (a *Teal_intcblock_fixed) String() string {
 
 type Teal_bytecblock_fixed struct {
 	BYTES1 [][]byte
+}
+
+func (a *Teal_bytecblock_fixed) Teal() Teal {
+	res := TealBuilder{}
+	res.Write(a)
+	return res.ops
 }
 
 func (a *Teal_bytecblock_fixed) String() string {
@@ -70,30 +102,54 @@ type Teal_b_fixed struct {
 	TARGET1 string
 }
 
+func (a *Teal_b_fixed) Teal() Teal {
+	res := TealBuilder{}
+	res.Write(a)
+	return res.ops
+}
+
 func (a *Teal_b_fixed) String() string {
 	return fmt.Sprintf("b %s", a.TARGET1)
 }
 
 type Teal_bnz_fixed struct {
-	s1      AstStatement
+	s1      TealAst
 	TARGET1 string
+}
+
+func (a *Teal_bnz_fixed) Teal() Teal {
+	res := TealBuilder{}
+	res.Write(a)
+	return res.ops
 }
 
 func (a *Teal_bnz_fixed) String() string {
-	return fmt.Sprintf("%s\nbnz %s", a.s1.String(), a.TARGET1)
+	return fmt.Sprintf("%s\nbnz %s", a.s1.Teal().String(), a.TARGET1)
 }
 
 type Teal_bz_fixed struct {
-	s1      AstStatement
+	s1      TealAst
 	TARGET1 string
 }
 
+func (a *Teal_bz_fixed) Teal() Teal {
+	res := TealBuilder{}
+	res.Write(a)
+	return res.ops
+}
+
 func (a *Teal_bz_fixed) String() string {
-	return fmt.Sprintf("%s\nbz %s", a.s1.String(), a.TARGET1)
+	return fmt.Sprintf("%s\nbz %s", a.s1.Teal().String(), a.TARGET1)
 }
 
 type Teal_label struct {
 	Name string
+}
+
+func (a *Teal_label) Teal() Teal {
+	res := TealBuilder{}
+	res.Write(a)
+	return res.ops
 }
 
 func (a *Teal_label) String() string {
@@ -102,6 +158,12 @@ func (a *Teal_label) String() string {
 
 type Teal_match_fixed struct {
 	TARGET1 []string
+}
+
+func (a *Teal_match_fixed) Teal() Teal {
+	res := TealBuilder{}
+	res.Write(a)
+	return res.ops
 }
 
 func (a *Teal_match_fixed) String() string {
@@ -116,35 +178,77 @@ func (a *Teal_match_fixed) String() string {
 	return res.String()
 }
 
+type Teal_byte struct {
+	S string
+}
+
+func (a *Teal_byte) Teal() Teal {
+	res := TealBuilder{}
+	res.Write(a)
+	return res.ops
+}
+
+func (a *Teal_byte) String() string {
+	return fmt.Sprintf("byte %s", a.S)
+}
+
+type Teal_named_int_value struct {
+	V string
+}
+
+func (a *Teal_named_int_value) Teal() Teal {
+	return Teal{a}
+}
+
+func (a *Teal_named_int_value) String() string {
+	return a.V
+
+}
+
+type Teal_named_int struct {
+	V TealAst
+}
+
+func (a *Teal_named_int) Teal() Teal {
+	return Teal{a}
+}
+
+func (a *Teal_named_int) String() string {
+	return fmt.Sprintf("int %s", a.V.Teal().String())
+
+}
+
 type Teal_int struct {
 	V uint64
+}
+
+func (a *Teal_int) Teal() Teal {
+	res := TealBuilder{}
+	res.Write(a)
+	return res.ops
 }
 
 func (a *Teal_int) String() string {
 	return fmt.Sprintf("int %d", a.V)
 }
 
-type Teal_seq struct {
-	Ops []TealOp
-}
-
-func (a *Teal_seq) String() string {
-	res := Teal{}
-	for _, op := range a.Ops {
-		res.Write(op)
-	}
-	return res.String()
-}
-
 type Teal_retsub_fixed struct {
-	Values []TealOp
+	Values []TealAst
+}
+
+func (a *Teal_retsub_fixed) Teal() Teal {
+	res := TealBuilder{}
+	res.Write(a)
+	return res.ops
 }
 
 func (a *Teal_retsub_fixed) String() string {
 	res := Lines{}
 
 	for _, v := range a.Values {
-		res.WriteLine(v.String())
+		for _, op := range v.Teal() {
+			res.WriteLine(op.String())
+		}
 	}
 
 	res.WriteLine("retsub")
@@ -153,14 +257,22 @@ func (a *Teal_retsub_fixed) String() string {
 }
 
 type Teal_return_fixed struct {
-	Value TealOp
+	Value TealAst
+}
+
+func (a *Teal_return_fixed) Teal() Teal {
+	res := TealBuilder{}
+	res.Write(a)
+	return res.ops
 }
 
 func (a *Teal_return_fixed) String() string {
 	res := Lines{}
 
 	if a.Value != nil {
-		res.WriteLine(a.Value.String())
+		for _, op := range a.Value.Teal() {
+			res.WriteLine(op.String())
+		}
 	}
 
 	res.WriteLine("return")
@@ -169,15 +281,23 @@ func (a *Teal_return_fixed) String() string {
 }
 
 type Teal_callsub_fixed struct {
-	Args   []TealOp
+	Args   []TealAst
 	Target string
+}
+
+func (a *Teal_callsub_fixed) Teal() Teal {
+	res := TealBuilder{}
+	res.Write(a)
+	return res.ops
 }
 
 func (a *Teal_callsub_fixed) String() string {
 	res := Lines{}
 
 	for _, a := range a.Args {
-		res.WriteLine(a.String())
+		for _, op := range a.Teal() {
+			res.WriteLine(op.String())
+		}
 	}
 
 	res.WriteLine(fmt.Sprintf("callsub %s", a.Target))
@@ -186,28 +306,55 @@ func (a *Teal_callsub_fixed) String() string {
 }
 
 type Teal_call_builtin struct {
-	Args []TealOp
-	Imms []TealOp
-
 	Name string
+
+	Args []TealAst
+	Imms []TealAst
+}
+
+func (a *Teal_call_builtin) Teal() Teal {
+	res := TealBuilder{}
+
+	for _, arg := range a.Args {
+		for _, op := range arg.Teal() {
+			res.Write(op)
+		}
+	}
+
+	res.Write(a)
+
+	return res.ops
 }
 
 func (a *Teal_call_builtin) String() string {
 	res := Lines{}
-
-	for _, a := range a.Args {
-		res.WriteLine(a.String())
-	}
 
 	call := []string{
 		a.Name,
 	}
 
 	for _, i := range a.Imms {
-		call = append(call, i.String())
+		for _, op := range i.Teal() {
+			call = append(call, op.String())
+		}
 	}
 
 	res.WriteLine(strings.Join(call, " "))
 
 	return res.String()
+}
+
+type Teal_builtin struct {
+	Op    string
+	Field string
+}
+
+type Teal_seq []TealAst
+
+func (a Teal_seq) Teal() Teal {
+	res := TealBuilder{}
+	for _, ast := range a {
+		res.Write(ast.Teal()...)
+	}
+	return res.ops
 }

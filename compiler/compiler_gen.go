@@ -3350,13 +3350,16 @@ var builtin_variables = []BuiltinVariableData{
 	{"uint64", "ClearState"},
 }
 
-type TealExpr interface {
-	String() string
+type TealAst interface {
+	Teal() Teal
 }
 
 type Teal_err struct {
 }
 
+func (a *Teal_err) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_err) String() string {
 	res := strings.Builder{}
 	res.WriteString("err")
@@ -3364,80 +3367,117 @@ func (a *Teal_err) String() string {
 }
 
 type Teal_sha256 struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_sha256) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_sha256) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("sha256")
 	return res.String()
 }
 
 type Teal_keccak256 struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_keccak256) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_keccak256) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("keccak256")
 	return res.String()
 }
 
 type Teal_sha512_256 struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_sha512_256) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_sha512_256) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("sha512_256")
 	return res.String()
 }
 
 type Teal_ed25519verify struct {
-	s1 AstStatement
-	s2 AstStatement
-	s3 AstStatement
+	s1 TealAst
+	s2 TealAst
+	s3 TealAst
 }
 
+func (a *Teal_ed25519verify) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_ed25519verify) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
-	res.WriteString(a.s3.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s3.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("ed25519verify")
 	return res.String()
 }
 
 type Teal_ecdsa_verify struct {
-	s1 AstStatement
-	s2 AstStatement
-	s3 AstStatement
-	s4 AstStatement
-	s5 AstStatement
+	s1 TealAst
+	s2 TealAst
+	s3 TealAst
+	s4 TealAst
+	s5 TealAst
 	V1 uint8
 }
 
+func (a *Teal_ecdsa_verify) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_ecdsa_verify) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
-	res.WriteString(a.s3.String())
-	res.WriteString("\n")
-	res.WriteString(a.s4.String())
-	res.WriteString("\n")
-	res.WriteString(a.s5.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s3.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s4.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s5.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("ecdsa_verify")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.V1))
@@ -3445,14 +3485,19 @@ func (a *Teal_ecdsa_verify) String() string {
 }
 
 type Teal_ecdsa_pk_decompress struct {
-	s1 AstStatement
+	s1 TealAst
 	V1 uint8
 }
 
+func (a *Teal_ecdsa_pk_decompress) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_ecdsa_pk_decompress) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("ecdsa_pk_decompress")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.V1))
@@ -3460,23 +3505,34 @@ func (a *Teal_ecdsa_pk_decompress) String() string {
 }
 
 type Teal_ecdsa_pk_recover struct {
-	s1 AstStatement
-	s2 AstStatement
-	s3 AstStatement
-	s4 AstStatement
+	s1 TealAst
+	s2 TealAst
+	s3 TealAst
+	s4 TealAst
 	V1 uint8
 }
 
+func (a *Teal_ecdsa_pk_recover) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_ecdsa_pk_recover) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
-	res.WriteString(a.s3.String())
-	res.WriteString("\n")
-	res.WriteString(a.s4.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s3.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s4.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("ecdsa_pk_recover")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.V1))
@@ -3484,352 +3540,514 @@ func (a *Teal_ecdsa_pk_recover) String() string {
 }
 
 type Teal_plus struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_plus) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_plus) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("+")
 	return res.String()
 }
 
 type Teal_minus struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_minus) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_minus) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("-")
 	return res.String()
 }
 
 type Teal_div struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_div) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_div) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("/")
 	return res.String()
 }
 
 type Teal_mul struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_mul) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_mul) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("*")
 	return res.String()
 }
 
 type Teal_lt struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_lt) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_lt) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("<")
 	return res.String()
 }
 
 type Teal_gt struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_gt) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_gt) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString(">")
 	return res.String()
 }
 
 type Teal_lteq struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_lteq) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_lteq) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("<=")
 	return res.String()
 }
 
 type Teal_gteq struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_gteq) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_gteq) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString(">=")
 	return res.String()
 }
 
 type Teal_andand struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_andand) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_andand) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("&&")
 	return res.String()
 }
 
 type Teal_oror struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_oror) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_oror) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("||")
 	return res.String()
 }
 
 type Teal_eqeq struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_eqeq) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_eqeq) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("==")
 	return res.String()
 }
 
 type Teal_noteq struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_noteq) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_noteq) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("!=")
 	return res.String()
 }
 
 type Teal_not struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_not) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_not) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("!")
 	return res.String()
 }
 
 type Teal_len struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_len) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_len) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("len")
 	return res.String()
 }
 
 type Teal_itob struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_itob) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_itob) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("itob")
 	return res.String()
 }
 
 type Teal_btoi struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_btoi) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_btoi) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("btoi")
 	return res.String()
 }
 
 type Teal_mod struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_mod) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_mod) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("%")
 	return res.String()
 }
 
 type Teal_or struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_or) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_or) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("|")
 	return res.String()
 }
 
 type Teal_and struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_and) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_and) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("&")
 	return res.String()
 }
 
 type Teal_xor struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_xor) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_xor) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("^")
 	return res.String()
 }
 
 type Teal_inv struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_inv) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_inv) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("~")
 	return res.String()
 }
 
 type Teal_mulw struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_mulw) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_mulw) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("mulw")
 	return res.String()
 }
 
 type Teal_addw struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_addw) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_addw) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("addw")
 	return res.String()
 }
 
 type Teal_divmodw struct {
-	s1 AstStatement
-	s2 AstStatement
-	s3 AstStatement
-	s4 AstStatement
+	s1 TealAst
+	s2 TealAst
+	s3 TealAst
+	s4 TealAst
 }
 
+func (a *Teal_divmodw) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_divmodw) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
-	res.WriteString(a.s3.String())
-	res.WriteString("\n")
-	res.WriteString(a.s4.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s3.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s4.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("divmodw")
 	return res.String()
 }
@@ -3838,6 +4056,9 @@ type Teal_intcblock struct {
 	UINT1 [][]byte
 }
 
+func (a *Teal_intcblock) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_intcblock) String() string {
 	res := strings.Builder{}
 	res.WriteString("intcblock")
@@ -3850,6 +4071,9 @@ type Teal_intc struct {
 	I1 uint8
 }
 
+func (a *Teal_intc) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_intc) String() string {
 	res := strings.Builder{}
 	res.WriteString("intc")
@@ -3861,6 +4085,9 @@ func (a *Teal_intc) String() string {
 type Teal_intc_0 struct {
 }
 
+func (a *Teal_intc_0) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_intc_0) String() string {
 	res := strings.Builder{}
 	res.WriteString("intc_0")
@@ -3870,6 +4097,9 @@ func (a *Teal_intc_0) String() string {
 type Teal_intc_1 struct {
 }
 
+func (a *Teal_intc_1) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_intc_1) String() string {
 	res := strings.Builder{}
 	res.WriteString("intc_1")
@@ -3879,6 +4109,9 @@ func (a *Teal_intc_1) String() string {
 type Teal_intc_2 struct {
 }
 
+func (a *Teal_intc_2) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_intc_2) String() string {
 	res := strings.Builder{}
 	res.WriteString("intc_2")
@@ -3888,6 +4121,9 @@ func (a *Teal_intc_2) String() string {
 type Teal_intc_3 struct {
 }
 
+func (a *Teal_intc_3) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_intc_3) String() string {
 	res := strings.Builder{}
 	res.WriteString("intc_3")
@@ -3898,6 +4134,9 @@ type Teal_bytecblock struct {
 	BYTES1 [][]byte
 }
 
+func (a *Teal_bytecblock) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_bytecblock) String() string {
 	res := strings.Builder{}
 	res.WriteString("bytecblock")
@@ -3910,6 +4149,9 @@ type Teal_bytec struct {
 	I1 uint8
 }
 
+func (a *Teal_bytec) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_bytec) String() string {
 	res := strings.Builder{}
 	res.WriteString("bytec")
@@ -3921,6 +4163,9 @@ func (a *Teal_bytec) String() string {
 type Teal_bytec_0 struct {
 }
 
+func (a *Teal_bytec_0) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_bytec_0) String() string {
 	res := strings.Builder{}
 	res.WriteString("bytec_0")
@@ -3930,6 +4175,9 @@ func (a *Teal_bytec_0) String() string {
 type Teal_bytec_1 struct {
 }
 
+func (a *Teal_bytec_1) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_bytec_1) String() string {
 	res := strings.Builder{}
 	res.WriteString("bytec_1")
@@ -3939,6 +4187,9 @@ func (a *Teal_bytec_1) String() string {
 type Teal_bytec_2 struct {
 }
 
+func (a *Teal_bytec_2) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_bytec_2) String() string {
 	res := strings.Builder{}
 	res.WriteString("bytec_2")
@@ -3948,6 +4199,9 @@ func (a *Teal_bytec_2) String() string {
 type Teal_bytec_3 struct {
 }
 
+func (a *Teal_bytec_3) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_bytec_3) String() string {
 	res := strings.Builder{}
 	res.WriteString("bytec_3")
@@ -3958,6 +4212,9 @@ type Teal_arg struct {
 	N1 uint8
 }
 
+func (a *Teal_arg) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_arg) String() string {
 	res := strings.Builder{}
 	res.WriteString("arg")
@@ -3969,6 +4226,9 @@ func (a *Teal_arg) String() string {
 type Teal_arg_0 struct {
 }
 
+func (a *Teal_arg_0) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_arg_0) String() string {
 	res := strings.Builder{}
 	res.WriteString("arg_0")
@@ -3978,6 +4238,9 @@ func (a *Teal_arg_0) String() string {
 type Teal_arg_1 struct {
 }
 
+func (a *Teal_arg_1) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_arg_1) String() string {
 	res := strings.Builder{}
 	res.WriteString("arg_1")
@@ -3987,6 +4250,9 @@ func (a *Teal_arg_1) String() string {
 type Teal_arg_2 struct {
 }
 
+func (a *Teal_arg_2) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_arg_2) String() string {
 	res := strings.Builder{}
 	res.WriteString("arg_2")
@@ -3996,6 +4262,9 @@ func (a *Teal_arg_2) String() string {
 type Teal_arg_3 struct {
 }
 
+func (a *Teal_arg_3) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_arg_3) String() string {
 	res := strings.Builder{}
 	res.WriteString("arg_3")
@@ -4006,6 +4275,9 @@ type Teal_txn struct {
 	F1 uint8
 }
 
+func (a *Teal_txn) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_txn) String() string {
 	res := strings.Builder{}
 	res.WriteString("txn")
@@ -4018,6 +4290,9 @@ type Teal_global struct {
 	F1 uint8
 }
 
+func (a *Teal_global) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_global) String() string {
 	res := strings.Builder{}
 	res.WriteString("global")
@@ -4031,6 +4306,9 @@ type Teal_gtxn struct {
 	F2 uint8
 }
 
+func (a *Teal_gtxn) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_gtxn) String() string {
 	res := strings.Builder{}
 	res.WriteString("gtxn")
@@ -4045,6 +4323,9 @@ type Teal_load struct {
 	I1 uint8
 }
 
+func (a *Teal_load) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_load) String() string {
 	res := strings.Builder{}
 	res.WriteString("load")
@@ -4054,14 +4335,19 @@ func (a *Teal_load) String() string {
 }
 
 type Teal_store struct {
-	s1 AstStatement
+	s1 TealAst
 	I1 uint8
 }
 
+func (a *Teal_store) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_store) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("store")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.I1))
@@ -4073,6 +4359,9 @@ type Teal_txna struct {
 	I2 uint8
 }
 
+func (a *Teal_txna) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_txna) String() string {
 	res := strings.Builder{}
 	res.WriteString("txna")
@@ -4089,6 +4378,9 @@ type Teal_gtxna struct {
 	I3 uint8
 }
 
+func (a *Teal_gtxna) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_gtxna) String() string {
 	res := strings.Builder{}
 	res.WriteString("gtxna")
@@ -4102,14 +4394,19 @@ func (a *Teal_gtxna) String() string {
 }
 
 type Teal_gtxns struct {
-	s1 AstStatement
+	s1 TealAst
 	F1 uint8
 }
 
+func (a *Teal_gtxns) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_gtxns) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("gtxns")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.F1))
@@ -4117,15 +4414,20 @@ func (a *Teal_gtxns) String() string {
 }
 
 type Teal_gtxnsa struct {
-	s1 AstStatement
+	s1 TealAst
 	F1 uint8
 	I2 uint8
 }
 
+func (a *Teal_gtxnsa) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_gtxnsa) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("gtxnsa")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.F1))
@@ -4139,6 +4441,9 @@ type Teal_gload struct {
 	I2 uint8
 }
 
+func (a *Teal_gload) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_gload) String() string {
 	res := strings.Builder{}
 	res.WriteString("gload")
@@ -4150,14 +4455,19 @@ func (a *Teal_gload) String() string {
 }
 
 type Teal_gloads struct {
-	s1 AstStatement
+	s1 TealAst
 	I1 uint8
 }
 
+func (a *Teal_gloads) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_gloads) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("gloads")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.I1))
@@ -4168,6 +4478,9 @@ type Teal_gaid struct {
 	T1 uint8
 }
 
+func (a *Teal_gaid) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_gaid) String() string {
 	res := strings.Builder{}
 	res.WriteString("gaid")
@@ -4177,53 +4490,75 @@ func (a *Teal_gaid) String() string {
 }
 
 type Teal_gaids struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_gaids) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_gaids) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("gaids")
 	return res.String()
 }
 
 type Teal_loads struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_loads) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_loads) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("loads")
 	return res.String()
 }
 
 type Teal_stores struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_stores) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_stores) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("stores")
 	return res.String()
 }
 
 type Teal_bnz struct {
-	s1      AstStatement
+	s1      TealAst
 	TARGET1 int16
 }
 
+func (a *Teal_bnz) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_bnz) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("bnz")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.TARGET1))
@@ -4231,14 +4566,19 @@ func (a *Teal_bnz) String() string {
 }
 
 type Teal_bz struct {
-	s1      AstStatement
+	s1      TealAst
 	TARGET1 int16
 }
 
+func (a *Teal_bz) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_bz) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("bz")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.TARGET1))
@@ -4249,6 +4589,9 @@ type Teal_b struct {
 	TARGET1 int16
 }
 
+func (a *Teal_b) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_b) String() string {
 	res := strings.Builder{}
 	res.WriteString("b")
@@ -4258,38 +4601,53 @@ func (a *Teal_b) String() string {
 }
 
 type Teal_return_ struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_return_) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_return_) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("return")
 	return res.String()
 }
 
 type Teal_assert struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_assert) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_assert) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("assert")
 	return res.String()
 }
 
 type Teal_bury struct {
-	s1 AstStatement
+	s1 TealAst
 	N1 uint8
 }
 
+func (a *Teal_bury) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_bury) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("bury")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.N1))
@@ -4300,6 +4658,9 @@ type Teal_popn struct {
 	N1 uint8
 }
 
+func (a *Teal_popn) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_popn) String() string {
 	res := strings.Builder{}
 	res.WriteString("popn")
@@ -4309,14 +4670,19 @@ func (a *Teal_popn) String() string {
 }
 
 type Teal_dupn struct {
-	s1 AstStatement
+	s1 TealAst
 	N1 uint8
 }
 
+func (a *Teal_dupn) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_dupn) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("dupn")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.N1))
@@ -4324,53 +4690,75 @@ func (a *Teal_dupn) String() string {
 }
 
 type Teal_pop struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_pop) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_pop) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("pop")
 	return res.String()
 }
 
 type Teal_dup struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_dup) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_dup) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("dup")
 	return res.String()
 }
 
 type Teal_dup2 struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_dup2) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_dup2) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("dup2")
 	return res.String()
 }
 
 type Teal_dig struct {
-	s1 AstStatement
+	s1 TealAst
 	N1 uint8
 }
 
+func (a *Teal_dig) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_dig) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("dig")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.N1))
@@ -4378,47 +4766,68 @@ func (a *Teal_dig) String() string {
 }
 
 type Teal_swap struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_swap) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_swap) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("swap")
 	return res.String()
 }
 
 type Teal_select struct {
-	s1 AstStatement
-	s2 AstStatement
-	s3 AstStatement
+	s1 TealAst
+	s2 TealAst
+	s3 TealAst
 }
 
+func (a *Teal_select) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_select) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
-	res.WriteString(a.s3.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s3.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("select")
 	return res.String()
 }
 
 type Teal_cover struct {
-	s1 AstStatement
+	s1 TealAst
 	N1 uint8
 }
 
+func (a *Teal_cover) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_cover) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("cover")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.N1))
@@ -4426,14 +4835,19 @@ func (a *Teal_cover) String() string {
 }
 
 type Teal_uncover struct {
-	s1 AstStatement
+	s1 TealAst
 	N1 uint8
 }
 
+func (a *Teal_uncover) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_uncover) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("uncover")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.N1))
@@ -4441,30 +4855,42 @@ func (a *Teal_uncover) String() string {
 }
 
 type Teal_concat struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_concat) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_concat) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("concat")
 	return res.String()
 }
 
 type Teal_substring struct {
-	s1 AstStatement
+	s1 TealAst
 	S1 uint8
 	E2 uint8
 }
 
+func (a *Teal_substring) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_substring) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("substring")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.S1))
@@ -4474,99 +4900,145 @@ func (a *Teal_substring) String() string {
 }
 
 type Teal_substring3 struct {
-	s1 AstStatement
-	s2 AstStatement
-	s3 AstStatement
+	s1 TealAst
+	s2 TealAst
+	s3 TealAst
 }
 
+func (a *Teal_substring3) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_substring3) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
-	res.WriteString(a.s3.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s3.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("substring3")
 	return res.String()
 }
 
 type Teal_getbit struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_getbit) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_getbit) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("getbit")
 	return res.String()
 }
 
 type Teal_setbit struct {
-	s1 AstStatement
-	s2 AstStatement
-	s3 AstStatement
+	s1 TealAst
+	s2 TealAst
+	s3 TealAst
 }
 
+func (a *Teal_setbit) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_setbit) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
-	res.WriteString(a.s3.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s3.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("setbit")
 	return res.String()
 }
 
 type Teal_getbyte struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_getbyte) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_getbyte) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("getbyte")
 	return res.String()
 }
 
 type Teal_setbyte struct {
-	s1 AstStatement
-	s2 AstStatement
-	s3 AstStatement
+	s1 TealAst
+	s2 TealAst
+	s3 TealAst
 }
 
+func (a *Teal_setbyte) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_setbyte) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
-	res.WriteString(a.s3.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s3.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("setbyte")
 	return res.String()
 }
 
 type Teal_extract struct {
-	s1 AstStatement
+	s1 TealAst
 	S1 uint8
 	L2 uint8
 }
 
+func (a *Teal_extract) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_extract) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("extract")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.S1))
@@ -4576,80 +5048,117 @@ func (a *Teal_extract) String() string {
 }
 
 type Teal_extract3 struct {
-	s1 AstStatement
-	s2 AstStatement
-	s3 AstStatement
+	s1 TealAst
+	s2 TealAst
+	s3 TealAst
 }
 
+func (a *Teal_extract3) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_extract3) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
-	res.WriteString(a.s3.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s3.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("extract3")
 	return res.String()
 }
 
 type Teal_extract_uint16 struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_extract_uint16) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_extract_uint16) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("extract_uint16")
 	return res.String()
 }
 
 type Teal_extract_uint32 struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_extract_uint32) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_extract_uint32) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("extract_uint32")
 	return res.String()
 }
 
 type Teal_extract_uint64 struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_extract_uint64) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_extract_uint64) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("extract_uint64")
 	return res.String()
 }
 
 type Teal_replace2 struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 	S1 uint8
 }
 
+func (a *Teal_replace2) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_replace2) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("replace2")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.S1))
@@ -4657,32 +5166,46 @@ func (a *Teal_replace2) String() string {
 }
 
 type Teal_replace3 struct {
-	s1 AstStatement
-	s2 AstStatement
-	s3 AstStatement
+	s1 TealAst
+	s2 TealAst
+	s3 TealAst
 }
 
+func (a *Teal_replace3) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_replace3) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
-	res.WriteString(a.s3.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s3.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("replace3")
 	return res.String()
 }
 
 type Teal_base64_decode struct {
-	s1 AstStatement
+	s1 TealAst
 	E1 uint8
 }
 
+func (a *Teal_base64_decode) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_base64_decode) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("base64_decode")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.E1))
@@ -4690,17 +5213,24 @@ func (a *Teal_base64_decode) String() string {
 }
 
 type Teal_json_ref struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 	R1 uint8
 }
 
+func (a *Teal_json_ref) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_json_ref) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("json_ref")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.R1))
@@ -4708,164 +5238,239 @@ func (a *Teal_json_ref) String() string {
 }
 
 type Teal_balance struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_balance) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_balance) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("balance")
 	return res.String()
 }
 
 type Teal_app_opted_in struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_app_opted_in) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_app_opted_in) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("app_opted_in")
 	return res.String()
 }
 
 type Teal_app_local_get struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_app_local_get) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_app_local_get) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("app_local_get")
 	return res.String()
 }
 
 type Teal_app_local_get_ex struct {
-	s1 AstStatement
-	s2 AstStatement
-	s3 AstStatement
+	s1 TealAst
+	s2 TealAst
+	s3 TealAst
 }
 
+func (a *Teal_app_local_get_ex) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_app_local_get_ex) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
-	res.WriteString(a.s3.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s3.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("app_local_get_ex")
 	return res.String()
 }
 
 type Teal_app_global_get struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_app_global_get) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_app_global_get) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("app_global_get")
 	return res.String()
 }
 
 type Teal_app_global_get_ex struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_app_global_get_ex) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_app_global_get_ex) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("app_global_get_ex")
 	return res.String()
 }
 
 type Teal_app_local_put struct {
-	s1 AstStatement
-	s2 AstStatement
-	s3 AstStatement
+	s1 TealAst
+	s2 TealAst
+	s3 TealAst
 }
 
+func (a *Teal_app_local_put) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_app_local_put) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
-	res.WriteString(a.s3.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s3.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("app_local_put")
 	return res.String()
 }
 
 type Teal_app_global_put struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_app_global_put) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_app_global_put) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("app_global_put")
 	return res.String()
 }
 
 type Teal_app_local_del struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_app_local_del) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_app_local_del) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("app_local_del")
 	return res.String()
 }
 
 type Teal_app_global_del struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_app_global_del) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_app_global_del) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("app_global_del")
 	return res.String()
 }
 
 type Teal_asset_holding_get struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 	F1 uint8
 }
 
+func (a *Teal_asset_holding_get) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_asset_holding_get) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("asset_holding_get")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.F1))
@@ -4873,14 +5478,19 @@ func (a *Teal_asset_holding_get) String() string {
 }
 
 type Teal_asset_params_get struct {
-	s1 AstStatement
+	s1 TealAst
 	F1 uint8
 }
 
+func (a *Teal_asset_params_get) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_asset_params_get) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("asset_params_get")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.F1))
@@ -4888,14 +5498,19 @@ func (a *Teal_asset_params_get) String() string {
 }
 
 type Teal_app_params_get struct {
-	s1 AstStatement
+	s1 TealAst
 	F1 uint8
 }
 
+func (a *Teal_app_params_get) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_app_params_get) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("app_params_get")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.F1))
@@ -4903,14 +5518,19 @@ func (a *Teal_app_params_get) String() string {
 }
 
 type Teal_acct_params_get struct {
-	s1 AstStatement
+	s1 TealAst
 	F1 uint8
 }
 
+func (a *Teal_acct_params_get) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_acct_params_get) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("acct_params_get")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.F1))
@@ -4918,13 +5538,18 @@ func (a *Teal_acct_params_get) String() string {
 }
 
 type Teal_min_balance struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_min_balance) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_min_balance) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("min_balance")
 	return res.String()
 }
@@ -4933,6 +5558,9 @@ type Teal_pushbytes struct {
 	BYTES1 []byte
 }
 
+func (a *Teal_pushbytes) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_pushbytes) String() string {
 	res := strings.Builder{}
 	res.WriteString("pushbytes")
@@ -4945,6 +5573,9 @@ type Teal_pushint struct {
 	UINT1 []byte
 }
 
+func (a *Teal_pushint) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_pushint) String() string {
 	res := strings.Builder{}
 	res.WriteString("pushint")
@@ -4957,6 +5588,9 @@ type Teal_pushbytess struct {
 	BYTES1 [][]byte
 }
 
+func (a *Teal_pushbytess) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_pushbytess) String() string {
 	res := strings.Builder{}
 	res.WriteString("pushbytess")
@@ -4969,6 +5603,9 @@ type Teal_pushints struct {
 	UINT1 [][]byte
 }
 
+func (a *Teal_pushints) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_pushints) String() string {
 	res := strings.Builder{}
 	res.WriteString("pushints")
@@ -4978,19 +5615,28 @@ func (a *Teal_pushints) String() string {
 }
 
 type Teal_ed25519verify_bare struct {
-	s1 AstStatement
-	s2 AstStatement
-	s3 AstStatement
+	s1 TealAst
+	s2 TealAst
+	s3 TealAst
 }
 
+func (a *Teal_ed25519verify_bare) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_ed25519verify_bare) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
-	res.WriteString(a.s3.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s3.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("ed25519verify_bare")
 	return res.String()
 }
@@ -4999,6 +5645,9 @@ type Teal_callsub struct {
 	TARGET1 int16
 }
 
+func (a *Teal_callsub) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_callsub) String() string {
 	res := strings.Builder{}
 	res.WriteString("callsub")
@@ -5010,6 +5659,9 @@ func (a *Teal_callsub) String() string {
 type Teal_retsub struct {
 }
 
+func (a *Teal_retsub) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_retsub) String() string {
 	res := strings.Builder{}
 	res.WriteString("retsub")
@@ -5021,6 +5673,9 @@ type Teal_proto struct {
 	R2 uint8
 }
 
+func (a *Teal_proto) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_proto) String() string {
 	res := strings.Builder{}
 	res.WriteString("proto")
@@ -5035,6 +5690,9 @@ type Teal_frame_dig struct {
 	I1 int8
 }
 
+func (a *Teal_frame_dig) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_frame_dig) String() string {
 	res := strings.Builder{}
 	res.WriteString("frame_dig")
@@ -5044,14 +5702,19 @@ func (a *Teal_frame_dig) String() string {
 }
 
 type Teal_frame_bury struct {
-	s1 AstStatement
+	s1 TealAst
 	I1 int8
 }
 
+func (a *Teal_frame_bury) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_frame_bury) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("frame_bury")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.I1))
@@ -5059,14 +5722,19 @@ func (a *Teal_frame_bury) String() string {
 }
 
 type Teal_switch_ struct {
-	s1      AstStatement
+	s1      TealAst
 	TARGET1 [][]byte
 }
 
+func (a *Teal_switch_) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_switch_) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("switch")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.TARGET1))
@@ -5077,6 +5745,9 @@ type Teal_match struct {
 	TARGET1 [][]byte
 }
 
+func (a *Teal_match) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_match) String() string {
 	res := strings.Builder{}
 	res.WriteString("match")
@@ -5086,373 +5757,543 @@ func (a *Teal_match) String() string {
 }
 
 type Teal_shl struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_shl) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_shl) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("shl")
 	return res.String()
 }
 
 type Teal_shr struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_shr) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_shr) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("shr")
 	return res.String()
 }
 
 type Teal_sqrt struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_sqrt) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_sqrt) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("sqrt")
 	return res.String()
 }
 
 type Teal_bitlen struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_bitlen) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_bitlen) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("bitlen")
 	return res.String()
 }
 
 type Teal_exp struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_exp) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_exp) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("exp")
 	return res.String()
 }
 
 type Teal_expw struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_expw) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_expw) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("expw")
 	return res.String()
 }
 
 type Teal_bsqrt struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_bsqrt) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_bsqrt) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("bsqrt")
 	return res.String()
 }
 
 type Teal_divw struct {
-	s1 AstStatement
-	s2 AstStatement
-	s3 AstStatement
+	s1 TealAst
+	s2 TealAst
+	s3 TealAst
 }
 
+func (a *Teal_divw) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_divw) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
-	res.WriteString(a.s3.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s3.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("divw")
 	return res.String()
 }
 
 type Teal_sha3_256 struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_sha3_256) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_sha3_256) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("sha3_256")
 	return res.String()
 }
 
 type Teal_bplus struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_bplus) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_bplus) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("b+")
 	return res.String()
 }
 
 type Teal_bminus struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_bminus) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_bminus) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("b-")
 	return res.String()
 }
 
 type Teal_bdiv struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_bdiv) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_bdiv) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("b/")
 	return res.String()
 }
 
 type Teal_bmul struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_bmul) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_bmul) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("b*")
 	return res.String()
 }
 
 type Teal_blt struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_blt) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_blt) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("b<")
 	return res.String()
 }
 
 type Teal_bgt struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_bgt) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_bgt) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("b>")
 	return res.String()
 }
 
 type Teal_blteq struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_blteq) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_blteq) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("b<=")
 	return res.String()
 }
 
 type Teal_bgteq struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_bgteq) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_bgteq) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("b>=")
 	return res.String()
 }
 
 type Teal_beqeq struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_beqeq) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_beqeq) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("b==")
 	return res.String()
 }
 
 type Teal_bnoteq struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_bnoteq) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_bnoteq) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("b!=")
 	return res.String()
 }
 
 type Teal_bmod struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_bmod) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_bmod) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("b%")
 	return res.String()
 }
 
 type Teal_bor struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_bor) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_bor) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("b|")
 	return res.String()
 }
 
 type Teal_band struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_band) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_band) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("b&")
 	return res.String()
 }
 
 type Teal_bxor struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_bxor) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_bxor) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("b^")
 	return res.String()
 }
 
 type Teal_binv struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_binv) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_binv) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("b~")
 	return res.String()
 }
 
 type Teal_bzero struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_bzero) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_bzero) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("bzero")
 	return res.String()
 }
 
 type Teal_log struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_log) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_log) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("log")
 	return res.String()
 }
@@ -5460,6 +6301,9 @@ func (a *Teal_log) String() string {
 type Teal_itxn_begin struct {
 }
 
+func (a *Teal_itxn_begin) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_itxn_begin) String() string {
 	res := strings.Builder{}
 	res.WriteString("itxn_begin")
@@ -5467,14 +6311,19 @@ func (a *Teal_itxn_begin) String() string {
 }
 
 type Teal_itxn_field struct {
-	s1 AstStatement
+	s1 TealAst
 	F1 uint8
 }
 
+func (a *Teal_itxn_field) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_itxn_field) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("itxn_field")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.F1))
@@ -5484,6 +6333,9 @@ func (a *Teal_itxn_field) String() string {
 type Teal_itxn_submit struct {
 }
 
+func (a *Teal_itxn_submit) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_itxn_submit) String() string {
 	res := strings.Builder{}
 	res.WriteString("itxn_submit")
@@ -5494,6 +6346,9 @@ type Teal_itxn struct {
 	F1 uint8
 }
 
+func (a *Teal_itxn) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_itxn) String() string {
 	res := strings.Builder{}
 	res.WriteString("itxn")
@@ -5507,6 +6362,9 @@ type Teal_itxna struct {
 	I2 uint8
 }
 
+func (a *Teal_itxna) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_itxna) String() string {
 	res := strings.Builder{}
 	res.WriteString("itxna")
@@ -5520,6 +6378,9 @@ func (a *Teal_itxna) String() string {
 type Teal_itxn_next struct {
 }
 
+func (a *Teal_itxn_next) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_itxn_next) String() string {
 	res := strings.Builder{}
 	res.WriteString("itxn_next")
@@ -5531,6 +6392,9 @@ type Teal_gitxn struct {
 	F2 uint8
 }
 
+func (a *Teal_gitxn) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_gitxn) String() string {
 	res := strings.Builder{}
 	res.WriteString("gitxn")
@@ -5547,6 +6411,9 @@ type Teal_gitxna struct {
 	I3 uint8
 }
 
+func (a *Teal_gitxna) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_gitxna) String() string {
 	res := strings.Builder{}
 	res.WriteString("gitxna")
@@ -5560,116 +6427,168 @@ func (a *Teal_gitxna) String() string {
 }
 
 type Teal_box_create struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_box_create) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_box_create) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("box_create")
 	return res.String()
 }
 
 type Teal_box_extract struct {
-	s1 AstStatement
-	s2 AstStatement
-	s3 AstStatement
+	s1 TealAst
+	s2 TealAst
+	s3 TealAst
 }
 
+func (a *Teal_box_extract) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_box_extract) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
-	res.WriteString(a.s3.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s3.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("box_extract")
 	return res.String()
 }
 
 type Teal_box_replace struct {
-	s1 AstStatement
-	s2 AstStatement
-	s3 AstStatement
+	s1 TealAst
+	s2 TealAst
+	s3 TealAst
 }
 
+func (a *Teal_box_replace) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_box_replace) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
-	res.WriteString(a.s3.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s3.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("box_replace")
 	return res.String()
 }
 
 type Teal_box_del struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_box_del) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_box_del) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("box_del")
 	return res.String()
 }
 
 type Teal_box_len struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_box_len) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_box_len) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("box_len")
 	return res.String()
 }
 
 type Teal_box_get struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_box_get) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_box_get) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("box_get")
 	return res.String()
 }
 
 type Teal_box_put struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_box_put) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_box_put) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("box_put")
 	return res.String()
 }
 
 type Teal_txnas struct {
-	s1 AstStatement
+	s1 TealAst
 	F1 uint8
 }
 
+func (a *Teal_txnas) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_txnas) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("txnas")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.F1))
@@ -5677,15 +6596,20 @@ func (a *Teal_txnas) String() string {
 }
 
 type Teal_gtxnas struct {
-	s1 AstStatement
+	s1 TealAst
 	T1 uint8
 	F2 uint8
 }
 
+func (a *Teal_gtxnas) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_gtxnas) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("gtxnas")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.T1))
@@ -5695,17 +6619,24 @@ func (a *Teal_gtxnas) String() string {
 }
 
 type Teal_gtxnsas struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 	F1 uint8
 }
 
+func (a *Teal_gtxnsas) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_gtxnsas) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("gtxnsas")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.F1))
@@ -5713,41 +6644,58 @@ func (a *Teal_gtxnsas) String() string {
 }
 
 type Teal_args struct {
-	s1 AstStatement
+	s1 TealAst
 }
 
+func (a *Teal_args) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_args) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("args")
 	return res.String()
 }
 
 type Teal_gloadss struct {
-	s1 AstStatement
-	s2 AstStatement
+	s1 TealAst
+	s2 TealAst
 }
 
+func (a *Teal_gloadss) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_gloadss) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("gloadss")
 	return res.String()
 }
 
 type Teal_itxnas struct {
-	s1 AstStatement
+	s1 TealAst
 	F1 uint8
 }
 
+func (a *Teal_itxnas) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_itxnas) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("itxnas")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.F1))
@@ -5755,15 +6703,20 @@ func (a *Teal_itxnas) String() string {
 }
 
 type Teal_gitxnas struct {
-	s1 AstStatement
+	s1 TealAst
 	T1 uint8
 	F2 uint8
 }
 
+func (a *Teal_gitxnas) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_gitxnas) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("gitxnas")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.T1))
@@ -5773,20 +6726,29 @@ func (a *Teal_gitxnas) String() string {
 }
 
 type Teal_vrf_verify struct {
-	s1 AstStatement
-	s2 AstStatement
-	s3 AstStatement
+	s1 TealAst
+	s2 TealAst
+	s3 TealAst
 	S1 uint8
 }
 
+func (a *Teal_vrf_verify) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_vrf_verify) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
-	res.WriteString(a.s2.String())
-	res.WriteString("\n")
-	res.WriteString(a.s3.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s2.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
+	for _, op := range a.s3.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("vrf_verify")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.S1))
@@ -5794,14 +6756,19 @@ func (a *Teal_vrf_verify) String() string {
 }
 
 type Teal_block struct {
-	s1 AstStatement
+	s1 TealAst
 	F1 uint8
 }
 
+func (a *Teal_block) Teal() Teal {
+	return Teal{a}
+}
 func (a *Teal_block) String() string {
 	res := strings.Builder{}
-	res.WriteString(a.s1.String())
-	res.WriteString("\n")
+	for _, op := range a.s1.Teal() {
+		res.WriteString(op.String())
+		res.WriteString("\n")
+	}
 	res.WriteString("block")
 	res.WriteString(" ")
 	res.WriteString(fmt.Sprintf("%d", a.F1))

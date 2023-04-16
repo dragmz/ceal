@@ -32,13 +32,13 @@ func (v *AstVisitor) VisitChildren(node antlr.RuleNode) interface{} {
 	return nil
 }
 
-func (v *AstVisitor) visitStatement(tree antlr.ParseTree) AstStatement {
+func (v *AstVisitor) visitStatement(tree antlr.ParseTree) CealStatement {
 	res := v.Visit(tree)
 	if res == nil {
 		return nil
 	}
 
-	return res.(AstStatement)
+	return res.(CealStatement)
 }
 
 func (v *AstVisitor) VisitMemberExpr(ctx *parser.MemberExprContext) interface{} {
@@ -112,7 +112,7 @@ func (v *AstVisitor) VisitVariableExpr(ctx *parser.VariableExprContext) interfac
 }
 
 func (v *AstVisitor) VisitMinusExpr(ctx *parser.MinusExprContext) interface{} {
-	return &CealMinusOp{
+	return &CealNegate{
 		Value: v.visitStatement(ctx.Expr()),
 	}
 }
@@ -271,7 +271,7 @@ func (v *AstVisitor) VisitCall_expr(ctx *parser.Call_exprContext) interface{} {
 
 	id := ids[0].GetText()
 
-	imms := []AstStatement{}
+	imms := []CealStatement{}
 
 	if len(ids) > 1 {
 		vr := v.mustResolveVariable(id)
@@ -289,9 +289,11 @@ func (v *AstVisitor) VisitCall_expr(ctx *parser.Call_exprContext) interface{} {
 
 		// TODO: currently supports just a single level of fields
 
-		imms = append(imms, &CealRaw{
+		raw := &CealRaw{
 			Value: ids[1].GetText(),
-		})
+		}
+
+		imms = append(imms, raw)
 	}
 
 	fun := v.global.functions[id]
@@ -530,7 +532,7 @@ func (v *AstVisitor) VisitForStmt(ctx *parser.ForStmtContext) interface{} {
 	v.scope = v.scope.enter()
 	loop := v.loops.Push("for")
 
-	init := []AstStatement{}
+	init := []CealStatement{}
 
 	if ctx.ForInit().Definition() != nil {
 		ast := v.visitStatement(ctx.ForInit().Definition())
@@ -551,7 +553,7 @@ func (v *AstVisitor) VisitForStmt(ctx *parser.ForStmtContext) interface{} {
 
 	condition := v.visitStatement(ctx.ForCondition().Expr())
 
-	iter := []AstStatement{}
+	iter := []CealStatement{}
 
 	for _, e := range ctx.ForIter().AllExpr() {
 		ast := v.visitStatement(e)
@@ -633,7 +635,7 @@ func (v *AstVisitor) VisitSwitchStmt(ctx *parser.SwitchStmtContext) interface{} 
 	}
 
 	for _, c := range ctx.AllCase_() {
-		stmts := []AstStatement{}
+		stmts := []CealStatement{}
 
 		for _, item := range c.AllStmt() {
 			stmts = append(stmts, v.visitStatement(item))
@@ -648,7 +650,7 @@ func (v *AstVisitor) VisitSwitchStmt(ctx *parser.SwitchStmtContext) interface{} 
 	}
 
 	if ctx.Default_() != nil {
-		stmts := []AstStatement{}
+		stmts := []CealStatement{}
 
 		for _, item := range ctx.Default_().AllStmt() {
 			stmts = append(stmts, v.visitStatement(item))

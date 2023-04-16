@@ -42,10 +42,12 @@ func run(a args) error {
 		src := string(bs)
 
 		program := c.Compile(src)
-		teal := program.String()
+		ast := program.TealAst()
+		teal := ast.Teal()
+		source := teal.String()
 
 		out := fmt.Sprintf("%s.teal", p)
-		err = os.WriteFile(out, []byte(teal), os.ModePerm)
+		err = os.WriteFile(out, []byte(source), os.ModePerm)
 		if err != nil {
 			return err
 		}

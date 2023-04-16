@@ -40,7 +40,9 @@ func TestExamplesCompileWithoutPanic(t *testing.T) {
 		src := string(bs)
 
 		program := c.Compile(src)
-		actual := program.String()
+		ast := program.TealAst()
+		teal := ast.Teal()
+		actual := teal.String()
 
 		tp := fmt.Sprintf("%s.teal", p)
 		tbs, err := os.ReadFile(tp)
