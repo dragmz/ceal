@@ -3,6 +3,7 @@ grammar C;
 program:
     (
         include
+        | comment
         | global ';'
         | function
         | struct ';'
@@ -35,7 +36,7 @@ stmt:
     | 'switch' '(' expr ')' '{' case* default? '}'                  # SwitchStmt
     | 'break' ';'                                                   # BreakStmt
     | 'continue' ';'                                                # ContinueStmt
-    | (SINGLE_COMMENT | MULTILINE_COMMENT)                          # CommentStmt
+    | comment                                                       # CommentStmt
     ;
 
 expr:
@@ -43,17 +44,17 @@ expr:
     | incdec ID                 # PreIncDecExpr
     | '-' expr                  # MinusExpr
     | '!' expr                  # NotExpr
-    | expr muldiv expr          # MulDivExpr
-    | expr addsub expr          # AddSubExpr
-    | expr eqneq expr           # EqNeqExpr
-    | expr '&' expr             # BitAndExpr
-    | expr '^' expr             # BitXorExpr
-    | expr '|' expr             # BitOrExpr
+    | l=expr muldiv r=expr      # MulDivExpr
+    | l=expr addsub r=expr      # AddSubExpr
+    | l=expr eqneq r=expr       # EqNeqExpr
+    | l=expr '&' r=expr         # BitAndExpr
+    | l=expr '^' r=expr         # BitXorExpr
+    | l=expr '|' r=expr         # BitOrExpr
     | l=expr '&&' r=expr        # AndExpr
     | l=expr '||' r=expr        # OrExpr
     | assign_expr               # AssignExpr
     | asdexpr                   # AssignSumDiffExpr
-    | condition=expr '?' true=expr ':' false=expr    # ConditionalExpr
+    | condition=expr '?' true=expr ':' false=expr # ConditionalExpr
     | ID                        # VariableExpr
     | constant                  # ConstantExpr
     | ID '[' expr ']'           # SubscriptExpr
@@ -62,6 +63,7 @@ expr:
     | '(' expr ')'              # GroupExpr
     ;
 
+comment: (SINGLE_COMMENT | MULTILINE_COMMENT);
 constant: (INT | STRING);
 assign_expr: ID ('.' ID)* '=' expr;
 const: 'const';

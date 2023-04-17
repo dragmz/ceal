@@ -302,6 +302,12 @@ func (s *BaseCListener) EnterMinusExpr(ctx *MinusExprContext) {}
 // ExitMinusExpr is called when production MinusExpr is exited.
 func (s *BaseCListener) ExitMinusExpr(ctx *MinusExprContext) {}
 
+// EnterComment is called when production comment is entered.
+func (s *BaseCListener) EnterComment(ctx *CommentContext) {}
+
+// ExitComment is called when production comment is exited.
+func (s *BaseCListener) ExitComment(ctx *CommentContext) {}
+
 // EnterConstant is called when production constant is entered.
 func (s *BaseCListener) EnterConstant(ctx *ConstantContext) {}
 

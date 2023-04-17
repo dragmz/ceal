@@ -1,5 +1,7 @@
 #include "avm.hpp"
 
+// An example contract with comments
+
 uint64 avm_main()
 {
     // Comment line 1

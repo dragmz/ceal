@@ -119,10 +119,9 @@ func (v *AstVisitor) VisitMinusExpr(ctx *parser.MinusExprContext) interface{} {
 }
 
 func (v *AstVisitor) VisitAddSubExpr(ctx *parser.AddSubExprContext) interface{} {
-	exprs := ctx.AllExpr()
 	return &CealBinop{
-		Left:  v.visitStatement(exprs[0]),
-		Right: v.visitStatement(exprs[1]),
+		Left:  v.visitStatement(ctx.GetL()),
+		Right: v.visitStatement(ctx.GetR()),
 		Op:    ctx.Addsub().GetText(),
 	}
 }
@@ -178,46 +177,41 @@ func (v *AstVisitor) VisitAndExpr(ctx *parser.AndExprContext) interface{} {
 }
 
 func (v *AstVisitor) VisitMulDivExpr(ctx *parser.MulDivExprContext) interface{} {
-	exprs := ctx.AllExpr()
 	return &CealBinop{
-		Left:  v.visitStatement(exprs[0]),
-		Right: v.visitStatement(exprs[1]),
+		Left:  v.visitStatement(ctx.GetL()),
+		Right: v.visitStatement(ctx.GetR()),
 		Op:    ctx.Muldiv().GetText(),
 	}
 }
 
 func (v *AstVisitor) VisitEqNeqExpr(ctx *parser.EqNeqExprContext) interface{} {
-	exprs := ctx.AllExpr()
 	return &CealBinop{
-		Left:  v.visitStatement(exprs[0]),
-		Right: v.visitStatement(exprs[1]),
+		Left:  v.visitStatement(ctx.GetL()),
+		Right: v.visitStatement(ctx.GetR()),
 		Op:    ctx.Eqneq().GetText(),
 	}
 }
 
 func (v *AstVisitor) VisitBitAndExpr(ctx *parser.BitAndExprContext) interface{} {
-	exprs := ctx.AllExpr()
 	return &CealBinop{
-		Left:  v.visitStatement(exprs[0]),
-		Right: v.visitStatement(exprs[1]),
+		Left:  v.visitStatement(ctx.GetL()),
+		Right: v.visitStatement(ctx.GetR()),
 		Op:    "&",
 	}
 }
 
 func (v *AstVisitor) VisitBitXorExpr(ctx *parser.BitXorExprContext) interface{} {
-	exprs := ctx.AllExpr()
 	return &CealBinop{
-		Left:  v.visitStatement(exprs[0]),
-		Right: v.visitStatement(exprs[1]),
+		Left:  v.visitStatement(ctx.GetL()),
+		Right: v.visitStatement(ctx.GetR()),
 		Op:    "^",
 	}
 }
 
 func (v *AstVisitor) VisitBitOrExpr(ctx *parser.BitOrExprContext) interface{} {
-	exprs := ctx.AllExpr()
 	return &CealBinop{
-		Left:  v.visitStatement(exprs[0]),
-		Right: v.visitStatement(exprs[1]),
+		Left:  v.visitStatement(ctx.GetL()),
+		Right: v.visitStatement(ctx.GetR()),
 		Op:    "|",
 	}
 }
@@ -681,18 +675,20 @@ func (v *AstVisitor) VisitConditionalExpr(ctx *parser.ConditionalExprContext) in
 }
 
 func (v *AstVisitor) VisitCommentStmt(ctx *parser.CommentStmtContext) interface{} {
-	if ctx.SINGLE_COMMENT() != nil {
+	comment := ctx.Comment()
+
+	if comment.SINGLE_COMMENT() != nil {
 		return &CealSingleLineComment{
 			Line: strings.TrimPrefix(
-				strings.Trim(ctx.SINGLE_COMMENT().GetText(), "\r\n"),
+				strings.Trim(comment.GetText(), "\r\n"),
 				"//",
 			),
 		}
 	}
 
-	if ctx.MULTILINE_COMMENT() != nil {
+	if comment.MULTILINE_COMMENT() != nil {
 		return &CealMultiLineComment{
-			Text: strings.TrimSuffix(strings.TrimPrefix(ctx.MULTILINE_COMMENT().GetText(), "/*"), "*/"),
+			Text: strings.TrimSuffix(strings.TrimPrefix(comment.GetText(), "/*"), "*/"),
 		}
 	}
 
