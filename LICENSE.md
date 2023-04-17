@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2023 Marcin Zawiejski
+Copyright (c) 2023-present ceal contributors (see AUTHORS.md)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
