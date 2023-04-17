@@ -377,12 +377,16 @@ func (a *CealVariable) TealAst() TealAst {
 		}
 	}
 
-	if a.V.t == "uint64" {
+	switch a.V.t {
+	case "uint64":
 		res.Write(&Teal_named_int{V: &Teal_named_int_value{V: a.V.name}})
 		return res.Build()
+	case "bytes":
+		res.Write(&Teal_byte{S: &Teal_byte_value{V: a.V.name}})
+	default:
+		panic(fmt.Sprintf("type '%s' is not supported", a.V.t))
 	}
 
-	res.Write(&Teal_byte{S: &Teal_byte_value{V: a.V.name}})
 	return res.Build()
 }
 
@@ -683,6 +687,11 @@ func (a *CealCall) TealAst() TealAst {
 	res := &TealAstBuilder{}
 
 	var args []TealAst
+
+	if a.Fun.compiler != nil {
+		ast := a.Fun.compiler.handler(a.Args)
+		res.Write(ast)
+	}
 
 	if a.Fun.builtin != nil {
 		i := 0

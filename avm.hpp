@@ -13,6 +13,9 @@ using uint8 = unsigned char;
 using int8 = signed char;
 using bytes = std::variant<const char*, const unsigned char*>;
 
+template <typename T>
+void abi_decode(bytes data, T& out) {};
+
 const uint64 NoOp = 0;
 const uint64 OptIn = 1;
 const uint64 CloseOut = 2;

@@ -111,10 +111,6 @@ func (v *SymbolTableVisitor) VisitBlockStmt(ctx *parser.BlockStmtContext) interf
 func (v *SymbolTableVisitor) VisitStruct(ctx *parser.StructContext) interface{} {
 	name := ctx.ID().GetText()
 
-	if t := v.scope.resolveType(name); t != nil {
-		panic(fmt.Sprintf("type '%s' is already defined", name))
-	}
-
 	s := &Struct{
 		fields:    map[string]*StructField{},
 		functions: map[string]*StructFunction{},
@@ -142,7 +138,7 @@ func (v *SymbolTableVisitor) VisitStruct(ctx *parser.StructContext) interface{} 
 		complex: s,
 	}
 
-	v.global.types[t.name] = t
+	v.global.registerType(t)
 
 	return nil
 }

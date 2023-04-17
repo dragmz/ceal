@@ -24,14 +24,20 @@ type BuiltinFunction struct {
 	imm   []*FunctionParam
 }
 
+type CompilerFunction struct {
+	parameters []*FunctionParam
+	handler    func(args []CealStatement) TealAst
+}
+
 type Function struct {
 	t    string
 	name string
 
 	returns int
 
-	builtin *BuiltinFunction
-	user    *UserFunction
+	builtin  *BuiltinFunction
+	user     *UserFunction
+	compiler *CompilerFunction
 }
 
 type StructField struct {
@@ -179,20 +185,6 @@ type Scope struct {
 	parent *Scope
 }
 
-func (s *Scope) resolveType(typeName string) *Type {
-	current := s
-
-	for current != nil {
-		if t, ok := current.types[typeName]; ok {
-			return t
-		}
-
-		current = current.parent
-	}
-
-	return nil
-}
-
 func NewScope(parent *Scope) *Scope {
 	s := &Scope{
 		parent:    parent,
@@ -204,12 +196,34 @@ func NewScope(parent *Scope) *Scope {
 	return s
 }
 
+func (s *Scope) resolveType(typeName string) *Type {
+	current := s
+
+	for current != nil {
+		if t, ok := current.types[typeName]; ok {
+			return t
+		}
+
+		current = current.parent
+	}
+
+	panic(fmt.Sprintf("unknown type: '%s'", typeName))
+}
+
 func (s *Scope) registerFunction(f *Function) {
 	if _, ok := s.functions[f.name]; ok {
 		panic(fmt.Sprintf("function '%s' is already defined", f.name))
 	}
 
 	s.functions[f.name] = f
+}
+
+func (s *Scope) registerType(t *Type) {
+	if _, ok := s.types[t.name]; ok {
+		panic(fmt.Sprintf("type '%s' is already defined", t.name))
+	}
+
+	s.types[t.name] = t
 }
 
 func (s *Scope) enter() *Scope {
@@ -310,30 +324,89 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 
 	global := NewScope(nil)
 
-	global.types["void"] = &Type{
+	global.registerType(&Type{
 		name: "void",
 		simple: &SimpleType{
 			empty: true,
 		},
-	}
+	})
 
-	global.types["bytes"] = &Type{
+	global.registerType(&Type{
 		name: "bytes",
 		simple: &SimpleType{
 			kind: SimpleTypeBytes,
 		},
-	}
+	})
 
-	global.types["uint64"] = &Type{
+	global.registerType(&Type{
 		name: "uint64",
 		simple: &SimpleType{
 			kind: SimpleTypeInt,
 		},
-	}
+	})
 
-	global.types["any"] = &Type{
+	global.registerType(&Type{
 		name:   "any",
 		simple: &SimpleType{},
+	})
+
+	{
+		f := &Function{
+			name: "abi_decode",
+			compiler: &CompilerFunction{
+				handler: func(args []CealStatement) TealAst {
+					v1, ok := args[0].(*CealVariable)
+					if !ok {
+						panic("abi_decode data argument expects a variable")
+					}
+
+					v1t := global.resolveType(v1.V.t)
+
+					if v1t.simple == nil || v1t.simple.kind != SimpleTypeBytes {
+						panic("abi_decode data argument must be of bytes type")
+					}
+
+					v2, ok := args[1].(*CealVariable)
+					if !ok {
+						panic("abi_decode out argument expects a variable")
+					}
+
+					v2t := global.resolveType(v2.V.t)
+
+					if v2t.simple != nil {
+						// TODO: implement
+						panic("abi_decode does not support simple types yet")
+					}
+
+					if v2t.complex != nil {
+						for _, name := range v2t.complex.fieldsNames {
+							field := v2t.complex.fields[name]
+							if field.fun != "" {
+								panic(fmt.Sprintf("abi_decode does not support built-in fields: '%s'", field.name))
+							}
+
+							ft := global.resolveType(field.t)
+							// TODO: implement
+							panic(fmt.Sprintf("abi_decode does not support decoding type: '%s'", ft.name))
+						}
+					}
+
+					panic(fmt.Sprintf("abi_decode does not support the type: '%s'", v2t.name))
+				},
+				parameters: []*FunctionParam{
+					{
+						t:    "bytes",
+						name: "data",
+					},
+					{
+						t:    "any&",
+						name: "out",
+					},
+				},
+			},
+		}
+
+		global.registerFunction(f)
 	}
 
 	for _, item := range builtin_functions {
@@ -399,7 +472,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 			complex: s,
 		}
 
-		global.types[t.name] = t
+		global.registerType(t)
 	}
 
 	for _, item := range builtin_variables {
