@@ -3,6 +3,8 @@ package teal
 import (
 	"fmt"
 	"strings"
+
+	"github.com/dragmz/tealex"
 )
 
 type ParserToken interface {
@@ -10,7 +12,7 @@ type ParserToken interface {
 }
 
 type parserToken struct {
-	t Token
+	t tealex.Token
 }
 
 func (t *parserToken) Value() string {
@@ -23,11 +25,11 @@ type ParserArgs interface {
 	Read_int16() int16
 	Read_rbyte() []byte
 	Read_rrbyte() [][]byte
-	Read() *Token
+	Read() *tealex.Token
 }
 
 type parserArgs struct {
-	items []Token
+	items []tealex.Token
 	index int
 }
 
@@ -51,7 +53,7 @@ func (a *parserArgs) Read_rrbyte() [][]byte {
 	panic("not implemented")
 }
 
-func (a *parserArgs) Read() *Token {
+func (a *parserArgs) Read() *tealex.Token {
 	if a.index >= len(a.items) {
 		return nil
 	}
@@ -63,15 +65,15 @@ func (a *parserArgs) Read() *Token {
 }
 
 type Subline struct {
-	Tokens []Token
+	Tokens []tealex.Token
 }
 
 type Line struct {
-	Tokens []Token
+	Tokens []tealex.Token
 	Subs   []Subline
 }
 
-func readLines(ts []Token) []Line {
+func readLines(ts []tealex.Token) []Line {
 	lines := []Line{}
 
 	p := 0
@@ -79,7 +81,7 @@ func readLines(ts []Token) []Line {
 		t := ts[i]
 
 		j := i + 1
-		eol := t.Type() == TokenEol
+		eol := t.Type() == tealex.TokenEol
 
 		if eol || j == len(ts) {
 			k := j
@@ -104,12 +106,12 @@ func prepareLines(lines []Line) {
 		for i := 0; i < len(l.Tokens); i++ {
 			t := l.Tokens[i]
 			switch t.Type() {
-			case TokenSemicolon:
+			case tealex.TokenSemicolon:
 				l.Subs = append(l.Subs, Subline{
 					Tokens: l.Tokens[sf:i],
 				})
 				sf = i + 1
-			case TokenComment:
+			case tealex.TokenComment:
 				l.Tokens = l.Tokens[:i]
 				l.Subs = append(l.Subs, Subline{
 					Tokens: l.Tokens[sf:i],
@@ -130,11 +132,11 @@ func prepareLines(lines []Line) {
 func ParseTeal(src string) Teal {
 	var t Teal
 
-	lexer := &Lexer{
+	lexer := &tealex.Lexer{
 		Source: []byte(src),
 	}
 
-	var tokens []Token
+	var tokens []tealex.Token
 
 	for lexer.Scan() {
 		tokens = append(tokens, lexer.Curr())
