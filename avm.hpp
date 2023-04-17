@@ -11,10 +11,13 @@ using uint16 = unsigned short;
 using int16 = signed short;
 using uint8 = unsigned char;
 using int8 = signed char;
-using bytes = std::variant<const char*, const unsigned char*>;
+using bytes = std::variant<const char *, const unsigned char *>;
 
 template <typename T>
-void abi_decode(bytes data, T& out) {};
+void abi_decode(bytes data, T &out){};
+
+template <typename T>
+bytes abi_encode(const T &in) { return {}; }
 
 const uint64 NoOp = 0;
 const uint64 OptIn = 1;
@@ -27,13 +30,13 @@ struct any
 {
 	any() = default;
 
-	template<typename T>
+	template <typename T>
 	any(T);
 
-	template<typename T>
+	template <typename T>
 	any operator=(T);
 
-	template<typename T>
+	template <typename T>
 	bool operator==(T);
 };
 

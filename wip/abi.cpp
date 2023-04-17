@@ -8,8 +8,13 @@ struct point_t
 
 uint64 avm_main()
 {
-    const bytes data = avm_box_extract("point", 0, 16);
+    point_t pt1;
 
-    point_t pt;
-    abi_decode(data, pt);
+    pt1.x = 1;
+    pt1.y = 2;
+
+    const bytes data = abi_encode(pt1);
+
+    point_t pt2;
+    abi_decode(data, pt2);
 }

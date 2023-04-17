@@ -352,6 +352,52 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 
 	{
 		f := &Function{
+			name:    "abi_encode",
+			t:       "bytes",
+			returns: 1,
+			compiler: &CompilerFunction{
+				handler: func(args []CealStatement) TealAst {
+					v, ok := args[0].(*CealVariable)
+					if !ok {
+						panic("abi_encode data argument expects a variable")
+					}
+
+					vt := global.resolveType(v.V.t)
+
+					if vt.simple != nil {
+						// TODO: implement
+						panic("abi_encode does not support simple types yet")
+					}
+
+					if vt.complex != nil {
+						for _, name := range vt.complex.fieldsNames {
+							field := vt.complex.fields[name]
+							if field.fun != "" {
+								panic(fmt.Sprintf("abi_encode does not support built-in fields: '%s'", field.name))
+							}
+
+							ft := global.resolveType(field.t)
+							// TODO: implement
+							panic(fmt.Sprintf("abi_encode does not support encoding type: '%s'", ft.name))
+						}
+					}
+
+					panic(fmt.Sprintf("abi_encode does not support the type: '%s'", vt.name))
+				},
+				parameters: []*FunctionParam{
+					{
+						t:    "any",
+						name: "in",
+					},
+				},
+			},
+		}
+
+		global.registerFunction(f)
+	}
+
+	{
+		f := &Function{
 			name: "abi_decode",
 			compiler: &CompilerFunction{
 				handler: func(args []CealStatement) TealAst {
