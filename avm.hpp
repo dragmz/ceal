@@ -49,24 +49,24 @@ void avm_sha256_op();
 /*
 sha256 - SHA256 hash of value A, yields [32]byte
 */
-bytes avm_sha256(STACK bytes s1);
+bytes avm_sha256(STACK bytes STACK_1);
 void avm_keccak256_op();
 /*
 keccak256 - Keccak256 hash of value A, yields [32]byte
 */
-bytes avm_keccak256(STACK bytes s1);
+bytes avm_keccak256(STACK bytes STACK_1);
 void avm_sha512_256_op();
 /*
 sha512_256 - SHA512_256 hash of value A, yields [32]byte
 */
-bytes avm_sha512_256(STACK bytes s1);
+bytes avm_sha512_256(STACK bytes STACK_1);
 void avm_ed25519verify_op();
 /*
 ed25519verify - for (data A, signature B, pubkey C) verify the signature of ("ProgData" || program_hash || data) against the pubkey => {0 or 1}
 
 The 32 byte public key is the last element on the stack, preceded by the 64 byte signature at the second-to-last element on the stack, preceded by the data which was signed at the third-to-last element on the stack.
 */
-uint64 avm_ed25519verify(STACK bytes s1, STACK bytes s2, STACK bytes s3);
+uint64 avm_ed25519verify(STACK bytes STACK_1, STACK bytes STACK_2, STACK bytes STACK_3);
 void avm_ecdsa_verify_op(IMMEDIATE uint8 V1);
 /*
 ecdsa_verify - for (data A, signature B, C and pubkey D, E) verify the signature of the data against the pubkey => {0 or 1}
@@ -75,8 +75,8 @@ The 32 byte Y-component of a public key is the last element on the stack, preced
 */
 struct avm_ecdsa_verify_t
 {
-	void Secp256k1(STACK bytes s1, STACK bytes s2, STACK bytes s3, STACK bytes s4, STACK bytes s5);
-	void Secp256r1(STACK bytes s1, STACK bytes s2, STACK bytes s3, STACK bytes s4, STACK bytes s5);
+	void Secp256k1(STACK bytes STACK_1, STACK bytes STACK_2, STACK bytes STACK_3, STACK bytes STACK_4, STACK bytes STACK_5);
+	void Secp256r1(STACK bytes STACK_1, STACK bytes STACK_2, STACK bytes STACK_3, STACK bytes STACK_4, STACK bytes STACK_5);
 };
 extern avm_ecdsa_verify_t avm_ecdsa_verify;
 void avm_ecdsa_pk_decompress_op(IMMEDIATE uint8 V1);
@@ -92,8 +92,8 @@ The 33 byte public key in a compressed form to be decompressed into X and Y (top
 */
 struct avm_ecdsa_pk_decompress_t
 {
-	void Secp256k1(STACK bytes s1);
-	void Secp256r1(STACK bytes s1);
+	void Secp256k1(STACK bytes STACK_1);
+	void Secp256r1(STACK bytes STACK_1);
 };
 extern avm_ecdsa_pk_decompress_t avm_ecdsa_pk_decompress;
 void avm_ecdsa_pk_recover_op(IMMEDIATE uint8 V1);
@@ -109,8 +109,8 @@ S (top) and R elements of a signature, recovery id and data (bottom) are expecte
 */
 struct avm_ecdsa_pk_recover_t
 {
-	void Secp256k1(STACK bytes s1, STACK uint64 s2, STACK bytes s3, STACK bytes s4);
-	void Secp256r1(STACK bytes s1, STACK uint64 s2, STACK bytes s3, STACK bytes s4);
+	void Secp256k1(STACK bytes STACK_1, STACK uint64 STACK_2, STACK bytes STACK_3, STACK bytes STACK_4);
+	void Secp256r1(STACK bytes STACK_1, STACK uint64 STACK_2, STACK bytes STACK_3, STACK bytes STACK_4);
 };
 extern avm_ecdsa_pk_recover_t avm_ecdsa_pk_recover;
 void avm_plus_op();
@@ -119,113 +119,113 @@ void avm_plus_op();
 
 Overflow is an error condition which halts execution and fails the transaction. Full precision is available from `addw`.
 */
-uint64 avm_plus(STACK uint64 s1, STACK uint64 s2);
+uint64 avm_plus(STACK uint64 STACK_1, STACK uint64 STACK_2);
 void avm_minus_op();
 /*
 - - A minus B. Fail if B > A.
 */
-uint64 avm_minus(STACK uint64 s1, STACK uint64 s2);
+uint64 avm_minus(STACK uint64 STACK_1, STACK uint64 STACK_2);
 void avm_div_op();
 /*
 / - A divided by B (truncated division). Fail if B == 0.
 
 `divmodw` is available to divide the two-element values produced by `mulw` and `addw`.
 */
-uint64 avm_div(STACK uint64 s1, STACK uint64 s2);
+uint64 avm_div(STACK uint64 STACK_1, STACK uint64 STACK_2);
 void avm_mul_op();
 /*
 * - A times B. Fail on overflow.
 
 Overflow is an error condition which halts execution and fails the transaction. Full precision is available from `mulw`.
 */
-uint64 avm_mul(STACK uint64 s1, STACK uint64 s2);
+uint64 avm_mul(STACK uint64 STACK_1, STACK uint64 STACK_2);
 void avm_lt_op();
 /*
 < - A less than B => {0 or 1}
 */
-uint64 avm_lt(STACK uint64 s1, STACK uint64 s2);
+uint64 avm_lt(STACK uint64 STACK_1, STACK uint64 STACK_2);
 void avm_gt_op();
 /*
 > - A greater than B => {0 or 1}
 */
-uint64 avm_gt(STACK uint64 s1, STACK uint64 s2);
+uint64 avm_gt(STACK uint64 STACK_1, STACK uint64 STACK_2);
 void avm_lteq_op();
 /*
 <= - A less than or equal to B => {0 or 1}
 */
-uint64 avm_lteq(STACK uint64 s1, STACK uint64 s2);
+uint64 avm_lteq(STACK uint64 STACK_1, STACK uint64 STACK_2);
 void avm_gteq_op();
 /*
 >= - A greater than or equal to B => {0 or 1}
 */
-uint64 avm_gteq(STACK uint64 s1, STACK uint64 s2);
+uint64 avm_gteq(STACK uint64 STACK_1, STACK uint64 STACK_2);
 void avm_andand_op();
 /*
 && - A is not zero and B is not zero => {0 or 1}
 */
-uint64 avm_andand(STACK uint64 s1, STACK uint64 s2);
+uint64 avm_andand(STACK uint64 STACK_1, STACK uint64 STACK_2);
 void avm_oror_op();
 /*
 || - A is not zero or B is not zero => {0 or 1}
 */
-uint64 avm_oror(STACK uint64 s1, STACK uint64 s2);
+uint64 avm_oror(STACK uint64 STACK_1, STACK uint64 STACK_2);
 void avm_eqeq_op();
 /*
 == - A is equal to B => {0 or 1}
 */
-uint64 avm_eqeq(STACK any s1, STACK any s2);
+uint64 avm_eqeq(STACK any STACK_1, STACK any STACK_2);
 void avm_noteq_op();
 /*
 != - A is not equal to B => {0 or 1}
 */
-uint64 avm_noteq(STACK any s1, STACK any s2);
+uint64 avm_noteq(STACK any STACK_1, STACK any STACK_2);
 void avm_not_op();
 /*
 ! - A == 0 yields 1; else 0
 */
-uint64 avm_not(STACK uint64 s1);
+uint64 avm_not(STACK uint64 STACK_1);
 void avm_len_op();
 /*
 len - yields length of byte value A
 */
-uint64 avm_len(STACK bytes s1);
+uint64 avm_len(STACK bytes STACK_1);
 void avm_itob_op();
 /*
 itob - converts uint64 A to big-endian byte array, always of length 8
 */
-bytes avm_itob(STACK uint64 s1);
+bytes avm_itob(STACK uint64 STACK_1);
 void avm_btoi_op();
 /*
 btoi - converts big-endian byte array A to uint64. Fails if len(A) > 8. Padded by leading 0s if len(A) < 8.
 
 `btoi` fails if the input is longer than 8 bytes.
 */
-uint64 avm_btoi(STACK bytes s1);
+uint64 avm_btoi(STACK bytes STACK_1);
 void avm_mod_op();
 /*
 % - A modulo B. Fail if B == 0.
 */
-uint64 avm_mod(STACK uint64 s1, STACK uint64 s2);
+uint64 avm_mod(STACK uint64 STACK_1, STACK uint64 STACK_2);
 void avm_or_op();
 /*
 | - A bitwise-or B
 */
-uint64 avm_or(STACK uint64 s1, STACK uint64 s2);
+uint64 avm_or(STACK uint64 STACK_1, STACK uint64 STACK_2);
 void avm_and_op();
 /*
 & - A bitwise-and B
 */
-uint64 avm_and(STACK uint64 s1, STACK uint64 s2);
+uint64 avm_and(STACK uint64 STACK_1, STACK uint64 STACK_2);
 void avm_xor_op();
 /*
 ^ - A bitwise-xor B
 */
-uint64 avm_xor(STACK uint64 s1, STACK uint64 s2);
+uint64 avm_xor(STACK uint64 STACK_1, STACK uint64 STACK_2);
 void avm_inv_op();
 /*
 ~ - bitwise invert value A
 */
-uint64 avm_inv(STACK uint64 s1);
+uint64 avm_inv(STACK uint64 STACK_1);
 void avm_mulw_op();
 struct avm_mulw_result_t
 {
@@ -235,7 +235,7 @@ struct avm_mulw_result_t
 /*
 mulw - A times B as a 128-bit result in two uint64s. X is the high 64 bits, Y is the low
 */
-avm_mulw_result_t avm_mulw(STACK uint64 s1, STACK uint64 s2);
+avm_mulw_result_t avm_mulw(STACK uint64 STACK_1, STACK uint64 STACK_2);
 void avm_addw_op();
 struct avm_addw_result_t
 {
@@ -245,7 +245,7 @@ struct avm_addw_result_t
 /*
 addw - A plus B as a 128-bit result. X is the carry-bit, Y is the low-order 64 bits.
 */
-avm_addw_result_t avm_addw(STACK uint64 s1, STACK uint64 s2);
+avm_addw_result_t avm_addw(STACK uint64 STACK_1, STACK uint64 STACK_2);
 void avm_divmodw_op();
 struct avm_divmodw_result_t
 {
@@ -259,7 +259,7 @@ divmodw - W,X = (A,B / C,D); Y,Z = (A,B modulo C,D)
 
 The notation J,K indicates that two uint64 values J and K are interpreted as a uint128 value, with J as the high uint64 and K the low.
 */
-avm_divmodw_result_t avm_divmodw(STACK uint64 s1, STACK uint64 s2, STACK uint64 s3, STACK uint64 s4);
+avm_divmodw_result_t avm_divmodw(STACK uint64 STACK_1, STACK uint64 STACK_2, STACK uint64 STACK_3, STACK uint64 STACK_4);
 void avm_intcblock_op(IMMEDIATE bytes UINT1);
 /*
 intcblock - prepare block of uint64 constants for use by intc
@@ -597,74 +597,74 @@ for notes on transaction fields available, see `txn`. If top of stack is _i_, `g
 */
 struct avm_gtxns_t
 {
-	bytes Sender(STACK uint64 s1);
-	uint64 Fee(STACK uint64 s1);
-	uint64 FirstValid(STACK uint64 s1);
-	uint64 FirstValidTime(STACK uint64 s1);
-	uint64 LastValid(STACK uint64 s1);
-	bytes Note(STACK uint64 s1);
-	bytes Lease(STACK uint64 s1);
-	bytes Receiver(STACK uint64 s1);
-	uint64 Amount(STACK uint64 s1);
-	bytes CloseRemainderTo(STACK uint64 s1);
-	bytes VotePK(STACK uint64 s1);
-	bytes SelectionPK(STACK uint64 s1);
-	uint64 VoteFirst(STACK uint64 s1);
-	uint64 VoteLast(STACK uint64 s1);
-	uint64 VoteKeyDilution(STACK uint64 s1);
-	bytes Type(STACK uint64 s1);
-	uint64 TypeEnum(STACK uint64 s1);
-	uint64 XferAsset(STACK uint64 s1);
-	uint64 AssetAmount(STACK uint64 s1);
-	bytes AssetSender(STACK uint64 s1);
-	bytes AssetReceiver(STACK uint64 s1);
-	bytes AssetCloseTo(STACK uint64 s1);
-	uint64 GroupIndex(STACK uint64 s1);
-	bytes TxID(STACK uint64 s1);
-	uint64 ApplicationID(STACK uint64 s1);
-	uint64 OnCompletion(STACK uint64 s1);
-	bytes ApplicationArgs(STACK uint64 s1);
-	uint64 NumAppArgs(STACK uint64 s1);
-	bytes Accounts(STACK uint64 s1);
-	uint64 NumAccounts(STACK uint64 s1);
-	bytes ApprovalProgram(STACK uint64 s1);
-	bytes ClearStateProgram(STACK uint64 s1);
-	bytes RekeyTo(STACK uint64 s1);
-	uint64 ConfigAsset(STACK uint64 s1);
-	uint64 ConfigAssetTotal(STACK uint64 s1);
-	uint64 ConfigAssetDecimals(STACK uint64 s1);
-	uint64 ConfigAssetDefaultFrozen(STACK uint64 s1);
-	bytes ConfigAssetUnitName(STACK uint64 s1);
-	bytes ConfigAssetName(STACK uint64 s1);
-	bytes ConfigAssetURL(STACK uint64 s1);
-	bytes ConfigAssetMetadataHash(STACK uint64 s1);
-	bytes ConfigAssetManager(STACK uint64 s1);
-	bytes ConfigAssetReserve(STACK uint64 s1);
-	bytes ConfigAssetFreeze(STACK uint64 s1);
-	bytes ConfigAssetClawback(STACK uint64 s1);
-	uint64 FreezeAsset(STACK uint64 s1);
-	bytes FreezeAssetAccount(STACK uint64 s1);
-	uint64 FreezeAssetFrozen(STACK uint64 s1);
-	uint64 Assets(STACK uint64 s1);
-	uint64 NumAssets(STACK uint64 s1);
-	uint64 Applications(STACK uint64 s1);
-	uint64 NumApplications(STACK uint64 s1);
-	uint64 GlobalNumUint(STACK uint64 s1);
-	uint64 GlobalNumByteSlice(STACK uint64 s1);
-	uint64 LocalNumUint(STACK uint64 s1);
-	uint64 LocalNumByteSlice(STACK uint64 s1);
-	uint64 ExtraProgramPages(STACK uint64 s1);
-	uint64 Nonparticipation(STACK uint64 s1);
-	bytes Logs(STACK uint64 s1);
-	uint64 NumLogs(STACK uint64 s1);
-	uint64 CreatedAssetID(STACK uint64 s1);
-	uint64 CreatedApplicationID(STACK uint64 s1);
-	bytes LastLog(STACK uint64 s1);
-	bytes StateProofPK(STACK uint64 s1);
-	bytes ApprovalProgramPages(STACK uint64 s1);
-	uint64 NumApprovalProgramPages(STACK uint64 s1);
-	bytes ClearStateProgramPages(STACK uint64 s1);
-	uint64 NumClearStateProgramPages(STACK uint64 s1);
+	bytes Sender(STACK uint64 STACK_1);
+	uint64 Fee(STACK uint64 STACK_1);
+	uint64 FirstValid(STACK uint64 STACK_1);
+	uint64 FirstValidTime(STACK uint64 STACK_1);
+	uint64 LastValid(STACK uint64 STACK_1);
+	bytes Note(STACK uint64 STACK_1);
+	bytes Lease(STACK uint64 STACK_1);
+	bytes Receiver(STACK uint64 STACK_1);
+	uint64 Amount(STACK uint64 STACK_1);
+	bytes CloseRemainderTo(STACK uint64 STACK_1);
+	bytes VotePK(STACK uint64 STACK_1);
+	bytes SelectionPK(STACK uint64 STACK_1);
+	uint64 VoteFirst(STACK uint64 STACK_1);
+	uint64 VoteLast(STACK uint64 STACK_1);
+	uint64 VoteKeyDilution(STACK uint64 STACK_1);
+	bytes Type(STACK uint64 STACK_1);
+	uint64 TypeEnum(STACK uint64 STACK_1);
+	uint64 XferAsset(STACK uint64 STACK_1);
+	uint64 AssetAmount(STACK uint64 STACK_1);
+	bytes AssetSender(STACK uint64 STACK_1);
+	bytes AssetReceiver(STACK uint64 STACK_1);
+	bytes AssetCloseTo(STACK uint64 STACK_1);
+	uint64 GroupIndex(STACK uint64 STACK_1);
+	bytes TxID(STACK uint64 STACK_1);
+	uint64 ApplicationID(STACK uint64 STACK_1);
+	uint64 OnCompletion(STACK uint64 STACK_1);
+	bytes ApplicationArgs(STACK uint64 STACK_1);
+	uint64 NumAppArgs(STACK uint64 STACK_1);
+	bytes Accounts(STACK uint64 STACK_1);
+	uint64 NumAccounts(STACK uint64 STACK_1);
+	bytes ApprovalProgram(STACK uint64 STACK_1);
+	bytes ClearStateProgram(STACK uint64 STACK_1);
+	bytes RekeyTo(STACK uint64 STACK_1);
+	uint64 ConfigAsset(STACK uint64 STACK_1);
+	uint64 ConfigAssetTotal(STACK uint64 STACK_1);
+	uint64 ConfigAssetDecimals(STACK uint64 STACK_1);
+	uint64 ConfigAssetDefaultFrozen(STACK uint64 STACK_1);
+	bytes ConfigAssetUnitName(STACK uint64 STACK_1);
+	bytes ConfigAssetName(STACK uint64 STACK_1);
+	bytes ConfigAssetURL(STACK uint64 STACK_1);
+	bytes ConfigAssetMetadataHash(STACK uint64 STACK_1);
+	bytes ConfigAssetManager(STACK uint64 STACK_1);
+	bytes ConfigAssetReserve(STACK uint64 STACK_1);
+	bytes ConfigAssetFreeze(STACK uint64 STACK_1);
+	bytes ConfigAssetClawback(STACK uint64 STACK_1);
+	uint64 FreezeAsset(STACK uint64 STACK_1);
+	bytes FreezeAssetAccount(STACK uint64 STACK_1);
+	uint64 FreezeAssetFrozen(STACK uint64 STACK_1);
+	uint64 Assets(STACK uint64 STACK_1);
+	uint64 NumAssets(STACK uint64 STACK_1);
+	uint64 Applications(STACK uint64 STACK_1);
+	uint64 NumApplications(STACK uint64 STACK_1);
+	uint64 GlobalNumUint(STACK uint64 STACK_1);
+	uint64 GlobalNumByteSlice(STACK uint64 STACK_1);
+	uint64 LocalNumUint(STACK uint64 STACK_1);
+	uint64 LocalNumByteSlice(STACK uint64 STACK_1);
+	uint64 ExtraProgramPages(STACK uint64 STACK_1);
+	uint64 Nonparticipation(STACK uint64 STACK_1);
+	bytes Logs(STACK uint64 STACK_1);
+	uint64 NumLogs(STACK uint64 STACK_1);
+	uint64 CreatedAssetID(STACK uint64 STACK_1);
+	uint64 CreatedApplicationID(STACK uint64 STACK_1);
+	bytes LastLog(STACK uint64 STACK_1);
+	bytes StateProofPK(STACK uint64 STACK_1);
+	bytes ApprovalProgramPages(STACK uint64 STACK_1);
+	uint64 NumApprovalProgramPages(STACK uint64 STACK_1);
+	bytes ClearStateProgramPages(STACK uint64 STACK_1);
+	uint64 NumClearStateProgramPages(STACK uint64 STACK_1);
 };
 extern avm_gtxns_t avm_gtxns;
 void avm_gtxnsa_op(IMMEDIATE uint8 F1, IMMEDIATE uint8 I2);
@@ -674,13 +674,13 @@ gtxnsa - Ith value of the array field F from the Ath transaction in the current 
 */
 struct avm_gtxnsa_t
 {
-	bytes ApplicationArgs(STACK uint64 s1, IMMEDIATE uint8 I2);
-	bytes Accounts(STACK uint64 s1, IMMEDIATE uint8 I2);
-	uint64 Assets(STACK uint64 s1, IMMEDIATE uint8 I2);
-	uint64 Applications(STACK uint64 s1, IMMEDIATE uint8 I2);
-	bytes Logs(STACK uint64 s1, IMMEDIATE uint8 I2);
-	bytes ApprovalProgramPages(STACK uint64 s1, IMMEDIATE uint8 I2);
-	bytes ClearStateProgramPages(STACK uint64 s1, IMMEDIATE uint8 I2);
+	bytes ApplicationArgs(STACK uint64 STACK_1, IMMEDIATE uint8 I2);
+	bytes Accounts(STACK uint64 STACK_1, IMMEDIATE uint8 I2);
+	uint64 Assets(STACK uint64 STACK_1, IMMEDIATE uint8 I2);
+	uint64 Applications(STACK uint64 STACK_1, IMMEDIATE uint8 I2);
+	bytes Logs(STACK uint64 STACK_1, IMMEDIATE uint8 I2);
+	bytes ApprovalProgramPages(STACK uint64 STACK_1, IMMEDIATE uint8 I2);
+	bytes ClearStateProgramPages(STACK uint64 STACK_1, IMMEDIATE uint8 I2);
 };
 extern avm_gtxnsa_t avm_gtxnsa;
 void avm_gload_op(IMMEDIATE uint8 T1, IMMEDIATE uint8 I2);
@@ -719,17 +719,17 @@ gaids - ID of the asset or application created in the Ath transaction of the cur
 
 `gaids` fails unless the requested transaction created an asset or application and A < GroupIndex.
 */
-uint64 avm_gaids(STACK uint64 s1);
+uint64 avm_gaids(STACK uint64 STACK_1);
 void avm_loads_op();
 /*
 loads - Ath scratch space value.  All scratch spaces are 0 at program start.
 */
-any avm_loads(STACK uint64 s1);
+any avm_loads(STACK uint64 STACK_1);
 void avm_stores_op();
 /*
 stores - store B to the Ath scratch space
 */
-void avm_stores(STACK uint64 s1, STACK any s2);
+void avm_stores(STACK uint64 STACK_1, STACK any STACK_2);
 void avm_bnz_op(IMMEDIATE int16 TARGET1);
 /*
 bnz - branch to TARGET if value A is not zero
@@ -766,12 +766,12 @@ void avm_return__op();
 /*
 return - use A as success value; end
 */
-void avm_return_(STACK uint64 s1);
+void avm_return_(STACK uint64 STACK_1);
 void avm_assert_op();
 /*
 assert - immediately fail unless A is a non-zero number
 */
-void avm_assert(STACK uint64 s1);
+void avm_assert(STACK uint64 STACK_1);
 void avm_bury_op(IMMEDIATE uint8 N1);
 /*
 bury - replace the Nth value from the top of the stack with A. bury 0 fails.
@@ -800,7 +800,7 @@ void avm_pop_op();
 /*
 pop - discard A
 */
-void avm_pop(STACK any s1);
+void avm_pop(STACK any STACK_1);
 void avm_dup_op();
 struct avm_dup_result_t
 {
@@ -810,7 +810,7 @@ struct avm_dup_result_t
 /*
 dup - duplicate A
 */
-avm_dup_result_t avm_dup(STACK any s1);
+avm_dup_result_t avm_dup(STACK any STACK_1);
 void avm_dup2_op();
 struct avm_dup2_result_t
 {
@@ -822,7 +822,7 @@ struct avm_dup2_result_t
 /*
 dup2 - duplicate A and B
 */
-avm_dup2_result_t avm_dup2(STACK any s1, STACK any s2);
+avm_dup2_result_t avm_dup2(STACK any STACK_1, STACK any STACK_2);
 void avm_dig_op(IMMEDIATE uint8 N1);
 struct avm_dig_result_t
 {
@@ -845,12 +845,12 @@ struct avm_swap_result_t
 /*
 swap - swaps A and B on stack
 */
-avm_swap_result_t avm_swap(STACK any s1, STACK any s2);
+avm_swap_result_t avm_swap(STACK any STACK_1, STACK any STACK_2);
 void avm_select_op();
 /*
 select - selects one of two values based on top-of-stack: B if C != 0, else A
 */
-any avm_select(STACK any s1, STACK any s2, STACK uint64 s3);
+any avm_select(STACK any STACK_1, STACK any STACK_2, STACK uint64 STACK_3);
 void avm_cover_op(IMMEDIATE uint8 N1);
 /*
 cover - remove top of stack, and place it deeper in the stack such that N elements are above it. Fails if stack depth <= N.
@@ -873,7 +873,7 @@ concat - join A and B
 
 `concat` fails if the result would be greater than 4096 bytes.
 */
-bytes avm_concat(STACK bytes s1, STACK bytes s2);
+bytes avm_concat(STACK bytes STACK_1, STACK bytes STACK_2);
 void avm_substring_op(IMMEDIATE uint8 S1, IMMEDIATE uint8 E2);
 /*
 substring - A range of bytes from A starting at S up to but not including E. If E < S, or either is larger than the array length, the program fails
@@ -886,31 +886,31 @@ void avm_substring3_op();
 /*
 substring3 - A range of bytes from A starting at B up to but not including C. If C < B, or either is larger than the array length, the program fails
 */
-bytes avm_substring3(STACK bytes s1, STACK uint64 s2, STACK uint64 s3);
+bytes avm_substring3(STACK bytes STACK_1, STACK uint64 STACK_2, STACK uint64 STACK_3);
 void avm_getbit_op();
 /*
 getbit - Bth bit of (byte-array or integer) A. If B is greater than or equal to the bit length of the value (8*byte length), the program fails
 
 see explanation of bit ordering in setbit
 */
-uint64 avm_getbit(STACK any s1, STACK uint64 s2);
+uint64 avm_getbit(STACK any STACK_1, STACK uint64 STACK_2);
 void avm_setbit_op();
 /*
 setbit - Copy of (byte-array or integer) A, with the Bth bit set to (0 or 1) C. If B is greater than or equal to the bit length of the value (8*byte length), the program fails
 
 When A is a uint64, index 0 is the least significant bit. Setting bit 3 to 1 on the integer 0 yields 8, or 2^3. When A is a byte array, index 0 is the leftmost bit of the leftmost byte. Setting bits 0 through 11 to 1 in a 4-byte-array of 0s yields the byte array 0xfff00000. Setting bit 3 to 1 on the 1-byte-array 0x00 yields the byte array 0x10.
 */
-any avm_setbit(STACK any s1, STACK uint64 s2, STACK uint64 s3);
+any avm_setbit(STACK any STACK_1, STACK uint64 STACK_2, STACK uint64 STACK_3);
 void avm_getbyte_op();
 /*
 getbyte - Bth byte of A, as an integer. If B is greater than or equal to the array length, the program fails
 */
-uint64 avm_getbyte(STACK bytes s1, STACK uint64 s2);
+uint64 avm_getbyte(STACK bytes STACK_1, STACK uint64 STACK_2);
 void avm_setbyte_op();
 /*
 setbyte - Copy of A with the Bth byte set to small integer (between 0..255) C. If B is greater than or equal to the array length, the program fails
 */
-bytes avm_setbyte(STACK bytes s1, STACK uint64 s2, STACK uint64 s3);
+bytes avm_setbyte(STACK bytes STACK_1, STACK uint64 STACK_2, STACK uint64 STACK_3);
 void avm_extract_op(IMMEDIATE uint8 S1, IMMEDIATE uint8 L2);
 /*
 extract - A range of bytes from A starting at S up to but not including S+L. If L is 0, then extract to the end of the string. If S or S+L is larger than the array length, the program fails
@@ -924,22 +924,22 @@ void avm_extract3_op();
 extract3 - A range of bytes from A starting at B up to but not including B+C. If B+C is larger than the array length, the program fails
 `extract3` can be called using `extract` with no immediates.
 */
-bytes avm_extract3(STACK bytes s1, STACK uint64 s2, STACK uint64 s3);
+bytes avm_extract3(STACK bytes STACK_1, STACK uint64 STACK_2, STACK uint64 STACK_3);
 void avm_extract_uint16_op();
 /*
 extract_uint16 - A uint16 formed from a range of big-endian bytes from A starting at B up to but not including B+2. If B+2 is larger than the array length, the program fails
 */
-uint64 avm_extract_uint16(STACK bytes s1, STACK uint64 s2);
+uint64 avm_extract_uint16(STACK bytes STACK_1, STACK uint64 STACK_2);
 void avm_extract_uint32_op();
 /*
 extract_uint32 - A uint32 formed from a range of big-endian bytes from A starting at B up to but not including B+4. If B+4 is larger than the array length, the program fails
 */
-uint64 avm_extract_uint32(STACK bytes s1, STACK uint64 s2);
+uint64 avm_extract_uint32(STACK bytes STACK_1, STACK uint64 STACK_2);
 void avm_extract_uint64_op();
 /*
 extract_uint64 - A uint64 formed from a range of big-endian bytes from A starting at B up to but not including B+8. If B+8 is larger than the array length, the program fails
 */
-uint64 avm_extract_uint64(STACK bytes s1, STACK uint64 s2);
+uint64 avm_extract_uint64(STACK bytes STACK_1, STACK uint64 STACK_2);
 void avm_replace2_op(IMMEDIATE uint8 S1);
 /*
 replace2 - Copy of A with the bytes starting at S replaced by the bytes of B. Fails if S+len(B) exceeds len(A)
@@ -954,7 +954,7 @@ void avm_replace3_op();
 replace3 - Copy of A with the bytes starting at B replaced by the bytes of C. Fails if B+len(C) exceeds len(A)
 `replace3` can be called using `replace` with no immediates.
 */
-bytes avm_replace3(STACK bytes s1, STACK uint64 s2, STACK bytes s3);
+bytes avm_replace3(STACK bytes STACK_1, STACK uint64 STACK_2, STACK bytes STACK_3);
 void avm_base64_decode_op(IMMEDIATE uint8 E1);
 /*
 base64_decode - decode A which was base64-encoded using _encoding_ E. Fail if A is not base64 encoded with encoding E
@@ -965,8 +965,8 @@ base64_decode - decode A which was base64-encoded using _encoding_ E. Fail if A 
 */
 struct avm_base64_decode_t
 {
-	any URLEncoding(STACK bytes s1);
-	any StdEncoding(STACK bytes s1);
+	any URLEncoding(STACK bytes STACK_1);
+	any StdEncoding(STACK bytes STACK_1);
 };
 extern avm_base64_decode_t avm_base64_decode;
 void avm_json_ref_op(IMMEDIATE uint8 R1);
@@ -979,9 +979,9 @@ Almost all smart contracts should use simpler and smaller methods (such as the [
 */
 struct avm_json_ref_t
 {
-	bytes JSONString(STACK bytes s1, STACK bytes s2);
-	uint64 JSONUint64(STACK bytes s1, STACK bytes s2);
-	bytes JSONObject(STACK bytes s1, STACK bytes s2);
+	bytes JSONString(STACK bytes STACK_1, STACK bytes STACK_2);
+	uint64 JSONUint64(STACK bytes STACK_1, STACK bytes STACK_2);
+	bytes JSONObject(STACK bytes STACK_1, STACK bytes STACK_2);
 };
 extern avm_json_ref_t avm_json_ref;
 void avm_balance_op();
@@ -990,21 +990,21 @@ balance - balance for account A, in microalgos. The balance is observed after th
 
 params: Txn.Accounts offset (or, since v4, an _available_ account address). Return: value.
 */
-uint64 avm_balance(STACK any s1);
+uint64 avm_balance(STACK any STACK_1);
 void avm_app_opted_in_op();
 /*
 app_opted_in - 1 if account A is opted in to application B, else 0
 
 params: Txn.Accounts offset (or, since v4, an _available_ account address), _available_ application id (or, since v4, a Txn.ForeignApps offset). Return: 1 if opted in and 0 otherwise.
 */
-uint64 avm_app_opted_in(STACK any s1, STACK uint64 s2);
+uint64 avm_app_opted_in(STACK any STACK_1, STACK uint64 STACK_2);
 void avm_app_local_get_op();
 /*
 app_local_get - local state of the key B in the current application in account A
 
 params: Txn.Accounts offset (or, since v4, an _available_ account address), state key. Return: value. The value is zero (of type uint64) if the key does not exist.
 */
-any avm_app_local_get(STACK any s1, STACK bytes s2);
+any avm_app_local_get(STACK any STACK_1, STACK bytes STACK_2);
 void avm_app_local_get_ex_op();
 struct avm_app_local_get_ex_result_t
 {
@@ -1016,14 +1016,14 @@ app_local_get_ex - X is the local state of application B, key C in account A. Y 
 
 params: Txn.Accounts offset (or, since v4, an _available_ account address), _available_ application id (or, since v4, a Txn.ForeignApps offset), state key. Return: did_exist flag (top of the stack, 1 if the application and key existed and 0 otherwise), value. The value is zero (of type uint64) if the key does not exist.
 */
-avm_app_local_get_ex_result_t avm_app_local_get_ex(STACK any s1, STACK uint64 s2, STACK bytes s3);
+avm_app_local_get_ex_result_t avm_app_local_get_ex(STACK any STACK_1, STACK uint64 STACK_2, STACK bytes STACK_3);
 void avm_app_global_get_op();
 /*
 app_global_get - global state of the key A in the current application
 
 params: state key. Return: value. The value is zero (of type uint64) if the key does not exist.
 */
-any avm_app_global_get(STACK bytes s1);
+any avm_app_global_get(STACK bytes STACK_1);
 void avm_app_global_get_ex_op();
 struct avm_app_global_get_ex_result_t
 {
@@ -1035,19 +1035,19 @@ app_global_get_ex - X is the global state of application A, key B. Y is 1 if key
 
 params: Txn.ForeignApps offset (or, since v4, an _available_ application id), state key. Return: did_exist flag (top of the stack, 1 if the application and key existed and 0 otherwise), value. The value is zero (of type uint64) if the key does not exist.
 */
-avm_app_global_get_ex_result_t avm_app_global_get_ex(STACK uint64 s1, STACK bytes s2);
+avm_app_global_get_ex_result_t avm_app_global_get_ex(STACK uint64 STACK_1, STACK bytes STACK_2);
 void avm_app_local_put_op();
 /*
 app_local_put - write C to key B in account A's local state of the current application
 
 params: Txn.Accounts offset (or, since v4, an _available_ account address), state key, value.
 */
-void avm_app_local_put(STACK any s1, STACK bytes s2, STACK any s3);
+void avm_app_local_put(STACK any STACK_1, STACK bytes STACK_2, STACK any STACK_3);
 void avm_app_global_put_op();
 /*
 app_global_put - write B to key A in the global state of the current application
 */
-void avm_app_global_put(STACK bytes s1, STACK any s2);
+void avm_app_global_put(STACK bytes STACK_1, STACK any STACK_2);
 void avm_app_local_del_op();
 /*
 app_local_del - delete key B from account A's local state of the current application
@@ -1056,7 +1056,7 @@ params: Txn.Accounts offset (or, since v4, an _available_ account address), stat
 
 Deleting a key which is already absent has no effect on the application local state. (In particular, it does _not_ cause the program to fail.)
 */
-void avm_app_local_del(STACK any s1, STACK bytes s2);
+void avm_app_local_del(STACK any STACK_1, STACK bytes STACK_2);
 void avm_app_global_del_op();
 /*
 app_global_del - delete key A from the global state of the current application
@@ -1065,7 +1065,7 @@ params: state key.
 
 Deleting a key which is already absent has no effect on the application global state. (In particular, it does _not_ cause the program to fail.)
 */
-void avm_app_global_del(STACK bytes s1);
+void avm_app_global_del(STACK bytes STACK_1);
 void avm_asset_holding_get_op(IMMEDIATE uint8 F1);
 struct avm_asset_holding_get_result_t
 {
@@ -1079,8 +1079,8 @@ params: Txn.Accounts offset (or, since v4, an _available_ address), asset id (or
 */
 struct avm_asset_holding_get_t
 {
-	uint64 AssetBalance(STACK any s1, STACK uint64 s2);
-	uint64 AssetFrozen(STACK any s1, STACK uint64 s2);
+	uint64 AssetBalance(STACK any STACK_1, STACK uint64 STACK_2);
+	uint64 AssetFrozen(STACK any STACK_1, STACK uint64 STACK_2);
 };
 extern avm_asset_holding_get_t avm_asset_holding_get;
 void avm_asset_params_get_op(IMMEDIATE uint8 F1);
@@ -1096,18 +1096,18 @@ params: Txn.ForeignAssets offset (or, since v4, an _available_ asset id. Return:
 */
 struct avm_asset_params_get_t
 {
-	uint64 AssetTotal(STACK uint64 s1);
-	uint64 AssetDecimals(STACK uint64 s1);
-	uint64 AssetDefaultFrozen(STACK uint64 s1);
-	bytes AssetUnitName(STACK uint64 s1);
-	bytes AssetName(STACK uint64 s1);
-	bytes AssetURL(STACK uint64 s1);
-	bytes AssetMetadataHash(STACK uint64 s1);
-	bytes AssetManager(STACK uint64 s1);
-	bytes AssetReserve(STACK uint64 s1);
-	bytes AssetFreeze(STACK uint64 s1);
-	bytes AssetClawback(STACK uint64 s1);
-	bytes AssetCreator(STACK uint64 s1);
+	uint64 AssetTotal(STACK uint64 STACK_1);
+	uint64 AssetDecimals(STACK uint64 STACK_1);
+	uint64 AssetDefaultFrozen(STACK uint64 STACK_1);
+	bytes AssetUnitName(STACK uint64 STACK_1);
+	bytes AssetName(STACK uint64 STACK_1);
+	bytes AssetURL(STACK uint64 STACK_1);
+	bytes AssetMetadataHash(STACK uint64 STACK_1);
+	bytes AssetManager(STACK uint64 STACK_1);
+	bytes AssetReserve(STACK uint64 STACK_1);
+	bytes AssetFreeze(STACK uint64 STACK_1);
+	bytes AssetClawback(STACK uint64 STACK_1);
+	bytes AssetCreator(STACK uint64 STACK_1);
 };
 extern avm_asset_params_get_t avm_asset_params_get;
 void avm_app_params_get_op(IMMEDIATE uint8 F1);
@@ -1123,15 +1123,15 @@ params: Txn.ForeignApps offset or an _available_ app id. Return: did_exist flag 
 */
 struct avm_app_params_get_t
 {
-	bytes AppApprovalProgram(STACK uint64 s1);
-	bytes AppClearStateProgram(STACK uint64 s1);
-	uint64 AppGlobalNumUint(STACK uint64 s1);
-	uint64 AppGlobalNumByteSlice(STACK uint64 s1);
-	uint64 AppLocalNumUint(STACK uint64 s1);
-	uint64 AppLocalNumByteSlice(STACK uint64 s1);
-	uint64 AppExtraProgramPages(STACK uint64 s1);
-	bytes AppCreator(STACK uint64 s1);
-	bytes AppAddress(STACK uint64 s1);
+	bytes AppApprovalProgram(STACK uint64 STACK_1);
+	bytes AppClearStateProgram(STACK uint64 STACK_1);
+	uint64 AppGlobalNumUint(STACK uint64 STACK_1);
+	uint64 AppGlobalNumByteSlice(STACK uint64 STACK_1);
+	uint64 AppLocalNumUint(STACK uint64 STACK_1);
+	uint64 AppLocalNumByteSlice(STACK uint64 STACK_1);
+	uint64 AppExtraProgramPages(STACK uint64 STACK_1);
+	bytes AppCreator(STACK uint64 STACK_1);
+	bytes AppAddress(STACK uint64 STACK_1);
 };
 extern avm_app_params_get_t avm_app_params_get;
 void avm_acct_params_get_op(IMMEDIATE uint8 F1);
@@ -1145,18 +1145,18 @@ acct_params_get - X is field F from account A. Y is 1 if A owns positive algos, 
 */
 struct avm_acct_params_get_t
 {
-	uint64 AcctBalance(STACK any s1);
-	uint64 AcctMinBalance(STACK any s1);
-	bytes AcctAuthAddr(STACK any s1);
-	uint64 AcctTotalNumUint(STACK any s1);
-	uint64 AcctTotalNumByteSlice(STACK any s1);
-	uint64 AcctTotalExtraAppPages(STACK any s1);
-	uint64 AcctTotalAppsCreated(STACK any s1);
-	uint64 AcctTotalAppsOptedIn(STACK any s1);
-	uint64 AcctTotalAssetsCreated(STACK any s1);
-	uint64 AcctTotalAssets(STACK any s1);
-	uint64 AcctTotalBoxes(STACK any s1);
-	uint64 AcctTotalBoxBytes(STACK any s1);
+	uint64 AcctBalance(STACK any STACK_1);
+	uint64 AcctMinBalance(STACK any STACK_1);
+	bytes AcctAuthAddr(STACK any STACK_1);
+	uint64 AcctTotalNumUint(STACK any STACK_1);
+	uint64 AcctTotalNumByteSlice(STACK any STACK_1);
+	uint64 AcctTotalExtraAppPages(STACK any STACK_1);
+	uint64 AcctTotalAppsCreated(STACK any STACK_1);
+	uint64 AcctTotalAppsOptedIn(STACK any STACK_1);
+	uint64 AcctTotalAssetsCreated(STACK any STACK_1);
+	uint64 AcctTotalAssets(STACK any STACK_1);
+	uint64 AcctTotalBoxes(STACK any STACK_1);
+	uint64 AcctTotalBoxBytes(STACK any STACK_1);
 };
 extern avm_acct_params_get_t avm_acct_params_get;
 void avm_min_balance_op();
@@ -1165,7 +1165,7 @@ min_balance - minimum required balance for account A, in microalgos. Required ba
 
 params: Txn.Accounts offset (or, since v4, an _available_ account address). Return: value.
 */
-uint64 avm_min_balance(STACK any s1);
+uint64 avm_min_balance(STACK any STACK_1);
 void avm_pushbytes_op(IMMEDIATE bytes BYTES1);
 /*
 pushbytes - immediate BYTES
@@ -1210,7 +1210,7 @@ void avm_ed25519verify_bare_op();
 /*
 ed25519verify_bare - for (data A, signature B, pubkey C) verify the signature of the data against the pubkey => {0 or 1}
 */
-uint64 avm_ed25519verify_bare(STACK bytes s1, STACK bytes s2, STACK bytes s3);
+uint64 avm_ed25519verify_bare(STACK bytes STACK_1, STACK bytes STACK_2, STACK bytes STACK_3);
 void avm_callsub_op(IMMEDIATE int16 TARGET1);
 /*
 callsub - branch unconditionally to TARGET, saving the next instruction on the call stack
@@ -1276,29 +1276,29 @@ void avm_shl_op();
 /*
 shl - A times 2^B, modulo 2^64
 */
-uint64 avm_shl(STACK uint64 s1, STACK uint64 s2);
+uint64 avm_shl(STACK uint64 STACK_1, STACK uint64 STACK_2);
 void avm_shr_op();
 /*
 shr - A divided by 2^B
 */
-uint64 avm_shr(STACK uint64 s1, STACK uint64 s2);
+uint64 avm_shr(STACK uint64 STACK_1, STACK uint64 STACK_2);
 void avm_sqrt_op();
 /*
 sqrt - The largest integer I such that I^2 <= A
 */
-uint64 avm_sqrt(STACK uint64 s1);
+uint64 avm_sqrt(STACK uint64 STACK_1);
 void avm_bitlen_op();
 /*
 bitlen - The highest set bit in A. If A is a byte-array, it is interpreted as a big-endian unsigned integer. bitlen of 0 is 0, bitlen of 8 is 4
 
 bitlen interprets arrays as big-endian integers, unlike setbit/getbit
 */
-uint64 avm_bitlen(STACK any s1);
+uint64 avm_bitlen(STACK any STACK_1);
 void avm_exp_op();
 /*
 exp - A raised to the Bth power. Fail if A == B == 0 and on overflow
 */
-uint64 avm_exp(STACK uint64 s1, STACK uint64 s2);
+uint64 avm_exp(STACK uint64 STACK_1, STACK uint64 STACK_2);
 void avm_expw_op();
 struct avm_expw_result_t
 {
@@ -1308,111 +1308,111 @@ struct avm_expw_result_t
 /*
 expw - A raised to the Bth power as a 128-bit result in two uint64s. X is the high 64 bits, Y is the low. Fail if A == B == 0 or if the results exceeds 2^128-1
 */
-avm_expw_result_t avm_expw(STACK uint64 s1, STACK uint64 s2);
+avm_expw_result_t avm_expw(STACK uint64 STACK_1, STACK uint64 STACK_2);
 void avm_bsqrt_op();
 /*
 bsqrt - The largest integer I such that I^2 <= A. A and I are interpreted as big-endian unsigned integers
 */
-bytes avm_bsqrt(STACK bytes s1);
+bytes avm_bsqrt(STACK bytes STACK_1);
 void avm_divw_op();
 /*
 divw - A,B / C. Fail if C == 0 or if result overflows.
 
 The notation A,B indicates that A and B are interpreted as a uint128 value, with A as the high uint64 and B the low.
 */
-uint64 avm_divw(STACK uint64 s1, STACK uint64 s2, STACK uint64 s3);
+uint64 avm_divw(STACK uint64 STACK_1, STACK uint64 STACK_2, STACK uint64 STACK_3);
 void avm_sha3_256_op();
 /*
 sha3_256 - SHA3_256 hash of value A, yields [32]byte
 */
-bytes avm_sha3_256(STACK bytes s1);
+bytes avm_sha3_256(STACK bytes STACK_1);
 void avm_bplus_op();
 /*
 b+ - A plus B. A and B are interpreted as big-endian unsigned integers
 */
-bytes avm_bplus(STACK bytes s1, STACK bytes s2);
+bytes avm_bplus(STACK bytes STACK_1, STACK bytes STACK_2);
 void avm_bminus_op();
 /*
 b- - A minus B. A and B are interpreted as big-endian unsigned integers. Fail on underflow.
 */
-bytes avm_bminus(STACK bytes s1, STACK bytes s2);
+bytes avm_bminus(STACK bytes STACK_1, STACK bytes STACK_2);
 void avm_bdiv_op();
 /*
 b/ - A divided by B (truncated division). A and B are interpreted as big-endian unsigned integers. Fail if B is zero.
 */
-bytes avm_bdiv(STACK bytes s1, STACK bytes s2);
+bytes avm_bdiv(STACK bytes STACK_1, STACK bytes STACK_2);
 void avm_bmul_op();
 /*
 b* - A times B. A and B are interpreted as big-endian unsigned integers.
 */
-bytes avm_bmul(STACK bytes s1, STACK bytes s2);
+bytes avm_bmul(STACK bytes STACK_1, STACK bytes STACK_2);
 void avm_blt_op();
 /*
 b< - 1 if A is less than B, else 0. A and B are interpreted as big-endian unsigned integers
 */
-uint64 avm_blt(STACK bytes s1, STACK bytes s2);
+uint64 avm_blt(STACK bytes STACK_1, STACK bytes STACK_2);
 void avm_bgt_op();
 /*
 b> - 1 if A is greater than B, else 0. A and B are interpreted as big-endian unsigned integers
 */
-uint64 avm_bgt(STACK bytes s1, STACK bytes s2);
+uint64 avm_bgt(STACK bytes STACK_1, STACK bytes STACK_2);
 void avm_blteq_op();
 /*
 b<= - 1 if A is less than or equal to B, else 0. A and B are interpreted as big-endian unsigned integers
 */
-uint64 avm_blteq(STACK bytes s1, STACK bytes s2);
+uint64 avm_blteq(STACK bytes STACK_1, STACK bytes STACK_2);
 void avm_bgteq_op();
 /*
 b>= - 1 if A is greater than or equal to B, else 0. A and B are interpreted as big-endian unsigned integers
 */
-uint64 avm_bgteq(STACK bytes s1, STACK bytes s2);
+uint64 avm_bgteq(STACK bytes STACK_1, STACK bytes STACK_2);
 void avm_beqeq_op();
 /*
 b== - 1 if A is equal to B, else 0. A and B are interpreted as big-endian unsigned integers
 */
-uint64 avm_beqeq(STACK bytes s1, STACK bytes s2);
+uint64 avm_beqeq(STACK bytes STACK_1, STACK bytes STACK_2);
 void avm_bnoteq_op();
 /*
 b!= - 0 if A is equal to B, else 1. A and B are interpreted as big-endian unsigned integers
 */
-uint64 avm_bnoteq(STACK bytes s1, STACK bytes s2);
+uint64 avm_bnoteq(STACK bytes STACK_1, STACK bytes STACK_2);
 void avm_bmod_op();
 /*
 b% - A modulo B. A and B are interpreted as big-endian unsigned integers. Fail if B is zero.
 */
-bytes avm_bmod(STACK bytes s1, STACK bytes s2);
+bytes avm_bmod(STACK bytes STACK_1, STACK bytes STACK_2);
 void avm_bor_op();
 /*
 b| - A bitwise-or B. A and B are zero-left extended to the greater of their lengths
 */
-bytes avm_bor(STACK bytes s1, STACK bytes s2);
+bytes avm_bor(STACK bytes STACK_1, STACK bytes STACK_2);
 void avm_band_op();
 /*
 b& - A bitwise-and B. A and B are zero-left extended to the greater of their lengths
 */
-bytes avm_band(STACK bytes s1, STACK bytes s2);
+bytes avm_band(STACK bytes STACK_1, STACK bytes STACK_2);
 void avm_bxor_op();
 /*
 b^ - A bitwise-xor B. A and B are zero-left extended to the greater of their lengths
 */
-bytes avm_bxor(STACK bytes s1, STACK bytes s2);
+bytes avm_bxor(STACK bytes STACK_1, STACK bytes STACK_2);
 void avm_binv_op();
 /*
 b~ - A with all bits inverted
 */
-bytes avm_binv(STACK bytes s1);
+bytes avm_binv(STACK bytes STACK_1);
 void avm_bzero_op();
 /*
 bzero - zero filled byte-array of length A
 */
-bytes avm_bzero(STACK uint64 s1);
+bytes avm_bzero(STACK uint64 STACK_1);
 void avm_log_op();
 /*
 log - write A to log state of the current application
 
 `log` fails if called more than MaxLogCalls times in a program, or if the sum of logged bytes exceeds 1024 bytes.
 */
-void avm_log(STACK bytes s1);
+void avm_log(STACK bytes STACK_1);
 void avm_itxn_begin_op();
 /*
 itxn_begin - begin preparation of a new inner transaction in a new transaction group
@@ -1428,57 +1428,57 @@ itxn_field - set field F of the current inner transaction to A
 */
 struct avm_itxn_field_t
 {
-	void Sender(STACK any s1);
-	void Fee(STACK any s1);
-	void Note(STACK any s1);
-	void Receiver(STACK any s1);
-	void Amount(STACK any s1);
-	void CloseRemainderTo(STACK any s1);
-	void VotePK(STACK any s1);
-	void SelectionPK(STACK any s1);
-	void VoteFirst(STACK any s1);
-	void VoteLast(STACK any s1);
-	void VoteKeyDilution(STACK any s1);
-	void Type(STACK any s1);
-	void TypeEnum(STACK any s1);
-	void XferAsset(STACK any s1);
-	void AssetAmount(STACK any s1);
-	void AssetSender(STACK any s1);
-	void AssetReceiver(STACK any s1);
-	void AssetCloseTo(STACK any s1);
-	void ApplicationID(STACK any s1);
-	void OnCompletion(STACK any s1);
-	void ApplicationArgs(STACK any s1);
-	void Accounts(STACK any s1);
-	void ApprovalProgram(STACK any s1);
-	void ClearStateProgram(STACK any s1);
-	void RekeyTo(STACK any s1);
-	void ConfigAsset(STACK any s1);
-	void ConfigAssetTotal(STACK any s1);
-	void ConfigAssetDecimals(STACK any s1);
-	void ConfigAssetDefaultFrozen(STACK any s1);
-	void ConfigAssetUnitName(STACK any s1);
-	void ConfigAssetName(STACK any s1);
-	void ConfigAssetURL(STACK any s1);
-	void ConfigAssetMetadataHash(STACK any s1);
-	void ConfigAssetManager(STACK any s1);
-	void ConfigAssetReserve(STACK any s1);
-	void ConfigAssetFreeze(STACK any s1);
-	void ConfigAssetClawback(STACK any s1);
-	void FreezeAsset(STACK any s1);
-	void FreezeAssetAccount(STACK any s1);
-	void FreezeAssetFrozen(STACK any s1);
-	void Assets(STACK any s1);
-	void Applications(STACK any s1);
-	void GlobalNumUint(STACK any s1);
-	void GlobalNumByteSlice(STACK any s1);
-	void LocalNumUint(STACK any s1);
-	void LocalNumByteSlice(STACK any s1);
-	void ExtraProgramPages(STACK any s1);
-	void Nonparticipation(STACK any s1);
-	void StateProofPK(STACK any s1);
-	void ApprovalProgramPages(STACK any s1);
-	void ClearStateProgramPages(STACK any s1);
+	void Sender(STACK any STACK_1);
+	void Fee(STACK any STACK_1);
+	void Note(STACK any STACK_1);
+	void Receiver(STACK any STACK_1);
+	void Amount(STACK any STACK_1);
+	void CloseRemainderTo(STACK any STACK_1);
+	void VotePK(STACK any STACK_1);
+	void SelectionPK(STACK any STACK_1);
+	void VoteFirst(STACK any STACK_1);
+	void VoteLast(STACK any STACK_1);
+	void VoteKeyDilution(STACK any STACK_1);
+	void Type(STACK any STACK_1);
+	void TypeEnum(STACK any STACK_1);
+	void XferAsset(STACK any STACK_1);
+	void AssetAmount(STACK any STACK_1);
+	void AssetSender(STACK any STACK_1);
+	void AssetReceiver(STACK any STACK_1);
+	void AssetCloseTo(STACK any STACK_1);
+	void ApplicationID(STACK any STACK_1);
+	void OnCompletion(STACK any STACK_1);
+	void ApplicationArgs(STACK any STACK_1);
+	void Accounts(STACK any STACK_1);
+	void ApprovalProgram(STACK any STACK_1);
+	void ClearStateProgram(STACK any STACK_1);
+	void RekeyTo(STACK any STACK_1);
+	void ConfigAsset(STACK any STACK_1);
+	void ConfigAssetTotal(STACK any STACK_1);
+	void ConfigAssetDecimals(STACK any STACK_1);
+	void ConfigAssetDefaultFrozen(STACK any STACK_1);
+	void ConfigAssetUnitName(STACK any STACK_1);
+	void ConfigAssetName(STACK any STACK_1);
+	void ConfigAssetURL(STACK any STACK_1);
+	void ConfigAssetMetadataHash(STACK any STACK_1);
+	void ConfigAssetManager(STACK any STACK_1);
+	void ConfigAssetReserve(STACK any STACK_1);
+	void ConfigAssetFreeze(STACK any STACK_1);
+	void ConfigAssetClawback(STACK any STACK_1);
+	void FreezeAsset(STACK any STACK_1);
+	void FreezeAssetAccount(STACK any STACK_1);
+	void FreezeAssetFrozen(STACK any STACK_1);
+	void Assets(STACK any STACK_1);
+	void Applications(STACK any STACK_1);
+	void GlobalNumUint(STACK any STACK_1);
+	void GlobalNumByteSlice(STACK any STACK_1);
+	void LocalNumUint(STACK any STACK_1);
+	void LocalNumByteSlice(STACK any STACK_1);
+	void ExtraProgramPages(STACK any STACK_1);
+	void Nonparticipation(STACK any STACK_1);
+	void StateProofPK(STACK any STACK_1);
+	void ApprovalProgramPages(STACK any STACK_1);
+	void ClearStateProgramPages(STACK any STACK_1);
 };
 extern avm_itxn_field_t avm_itxn_field;
 void avm_itxn_submit_op();
@@ -1683,22 +1683,22 @@ box_create - create a box named A, of length B. Fail if A is empty or B exceeds 
 
 Newly created boxes are filled with 0 bytes. `box_create` will fail if the referenced box already exists with a different size. Otherwise, existing boxes are unchanged by `box_create`.
 */
-uint64 avm_box_create(STACK bytes s1, STACK uint64 s2);
+uint64 avm_box_create(STACK bytes STACK_1, STACK uint64 STACK_2);
 void avm_box_extract_op();
 /*
 box_extract - read C bytes from box A, starting at offset B. Fail if A does not exist, or the byte range is outside A's size.
 */
-bytes avm_box_extract(STACK bytes s1, STACK uint64 s2, STACK uint64 s3);
+bytes avm_box_extract(STACK bytes STACK_1, STACK uint64 STACK_2, STACK uint64 STACK_3);
 void avm_box_replace_op();
 /*
 box_replace - write byte-array C into box A, starting at offset B. Fail if A does not exist, or the byte range is outside A's size.
 */
-void avm_box_replace(STACK bytes s1, STACK uint64 s2, STACK bytes s3);
+void avm_box_replace(STACK bytes STACK_1, STACK uint64 STACK_2, STACK bytes STACK_3);
 void avm_box_del_op();
 /*
 box_del - delete box named A if it exists. Return 1 if A existed, 0 otherwise
 */
-uint64 avm_box_del(STACK bytes s1);
+uint64 avm_box_del(STACK bytes STACK_1);
 void avm_box_len_op();
 struct avm_box_len_result_t
 {
@@ -1708,7 +1708,7 @@ struct avm_box_len_result_t
 /*
 box_len - X is the length of box A if A exists, else 0. Y is 1 if A exists, else 0.
 */
-avm_box_len_result_t avm_box_len(STACK bytes s1);
+avm_box_len_result_t avm_box_len(STACK bytes STACK_1);
 void avm_box_get_op();
 struct avm_box_get_result_t
 {
@@ -1720,27 +1720,27 @@ box_get - X is the contents of box A if A exists, else ''. Y is 1 if A exists, e
 
 For boxes that exceed 4,096 bytes, consider `box_create`, `box_extract`, and `box_replace`
 */
-avm_box_get_result_t avm_box_get(STACK bytes s1);
+avm_box_get_result_t avm_box_get(STACK bytes STACK_1);
 void avm_box_put_op();
 /*
 box_put - replaces the contents of box A with byte-array B. Fails if A exists and len(B) != len(box A). Creates A if it does not exist
 
 For boxes that exceed 4,096 bytes, consider `box_create`, `box_extract`, and `box_replace`
 */
-void avm_box_put(STACK bytes s1, STACK bytes s2);
+void avm_box_put(STACK bytes STACK_1, STACK bytes STACK_2);
 void avm_txnas_op(IMMEDIATE uint8 F1);
 /*
 txnas - Ath value of the array field F of the current transaction
 */
 struct avm_txnas_t
 {
-	bytes ApplicationArgs(STACK uint64 s1);
-	bytes Accounts(STACK uint64 s1);
-	uint64 Assets(STACK uint64 s1);
-	uint64 Applications(STACK uint64 s1);
-	bytes Logs(STACK uint64 s1);
-	bytes ApprovalProgramPages(STACK uint64 s1);
-	bytes ClearStateProgramPages(STACK uint64 s1);
+	bytes ApplicationArgs(STACK uint64 STACK_1);
+	bytes Accounts(STACK uint64 STACK_1);
+	uint64 Assets(STACK uint64 STACK_1);
+	uint64 Applications(STACK uint64 STACK_1);
+	bytes Logs(STACK uint64 STACK_1);
+	bytes ApprovalProgramPages(STACK uint64 STACK_1);
+	bytes ClearStateProgramPages(STACK uint64 STACK_1);
 };
 extern avm_txnas_t avm_txnas;
 void avm_gtxnas_op(IMMEDIATE uint8 T1, IMMEDIATE uint8 F2);
@@ -1749,13 +1749,13 @@ gtxnas - Ath value of the array field F from the Tth transaction in the current 
 */
 struct avm_gtxnas_t
 {
-	bytes ApplicationArgs(STACK uint64 s1, IMMEDIATE uint8 F2);
-	bytes Accounts(STACK uint64 s1, IMMEDIATE uint8 F2);
-	uint64 Assets(STACK uint64 s1, IMMEDIATE uint8 F2);
-	uint64 Applications(STACK uint64 s1, IMMEDIATE uint8 F2);
-	bytes Logs(STACK uint64 s1, IMMEDIATE uint8 F2);
-	bytes ApprovalProgramPages(STACK uint64 s1, IMMEDIATE uint8 F2);
-	bytes ClearStateProgramPages(STACK uint64 s1, IMMEDIATE uint8 F2);
+	bytes ApplicationArgs(STACK uint64 STACK_1, IMMEDIATE uint8 F2);
+	bytes Accounts(STACK uint64 STACK_1, IMMEDIATE uint8 F2);
+	uint64 Assets(STACK uint64 STACK_1, IMMEDIATE uint8 F2);
+	uint64 Applications(STACK uint64 STACK_1, IMMEDIATE uint8 F2);
+	bytes Logs(STACK uint64 STACK_1, IMMEDIATE uint8 F2);
+	bytes ApprovalProgramPages(STACK uint64 STACK_1, IMMEDIATE uint8 F2);
+	bytes ClearStateProgramPages(STACK uint64 STACK_1, IMMEDIATE uint8 F2);
 };
 extern avm_gtxnas_t avm_gtxnas;
 void avm_gtxnsas_op(IMMEDIATE uint8 F1);
@@ -1764,25 +1764,25 @@ gtxnsas - Bth value of the array field F from the Ath transaction in the current
 */
 struct avm_gtxnsas_t
 {
-	bytes ApplicationArgs(STACK uint64 s1, STACK uint64 s2);
-	bytes Accounts(STACK uint64 s1, STACK uint64 s2);
-	uint64 Assets(STACK uint64 s1, STACK uint64 s2);
-	uint64 Applications(STACK uint64 s1, STACK uint64 s2);
-	bytes Logs(STACK uint64 s1, STACK uint64 s2);
-	bytes ApprovalProgramPages(STACK uint64 s1, STACK uint64 s2);
-	bytes ClearStateProgramPages(STACK uint64 s1, STACK uint64 s2);
+	bytes ApplicationArgs(STACK uint64 STACK_1, STACK uint64 STACK_2);
+	bytes Accounts(STACK uint64 STACK_1, STACK uint64 STACK_2);
+	uint64 Assets(STACK uint64 STACK_1, STACK uint64 STACK_2);
+	uint64 Applications(STACK uint64 STACK_1, STACK uint64 STACK_2);
+	bytes Logs(STACK uint64 STACK_1, STACK uint64 STACK_2);
+	bytes ApprovalProgramPages(STACK uint64 STACK_1, STACK uint64 STACK_2);
+	bytes ClearStateProgramPages(STACK uint64 STACK_1, STACK uint64 STACK_2);
 };
 extern avm_gtxnsas_t avm_gtxnsas;
 void avm_args_op();
 /*
 args - Ath LogicSig argument
 */
-bytes avm_args(STACK uint64 s1);
+bytes avm_args(STACK uint64 STACK_1);
 void avm_gloadss_op();
 /*
 gloadss - Bth scratch space value of the Ath transaction in the current group
 */
-any avm_gloadss(STACK uint64 s1, STACK uint64 s2);
+any avm_gloadss(STACK uint64 STACK_1, STACK uint64 STACK_2);
 void avm_itxnas_op(IMMEDIATE uint8 F1);
 /*
 itxnas - Ath value of the array field F of the last inner transaction
@@ -1812,7 +1812,7 @@ vrf_verify - Verify the proof B of message A against pubkey C. Returns vrf outpu
 */
 struct avm_vrf_verify_t
 {
-	void VrfAlgorand(STACK bytes s1, STACK bytes s2, STACK bytes s3);
+	void VrfAlgorand(STACK bytes STACK_1, STACK bytes STACK_2, STACK bytes STACK_3);
 };
 extern avm_vrf_verify_t avm_vrf_verify;
 void avm_block_op(IMMEDIATE uint8 F1);
@@ -1821,7 +1821,7 @@ block - field F of block A. Fail unless A falls between txn.LastValid-1002 and t
 */
 struct avm_block_t
 {
-	bytes BlkSeed(STACK uint64 s1);
-	uint64 BlkTimestamp(STACK uint64 s1);
+	bytes BlkSeed(STACK uint64 STACK_1);
+	uint64 BlkTimestamp(STACK uint64 STACK_1);
 };
 extern avm_block_t avm_block;

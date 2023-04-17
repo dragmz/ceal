@@ -2,6 +2,7 @@ package compiler
 
 import (
 	"ceal/parser"
+	"ceal/teal"
 	"fmt"
 	"os"
 	"path"
@@ -26,7 +27,7 @@ type BuiltinFunction struct {
 
 type CompilerFunction struct {
 	parameters []*FunctionParam
-	handler    func(args []CealStatement) TealAst
+	handler    func(args []CealStatement) teal.TealAst
 }
 
 type Function struct {
@@ -356,7 +357,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 			t:       "bytes",
 			returns: 1,
 			compiler: &CompilerFunction{
-				handler: func(args []CealStatement) TealAst {
+				handler: func(args []CealStatement) teal.TealAst {
 					v, ok := args[0].(*CealVariable)
 					if !ok {
 						panic("abi_encode data argument expects a variable")
@@ -400,7 +401,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 		f := &Function{
 			name: "abi_decode",
 			compiler: &CompilerFunction{
-				handler: func(args []CealStatement) TealAst {
+				handler: func(args []CealStatement) teal.TealAst {
 					v1, ok := args[0].(*CealVariable)
 					if !ok {
 						panic("abi_decode data argument expects a variable")

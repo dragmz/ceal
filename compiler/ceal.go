@@ -1,12 +1,13 @@
 package compiler
 
 import (
+	"ceal/teal"
 	"fmt"
 	"strings"
 )
 
 type CealStatement interface {
-	TealAst() TealAst
+	TealAst() teal.TealAst
 }
 
 type CealProgram struct {
@@ -27,10 +28,10 @@ func (a *CealProgram) registerFunction(f *CealFunction) {
 
 }
 
-func (a *CealProgram) TealAst() TealAst {
-	res := &TealAstBuilder{}
+func (a *CealProgram) TealAst() teal.TealAst {
+	res := &teal.TealAstBuilder{}
 
-	res.Write(&Teal_pragma_version{Version: AvmVersion})
+	res.Write(&teal.Teal_pragma_version{Version: AvmVersion})
 
 	if len(a.ConstInts) > 0 {
 		items := []uint64{}
@@ -38,17 +39,17 @@ func (a *CealProgram) TealAst() TealAst {
 			items = append(items, uint64(v))
 		}
 
-		res.Write(&Teal_intcblock_fixed{UINT1: items})
+		res.Write(&teal.Teal_intcblock_fixed{UINT1: items})
 	}
 
 	if len(a.ConstBytes) > 0 {
-		res.Write(&Teal_bytecblock_fixed{BYTES1: a.ConstBytes})
+		res.Write(&teal.Teal_bytecblock_fixed{BYTES1: a.ConstBytes})
 	}
 
 	main := a.Functions[AvmMainName]
 
 	if len(a.Functions) > 1 {
-		res.Write(&Teal_b_fixed{TARGET1: main.Fun.name})
+		res.Write(&teal.Teal_b_fixed{TARGET1: main.Fun.name})
 	}
 
 	for _, name := range a.FunctionNames {
@@ -58,12 +59,12 @@ func (a *CealProgram) TealAst() TealAst {
 			continue
 		}
 
-		res.Write(&Teal_label{Name: ast.Fun.name})
+		res.Write(&teal.Teal_label{Name: ast.Fun.name})
 		res.Write(ast.TealAst())
 	}
 
 	if len(a.Functions) > 1 {
-		res.Write(&Teal_label{Name: main.Fun.name})
+		res.Write(&teal.Teal_label{Name: main.Fun.name})
 	}
 
 	res.Write(main.TealAst())
@@ -76,8 +77,8 @@ type CealContinue struct {
 	Index int
 }
 
-func (a *CealContinue) TealAst() TealAst {
-	return &Teal_b_fixed{TARGET1: fmt.Sprintf("%s_%d_continue", a.Label, a.Index)}
+func (a *CealContinue) TealAst() teal.TealAst {
+	return &teal.Teal_b_fixed{TARGET1: fmt.Sprintf("%s_%d_continue", a.Label, a.Index)}
 }
 
 type CealBreak struct {
@@ -85,8 +86,8 @@ type CealBreak struct {
 	Index int
 }
 
-func (a *CealBreak) TealAst() TealAst {
-	return &Teal_b_fixed{TARGET1: fmt.Sprintf("%s_%d_end", a.Label, a.Index)}
+func (a *CealBreak) TealAst() teal.TealAst {
+	return &teal.Teal_b_fixed{TARGET1: fmt.Sprintf("%s_%d_end", a.Label, a.Index)}
 }
 
 type CealSwitchCase struct {
@@ -104,8 +105,8 @@ type CealSwitch struct {
 	Default []CealStatement
 }
 
-func (a *CealSwitch) TealAst() TealAst {
-	res := &TealAstBuilder{}
+func (a *CealSwitch) TealAst() teal.TealAst {
+	res := &teal.TealAstBuilder{}
 
 	labels := []string{}
 
@@ -117,7 +118,7 @@ func (a *CealSwitch) TealAst() TealAst {
 	}
 
 	res.Write(a.Value.TealAst())
-	res.Write(&Teal_match_fixed{TARGET1: labels})
+	res.Write(&teal.Teal_match_fixed{TARGET1: labels})
 
 	if len(a.Default) > 0 {
 		for _, stmt := range a.Default {
@@ -128,7 +129,7 @@ func (a *CealSwitch) TealAst() TealAst {
 	for i, c := range a.Cases {
 		label := labels[i]
 
-		res.Write(&Teal_label{Name: label})
+		res.Write(&teal.Teal_label{Name: label})
 
 		for _, stmt := range c.Statements {
 			res.Write(stmt.TealAst())
@@ -136,7 +137,7 @@ func (a *CealSwitch) TealAst() TealAst {
 	}
 
 	if a.Loop.breaks {
-		res.Write(&Teal_label{Name: fmt.Sprintf("switch_%d_end", a.Index)})
+		res.Write(&teal.Teal_label{Name: fmt.Sprintf("switch_%d_end", a.Index)})
 	}
 
 	return res.Build()
@@ -149,22 +150,22 @@ type CealDoWhile struct {
 	Statement CealStatement
 }
 
-func (a *CealDoWhile) TealAst() TealAst {
-	res := &TealAstBuilder{}
-	res.Write(&Teal_label{Name: fmt.Sprintf("do_%d", a.Index)})
+func (a *CealDoWhile) TealAst() teal.TealAst {
+	res := &teal.TealAstBuilder{}
+	res.Write(&teal.Teal_label{Name: fmt.Sprintf("do_%d", a.Index)})
 	res.Write(a.Statement.TealAst())
 
 	if a.Loop.continues {
-		res.Write(&Teal_label{Name: fmt.Sprintf("do_%d_continue", a.Index)})
+		res.Write(&teal.Teal_label{Name: fmt.Sprintf("do_%d_continue", a.Index)})
 	}
 
-	res.Write(&Teal_bnz_fixed{
-		s1:      a.Condition.TealAst(),
+	res.Write(&teal.Teal_bnz_fixed{
+		S1:      a.Condition.TealAst(),
 		TARGET1: fmt.Sprintf("do_%d", a.Index),
 	})
 
 	if a.Loop.breaks {
-		res.Write(&Teal_label{Name: fmt.Sprintf("do_%d_end", a.Index)})
+		res.Write(&teal.Teal_label{Name: fmt.Sprintf("do_%d_end", a.Index)})
 	}
 
 	return res.Build()
@@ -177,23 +178,23 @@ type CealWhile struct {
 	Statement CealStatement
 }
 
-func (a *CealWhile) TealAst() TealAst {
-	res := &TealAstBuilder{}
+func (a *CealWhile) TealAst() teal.TealAst {
+	res := &teal.TealAstBuilder{}
 
-	res.Write(&Teal_label{Name: fmt.Sprintf("while_%d", a.Index)})
-	res.Write(&Teal_bz_fixed{
-		s1:      a.Condition.TealAst(),
+	res.Write(&teal.Teal_label{Name: fmt.Sprintf("while_%d", a.Index)})
+	res.Write(&teal.Teal_bz_fixed{
+		S1:      a.Condition.TealAst(),
 		TARGET1: fmt.Sprintf("while_%d_end", a.Index),
 	})
 
 	res.Write(a.Statement.TealAst())
 
 	if a.Loop.continues {
-		res.Write(&Teal_label{Name: fmt.Sprintf("while_%d_continue", a.Index)})
+		res.Write(&teal.Teal_label{Name: fmt.Sprintf("while_%d_continue", a.Index)})
 	}
 
-	res.Write(&Teal_b_fixed{TARGET1: fmt.Sprintf("while_%d", a.Index)})
-	res.Write(&Teal_label{Name: fmt.Sprintf("while_%d_end", a.Index)})
+	res.Write(&teal.Teal_b_fixed{TARGET1: fmt.Sprintf("while_%d", a.Index)})
+	res.Write(&teal.Teal_label{Name: fmt.Sprintf("while_%d_end", a.Index)})
 
 	return res.Build()
 }
@@ -207,30 +208,30 @@ type CealFor struct {
 	Iter      []CealStatement
 }
 
-func (a *CealFor) TealAst() TealAst {
-	res := &TealAstBuilder{}
+func (a *CealFor) TealAst() teal.TealAst {
+	res := &teal.TealAstBuilder{}
 
 	for _, stmt := range a.Init {
 		res.Write(stmt.TealAst())
 	}
 
-	res.Write(&Teal_label{Name: fmt.Sprintf("for_%d", a.Index)})
-	res.Write(&Teal_bz_fixed{
-		s1:      a.Condition.TealAst(),
+	res.Write(&teal.Teal_label{Name: fmt.Sprintf("for_%d", a.Index)})
+	res.Write(&teal.Teal_bz_fixed{
+		S1:      a.Condition.TealAst(),
 		TARGET1: fmt.Sprintf("for_%d_end", a.Index),
 	})
 	res.Write(a.Statement.TealAst())
 
 	if a.Loop.continues {
-		res.Write(&Teal_label{Name: fmt.Sprintf("for_%d_continue", a.Index)})
+		res.Write(&teal.Teal_label{Name: fmt.Sprintf("for_%d_continue", a.Index)})
 	}
 
 	for _, stmt := range a.Iter {
 		res.Write(stmt.TealAst())
 	}
 
-	res.Write(&Teal_b_fixed{TARGET1: fmt.Sprintf("for_%d", a.Index)})
-	res.Write(&Teal_label{Name: fmt.Sprintf("for_%d_end", a.Index)})
+	res.Write(&teal.Teal_b_fixed{TARGET1: fmt.Sprintf("for_%d", a.Index)})
+	res.Write(&teal.Teal_label{Name: fmt.Sprintf("for_%d_end", a.Index)})
 
 	return res.Build()
 }
@@ -255,33 +256,33 @@ func (a *CealPrefix) ToStmt() {
 	a.IsStmt = true
 }
 
-func (a *CealPrefix) TealAst() TealAst {
+func (a *CealPrefix) TealAst() teal.TealAst {
 	if a.V.constant {
 		panic("cannot modify const var")
 	}
 
-	var op TealAst
+	var op teal.TealAst
 
 	switch a.Op {
 	case "++":
-		op = &Teal_plus{
-			s1: &Teal_load{I1: uint8(a.V.local.slot)},
-			s2: &Teal_int{V: 1},
+		op = &teal.Teal_plus{
+			STACK_1: &teal.Teal_load{I1: uint8(a.V.local.slot)},
+			STACK_2: &teal.Teal_int{V: 1},
 		}
 	case "--":
-		op = &Teal_minus{
-			s1: &Teal_load{I1: uint8(a.V.local.slot)},
-			s2: &Teal_int{V: 1},
+		op = &teal.Teal_minus{
+			STACK_1: &teal.Teal_load{I1: uint8(a.V.local.slot)},
+			STACK_2: &teal.Teal_int{V: 1},
 		}
 	default:
 		panic(fmt.Sprintf("prefix operator not supported: '%s'", a.Op))
 	}
 
-	res := &TealAstBuilder{}
-	res.Write(&Teal_store{s1: op, I1: uint8(a.V.local.slot)})
+	res := &teal.TealAstBuilder{}
+	res.Write(&teal.Teal_store{STACK_1: op, I1: uint8(a.V.local.slot)})
 
 	if !a.IsStmt {
-		res.Write(&Teal_load{I1: uint8(a.V.local.slot)})
+		res.Write(&teal.Teal_load{I1: uint8(a.V.local.slot)})
 	}
 
 	return res.Build()
@@ -298,64 +299,64 @@ func (a *CealPostfix) ToStmt() {
 	a.IsStmt = true
 }
 
-func (a *CealPostfix) TealAst() TealAst {
+func (a *CealPostfix) TealAst() teal.TealAst {
 	if a.V.constant {
 		panic("cannot modify const var")
 	}
 
-	var s1 TealAst
-	s1 = &Teal_load{I1: uint8(a.V.local.slot)}
+	var s1 teal.TealAst
+	s1 = &teal.Teal_load{I1: uint8(a.V.local.slot)}
 
 	if !a.IsStmt {
-		s1 = &Teal_dup{s1: s1}
+		s1 = &teal.Teal_dup{STACK_1: s1}
 	}
 
-	s2 := &Teal_int{V: 1}
+	s2 := &teal.Teal_int{V: 1}
 
-	var op TealAst
+	var op teal.TealAst
 	switch a.Op {
 	case "++":
-		op = &Teal_plus{s1: s1, s2: s2}
+		op = &teal.Teal_plus{STACK_1: s1, STACK_2: s2}
 	case "--":
-		op = &Teal_minus{s1: s1, s2: s2}
+		op = &teal.Teal_minus{STACK_1: s1, STACK_2: s2}
 	default:
 		panic(fmt.Sprintf("postfix operator not supported: '%s'", a.Op))
 	}
 
-	return &Teal_store{s1: op, I1: uint8(a.V.local.slot)}
+	return &teal.Teal_store{STACK_1: op, I1: uint8(a.V.local.slot)}
 }
 
 type CealLabel struct {
 	Name string
 }
 
-func (a *CealLabel) TealAst() TealAst {
-	return &Teal_label{Name: fmt.Sprintf("label_%s", a.Name)}
+func (a *CealLabel) TealAst() teal.TealAst {
+	return &teal.Teal_label{Name: fmt.Sprintf("label_%s", a.Name)}
 }
 
 type CealGoto struct {
 	Label string
 }
 
-func (a *CealGoto) TealAst() TealAst {
-	return &Teal_b_fixed{TARGET1: fmt.Sprintf("label_%s", a.Label)}
+func (a *CealGoto) TealAst() teal.TealAst {
+	return &teal.Teal_b_fixed{TARGET1: fmt.Sprintf("label_%s", a.Label)}
 }
 
 type CealVariable struct {
 	V *Variable
 }
 
-func (a *CealVariable) TealAst() TealAst {
-	res := &TealAstBuilder{}
+func (a *CealVariable) TealAst() teal.TealAst {
+	res := &teal.TealAstBuilder{}
 
 	if a.V.local != nil {
-		ast := &Teal_load{I1: uint8(a.V.local.slot)}
+		ast := &teal.Teal_load{I1: uint8(a.V.local.slot)}
 		res.Write(ast)
 		return res.Build()
 	}
 
 	if a.V.param != nil {
-		ast := &Teal_frame_dig{I1: int8(a.V.param.index)}
+		ast := &teal.Teal_frame_dig{I1: int8(a.V.param.index)}
 		res.Write(ast)
 		return res.Build()
 	}
@@ -363,13 +364,13 @@ func (a *CealVariable) TealAst() TealAst {
 	if a.V.const_ != nil {
 		switch a.V.const_.kind {
 		case SimpleTypeInt:
-			ast := &Teal_intc{
+			ast := &teal.Teal_intc{
 				I1: uint8(a.V.const_.index),
 			}
 			res.Write(ast)
 			return res.Build()
 		case SimpleTypeBytes:
-			ast := &Teal_bytec{
+			ast := &teal.Teal_bytec{
 				I1: uint8(a.V.const_.index),
 			}
 			res.Write(ast)
@@ -379,10 +380,10 @@ func (a *CealVariable) TealAst() TealAst {
 
 	switch a.V.t {
 	case "uint64":
-		res.Write(&Teal_named_int{V: &Teal_named_int_value{V: a.V.name}})
+		res.Write(&teal.Teal_named_int{V: &teal.Teal_named_int_value{V: a.V.name}})
 		return res.Build()
 	case "bytes":
-		res.Write(&Teal_byte{S: &Teal_byte_value{V: a.V.name}})
+		res.Write(&teal.Teal_byte{S: &teal.Teal_byte_value{V: a.V.name}})
 	default:
 		panic(fmt.Sprintf("type '%s' is not supported", a.V.t))
 	}
@@ -395,11 +396,11 @@ type CealUnaryOp struct {
 	Statement CealStatement
 }
 
-func (a *CealUnaryOp) TealAst() TealAst {
-	res := &TealAstBuilder{}
+func (a *CealUnaryOp) TealAst() teal.TealAst {
+	res := &teal.TealAstBuilder{}
 	switch a.Op {
 	case "!":
-		res.Write(&Teal_not{s1: a.Statement.TealAst()})
+		res.Write(&teal.Teal_not{STACK_1: a.Statement.TealAst()})
 	default:
 		panic(fmt.Sprintf("unary op '%s' not supported", a.Op))
 	}
@@ -416,7 +417,7 @@ type CealAssignSumDiff struct {
 	IsStmt bool
 }
 
-func (a *CealAssignSumDiff) TealAst() TealAst {
+func (a *CealAssignSumDiff) TealAst() teal.TealAst {
 	var slot uint8
 
 	if a.T.complex != nil {
@@ -426,22 +427,22 @@ func (a *CealAssignSumDiff) TealAst() TealAst {
 		slot = uint8(a.V.local.slot)
 	}
 
-	s1 := &Teal_load{I1: slot}
+	s1 := &teal.Teal_load{I1: slot}
 
-	var op TealAst
+	var op teal.TealAst
 
 	switch a.Op {
 	case "+=":
-		op = &Teal_plus{s1: s1, s2: a.Value.TealAst()}
+		op = &teal.Teal_plus{STACK_1: s1, STACK_2: a.Value.TealAst()}
 	case "-=":
-		op = &Teal_minus{s1: s1, s2: a.Value.TealAst()}
+		op = &teal.Teal_minus{STACK_1: s1, STACK_2: a.Value.TealAst()}
 	}
 
 	if !a.IsStmt {
-		op = &Teal_dup{s1: op}
+		op = &teal.Teal_dup{STACK_1: op}
 	}
 
-	return &Teal_store{s1: op, I1: slot}
+	return &teal.Teal_store{STACK_1: op, I1: slot}
 }
 
 type CealAnd struct {
@@ -451,18 +452,18 @@ type CealAnd struct {
 	Right CealStatement
 }
 
-func (a *CealAnd) TealAst() TealAst {
-	res := &TealAstBuilder{}
+func (a *CealAnd) TealAst() teal.TealAst {
+	res := &teal.TealAstBuilder{}
 
-	res.Write(&Teal_andand{
-		s1: &Teal_bz_fixed{
-			s1:      &Teal_dup{s1: a.Left.TealAst()},
+	res.Write(&teal.Teal_andand{
+		STACK_1: &teal.Teal_bz_fixed{
+			S1:      &teal.Teal_dup{STACK_1: a.Left.TealAst()},
 			TARGET1: fmt.Sprintf("and_%d_end", a.Index),
 		},
-		s2: a.Right.TealAst(),
+		STACK_2: a.Right.TealAst(),
 	})
 
-	res.Write(&Teal_label{Name: fmt.Sprintf("and_%d_end", a.Index)})
+	res.Write(&teal.Teal_label{Name: fmt.Sprintf("and_%d_end", a.Index)})
 
 	return res.Build()
 }
@@ -473,21 +474,21 @@ type CealOr struct {
 	Right CealStatement
 }
 
-func (a *CealOr) TealAst() TealAst {
-	res := &TealAstBuilder{}
+func (a *CealOr) TealAst() teal.TealAst {
+	res := &teal.TealAstBuilder{}
 
 	res.Write(
-		&Teal_oror{
-			s1: &Teal_bnz_fixed{
-				s1: &Teal_dup{
-					s1: a.Left.TealAst(),
+		&teal.Teal_oror{
+			STACK_1: &teal.Teal_bnz_fixed{
+				S1: &teal.Teal_dup{
+					STACK_1: a.Left.TealAst(),
 				},
 				TARGET1: fmt.Sprintf("or_%d_end", a.Index),
 			},
-			s2: a.Right.TealAst(),
+			STACK_2: a.Right.TealAst(),
 		})
 
-	res.Write(&Teal_label{Name: fmt.Sprintf("or_%d_end", a.Index)})
+	res.Write(&teal.Teal_label{Name: fmt.Sprintf("or_%d_end", a.Index)})
 
 	return res.Build()
 }
@@ -498,38 +499,38 @@ type CealBinop struct {
 	Right CealStatement
 }
 
-func (a *CealBinop) TealAst() TealAst {
-	var op TealAst
+func (a *CealBinop) TealAst() teal.TealAst {
+	var op teal.TealAst
 
 	switch a.Op {
 	case "+":
-		op = &Teal_plus{s1: a.Left.TealAst(), s2: a.Right.TealAst()}
+		op = &teal.Teal_plus{STACK_1: a.Left.TealAst(), STACK_2: a.Right.TealAst()}
 	case "-":
-		op = &Teal_minus{s1: a.Left.TealAst(), s2: a.Right.TealAst()}
+		op = &teal.Teal_minus{STACK_1: a.Left.TealAst(), STACK_2: a.Right.TealAst()}
 	case "*":
-		op = &Teal_mul{s1: a.Left.TealAst(), s2: a.Right.TealAst()}
+		op = &teal.Teal_mul{STACK_1: a.Left.TealAst(), STACK_2: a.Right.TealAst()}
 	case "/":
-		op = &Teal_div{s1: a.Left.TealAst(), s2: a.Right.TealAst()}
+		op = &teal.Teal_div{STACK_1: a.Left.TealAst(), STACK_2: a.Right.TealAst()}
 	case "==":
-		op = &Teal_eqeq{s1: a.Left.TealAst(), s2: a.Right.TealAst()}
+		op = &teal.Teal_eqeq{STACK_1: a.Left.TealAst(), STACK_2: a.Right.TealAst()}
 	case "!=":
-		op = &Teal_noteq{s1: a.Left.TealAst(), s2: a.Right.TealAst()}
+		op = &teal.Teal_noteq{STACK_1: a.Left.TealAst(), STACK_2: a.Right.TealAst()}
 	case "&":
-		op = &Teal_and{s1: a.Left.TealAst(), s2: a.Right.TealAst()}
+		op = &teal.Teal_and{STACK_1: a.Left.TealAst(), STACK_2: a.Right.TealAst()}
 	case "^":
-		op = &Teal_xor{s1: a.Left.TealAst(), s2: a.Right.TealAst()}
+		op = &teal.Teal_xor{STACK_1: a.Left.TealAst(), STACK_2: a.Right.TealAst()}
 	case "|":
-		op = &Teal_or{s1: a.Left.TealAst(), s2: a.Right.TealAst()}
+		op = &teal.Teal_or{STACK_1: a.Left.TealAst(), STACK_2: a.Right.TealAst()}
 	case "<":
-		op = &Teal_lt{s1: a.Left.TealAst(), s2: a.Right.TealAst()}
+		op = &teal.Teal_lt{STACK_1: a.Left.TealAst(), STACK_2: a.Right.TealAst()}
 	case ">":
-		op = &Teal_gt{s1: a.Left.TealAst(), s2: a.Right.TealAst()}
+		op = &teal.Teal_gt{STACK_1: a.Left.TealAst(), STACK_2: a.Right.TealAst()}
 	case "<=":
-		op = &Teal_lteq{s1: a.Left.TealAst(), s2: a.Right.TealAst()}
+		op = &teal.Teal_lteq{STACK_1: a.Left.TealAst(), STACK_2: a.Right.TealAst()}
 	case ">=":
-		op = &Teal_gteq{s1: a.Left.TealAst(), s2: a.Right.TealAst()}
+		op = &teal.Teal_gteq{STACK_1: a.Left.TealAst(), STACK_2: a.Right.TealAst()}
 	case "%":
-		op = &Teal_mod{s1: a.Left.TealAst(), s2: a.Right.TealAst()}
+		op = &teal.Teal_mod{STACK_1: a.Left.TealAst(), STACK_2: a.Right.TealAst()}
 	default:
 		panic(fmt.Sprintf("binary op '%s' is not supported yet", a.Op))
 	}
@@ -541,10 +542,10 @@ type CealNegate struct {
 	Value CealStatement
 }
 
-func (a *CealNegate) TealAst() TealAst {
-	return &Teal_minus{
-		s1: &Teal_int{V: 0},
-		s2: a.Value.TealAst(),
+func (a *CealNegate) TealAst() teal.TealAst {
+	return &teal.Teal_minus{
+		STACK_1: &teal.Teal_int{V: 0},
+		STACK_2: a.Value.TealAst(),
 	}
 }
 
@@ -555,14 +556,14 @@ type CealDefine struct {
 	Value CealStatement
 }
 
-func (a *CealDefine) TealAst() TealAst {
+func (a *CealDefine) TealAst() teal.TealAst {
 	if a.T.complex != nil {
 		panic("defining complex variable is not supported yet")
 	}
 
-	ast := &Teal_store{
-		s1: a.Value.TealAst(),
-		I1: uint8(a.V.local.slot),
+	ast := &teal.Teal_store{
+		STACK_1: a.Value.TealAst(),
+		I1:      uint8(a.V.local.slot),
 	}
 
 	return ast
@@ -583,7 +584,7 @@ func (a *CealAssign) ToStmt() {
 	a.IsStmt = true
 }
 
-func (a *CealAssign) TealAst() TealAst {
+func (a *CealAssign) TealAst() teal.TealAst {
 	if a.V.constant {
 		panic("cannot assign to a const var")
 	}
@@ -593,13 +594,13 @@ func (a *CealAssign) TealAst() TealAst {
 		panic("cannot assign param var")
 	}
 
-	res := &TealAstBuilder{}
+	res := &teal.TealAstBuilder{}
 
 	if a.T.complex != nil {
 		if a.T.complex.builtin != nil {
-			res.Write(&Teal_call_builtin{
+			res.Write(&teal.Teal_call_builtin{
 				Name: a.Fun.builtin.op,
-				Imms: []TealAst{&Teal_named_int_value{
+				Imms: []teal.TealAst{&teal.Teal_named_int_value{
 					V: a.F.name,
 				}},
 			})
@@ -610,24 +611,24 @@ func (a *CealAssign) TealAst() TealAst {
 			}
 
 			v := a.V.fields[a.F.name]
-			ast := &Teal_store{
-				s1: a.Value.TealAst(),
-				I1: uint8(v.local.slot),
+			ast := &teal.Teal_store{
+				STACK_1: a.Value.TealAst(),
+				I1:      uint8(v.local.slot),
 			}
 
 			res.Write(ast)
 		}
 	} else {
-		ast := &Teal_store{
-			s1: a.Value.TealAst(),
-			I1: uint8(a.V.local.slot),
+		ast := &teal.Teal_store{
+			STACK_1: a.Value.TealAst(),
+			I1:      uint8(a.V.local.slot),
 		}
 
 		res.Write(ast)
 	}
 
 	if !a.IsStmt {
-		load := &Teal_load{
+		load := &teal.Teal_load{
 			I1: uint8(a.V.local.slot),
 		}
 
@@ -644,13 +645,13 @@ type CealStructField struct {
 	Fun *Function
 }
 
-func (a *CealStructField) TealAst() TealAst {
-	res := &TealAstBuilder{}
+func (a *CealStructField) TealAst() teal.TealAst {
+	res := &teal.TealAstBuilder{}
 
 	if a.T.complex.builtin != nil {
-		res.Write(&Teal_call_builtin{
+		res.Write(&teal.Teal_call_builtin{
 			Name: a.Fun.builtin.op,
-			Imms: []TealAst{&Teal_named_int_value{
+			Imms: []teal.TealAst{&teal.Teal_named_int_value{
 				V: a.F.name,
 			}},
 		})
@@ -663,7 +664,7 @@ func (a *CealStructField) TealAst() TealAst {
 
 	v := a.V.fields[a.F.name]
 
-	ast := &Teal_load{
+	ast := &teal.Teal_load{
 		I1: uint8(v.local.slot),
 	}
 
@@ -683,10 +684,10 @@ func (a *CealCall) ToStmt() {
 	a.IsStmt = true
 }
 
-func (a *CealCall) TealAst() TealAst {
-	res := &TealAstBuilder{}
+func (a *CealCall) TealAst() teal.TealAst {
+	res := &teal.TealAstBuilder{}
 
-	var args []TealAst
+	var args []teal.TealAst
 
 	if a.Fun.compiler != nil {
 		ast := a.Fun.compiler.handler(a.Args)
@@ -701,7 +702,7 @@ func (a *CealCall) TealAst() TealAst {
 			args = append(args, arg.TealAst())
 		}
 
-		var imms []TealAst
+		var imms []teal.TealAst
 
 		for ; i < len(a.Fun.builtin.stack)+len(a.Fun.builtin.imm); i++ {
 			arg := a.Args[i]
@@ -713,7 +714,7 @@ func (a *CealCall) TealAst() TealAst {
 			imms = append(imms, ast)
 		}
 
-		res.Write(&Teal_call_builtin{
+		res.Write(&teal.Teal_call_builtin{
 			Args: args,
 			Imms: imms,
 			Name: a.Fun.builtin.op,
@@ -725,7 +726,7 @@ func (a *CealCall) TealAst() TealAst {
 			args = append(args, arg.TealAst())
 		}
 
-		res.Write(&Teal_callsub_fixed{
+		res.Write(&teal.Teal_callsub_fixed{
 			Args:   args,
 			Target: a.Fun.name,
 		})
@@ -733,7 +734,7 @@ func (a *CealCall) TealAst() TealAst {
 
 	if a.IsStmt {
 		if a.Fun.returns > 0 {
-			res.Write(&Teal_popn{N1: uint8(a.Fun.returns)})
+			res.Write(&teal.Teal_popn{N1: uint8(a.Fun.returns)})
 		}
 	}
 
@@ -757,10 +758,10 @@ func (a *CealIntConstant) ToValue() {
 	a.value = true
 }
 
-func (a *CealIntConstant) TealAst() TealAst {
-	var v TealAst = &Teal_named_int_value{V: a.Value}
+func (a *CealIntConstant) TealAst() teal.TealAst {
+	var v teal.TealAst = &teal.Teal_named_int_value{V: a.Value}
 	if !a.value {
-		v = &Teal_named_int{V: v}
+		v = &teal.Teal_named_int{V: v}
 	}
 	return v
 }
@@ -774,10 +775,10 @@ func (a *CealByteConstant) ToValue() {
 	a.value = true
 }
 
-func (a *CealByteConstant) TealAst() TealAst {
-	var v TealAst = &Teal_byte_value{V: a.Value}
+func (a *CealByteConstant) TealAst() teal.TealAst {
+	var v teal.TealAst = &teal.Teal_byte_value{V: a.Value}
 	if !a.value {
-		v = &Teal_byte{S: v}
+		v = &teal.Teal_byte{S: v}
 	}
 	return v
 }
@@ -790,21 +791,21 @@ type CealReturn struct {
 func (a *CealReturn) IsReturn() {
 }
 
-func (a *CealReturn) TealAst() TealAst {
-	var op TealAst
+func (a *CealReturn) TealAst() teal.TealAst {
+	var op teal.TealAst
 
 	if a.Fun != nil && a.Fun.user.sub {
-		var values []TealAst
+		var values []teal.TealAst
 
 		if a.Value != nil {
 			values = append(values, a.Value.TealAst())
 		}
 
-		op = &Teal_retsub_fixed{
+		op = &teal.Teal_retsub_fixed{
 			Values: values,
 		}
 	} else {
-		op = &Teal_return_fixed{
+		op = &teal.Teal_return_fixed{
 			Value: a.Value.TealAst(),
 		}
 	}
@@ -816,8 +817,8 @@ type CealBlock struct {
 	Statements []CealStatement
 }
 
-func (a *CealBlock) TealAst() TealAst {
-	res := &TealAstBuilder{}
+func (a *CealBlock) TealAst() teal.TealAst {
+	res := &teal.TealAstBuilder{}
 
 	for _, stmt := range a.Statements {
 		res.Write(stmt.TealAst())
@@ -835,21 +836,21 @@ type CealConditional struct {
 	False CealStatement
 }
 
-func (a *CealConditional) TealAst() TealAst {
-	res := &TealAstBuilder{}
+func (a *CealConditional) TealAst() teal.TealAst {
+	res := &teal.TealAstBuilder{}
 
 	false_label := fmt.Sprintf("conditional_%d_false", a.Index)
 	end_label := fmt.Sprintf("conditional_%d_end", a.Index)
 
-	res.Write(&Teal_bz_fixed{
-		s1:      a.Condition.TealAst(),
+	res.Write(&teal.Teal_bz_fixed{
+		S1:      a.Condition.TealAst(),
 		TARGET1: false_label,
 	})
 	res.Write(a.True.TealAst())
-	res.Write(&Teal_b_fixed{TARGET1: end_label})
-	res.Write(&Teal_label{Name: false_label})
+	res.Write(&teal.Teal_b_fixed{TARGET1: end_label})
+	res.Write(&teal.Teal_label{Name: false_label})
 	res.Write(a.False.TealAst())
-	res.Write(&Teal_label{Name: end_label})
+	res.Write(&teal.Teal_label{Name: end_label})
 
 	return res.Build()
 }
@@ -864,21 +865,21 @@ type CealIf struct {
 	Alternatives []*CealIfAlternative
 }
 
-func (a *CealIf) TealAst() TealAst {
-	res := &TealAstBuilder{}
+func (a *CealIf) TealAst() teal.TealAst {
+	res := &teal.TealAstBuilder{}
 
 	end_label := fmt.Sprintf("if_end_%d", a.Index)
 
 	for i, alt := range a.Alternatives {
 		if alt.Condition != nil {
 			if i < len(a.Alternatives)-1 {
-				res.Write(&Teal_bz_fixed{
-					s1:      alt.Condition.TealAst(),
+				res.Write(&teal.Teal_bz_fixed{
+					S1:      alt.Condition.TealAst(),
 					TARGET1: fmt.Sprintf("if_skip_%d_%d", a.Index, i),
 				})
 			} else {
-				res.Write(&Teal_bz_fixed{
-					s1:      alt.Condition.TealAst(),
+				res.Write(&teal.Teal_bz_fixed{
+					S1:      alt.Condition.TealAst(),
 					TARGET1: end_label,
 				})
 			}
@@ -889,17 +890,17 @@ func (a *CealIf) TealAst() TealAst {
 		}
 
 		if i < len(a.Alternatives)-1 {
-			res.Write(&Teal_b_fixed{TARGET1: end_label})
+			res.Write(&teal.Teal_b_fixed{TARGET1: end_label})
 		}
 
 		if alt.Condition != nil {
 			if i < len(a.Alternatives)-1 {
-				res.Write(&Teal_label{Name: fmt.Sprintf("if_skip_%d_%d", a.Index, i)})
+				res.Write(&teal.Teal_label{Name: fmt.Sprintf("if_skip_%d_%d", a.Index, i)})
 			}
 		}
 	}
 
-	res.Write(&Teal_label{Name: end_label})
+	res.Write(&teal.Teal_label{Name: end_label})
 
 	return res.Build()
 }
@@ -909,12 +910,12 @@ type CealFunction struct {
 	Statements []CealStatement
 }
 
-func (a *CealFunction) TealAst() TealAst {
-	res := &TealAstBuilder{}
+func (a *CealFunction) TealAst() teal.TealAst {
+	res := &teal.TealAstBuilder{}
 
 	if a.Fun.user.sub {
 		if a.Fun.user.args != 0 || a.Fun.returns != 0 {
-			ast := &Teal_proto{
+			ast := &teal.Teal_proto{
 				A1: uint8(a.Fun.user.args),
 				R2: uint8(a.Fun.returns),
 			}
@@ -931,7 +932,7 @@ func (a *CealFunction) TealAst() TealAst {
 		if len(a.Statements) > 0 {
 			last := a.Statements[len(a.Statements)-1]
 			if _, ok := last.(CealIsReturn); !ok {
-				res.Write(&Teal_retsub{})
+				res.Write(&teal.Teal_retsub{})
 			}
 		}
 	}
@@ -947,11 +948,11 @@ func (a *CealRaw) String() string {
 	return a.Value
 }
 
-func (a *CealRaw) Teal() Teal {
-	return Teal{a}
+func (a *CealRaw) Teal() teal.Teal {
+	return teal.Teal{a}
 }
 
-func (a *CealRaw) TealAst() TealAst {
+func (a *CealRaw) TealAst() teal.TealAst {
 	return a
 }
 
@@ -959,15 +960,15 @@ type CealSingleLineComment struct {
 	Line string
 }
 
-func (a *CealSingleLineComment) TealAst() TealAst {
-	return &Teal_comment{Lines: []string{a.Line}}
+func (a *CealSingleLineComment) TealAst() teal.TealAst {
+	return &teal.Teal_comment{Lines: []string{a.Line}}
 }
 
 type CealMultiLineComment struct {
 	Text string
 }
 
-func (a *CealMultiLineComment) TealAst() TealAst {
+func (a *CealMultiLineComment) TealAst() teal.TealAst {
 	lines := strings.Split(a.Text, "\n")
-	return &Teal_comment{Lines: lines}
+	return &teal.Teal_comment{Lines: lines}
 }

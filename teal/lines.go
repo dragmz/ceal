@@ -1,4 +1,4 @@
-package compiler
+package teal
 
 import "strings"
 
