@@ -151,7 +151,7 @@ func readStacks(op LangSpecOp) []ceal.CealArg {
 	for i := 0; i < stacks; i++ {
 		p := ceal.CealArg{
 			Type: readType(op.Args[i]),
-			Name: fmt.Sprintf("s%d", i+1),
+			Name: fmt.Sprintf("STACK_%d", i+1),
 		}
 
 		ps = append(ps, p)

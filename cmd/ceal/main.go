@@ -13,7 +13,8 @@ import (
 )
 
 //go:generate go run ../sdk/main.go -spec ../../ceal.json --out ../../avm.hpp
-//go:generate go run ../gen/main.go -spec ../../ceal.json --out ../../compiler/compiler_gen.go
+//go:generate go run ../gen/main.go -spec ../../ceal.json --out ../../compiler/gen.go
+//go:generate go run ../teal/main.go -spec ../../ceal.json --out ../../teal/gen.go
 
 type args struct {
 	Path   string

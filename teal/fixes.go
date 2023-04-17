@@ -1,4 +1,4 @@
-package compiler
+package teal
 
 import (
 	"encoding/hex"
@@ -105,7 +105,7 @@ func (a *Teal_b_fixed) String() string {
 }
 
 type Teal_bnz_fixed struct {
-	s1      TealAst
+	S1      TealAst
 	TARGET1 string
 }
 
@@ -114,11 +114,11 @@ func (a *Teal_bnz_fixed) Teal() Teal {
 }
 
 func (a *Teal_bnz_fixed) String() string {
-	return fmt.Sprintf("%s\nbnz %s", a.s1.Teal().String(), a.TARGET1)
+	return fmt.Sprintf("%s\nbnz %s", a.S1.Teal().String(), a.TARGET1)
 }
 
 type Teal_bz_fixed struct {
-	s1      TealAst
+	S1      TealAst
 	TARGET1 string
 }
 
@@ -127,7 +127,7 @@ func (a *Teal_bz_fixed) Teal() Teal {
 }
 
 func (a *Teal_bz_fixed) String() string {
-	return fmt.Sprintf("%s\nbz %s", a.s1.Teal().String(), a.TARGET1)
+	return fmt.Sprintf("%s\nbz %s", a.S1.Teal().String(), a.TARGET1)
 }
 
 type Teal_label struct {
@@ -372,4 +372,13 @@ func (a *Teal_raw) Teal() Teal {
 
 func (a *Teal_raw) String() string {
 	return a.V
+}
+
+type Teal_int_op struct {
+	V int
+}
+
+func Parse_Teal_int_op(a ParserArgs) TealOp {
+	v := a.Read()
+	return &Teal_named_int{V: &Teal_named_int_value{V: v.String()}}
 }
