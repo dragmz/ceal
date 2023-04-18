@@ -8,8 +8,9 @@ type AstStatement interface {
 }
 
 type BuiltinFunctionParamData struct {
-	t    string
-	name string
+	t     string
+	name  string
+	array bool
 }
 
 type BuiltinFunctionData struct {
@@ -36,7 +37,7 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "bytes", name: "avm_sha256", op: "sha256",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
+			{t: "bytes", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -48,7 +49,7 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "bytes", name: "avm_keccak256", op: "keccak256",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
+			{t: "bytes", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -60,7 +61,7 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "bytes", name: "avm_sha512_256", op: "sha512_256",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
+			{t: "bytes", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -72,9 +73,9 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_ed25519verify", op: "ed25519verify",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
-			{t: "bytes", name: "STACK_3"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
+			{t: "bytes", name: "STACK_3", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -86,63 +87,63 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_ecdsa_verify", op: "ecdsa_verify",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
-			{t: "bytes", name: "STACK_3"},
-			{t: "bytes", name: "STACK_4"},
-			{t: "bytes", name: "STACK_5"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
+			{t: "bytes", name: "STACK_3", array: false},
+			{t: "bytes", name: "STACK_4", array: false},
+			{t: "bytes", name: "STACK_5", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "V1"},
+			{t: "uint8", name: "V1", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "uint64", name: "avm_ecdsa_verify_op", op: "ecdsa_verify",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "V1"},
+			{t: "uint8", name: "V1", array: false},
 		},
 	},
 	{
 		t: "avm_ecdsa_pk_decompress_result_t", name: "avm_ecdsa_pk_decompress", op: "ecdsa_pk_decompress",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
+			{t: "bytes", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "V1"},
+			{t: "uint8", name: "V1", array: false},
 		},
 		returns: 2,
 	},
 	{
 		t: "avm_ecdsa_pk_decompress_result_t", name: "avm_ecdsa_pk_decompress_op", op: "ecdsa_pk_decompress",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "V1"},
+			{t: "uint8", name: "V1", array: false},
 		},
 	},
 	{
 		t: "avm_ecdsa_pk_recover_result_t", name: "avm_ecdsa_pk_recover", op: "ecdsa_pk_recover",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
-			{t: "bytes", name: "STACK_3"},
-			{t: "bytes", name: "STACK_4"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
+			{t: "bytes", name: "STACK_3", array: false},
+			{t: "bytes", name: "STACK_4", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "V1"},
+			{t: "uint8", name: "V1", array: false},
 		},
 		returns: 2,
 	},
 	{
 		t: "avm_ecdsa_pk_recover_result_t", name: "avm_ecdsa_pk_recover_op", op: "ecdsa_pk_recover",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "V1"},
+			{t: "uint8", name: "V1", array: false},
 		},
 	},
 	{
 		t: "uint64", name: "avm_plus", op: "+",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -154,8 +155,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_minus", op: "-",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -167,8 +168,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_div", op: "/",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -180,8 +181,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_mul", op: "*",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -193,8 +194,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_lt", op: "<",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -206,8 +207,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_gt", op: ">",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -219,8 +220,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_lteq", op: "<=",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -232,8 +233,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_gteq", op: ">=",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -245,8 +246,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_andand", op: "&&",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -258,8 +259,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_oror", op: "||",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -271,8 +272,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_eqeq", op: "==",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
-			{t: "any", name: "STACK_2"},
+			{t: "any", name: "STACK_1", array: false},
+			{t: "any", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -284,8 +285,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_noteq", op: "!=",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
-			{t: "any", name: "STACK_2"},
+			{t: "any", name: "STACK_1", array: false},
+			{t: "any", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -297,7 +298,7 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_not", op: "!",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
+			{t: "uint64", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -309,7 +310,7 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_len", op: "len",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
+			{t: "bytes", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -321,7 +322,7 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "bytes", name: "avm_itob", op: "itob",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
+			{t: "uint64", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -333,7 +334,7 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_btoi", op: "btoi",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
+			{t: "bytes", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -345,8 +346,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_mod", op: "%",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -358,8 +359,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_or", op: "|",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -371,8 +372,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_and", op: "&",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -384,8 +385,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_xor", op: "^",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -397,7 +398,7 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_inv", op: "~",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
+			{t: "uint64", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -409,8 +410,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "avm_mulw_result_t", name: "avm_mulw", op: "mulw",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 2,
@@ -422,8 +423,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "avm_addw_result_t", name: "avm_addw", op: "addw",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 2,
@@ -435,10 +436,10 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "avm_divmodw_result_t", name: "avm_divmodw", op: "divmodw",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
-			{t: "uint64", name: "STACK_3"},
-			{t: "uint64", name: "STACK_4"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
+			{t: "uint64", name: "STACK_3", array: false},
+			{t: "uint64", name: "STACK_4", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 4,
@@ -451,28 +452,28 @@ var builtin_functions = []BuiltinFunctionData{
 		t: "void", name: "avm_intcblock", op: "intcblock",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "bytes", name: "UINT1"},
+			{t: "bytes", name: "UINT1", array: true},
 		},
 		returns: 0,
 	},
 	{
 		t: "void", name: "avm_intcblock_op", op: "intcblock",
 		imm: []BuiltinFunctionParamData{
-			{t: "bytes", name: "UINT1"},
+			{t: "bytes", name: "UINT1", array: true},
 		},
 	},
 	{
 		t: "uint64", name: "avm_intc", op: "intc",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "I1"},
+			{t: "uint8", name: "I1", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "uint64", name: "avm_intc_op", op: "intc",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "I1"},
+			{t: "uint8", name: "I1", array: false},
 		},
 	},
 	{
@@ -519,28 +520,28 @@ var builtin_functions = []BuiltinFunctionData{
 		t: "void", name: "avm_bytecblock", op: "bytecblock",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "bytes", name: "BYTES1"},
+			{t: "bytes", name: "BYTES1", array: true},
 		},
 		returns: 0,
 	},
 	{
 		t: "void", name: "avm_bytecblock_op", op: "bytecblock",
 		imm: []BuiltinFunctionParamData{
-			{t: "bytes", name: "BYTES1"},
+			{t: "bytes", name: "BYTES1", array: true},
 		},
 	},
 	{
 		t: "bytes", name: "avm_bytec", op: "bytec",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "I1"},
+			{t: "uint8", name: "I1", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "bytes", name: "avm_bytec_op", op: "bytec",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "I1"},
+			{t: "uint8", name: "I1", array: false},
 		},
 	},
 	{
@@ -587,14 +588,14 @@ var builtin_functions = []BuiltinFunctionData{
 		t: "bytes", name: "avm_arg", op: "arg",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "N1"},
+			{t: "uint8", name: "N1", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "bytes", name: "avm_arg_op", op: "arg",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "N1"},
+			{t: "uint8", name: "N1", array: false},
 		},
 	},
 	{
@@ -641,194 +642,194 @@ var builtin_functions = []BuiltinFunctionData{
 		t: "any", name: "avm_txn", op: "txn",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "any", name: "avm_txn_op", op: "txn",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 	},
 	{
 		t: "any", name: "avm_global", op: "global",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "any", name: "avm_global_op", op: "global",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 	},
 	{
 		t: "any", name: "avm_gtxn", op: "gtxn",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "T1"},
-			{t: "uint8", name: "F2"},
+			{t: "uint8", name: "T1", array: false},
+			{t: "uint8", name: "F2", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "any", name: "avm_gtxn_op", op: "gtxn",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "T1"},
-			{t: "uint8", name: "F2"},
+			{t: "uint8", name: "T1", array: false},
+			{t: "uint8", name: "F2", array: false},
 		},
 	},
 	{
 		t: "any", name: "avm_load", op: "load",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "I1"},
+			{t: "uint8", name: "I1", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "any", name: "avm_load_op", op: "load",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "I1"},
+			{t: "uint8", name: "I1", array: false},
 		},
 	},
 	{
 		t: "void", name: "avm_store", op: "store",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
+			{t: "any", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "I1"},
+			{t: "uint8", name: "I1", array: false},
 		},
 		returns: 0,
 	},
 	{
 		t: "void", name: "avm_store_op", op: "store",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "I1"},
+			{t: "uint8", name: "I1", array: false},
 		},
 	},
 	{
 		t: "any", name: "avm_txna", op: "txna",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
-			{t: "uint8", name: "I2"},
+			{t: "uint8", name: "F1", array: false},
+			{t: "uint8", name: "I2", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "any", name: "avm_txna_op", op: "txna",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
-			{t: "uint8", name: "I2"},
+			{t: "uint8", name: "F1", array: false},
+			{t: "uint8", name: "I2", array: false},
 		},
 	},
 	{
 		t: "any", name: "avm_gtxna", op: "gtxna",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "T1"},
-			{t: "uint8", name: "F2"},
-			{t: "uint8", name: "I3"},
+			{t: "uint8", name: "T1", array: false},
+			{t: "uint8", name: "F2", array: false},
+			{t: "uint8", name: "I3", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "any", name: "avm_gtxna_op", op: "gtxna",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "T1"},
-			{t: "uint8", name: "F2"},
-			{t: "uint8", name: "I3"},
+			{t: "uint8", name: "T1", array: false},
+			{t: "uint8", name: "F2", array: false},
+			{t: "uint8", name: "I3", array: false},
 		},
 	},
 	{
 		t: "any", name: "avm_gtxns", op: "gtxns",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
+			{t: "uint64", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "any", name: "avm_gtxns_op", op: "gtxns",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 	},
 	{
 		t: "any", name: "avm_gtxnsa", op: "gtxnsa",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
+			{t: "uint64", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
-			{t: "uint8", name: "I2"},
+			{t: "uint8", name: "F1", array: false},
+			{t: "uint8", name: "I2", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "any", name: "avm_gtxnsa_op", op: "gtxnsa",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
-			{t: "uint8", name: "I2"},
+			{t: "uint8", name: "F1", array: false},
+			{t: "uint8", name: "I2", array: false},
 		},
 	},
 	{
 		t: "any", name: "avm_gload", op: "gload",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "T1"},
-			{t: "uint8", name: "I2"},
+			{t: "uint8", name: "T1", array: false},
+			{t: "uint8", name: "I2", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "any", name: "avm_gload_op", op: "gload",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "T1"},
-			{t: "uint8", name: "I2"},
+			{t: "uint8", name: "T1", array: false},
+			{t: "uint8", name: "I2", array: false},
 		},
 	},
 	{
 		t: "any", name: "avm_gloads", op: "gloads",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
+			{t: "uint64", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "I1"},
+			{t: "uint8", name: "I1", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "any", name: "avm_gloads_op", op: "gloads",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "I1"},
+			{t: "uint8", name: "I1", array: false},
 		},
 	},
 	{
 		t: "uint64", name: "avm_gaid", op: "gaid",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "T1"},
+			{t: "uint8", name: "T1", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "uint64", name: "avm_gaid_op", op: "gaid",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "T1"},
+			{t: "uint8", name: "T1", array: false},
 		},
 	},
 	{
 		t: "uint64", name: "avm_gaids", op: "gaids",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
+			{t: "uint64", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -840,7 +841,7 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "any", name: "avm_loads", op: "loads",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
+			{t: "uint64", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -852,8 +853,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "void", name: "avm_stores", op: "stores",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "any", name: "STACK_2"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "any", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 0,
@@ -865,65 +866,65 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "void", name: "avm_bnz", op: "bnz",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
+			{t: "uint64", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "int16", name: "TARGET1"},
+			{t: "label", name: "TARGET1", array: false},
 		},
 		returns: 0,
 	},
 	{
 		t: "void", name: "avm_bnz_op", op: "bnz",
 		imm: []BuiltinFunctionParamData{
-			{t: "int16", name: "TARGET1"},
+			{t: "label", name: "TARGET1", array: false},
 		},
 	},
 	{
 		t: "void", name: "avm_bz", op: "bz",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
+			{t: "uint64", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "int16", name: "TARGET1"},
+			{t: "label", name: "TARGET1", array: false},
 		},
 		returns: 0,
 	},
 	{
 		t: "void", name: "avm_bz_op", op: "bz",
 		imm: []BuiltinFunctionParamData{
-			{t: "int16", name: "TARGET1"},
+			{t: "label", name: "TARGET1", array: false},
 		},
 	},
 	{
 		t: "void", name: "avm_b", op: "b",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "int16", name: "TARGET1"},
+			{t: "label", name: "TARGET1", array: false},
 		},
 		returns: 0,
 	},
 	{
 		t: "void", name: "avm_b_op", op: "b",
 		imm: []BuiltinFunctionParamData{
-			{t: "int16", name: "TARGET1"},
+			{t: "label", name: "TARGET1", array: false},
 		},
 	},
 	{
-		t: "void", name: "avm_return_", op: "return",
+		t: "void", name: "avm_return", op: "return",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
+			{t: "uint64", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 0,
 	},
 	{
-		t: "void", name: "avm_return__op", op: "return",
+		t: "void", name: "avm_return_op", op: "return",
 		imm: []BuiltinFunctionParamData{},
 	},
 	{
 		t: "void", name: "avm_assert", op: "assert",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
+			{t: "uint64", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 0,
@@ -935,53 +936,53 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "void", name: "avm_bury", op: "bury",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
+			{t: "any", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "N1"},
+			{t: "uint8", name: "N1", array: false},
 		},
 		returns: 0,
 	},
 	{
 		t: "void", name: "avm_bury_op", op: "bury",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "N1"},
+			{t: "uint8", name: "N1", array: false},
 		},
 	},
 	{
 		t: "void", name: "avm_popn", op: "popn",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "N1"},
+			{t: "uint8", name: "N1", array: false},
 		},
 		returns: 0,
 	},
 	{
 		t: "void", name: "avm_popn_op", op: "popn",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "N1"},
+			{t: "uint8", name: "N1", array: false},
 		},
 	},
 	{
 		t: "void", name: "avm_dupn", op: "dupn",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
+			{t: "any", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "N1"},
+			{t: "uint8", name: "N1", array: false},
 		},
 		returns: 0,
 	},
 	{
 		t: "void", name: "avm_dupn_op", op: "dupn",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "N1"},
+			{t: "uint8", name: "N1", array: false},
 		},
 	},
 	{
 		t: "void", name: "avm_pop", op: "pop",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
+			{t: "any", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 0,
@@ -993,7 +994,7 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "avm_dup_result_t", name: "avm_dup", op: "dup",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
+			{t: "any", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 2,
@@ -1005,8 +1006,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "avm_dup2_result_t", name: "avm_dup2", op: "dup2",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
-			{t: "any", name: "STACK_2"},
+			{t: "any", name: "STACK_1", array: false},
+			{t: "any", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 4,
@@ -1018,24 +1019,24 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "avm_dig_result_t", name: "avm_dig", op: "dig",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
+			{t: "any", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "N1"},
+			{t: "uint8", name: "N1", array: false},
 		},
 		returns: 2,
 	},
 	{
 		t: "avm_dig_result_t", name: "avm_dig_op", op: "dig",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "N1"},
+			{t: "uint8", name: "N1", array: false},
 		},
 	},
 	{
 		t: "avm_swap_result_t", name: "avm_swap", op: "swap",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
-			{t: "any", name: "STACK_2"},
+			{t: "any", name: "STACK_1", array: false},
+			{t: "any", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 2,
@@ -1047,9 +1048,9 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "any", name: "avm_select", op: "select",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
-			{t: "any", name: "STACK_2"},
-			{t: "uint64", name: "STACK_3"},
+			{t: "any", name: "STACK_1", array: false},
+			{t: "any", name: "STACK_2", array: false},
+			{t: "uint64", name: "STACK_3", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1061,40 +1062,40 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "any", name: "avm_cover", op: "cover",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
+			{t: "any", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "N1"},
+			{t: "uint8", name: "N1", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "any", name: "avm_cover_op", op: "cover",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "N1"},
+			{t: "uint8", name: "N1", array: false},
 		},
 	},
 	{
 		t: "any", name: "avm_uncover", op: "uncover",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
+			{t: "any", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "N1"},
+			{t: "uint8", name: "N1", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "any", name: "avm_uncover_op", op: "uncover",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "N1"},
+			{t: "uint8", name: "N1", array: false},
 		},
 	},
 	{
 		t: "bytes", name: "avm_concat", op: "concat",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1106,27 +1107,27 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "bytes", name: "avm_substring", op: "substring",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
+			{t: "bytes", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "S1"},
-			{t: "uint8", name: "E2"},
+			{t: "uint8", name: "S1", array: false},
+			{t: "uint8", name: "E2", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "bytes", name: "avm_substring_op", op: "substring",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "S1"},
-			{t: "uint8", name: "E2"},
+			{t: "uint8", name: "S1", array: false},
+			{t: "uint8", name: "E2", array: false},
 		},
 	},
 	{
 		t: "bytes", name: "avm_substring3", op: "substring3",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
-			{t: "uint64", name: "STACK_3"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
+			{t: "uint64", name: "STACK_3", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1138,8 +1139,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_getbit", op: "getbit",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "any", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1151,9 +1152,9 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "any", name: "avm_setbit", op: "setbit",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
-			{t: "uint64", name: "STACK_3"},
+			{t: "any", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
+			{t: "uint64", name: "STACK_3", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1165,8 +1166,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_getbyte", op: "getbyte",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1178,9 +1179,9 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "bytes", name: "avm_setbyte", op: "setbyte",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
-			{t: "uint64", name: "STACK_3"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
+			{t: "uint64", name: "STACK_3", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1192,27 +1193,27 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "bytes", name: "avm_extract", op: "extract",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
+			{t: "bytes", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "S1"},
-			{t: "uint8", name: "L2"},
+			{t: "uint8", name: "S1", array: false},
+			{t: "uint8", name: "L2", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "bytes", name: "avm_extract_op", op: "extract",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "S1"},
-			{t: "uint8", name: "L2"},
+			{t: "uint8", name: "S1", array: false},
+			{t: "uint8", name: "L2", array: false},
 		},
 	},
 	{
 		t: "bytes", name: "avm_extract3", op: "extract3",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
-			{t: "uint64", name: "STACK_3"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
+			{t: "uint64", name: "STACK_3", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1224,8 +1225,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_extract_uint16", op: "extract_uint16",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1237,8 +1238,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_extract_uint32", op: "extract_uint32",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1250,8 +1251,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_extract_uint64", op: "extract_uint64",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1263,26 +1264,26 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "bytes", name: "avm_replace2", op: "replace2",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "S1"},
+			{t: "uint8", name: "S1", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "bytes", name: "avm_replace2_op", op: "replace2",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "S1"},
+			{t: "uint8", name: "S1", array: false},
 		},
 	},
 	{
 		t: "bytes", name: "avm_replace3", op: "replace3",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
-			{t: "bytes", name: "STACK_3"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
+			{t: "bytes", name: "STACK_3", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1294,40 +1295,40 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "bytes", name: "avm_base64_decode", op: "base64_decode",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
+			{t: "bytes", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "E1"},
+			{t: "uint8", name: "E1", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "bytes", name: "avm_base64_decode_op", op: "base64_decode",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "E1"},
+			{t: "uint8", name: "E1", array: false},
 		},
 	},
 	{
 		t: "any", name: "avm_json_ref", op: "json_ref",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "R1"},
+			{t: "uint8", name: "R1", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "any", name: "avm_json_ref_op", op: "json_ref",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "R1"},
+			{t: "uint8", name: "R1", array: false},
 		},
 	},
 	{
 		t: "uint64", name: "avm_balance", op: "balance",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
+			{t: "any", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1339,8 +1340,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_app_opted_in", op: "app_opted_in",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "any", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1352,8 +1353,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "any", name: "avm_app_local_get", op: "app_local_get",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
+			{t: "any", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1365,9 +1366,9 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "avm_app_local_get_ex_result_t", name: "avm_app_local_get_ex", op: "app_local_get_ex",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
-			{t: "bytes", name: "STACK_3"},
+			{t: "any", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
+			{t: "bytes", name: "STACK_3", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 2,
@@ -1379,7 +1380,7 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "any", name: "avm_app_global_get", op: "app_global_get",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
+			{t: "bytes", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1391,8 +1392,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "avm_app_global_get_ex_result_t", name: "avm_app_global_get_ex", op: "app_global_get_ex",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 2,
@@ -1404,9 +1405,9 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "void", name: "avm_app_local_put", op: "app_local_put",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
-			{t: "any", name: "STACK_3"},
+			{t: "any", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
+			{t: "any", name: "STACK_3", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 0,
@@ -1418,8 +1419,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "void", name: "avm_app_global_put", op: "app_global_put",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "any", name: "STACK_2"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "any", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 0,
@@ -1431,8 +1432,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "void", name: "avm_app_local_del", op: "app_local_del",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
+			{t: "any", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 0,
@@ -1444,7 +1445,7 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "void", name: "avm_app_global_del", op: "app_global_del",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
+			{t: "bytes", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 0,
@@ -1456,72 +1457,72 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "avm_asset_holding_get_result_t", name: "avm_asset_holding_get", op: "asset_holding_get",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "any", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 		returns: 2,
 	},
 	{
 		t: "avm_asset_holding_get_result_t", name: "avm_asset_holding_get_op", op: "asset_holding_get",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 	},
 	{
 		t: "avm_asset_params_get_result_t", name: "avm_asset_params_get", op: "asset_params_get",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
+			{t: "uint64", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 		returns: 2,
 	},
 	{
 		t: "avm_asset_params_get_result_t", name: "avm_asset_params_get_op", op: "asset_params_get",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 	},
 	{
 		t: "avm_app_params_get_result_t", name: "avm_app_params_get", op: "app_params_get",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
+			{t: "uint64", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 		returns: 2,
 	},
 	{
 		t: "avm_app_params_get_result_t", name: "avm_app_params_get_op", op: "app_params_get",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 	},
 	{
 		t: "avm_acct_params_get_result_t", name: "avm_acct_params_get", op: "acct_params_get",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
+			{t: "any", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 		returns: 2,
 	},
 	{
 		t: "avm_acct_params_get_result_t", name: "avm_acct_params_get_op", op: "acct_params_get",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 	},
 	{
 		t: "uint64", name: "avm_min_balance", op: "min_balance",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
+			{t: "any", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1534,64 +1535,64 @@ var builtin_functions = []BuiltinFunctionData{
 		t: "bytes", name: "avm_pushbytes", op: "pushbytes",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "bytes", name: "BYTES1"},
+			{t: "bytes", name: "BYTES1", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "bytes", name: "avm_pushbytes_op", op: "pushbytes",
 		imm: []BuiltinFunctionParamData{
-			{t: "bytes", name: "BYTES1"},
+			{t: "bytes", name: "BYTES1", array: false},
 		},
 	},
 	{
 		t: "uint64", name: "avm_pushint", op: "pushint",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "bytes", name: "UINT1"},
+			{t: "bytes", name: "UINT1", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "uint64", name: "avm_pushint_op", op: "pushint",
 		imm: []BuiltinFunctionParamData{
-			{t: "bytes", name: "UINT1"},
+			{t: "bytes", name: "UINT1", array: false},
 		},
 	},
 	{
 		t: "void", name: "avm_pushbytess", op: "pushbytess",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "bytes", name: "BYTES1"},
+			{t: "bytes", name: "BYTES1", array: true},
 		},
 		returns: 0,
 	},
 	{
 		t: "void", name: "avm_pushbytess_op", op: "pushbytess",
 		imm: []BuiltinFunctionParamData{
-			{t: "bytes", name: "BYTES1"},
+			{t: "bytes", name: "BYTES1", array: true},
 		},
 	},
 	{
 		t: "void", name: "avm_pushints", op: "pushints",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "bytes", name: "UINT1"},
+			{t: "bytes", name: "UINT1", array: true},
 		},
 		returns: 0,
 	},
 	{
 		t: "void", name: "avm_pushints_op", op: "pushints",
 		imm: []BuiltinFunctionParamData{
-			{t: "bytes", name: "UINT1"},
+			{t: "bytes", name: "UINT1", array: true},
 		},
 	},
 	{
 		t: "uint64", name: "avm_ed25519verify_bare", op: "ed25519verify_bare",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
-			{t: "bytes", name: "STACK_3"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
+			{t: "bytes", name: "STACK_3", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1604,14 +1605,14 @@ var builtin_functions = []BuiltinFunctionData{
 		t: "void", name: "avm_callsub", op: "callsub",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "int16", name: "TARGET1"},
+			{t: "label", name: "TARGET1", array: false},
 		},
 		returns: 0,
 	},
 	{
 		t: "void", name: "avm_callsub_op", op: "callsub",
 		imm: []BuiltinFunctionParamData{
-			{t: "int16", name: "TARGET1"},
+			{t: "label", name: "TARGET1", array: false},
 		},
 	},
 	{
@@ -1628,83 +1629,83 @@ var builtin_functions = []BuiltinFunctionData{
 		t: "void", name: "avm_proto", op: "proto",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "A1"},
-			{t: "uint8", name: "R2"},
+			{t: "uint8", name: "A1", array: false},
+			{t: "uint8", name: "R2", array: false},
 		},
 		returns: 0,
 	},
 	{
 		t: "void", name: "avm_proto_op", op: "proto",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "A1"},
-			{t: "uint8", name: "R2"},
+			{t: "uint8", name: "A1", array: false},
+			{t: "uint8", name: "R2", array: false},
 		},
 	},
 	{
 		t: "any", name: "avm_frame_dig", op: "frame_dig",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "int8", name: "I1"},
+			{t: "int8", name: "I1", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "any", name: "avm_frame_dig_op", op: "frame_dig",
 		imm: []BuiltinFunctionParamData{
-			{t: "int8", name: "I1"},
+			{t: "int8", name: "I1", array: false},
 		},
 	},
 	{
 		t: "void", name: "avm_frame_bury", op: "frame_bury",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
+			{t: "any", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "int8", name: "I1"},
+			{t: "int8", name: "I1", array: false},
 		},
 		returns: 0,
 	},
 	{
 		t: "void", name: "avm_frame_bury_op", op: "frame_bury",
 		imm: []BuiltinFunctionParamData{
-			{t: "int8", name: "I1"},
+			{t: "int8", name: "I1", array: false},
 		},
 	},
 	{
-		t: "void", name: "avm_switch_", op: "switch",
+		t: "void", name: "avm_switch", op: "switch",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
+			{t: "uint64", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "bytes", name: "TARGET1"},
+			{t: "label", name: "TARGET1", array: true},
 		},
 		returns: 0,
 	},
 	{
-		t: "void", name: "avm_switch__op", op: "switch",
+		t: "void", name: "avm_switch_op", op: "switch",
 		imm: []BuiltinFunctionParamData{
-			{t: "bytes", name: "TARGET1"},
+			{t: "label", name: "TARGET1", array: true},
 		},
 	},
 	{
 		t: "void", name: "avm_match", op: "match",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "bytes", name: "TARGET1"},
+			{t: "label", name: "TARGET1", array: true},
 		},
 		returns: 0,
 	},
 	{
 		t: "void", name: "avm_match_op", op: "match",
 		imm: []BuiltinFunctionParamData{
-			{t: "bytes", name: "TARGET1"},
+			{t: "label", name: "TARGET1", array: true},
 		},
 	},
 	{
 		t: "uint64", name: "avm_shl", op: "shl",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1716,8 +1717,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_shr", op: "shr",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1729,7 +1730,7 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_sqrt", op: "sqrt",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
+			{t: "uint64", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1741,7 +1742,7 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_bitlen", op: "bitlen",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
+			{t: "any", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1753,8 +1754,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_exp", op: "exp",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1766,8 +1767,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "avm_expw_result_t", name: "avm_expw", op: "expw",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 2,
@@ -1779,7 +1780,7 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "bytes", name: "avm_bsqrt", op: "bsqrt",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
+			{t: "bytes", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1791,9 +1792,9 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_divw", op: "divw",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
-			{t: "uint64", name: "STACK_3"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
+			{t: "uint64", name: "STACK_3", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1805,7 +1806,7 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "bytes", name: "avm_sha3_256", op: "sha3_256",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
+			{t: "bytes", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1817,8 +1818,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "bytes", name: "avm_bplus", op: "b+",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1830,8 +1831,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "bytes", name: "avm_bminus", op: "b-",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1843,8 +1844,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "bytes", name: "avm_bdiv", op: "b/",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1856,8 +1857,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "bytes", name: "avm_bmul", op: "b*",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1869,8 +1870,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_blt", op: "b<",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1882,8 +1883,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_bgt", op: "b>",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1895,8 +1896,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_blteq", op: "b<=",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1908,8 +1909,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_bgteq", op: "b>=",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1921,8 +1922,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_beqeq", op: "b==",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1934,8 +1935,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_bnoteq", op: "b!=",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1947,8 +1948,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "bytes", name: "avm_bmod", op: "b%",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1960,8 +1961,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "bytes", name: "avm_bor", op: "b|",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1973,8 +1974,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "bytes", name: "avm_band", op: "b&",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1986,8 +1987,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "bytes", name: "avm_bxor", op: "b^",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -1999,7 +2000,7 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "bytes", name: "avm_binv", op: "b~",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
+			{t: "bytes", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -2011,7 +2012,7 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "bytes", name: "avm_bzero", op: "bzero",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
+			{t: "uint64", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -2023,7 +2024,7 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "void", name: "avm_log", op: "log",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
+			{t: "bytes", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 0,
@@ -2045,17 +2046,17 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "void", name: "avm_itxn_field", op: "itxn_field",
 		stack: []BuiltinFunctionParamData{
-			{t: "any", name: "STACK_1"},
+			{t: "any", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 		returns: 0,
 	},
 	{
 		t: "void", name: "avm_itxn_field_op", op: "itxn_field",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 	},
 	{
@@ -2072,30 +2073,30 @@ var builtin_functions = []BuiltinFunctionData{
 		t: "any", name: "avm_itxn", op: "itxn",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "any", name: "avm_itxn_op", op: "itxn",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 	},
 	{
 		t: "any", name: "avm_itxna", op: "itxna",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
-			{t: "uint8", name: "I2"},
+			{t: "uint8", name: "F1", array: false},
+			{t: "uint8", name: "I2", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "any", name: "avm_itxna_op", op: "itxna",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
-			{t: "uint8", name: "I2"},
+			{t: "uint8", name: "F1", array: false},
+			{t: "uint8", name: "I2", array: false},
 		},
 	},
 	{
@@ -2112,41 +2113,41 @@ var builtin_functions = []BuiltinFunctionData{
 		t: "any", name: "avm_gitxn", op: "gitxn",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "T1"},
-			{t: "uint8", name: "F2"},
+			{t: "uint8", name: "T1", array: false},
+			{t: "uint8", name: "F2", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "any", name: "avm_gitxn_op", op: "gitxn",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "T1"},
-			{t: "uint8", name: "F2"},
+			{t: "uint8", name: "T1", array: false},
+			{t: "uint8", name: "F2", array: false},
 		},
 	},
 	{
 		t: "any", name: "avm_gitxna", op: "gitxna",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "T1"},
-			{t: "uint8", name: "F2"},
-			{t: "uint8", name: "I3"},
+			{t: "uint8", name: "T1", array: false},
+			{t: "uint8", name: "F2", array: false},
+			{t: "uint8", name: "I3", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "any", name: "avm_gitxna_op", op: "gitxna",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "T1"},
-			{t: "uint8", name: "F2"},
-			{t: "uint8", name: "I3"},
+			{t: "uint8", name: "T1", array: false},
+			{t: "uint8", name: "F2", array: false},
+			{t: "uint8", name: "I3", array: false},
 		},
 	},
 	{
 		t: "uint64", name: "avm_box_create", op: "box_create",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -2158,9 +2159,9 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "bytes", name: "avm_box_extract", op: "box_extract",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
-			{t: "uint64", name: "STACK_3"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
+			{t: "uint64", name: "STACK_3", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -2172,9 +2173,9 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "void", name: "avm_box_replace", op: "box_replace",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
-			{t: "bytes", name: "STACK_3"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
+			{t: "bytes", name: "STACK_3", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 0,
@@ -2186,7 +2187,7 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "uint64", name: "avm_box_del", op: "box_del",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
+			{t: "bytes", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -2198,7 +2199,7 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "avm_box_len_result_t", name: "avm_box_len", op: "box_len",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
+			{t: "bytes", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 2,
@@ -2210,7 +2211,7 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "avm_box_get_result_t", name: "avm_box_get", op: "box_get",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
+			{t: "bytes", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 2,
@@ -2222,8 +2223,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "void", name: "avm_box_put", op: "box_put",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 0,
@@ -2235,58 +2236,58 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "any", name: "avm_txnas", op: "txnas",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
+			{t: "uint64", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "any", name: "avm_txnas_op", op: "txnas",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 	},
 	{
 		t: "any", name: "avm_gtxnas", op: "gtxnas",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
+			{t: "uint64", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "T1"},
-			{t: "uint8", name: "F2"},
+			{t: "uint8", name: "T1", array: false},
+			{t: "uint8", name: "F2", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "any", name: "avm_gtxnas_op", op: "gtxnas",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "T1"},
-			{t: "uint8", name: "F2"},
+			{t: "uint8", name: "T1", array: false},
+			{t: "uint8", name: "F2", array: false},
 		},
 	},
 	{
 		t: "any", name: "avm_gtxnsas", op: "gtxnsas",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "any", name: "avm_gtxnsas_op", op: "gtxnsas",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 	},
 	{
 		t: "bytes", name: "avm_args", op: "args",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
+			{t: "uint64", name: "STACK_1", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -2298,8 +2299,8 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "any", name: "avm_gloadss", op: "gloadss",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
-			{t: "uint64", name: "STACK_2"},
+			{t: "uint64", name: "STACK_1", array: false},
+			{t: "uint64", name: "STACK_2", array: false},
 		},
 		imm:     []BuiltinFunctionParamData{},
 		returns: 1,
@@ -2311,69 +2312,69 @@ var builtin_functions = []BuiltinFunctionData{
 	{
 		t: "any", name: "avm_itxnas", op: "itxnas",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
+			{t: "uint64", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "any", name: "avm_itxnas_op", op: "itxnas",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 	},
 	{
 		t: "any", name: "avm_gitxnas", op: "gitxnas",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
+			{t: "uint64", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "T1"},
-			{t: "uint8", name: "F2"},
+			{t: "uint8", name: "T1", array: false},
+			{t: "uint8", name: "F2", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "any", name: "avm_gitxnas_op", op: "gitxnas",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "T1"},
-			{t: "uint8", name: "F2"},
+			{t: "uint8", name: "T1", array: false},
+			{t: "uint8", name: "F2", array: false},
 		},
 	},
 	{
 		t: "avm_vrf_verify_result_t", name: "avm_vrf_verify", op: "vrf_verify",
 		stack: []BuiltinFunctionParamData{
-			{t: "bytes", name: "STACK_1"},
-			{t: "bytes", name: "STACK_2"},
-			{t: "bytes", name: "STACK_3"},
+			{t: "bytes", name: "STACK_1", array: false},
+			{t: "bytes", name: "STACK_2", array: false},
+			{t: "bytes", name: "STACK_3", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "S1"},
+			{t: "uint8", name: "S1", array: false},
 		},
 		returns: 2,
 	},
 	{
 		t: "avm_vrf_verify_result_t", name: "avm_vrf_verify_op", op: "vrf_verify",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "S1"},
+			{t: "uint8", name: "S1", array: false},
 		},
 	},
 	{
 		t: "any", name: "avm_block", op: "block",
 		stack: []BuiltinFunctionParamData{
-			{t: "uint64", name: "STACK_1"},
+			{t: "uint64", name: "STACK_1", array: false},
 		},
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 		returns: 1,
 	},
 	{
 		t: "any", name: "avm_block_op", op: "block",
 		imm: []BuiltinFunctionParamData{
-			{t: "uint8", name: "F1"},
+			{t: "uint8", name: "F1", array: false},
 		},
 	},
 }

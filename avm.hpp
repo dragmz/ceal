@@ -2,6 +2,7 @@
 #pragma once
 
 #include <variant>
+#include <string>
 
 #define IMMEDIATE
 #define STACK
@@ -12,6 +13,7 @@ using int16 = signed short;
 using uint8 = unsigned char;
 using int8 = signed char;
 using bytes = std::variant<const char *, const unsigned char *>;
+using label = std::string;
 
 template <typename T>
 void abi_decode(bytes data, T &out){};
@@ -260,7 +262,7 @@ divmodw - W,X = (A,B / C,D); Y,Z = (A,B modulo C,D)
 The notation J,K indicates that two uint64 values J and K are interpreted as a uint128 value, with J as the high uint64 and K the low.
 */
 avm_divmodw_result_t avm_divmodw(STACK uint64 STACK_1, STACK uint64 STACK_2, STACK uint64 STACK_3, STACK uint64 STACK_4);
-void avm_intcblock_op(IMMEDIATE bytes UINT1);
+void avm_intcblock_op(IMMEDIATE bytes UINT1, ...);
 /*
 intcblock - prepare block of uint64 constants for use by intc
 
@@ -298,7 +300,7 @@ void avm_intc_3_op();
 intc_3 - constant 3 from intcblock
 */
 uint64 avm_intc_3();
-void avm_bytecblock_op(IMMEDIATE bytes BYTES1);
+void avm_bytecblock_op(IMMEDIATE bytes BYTES1, ...);
 /*
 bytecblock - prepare block of byte-array constants for use by bytec
 
@@ -730,7 +732,7 @@ void avm_stores_op();
 stores - store B to the Ath scratch space
 */
 void avm_stores(STACK uint64 STACK_1, STACK any STACK_2);
-void avm_bnz_op(IMMEDIATE int16 TARGET1);
+void avm_bnz_op(IMMEDIATE label TARGET1);
 /*
 bnz - branch to TARGET if value A is not zero
 
@@ -742,7 +744,7 @@ struct avm_bnz_t
 {
 };
 extern avm_bnz_t avm_bnz;
-void avm_bz_op(IMMEDIATE int16 TARGET1);
+void avm_bz_op(IMMEDIATE label TARGET1);
 /*
 bz - branch to TARGET if value A is zero
 
@@ -752,7 +754,7 @@ struct avm_bz_t
 {
 };
 extern avm_bz_t avm_bz;
-void avm_b_op(IMMEDIATE int16 TARGET1);
+void avm_b_op(IMMEDIATE label TARGET1);
 /*
 b - branch unconditionally to TARGET
 
@@ -762,11 +764,11 @@ struct avm_b_t
 {
 };
 extern avm_b_t avm_b;
-void avm_return__op();
+void avm_return_op();
 /*
 return - use A as success value; end
 */
-void avm_return_(STACK uint64 STACK_1);
+void avm_return(STACK uint64 STACK_1);
 void avm_assert_op();
 /*
 assert - immediately fail unless A is a non-zero number
@@ -1186,7 +1188,7 @@ struct avm_pushint_t
 {
 };
 extern avm_pushint_t avm_pushint;
-void avm_pushbytess_op(IMMEDIATE bytes BYTES1);
+void avm_pushbytess_op(IMMEDIATE bytes BYTES1, ...);
 /*
 pushbytess - push sequences of immediate byte arrays to stack (first byte array being deepest)
 
@@ -1196,7 +1198,7 @@ struct avm_pushbytess_t
 {
 };
 extern avm_pushbytess_t avm_pushbytess;
-void avm_pushints_op(IMMEDIATE bytes UINT1);
+void avm_pushints_op(IMMEDIATE bytes UINT1, ...);
 /*
 pushints - push sequence of immediate uints to stack in the order they appear (first uint being deepest)
 
@@ -1211,7 +1213,7 @@ void avm_ed25519verify_bare_op();
 ed25519verify_bare - for (data A, signature B, pubkey C) verify the signature of the data against the pubkey => {0 or 1}
 */
 uint64 avm_ed25519verify_bare(STACK bytes STACK_1, STACK bytes STACK_2, STACK bytes STACK_3);
-void avm_callsub_op(IMMEDIATE int16 TARGET1);
+void avm_callsub_op(IMMEDIATE label TARGET1);
 /*
 callsub - branch unconditionally to TARGET, saving the next instruction on the call stack
 
@@ -1254,15 +1256,15 @@ struct avm_frame_bury_t
 {
 };
 extern avm_frame_bury_t avm_frame_bury;
-void avm_switch__op(IMMEDIATE bytes TARGET1);
+void avm_switch_op(IMMEDIATE label TARGET1, ...);
 /*
 switch - branch to the Ath label. Continue at following instruction if index A exceeds the number of labels.
 */
-struct avm_switch__t
+struct avm_switch_t
 {
 };
-extern avm_switch__t avm_switch_;
-void avm_match_op(IMMEDIATE bytes TARGET1);
+extern avm_switch_t avm_switch;
+void avm_match_op(IMMEDIATE label TARGET1, ...);
 /*
 match - given match cases from A[1] to A[N], branch to the Ith label where A[I] = B. Continue to the following instruction if no matches are found.
 

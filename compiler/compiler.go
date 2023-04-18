@@ -15,8 +15,9 @@ type CealCompiler struct {
 }
 
 type FunctionParam struct {
-	t    string
-	name string
+	t     string
+	name  string
+	array bool
 }
 
 type BuiltinFunction struct {
@@ -468,15 +469,17 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 
 		for _, item := range item.stack {
 			f.builtin.stack = append(f.builtin.stack, &FunctionParam{
-				t:    item.t,
-				name: item.name,
+				t:     item.t,
+				name:  item.name,
+				array: item.array,
 			})
 		}
 
 		for _, item := range item.imm {
 			f.builtin.imm = append(f.builtin.imm, &FunctionParam{
-				t:    item.t,
-				name: item.name,
+				t:     item.t,
+				name:  item.name,
+				array: item.array,
 			})
 		}
 

@@ -4,7 +4,7 @@ uint64 avm_main()
 {
     asm("int 1"
         "callsub fun");
-    avm_return__op();
+    avm_return_op();
 
     asm("fun:");
 

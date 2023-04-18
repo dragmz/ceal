@@ -2431,7 +2431,7 @@
 			"name": "bnz",
 			"imms": [
 				{
-					"type": "int16",
+					"type": "label",
 					"name": "TARGET1",
 					"array": false
 				}
@@ -2452,7 +2452,7 @@
 			"name": "bz",
 			"imms": [
 				{
-					"type": "int16",
+					"type": "label",
 					"name": "TARGET1",
 					"array": false
 				}
@@ -2473,7 +2473,7 @@
 			"name": "b",
 			"imms": [
 				{
-					"type": "int16",
+					"type": "label",
 					"name": "TARGET1",
 					"array": false
 				}
@@ -3886,7 +3886,7 @@
 			"name": "callsub",
 			"imms": [
 				{
-					"type": "int16",
+					"type": "label",
 					"name": "TARGET1",
 					"array": false
 				}
@@ -3971,7 +3971,7 @@
 			"name": "switch",
 			"imms": [
 				{
-					"type": "bytes",
+					"type": "label",
 					"name": "TARGET1",
 					"array": true
 				}
@@ -3992,7 +3992,7 @@
 			"name": "match",
 			"imms": [
 				{
-					"type": "bytes",
+					"type": "label",
 					"name": "TARGET1",
 					"array": true
 				}

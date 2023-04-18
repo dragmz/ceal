@@ -49,6 +49,10 @@ func formatImms(op ceal.CealSpecOp, skip int, b *strings.Builder) {
 		b.WriteString(arg.Type)
 		b.WriteString(" ")
 		b.WriteString(arg.Name)
+		if arg.Array {
+			// TODO: not sure the ", ..." is the best design choice; what about multiple array args? (but there are none in avm currently)
+			b.WriteString(", ...")
+		}
 	}
 }
 
@@ -83,6 +87,7 @@ func run(a args) error {
 #pragma once
 
 #include <variant>
+#include <string>
 
 #define IMMEDIATE
 #define STACK
@@ -93,6 +98,7 @@ using int16 = signed short;
 using uint8 = unsigned char;
 using int8 = signed char;
 using bytes = std::variant<const char *, const unsigned char *>;
+using label = std::string;
 
 template <typename T>
 void abi_decode(bytes data, T &out){};

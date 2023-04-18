@@ -114,12 +114,12 @@ func readImms(op LangSpecOp) []ceal.CealArg {
 			t = "uint8"
 		case "int8":
 			t = "int8"
-		case "int16 (big-endian)":
-			t = "int16"
 		case "varuint":
 			t = "bytes"
+		case "int16 (big-endian)":
+			t = "label"
 		case "varuint count, [int16 (big-endian) ...]":
-			t = "bytes"
+			t = "label"
 			array = true
 		case "varuint count, [varuint ...]":
 			t = "bytes"

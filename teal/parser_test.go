@@ -40,9 +40,30 @@ func TestParseToSelf(t *testing.T) {
 		`int 1
 		box_create`,
 		`byte b64 dGVzdA==`,
+		`dig 1`,
+		`concat`,
+		`dup`,
+		`-`,
+		`bnz loop_n`,
+		`swap`,
+		`itob`,
+		`extract 1 2`,
 	}
 
 	for _, source := range sources {
 		testParseTo(t, source, source)
+	}
+}
+
+func TestParseError(t *testing.T) {
+	tests := []string{
+		"_some_unknown_op_",
+		"int",
+	}
+
+	for _, test := range tests {
+		assert.Panics(t, func() {
+			ParseTeal(test)
+		})
 	}
 }

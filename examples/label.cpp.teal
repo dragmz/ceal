@@ -1,0 +1,10 @@
+#pragma version 8
+int 1
+bnz test
+test:
+int 1
+int 2
+int 1
+match a b
+a:
+b:

@@ -34,6 +34,8 @@ func readGoType(arg ceal.CealArg) string {
 		t = arg.Type
 	case "bytes":
 		t = "[]byte"
+	case "label":
+		t = "string"
 	default:
 		panic(fmt.Sprintf("unsupported arg type: '%s'", arg.Type))
 	}
@@ -74,8 +76,9 @@ func makeAvmCpp(cs ceal.CealSpec, bw *bufio.Writer) error {
 package teal
 
 import (
-	"strings"
+	"encoding/hex"
 	"fmt"
+	"strings"
 )
 `)
 
@@ -90,11 +93,9 @@ type TealAst interface
 	for _, op := range cs.Ops {
 		name := ceal.FormatOpName(op.Name)
 		fmt.Fprintf(bw, "type Teal_%s struct {\n", name)
+		fmt.Fprintf(bw, "\tTeal_%s_op\n", name)
 		for _, arg := range op.Stacks {
 			fmt.Fprintf(bw, "\t%s TealAst\n", strings.ToUpper(arg.Name))
-		}
-		for _, arg := range op.Imms {
-			fmt.Fprintf(bw, "\t%s %s\n", arg.Name, readGoType(arg))
 		}
 
 		bw.WriteString("}\n")
@@ -113,15 +114,7 @@ type TealAst interface
 			bw.WriteString("\t}\n")
 		}
 
-		fmt.Fprintf(bw, "\tres.WriteString(\"%s\")\n", op.Name)
-		if len(op.Imms) > 0 {
-			for _, arg := range op.Imms {
-				bw.WriteString("\tres.WriteString(\" \")\n")
-
-				// TODO: handle other types than just ints
-				fmt.Fprintf(bw, "\tres.WriteString(fmt.Sprintf(\"%%d\", a.%s))\n", arg.Name)
-			}
-		}
+		fmt.Fprintf(bw, "\tres.WriteString(a.Teal_%s_op.String())\n", name)
 
 		bw.WriteString("\treturn res.String()\n")
 		bw.WriteString("}\n")
@@ -149,19 +142,37 @@ type TealAst interface
 		fmt.Fprintf(bw, "\tres.WriteString(\"%s\")\n", op.Name)
 		if len(op.Imms) > 0 {
 			for _, arg := range op.Imms {
-				bw.WriteString("\tres.WriteString(\" \")\n")
+				if arg.Array {
+					fmt.Fprintf(bw, "\tfor _, v := range a.%s {\n", arg.Name)
+					bw.WriteString("\t\tres.WriteString(\" \")\n")
 
-				// TODO: handle other types than just ints
-				fmt.Fprintf(bw, "\tres.WriteString(fmt.Sprintf(\"%%d\", a.%s))\n", arg.Name)
+					switch arg.Type {
+					case "bytes":
+						bw.WriteString("\t\tres.WriteString(hex.EncodeToString(v))\n")
+					default:
+						bw.WriteString("\t\tres.WriteString(v)\n")
+					}
+
+					bw.WriteString("}\n")
+				} else {
+					switch arg.Type {
+					case "label":
+						fmt.Fprintf(bw, "\tres.WriteString(fmt.Sprintf(\" %%s\", a.%s))\n", arg.Name)
+					default:
+						// TODO: handle other types than just ints
+						fmt.Fprintf(bw, "\tres.WriteString(fmt.Sprintf(\" %%d\", a.%s))\n", arg.Name)
+					}
+				}
 			}
 		}
+
 		bw.WriteString("\treturn res.String()")
 		bw.WriteString("}\n")
 	}
 
 	bw.WriteString("\n")
 
-	bw.WriteString("func parseTeal(ctx ParserContext) TealOp {\n")
+	bw.WriteString("func tryParseTealOp(ctx ParserContext) TealOp {\n")
 	bw.WriteString("\tfirst := ctx.Read()\n")
 	bw.WriteString("\tvalue := first.String()\n")
 	bw.WriteString("\tswitch value {\n")

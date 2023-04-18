@@ -187,6 +187,18 @@ func (a *Teal_byte_value) String() string {
 	return fmt.Sprintf("b64 %s", base64.StdEncoding.EncodeToString(a.V))
 }
 
+type Teal_literal struct {
+	V string
+}
+
+func (a *Teal_literal) Teal() Teal {
+	return Teal{a}
+}
+
+func (a *Teal_literal) String() string {
+	return a.V
+}
+
 type Teal_byte_string_value struct {
 	V string
 }
@@ -196,7 +208,7 @@ func (a *Teal_byte_string_value) Teal() Teal {
 }
 
 func (a *Teal_byte_string_value) String() string {
-	return a.V
+	return fmt.Sprintf("\"%s\"", a.V)
 }
 
 type Teal_named_int_value struct {
@@ -380,11 +392,7 @@ type Teal_raw struct {
 }
 
 func (a *Teal_raw) Teal() Teal {
-	return Teal{a}
-}
-
-func (a *Teal_raw) String() string {
-	return a.V
+	return ParseTeal(a.V)
 }
 
 type Teal_int_op struct {
@@ -399,4 +407,10 @@ func Parse_Teal_int_op(a ParserContext) TealOp {
 func Parse_Teal_byte_op(a ParserContext) TealOp {
 	v := a.Read_rbyte()
 	return &Teal_byte{S: &Teal_byte_value{V: v}}
+}
+
+func Parse_Teal_callsub_op_fixed(a ParserContext) TealOp {
+	v := a.Read()
+	// TODO: should actually return Teal_callsub_op
+	return &Teal_callsub_fixed{Target: v.String()}
 }

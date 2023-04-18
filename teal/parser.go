@@ -12,12 +12,23 @@ import (
 )
 
 type ParserContext interface {
+	Read() tealex.Token
+
 	Read_int8() int8
 	Read_uint8() uint8
 	Read_int16() int16
 	Read_rbyte() []byte
 	Read_rrbyte() [][]byte
-	Read() tealex.Token
+	Read_string() string
+	Read_rstring() []string
+}
+
+func (a *parserContext) Read_rstring() []string {
+	return a.readStringsArray()
+}
+
+func (a *parserContext) Read_string() string {
+	return a.mustRead()
 }
 
 func (a *parserContext) Read_int8() int8 {
@@ -45,6 +56,14 @@ func (a *parserContext) Read() tealex.Token {
 	return a.args.Curr()
 }
 
+type Teal_parse_error struct {
+	e interface{}
+}
+
+func (a *Teal_parse_error) String() string {
+	return fmt.Sprintf("// parse error - %s", a.e)
+}
+
 type parseError struct {
 	error
 
@@ -65,8 +84,8 @@ func (e parseError) End() int {
 	return e.e
 }
 
-func (e parseError) String() string {
-	return e.error.Error()
+func (e parseError) Error() string {
+	return fmt.Sprintf("line: %d, column: %d:%d, error: %s", e.l, e.b, e.e, e.error.Error())
 }
 
 func readInt8(s string) (int8, error) {
@@ -222,6 +241,16 @@ func (c *parserContext) readBytesArray() [][]byte {
 	return res
 }
 
+func (c *parserContext) readStringsArray() []string {
+	res := []string{}
+
+	for c.args.Scan() {
+		res = append(res, c.args.Text())
+	}
+
+	return res
+}
+
 func (c *parserContext) mustReadBytes() []byte {
 	c.mustReadArg()
 	return c.parseBytes()
@@ -278,15 +307,13 @@ type parserContext struct {
 	args *arguments
 }
 
-type recoverable struct{}
-
 func (c *parserContext) failAt(l int, b int, e int, err error) {
-	c.errorAt(l, b, e, err)
-	panic(recoverable{})
+	perr := c.errorAt(l, b, e, err)
+	panic(perr)
 }
 
-func (c *parserContext) errorAt(l int, b int, e int, err error) {
-	panic(parseError{l: l, b: b, e: e, error: err})
+func (c *parserContext) errorAt(l int, b int, e int, err error) error {
+	return parseError{l: l, b: b, e: e, error: err}
 }
 
 func (c *parserContext) failToken(t tealex.Token, err error) {
@@ -384,39 +411,53 @@ func ParseTeal(src string) Teal {
 
 	for _, line := range lines {
 		for _, sub := range line.Subs {
-			var op TealOp
+			func() {
+				// TODO: disabled so ParseTeal panics but maybe should generate an error comment instead?
+				/*
+					defer func() {
+						if err := recover(); err != nil {
+							t = append(t, &Teal_parse_error{e: err})
+						}
+					}()
+				*/
+				var op TealOp
+				ctx := &parserContext{args: &arguments{ts: sub.Tokens}}
 
-			ctx := &parserContext{args: &arguments{ts: sub.Tokens}}
+				f := ctx.Read()
+				v := f.String()
 
-			f := ctx.Read()
-			v := f.String()
+				if strings.HasSuffix(v, "#pragma") {
+					name := ctx.Read()
 
-			if strings.HasSuffix(v, "#pragma") {
-				name := ctx.Read()
+					if name.String() != "version" {
+						panic(fmt.Sprintf("unsupported #pragma: '%s'", name.String()))
+					}
 
-				if name.String() != "version" {
-					panic(fmt.Sprintf("unsupported #pragma: '%s'", name.String()))
+					version := ctx.Read_uint8()
+
+					op = &Teal_pragma_version{
+						Version: int(version),
+					}
+				} else if strings.HasSuffix(v, ":") {
+					op = &Teal_label{Name: v[:len(v)-1]}
+				} else {
+					switch v {
+					case "int":
+						op = Parse_Teal_int_op(ctx)
+					case "byte":
+						op = Parse_Teal_byte_op(ctx)
+					case "callsub":
+						op = Parse_Teal_callsub_op_fixed(ctx)
+					default:
+						pa := &parserContext{args: &arguments{ts: sub.Tokens}}
+						op = tryParseTealOp(pa)
+						if op == nil {
+							pa.failCurr(errors.New(fmt.Sprintf("unexpected op: %s", v)))
+						}
+					}
 				}
-
-				version := ctx.Read_uint8()
-
-				op = &Teal_pragma_version{
-					Version: int(version),
-				}
-			} else if strings.HasSuffix(v, ":") {
-				op = &Teal_label{Name: v[:len(v)-1]}
-			} else {
-				switch v {
-				case "int":
-					op = Parse_Teal_int_op(ctx)
-				case "byte":
-					op = Parse_Teal_byte_op(ctx)
-				default:
-					pa := &parserContext{&arguments{ts: sub.Tokens}}
-					op = parseTeal(pa)
-				}
-			}
-			t = append(t, op)
+				t = append(t, op)
+			}()
 		}
 	}
 

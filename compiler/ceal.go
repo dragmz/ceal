@@ -266,12 +266,12 @@ func (a *CealPrefix) TealAst() teal.TealAst {
 	switch a.Op {
 	case "++":
 		op = &teal.Teal_plus{
-			STACK_1: &teal.Teal_load{I1: uint8(a.V.local.slot)},
+			STACK_1: &teal.Teal_load{Teal_load_op: teal.Teal_load_op{I1: uint8(a.V.local.slot)}},
 			STACK_2: &teal.Teal_int{V: 1},
 		}
 	case "--":
 		op = &teal.Teal_minus{
-			STACK_1: &teal.Teal_load{I1: uint8(a.V.local.slot)},
+			STACK_1: &teal.Teal_load{Teal_load_op: teal.Teal_load_op{I1: uint8(a.V.local.slot)}},
 			STACK_2: &teal.Teal_int{V: 1},
 		}
 	default:
@@ -279,10 +279,10 @@ func (a *CealPrefix) TealAst() teal.TealAst {
 	}
 
 	res := &teal.TealAstBuilder{}
-	res.Write(&teal.Teal_store{STACK_1: op, I1: uint8(a.V.local.slot)})
+	res.Write(&teal.Teal_store{STACK_1: op, Teal_store_op: teal.Teal_store_op{I1: uint8(a.V.local.slot)}})
 
 	if !a.IsStmt {
-		res.Write(&teal.Teal_load{I1: uint8(a.V.local.slot)})
+		res.Write(&teal.Teal_load{Teal_load_op: teal.Teal_load_op{I1: uint8(a.V.local.slot)}})
 	}
 
 	return res.Build()
@@ -305,7 +305,7 @@ func (a *CealPostfix) TealAst() teal.TealAst {
 	}
 
 	var s1 teal.TealAst
-	s1 = &teal.Teal_load{I1: uint8(a.V.local.slot)}
+	s1 = &teal.Teal_load{Teal_load_op: teal.Teal_load_op{I1: uint8(a.V.local.slot)}}
 
 	if !a.IsStmt {
 		s1 = &teal.Teal_dup{STACK_1: s1}
@@ -323,7 +323,7 @@ func (a *CealPostfix) TealAst() teal.TealAst {
 		panic(fmt.Sprintf("postfix operator not supported: '%s'", a.Op))
 	}
 
-	return &teal.Teal_store{STACK_1: op, I1: uint8(a.V.local.slot)}
+	return &teal.Teal_store{STACK_1: op, Teal_store_op: teal.Teal_store_op{I1: uint8(a.V.local.slot)}}
 }
 
 type CealLabel struct {
@@ -350,13 +350,13 @@ func (a *CealVariable) TealAst() teal.TealAst {
 	res := &teal.TealAstBuilder{}
 
 	if a.V.local != nil {
-		ast := &teal.Teal_load{I1: uint8(a.V.local.slot)}
+		ast := &teal.Teal_load{Teal_load_op: teal.Teal_load_op{I1: uint8(a.V.local.slot)}}
 		res.Write(ast)
 		return res.Build()
 	}
 
 	if a.V.param != nil {
-		ast := &teal.Teal_frame_dig{I1: int8(a.V.param.index)}
+		ast := &teal.Teal_frame_dig{Teal_frame_dig_op: teal.Teal_frame_dig_op{I1: int8(a.V.param.index)}}
 		res.Write(ast)
 		return res.Build()
 	}
@@ -364,15 +364,11 @@ func (a *CealVariable) TealAst() teal.TealAst {
 	if a.V.const_ != nil {
 		switch a.V.const_.kind {
 		case SimpleTypeInt:
-			ast := &teal.Teal_intc{
-				I1: uint8(a.V.const_.index),
-			}
+			ast := &teal.Teal_intc{Teal_intc_op: teal.Teal_intc_op{I1: uint8(a.V.const_.index)}}
 			res.Write(ast)
 			return res.Build()
 		case SimpleTypeBytes:
-			ast := &teal.Teal_bytec{
-				I1: uint8(a.V.const_.index),
-			}
+			ast := &teal.Teal_bytec{Teal_bytec_op: teal.Teal_bytec_op{I1: uint8(a.V.const_.index)}}
 			res.Write(ast)
 			return res.Build()
 		}
@@ -427,7 +423,7 @@ func (a *CealAssignSumDiff) TealAst() teal.TealAst {
 		slot = uint8(a.V.local.slot)
 	}
 
-	s1 := &teal.Teal_load{I1: slot}
+	s1 := &teal.Teal_load{Teal_load_op: teal.Teal_load_op{I1: slot}}
 
 	var op teal.TealAst
 
@@ -442,7 +438,7 @@ func (a *CealAssignSumDiff) TealAst() teal.TealAst {
 		op = &teal.Teal_dup{STACK_1: op}
 	}
 
-	return &teal.Teal_store{STACK_1: op, I1: slot}
+	return &teal.Teal_store{STACK_1: op, Teal_store_op: teal.Teal_store_op{I1: slot}}
 }
 
 type CealAnd struct {
@@ -562,8 +558,8 @@ func (a *CealDefine) TealAst() teal.TealAst {
 	}
 
 	ast := &teal.Teal_store{
-		STACK_1: a.Value.TealAst(),
-		I1:      uint8(a.V.local.slot),
+		STACK_1:       a.Value.TealAst(),
+		Teal_store_op: teal.Teal_store_op{I1: uint8(a.V.local.slot)},
 	}
 
 	return ast
@@ -612,16 +608,16 @@ func (a *CealAssign) TealAst() teal.TealAst {
 
 			v := a.V.fields[a.F.name]
 			ast := &teal.Teal_store{
-				STACK_1: a.Value.TealAst(),
-				I1:      uint8(v.local.slot),
+				STACK_1:       a.Value.TealAst(),
+				Teal_store_op: teal.Teal_store_op{I1: uint8(v.local.slot)},
 			}
 
 			res.Write(ast)
 		}
 	} else {
 		ast := &teal.Teal_store{
-			STACK_1: a.Value.TealAst(),
-			I1:      uint8(a.V.local.slot),
+			STACK_1:       a.Value.TealAst(),
+			Teal_store_op: teal.Teal_store_op{I1: uint8(a.V.local.slot)},
 		}
 
 		res.Write(ast)
@@ -629,7 +625,7 @@ func (a *CealAssign) TealAst() teal.TealAst {
 
 	if !a.IsStmt {
 		load := &teal.Teal_load{
-			I1: uint8(a.V.local.slot),
+			Teal_load_op: teal.Teal_load_op{I1: uint8(a.V.local.slot)},
 		}
 
 		res.Write(load)
@@ -665,7 +661,7 @@ func (a *CealStructField) TealAst() teal.TealAst {
 	v := a.V.fields[a.F.name]
 
 	ast := &teal.Teal_load{
-		I1: uint8(v.local.slot),
+		Teal_load_op: teal.Teal_load_op{I1: uint8(v.local.slot)},
 	}
 
 	res.Write(ast)
@@ -704,14 +700,27 @@ func (a *CealCall) TealAst() teal.TealAst {
 
 		var imms []teal.TealAst
 
-		for ; i < len(a.Fun.builtin.stack)+len(a.Fun.builtin.imm); i++ {
+		ii := 0
+		for ; i < len(a.Args); i++ {
 			arg := a.Args[i]
 			if e, ok := arg.(CealValue); ok {
 				e.ToValue()
 			}
 
+			imm := a.Fun.builtin.imm[ii]
+			if e, ok := arg.(*CealStringConstant); ok {
+				switch imm.t {
+				case "label":
+					e.kind = CealStringConstantLabel
+				}
+			}
+
 			ast := arg.TealAst()
 			imms = append(imms, ast)
+
+			if !imm.array {
+				ii++
+			}
 		}
 
 		res.Write(&teal.Teal_call_builtin{
@@ -734,7 +743,7 @@ func (a *CealCall) TealAst() teal.TealAst {
 
 	if a.IsStmt {
 		if a.Fun.returns > 0 {
-			res.Write(&teal.Teal_popn{N1: uint8(a.Fun.returns)})
+			res.Write(&teal.Teal_popn{Teal_popn_op: teal.Teal_popn_op{N1: uint8(a.Fun.returns)}})
 		}
 	}
 
@@ -766,20 +775,37 @@ func (a *CealIntConstant) TealAst() teal.TealAst {
 	return v
 }
 
-type CealByteConstant struct {
+type CealStringConstantKind uint8
+
+const (
+	CealStringConstantLiteral = iota
+	CealStringConstantLabel
+)
+
+type CealStringConstant struct {
 	Value string
 	value bool
+	kind  CealStringConstantKind
 }
 
-func (a *CealByteConstant) ToValue() {
+func (a *CealStringConstant) ToValue() {
 	a.value = true
 }
 
-func (a *CealByteConstant) TealAst() teal.TealAst {
-	var v teal.TealAst = &teal.Teal_byte_string_value{V: a.Value}
+func (a *CealStringConstant) TealAst() teal.TealAst {
+	var v teal.TealAst
+
+	switch a.kind {
+	case CealStringConstantLabel:
+		v = &teal.Teal_literal{V: a.Value}
+	case CealStringConstantLiteral:
+		v = &teal.Teal_byte_string_value{V: a.Value}
+	}
+
 	if !a.value {
 		v = &teal.Teal_byte{S: v}
 	}
+
 	return v
 }
 
@@ -916,8 +942,10 @@ func (a *CealFunction) TealAst() teal.TealAst {
 	if a.Fun.user.sub {
 		if a.Fun.user.args != 0 || a.Fun.returns != 0 {
 			ast := &teal.Teal_proto{
-				A1: uint8(a.Fun.user.args),
-				R2: uint8(a.Fun.returns),
+				Teal_proto_op: teal.Teal_proto_op{
+					A1: uint8(a.Fun.user.args),
+					R2: uint8(a.Fun.returns),
+				},
 			}
 
 			res.Write(ast)
@@ -954,6 +982,18 @@ func (a *CealRaw) Teal() teal.Teal {
 
 func (a *CealRaw) TealAst() teal.TealAst {
 	return a
+}
+
+type CealAsm struct {
+	Value string
+}
+
+func (a *CealAsm) String() string {
+	return a.Value
+}
+
+func (a *CealAsm) TealAst() teal.TealAst {
+	return &teal.Teal_raw{V: a.Value}
 }
 
 type CealSingleLineComment struct {

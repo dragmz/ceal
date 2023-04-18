@@ -37,21 +37,19 @@ type CealSpec struct {
 }
 
 var replaceMap = map[string]string{
-	"+":      "plus",
-	"-":      "minus",
-	"/":      "div",
-	"*":      "mul",
-	"<":      "lt",
-	">":      "gt",
-	"=":      "eq",
-	"&":      "and",
-	"|":      "or",
-	"!":      "not",
-	"%":      "mod",
-	"^":      "xor",
-	"~":      "inv",
-	"switch": "switch_",
-	"return": "return_",
+	"+": "plus",
+	"-": "minus",
+	"/": "div",
+	"*": "mul",
+	"<": "lt",
+	">": "gt",
+	"=": "eq",
+	"&": "and",
+	"|": "or",
+	"!": "not",
+	"%": "mod",
+	"^": "xor",
+	"~": "inv",
 }
 
 func FormatOpName(name string) string {

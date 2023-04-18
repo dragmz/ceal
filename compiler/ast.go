@@ -241,8 +241,8 @@ func (v *AstVisitor) VisitConstantExpr(ctx *parser.ConstantExprContext) interfac
 	}
 
 	if c.STRING() != nil {
-		res = &CealByteConstant{
-			Value: c.STRING().GetText(),
+		res = &CealStringConstant{
+			Value: ceal_TrimSTRINGQuotes(c.STRING().GetText()),
 		}
 	}
 
@@ -702,9 +702,13 @@ func (v *AstVisitor) VisitCommentStmt(ctx *parser.CommentStmtContext) interface{
 func (v *AstVisitor) VisitAsmStmt(ctx *parser.AsmStmtContext) interface{} {
 	var ops []string
 	for _, s := range ctx.AllSTRING() {
-		ops = append(ops, strings.TrimSuffix(strings.TrimPrefix(s.GetText(), "\""), "\""))
+		ops = append(ops, ceal_TrimSTRINGQuotes(s.GetText()))
 	}
-	return &CealRaw{
+	return &CealAsm{
 		Value: strings.Join(ops, "\n"),
 	}
+}
+
+func ceal_TrimSTRINGQuotes(v string) string {
+	return strings.TrimSuffix(strings.TrimPrefix(v, "\""), "\"")
 }
