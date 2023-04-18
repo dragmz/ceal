@@ -132,14 +132,16 @@ type TealAst interface
 		}
 		bw.WriteString("}\n")
 
-		fmt.Fprintf(bw, "func Parse_Teal_%s_op(a ParserArgs) *Teal_%s_op {\n", name, name)
+		fmt.Fprintf(bw, "func Parse_Teal_%s_op(ctx ParserContext) *Teal_%s_op {\n", name, name)
 		fmt.Fprintf(bw, "\tt := &Teal_%s_op{\n", name)
 		for _, imm := range op.Imms {
-			fmt.Fprintf(bw, "\t\t%s: a.Read_%s(),\n", imm.Name, strings.ReplaceAll(readGoType(imm), "[]", "r"))
+			fmt.Fprintf(bw, "\t\t%s: ctx.Read_%s(),\n", imm.Name, strings.ReplaceAll(readGoType(imm), "[]", "r"))
 		}
 		bw.WriteString("\t}\n")
 		bw.WriteString("\treturn t\n")
 		bw.WriteString("}\n")
+
+		bw.WriteString("\n")
 
 		fmt.Fprintf(bw, "func (a *Teal_%s_op) String() string {\n", name)
 		bw.WriteString("\tres := strings.Builder{}\n")
@@ -157,14 +159,16 @@ type TealAst interface
 		bw.WriteString("}\n")
 	}
 
-	bw.WriteString("func parseTeal(a ParserArgs) TealOp {\n")
-	bw.WriteString("\tfirst := a.Read()\n")
+	bw.WriteString("\n")
+
+	bw.WriteString("func parseTeal(ctx ParserContext) TealOp {\n")
+	bw.WriteString("\tfirst := ctx.Read()\n")
 	bw.WriteString("\tvalue := first.String()\n")
 	bw.WriteString("\tswitch value {\n")
 	for _, op := range cs.Ops {
 		name := ceal.FormatOpName(op.Name)
 		fmt.Fprintf(bw, "\t\tcase \"%s\":\n", op.Name)
-		fmt.Fprintf(bw, "\t\treturn Parse_Teal_%s_op(a)\n", name)
+		fmt.Fprintf(bw, "\t\treturn Parse_Teal_%s_op(ctx)\n", name)
 	}
 	bw.WriteString("\t\tdefault:\n")
 	bw.WriteString("\t\t\tpanic(fmt.Sprintf(\"unexpected op: %s\", value))")

@@ -2,11 +2,11 @@ package teal
 
 import "strings"
 
-type Lines struct {
+type Source struct {
 	lines []string
 }
 
-func (l *Lines) WriteLine(s string) {
+func (l *Source) WriteLine(s string) {
 	if s == "" {
 		return
 	}
@@ -14,6 +14,6 @@ func (l *Lines) WriteLine(s string) {
 	l.lines = append(l.lines, s)
 }
 
-func (l *Lines) String() string {
+func (l *Source) String() string {
 	return strings.Join(l.lines, "\n")
 }

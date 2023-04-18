@@ -383,7 +383,7 @@ func (a *CealVariable) TealAst() teal.TealAst {
 		res.Write(&teal.Teal_named_int{V: &teal.Teal_named_int_value{V: a.V.name}})
 		return res.Build()
 	case "bytes":
-		res.Write(&teal.Teal_byte{S: &teal.Teal_byte_value{V: a.V.name}})
+		res.Write(&teal.Teal_byte{S: &teal.Teal_byte_string_value{V: a.V.name}})
 	default:
 		panic(fmt.Sprintf("type '%s' is not supported", a.V.t))
 	}
@@ -776,7 +776,7 @@ func (a *CealByteConstant) ToValue() {
 }
 
 func (a *CealByteConstant) TealAst() teal.TealAst {
-	var v teal.TealAst = &teal.Teal_byte_value{V: a.Value}
+	var v teal.TealAst = &teal.Teal_byte_string_value{V: a.Value}
 	if !a.value {
 		v = &teal.Teal_byte{S: v}
 	}
