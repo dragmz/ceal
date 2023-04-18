@@ -24,10 +24,11 @@ func (a *Teal_err) String() string {
 type Teal_err_op struct {
 }
 
-func Parse_Teal_err_op(a ParserArgs) *Teal_err_op {
+func Parse_Teal_err_op(ctx ParserContext) *Teal_err_op {
 	t := &Teal_err_op{}
 	return t
 }
+
 func (a *Teal_err_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("err")
@@ -54,10 +55,11 @@ func (a *Teal_sha256) String() string {
 type Teal_sha256_op struct {
 }
 
-func Parse_Teal_sha256_op(a ParserArgs) *Teal_sha256_op {
+func Parse_Teal_sha256_op(ctx ParserContext) *Teal_sha256_op {
 	t := &Teal_sha256_op{}
 	return t
 }
+
 func (a *Teal_sha256_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("sha256")
@@ -84,10 +86,11 @@ func (a *Teal_keccak256) String() string {
 type Teal_keccak256_op struct {
 }
 
-func Parse_Teal_keccak256_op(a ParserArgs) *Teal_keccak256_op {
+func Parse_Teal_keccak256_op(ctx ParserContext) *Teal_keccak256_op {
 	t := &Teal_keccak256_op{}
 	return t
 }
+
 func (a *Teal_keccak256_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("keccak256")
@@ -114,10 +117,11 @@ func (a *Teal_sha512_256) String() string {
 type Teal_sha512_256_op struct {
 }
 
-func Parse_Teal_sha512_256_op(a ParserArgs) *Teal_sha512_256_op {
+func Parse_Teal_sha512_256_op(ctx ParserContext) *Teal_sha512_256_op {
 	t := &Teal_sha512_256_op{}
 	return t
 }
+
 func (a *Teal_sha512_256_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("sha512_256")
@@ -154,10 +158,11 @@ func (a *Teal_ed25519verify) String() string {
 type Teal_ed25519verify_op struct {
 }
 
-func Parse_Teal_ed25519verify_op(a ParserArgs) *Teal_ed25519verify_op {
+func Parse_Teal_ed25519verify_op(ctx ParserContext) *Teal_ed25519verify_op {
 	t := &Teal_ed25519verify_op{}
 	return t
 }
+
 func (a *Teal_ed25519verify_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("ed25519verify")
@@ -208,12 +213,13 @@ type Teal_ecdsa_verify_op struct {
 	V1 uint8
 }
 
-func Parse_Teal_ecdsa_verify_op(a ParserArgs) *Teal_ecdsa_verify_op {
+func Parse_Teal_ecdsa_verify_op(ctx ParserContext) *Teal_ecdsa_verify_op {
 	t := &Teal_ecdsa_verify_op{
-		V1: a.Read_uint8(),
+		V1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_ecdsa_verify_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("ecdsa_verify")
@@ -246,12 +252,13 @@ type Teal_ecdsa_pk_decompress_op struct {
 	V1 uint8
 }
 
-func Parse_Teal_ecdsa_pk_decompress_op(a ParserArgs) *Teal_ecdsa_pk_decompress_op {
+func Parse_Teal_ecdsa_pk_decompress_op(ctx ParserContext) *Teal_ecdsa_pk_decompress_op {
 	t := &Teal_ecdsa_pk_decompress_op{
-		V1: a.Read_uint8(),
+		V1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_ecdsa_pk_decompress_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("ecdsa_pk_decompress")
@@ -299,12 +306,13 @@ type Teal_ecdsa_pk_recover_op struct {
 	V1 uint8
 }
 
-func Parse_Teal_ecdsa_pk_recover_op(a ParserArgs) *Teal_ecdsa_pk_recover_op {
+func Parse_Teal_ecdsa_pk_recover_op(ctx ParserContext) *Teal_ecdsa_pk_recover_op {
 	t := &Teal_ecdsa_pk_recover_op{
-		V1: a.Read_uint8(),
+		V1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_ecdsa_pk_recover_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("ecdsa_pk_recover")
@@ -338,10 +346,11 @@ func (a *Teal_plus) String() string {
 type Teal_plus_op struct {
 }
 
-func Parse_Teal_plus_op(a ParserArgs) *Teal_plus_op {
+func Parse_Teal_plus_op(ctx ParserContext) *Teal_plus_op {
 	t := &Teal_plus_op{}
 	return t
 }
+
 func (a *Teal_plus_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("+")
@@ -373,10 +382,11 @@ func (a *Teal_minus) String() string {
 type Teal_minus_op struct {
 }
 
-func Parse_Teal_minus_op(a ParserArgs) *Teal_minus_op {
+func Parse_Teal_minus_op(ctx ParserContext) *Teal_minus_op {
 	t := &Teal_minus_op{}
 	return t
 }
+
 func (a *Teal_minus_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("-")
@@ -408,10 +418,11 @@ func (a *Teal_div) String() string {
 type Teal_div_op struct {
 }
 
-func Parse_Teal_div_op(a ParserArgs) *Teal_div_op {
+func Parse_Teal_div_op(ctx ParserContext) *Teal_div_op {
 	t := &Teal_div_op{}
 	return t
 }
+
 func (a *Teal_div_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("/")
@@ -443,10 +454,11 @@ func (a *Teal_mul) String() string {
 type Teal_mul_op struct {
 }
 
-func Parse_Teal_mul_op(a ParserArgs) *Teal_mul_op {
+func Parse_Teal_mul_op(ctx ParserContext) *Teal_mul_op {
 	t := &Teal_mul_op{}
 	return t
 }
+
 func (a *Teal_mul_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("*")
@@ -478,10 +490,11 @@ func (a *Teal_lt) String() string {
 type Teal_lt_op struct {
 }
 
-func Parse_Teal_lt_op(a ParserArgs) *Teal_lt_op {
+func Parse_Teal_lt_op(ctx ParserContext) *Teal_lt_op {
 	t := &Teal_lt_op{}
 	return t
 }
+
 func (a *Teal_lt_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("<")
@@ -513,10 +526,11 @@ func (a *Teal_gt) String() string {
 type Teal_gt_op struct {
 }
 
-func Parse_Teal_gt_op(a ParserArgs) *Teal_gt_op {
+func Parse_Teal_gt_op(ctx ParserContext) *Teal_gt_op {
 	t := &Teal_gt_op{}
 	return t
 }
+
 func (a *Teal_gt_op) String() string {
 	res := strings.Builder{}
 	res.WriteString(">")
@@ -548,10 +562,11 @@ func (a *Teal_lteq) String() string {
 type Teal_lteq_op struct {
 }
 
-func Parse_Teal_lteq_op(a ParserArgs) *Teal_lteq_op {
+func Parse_Teal_lteq_op(ctx ParserContext) *Teal_lteq_op {
 	t := &Teal_lteq_op{}
 	return t
 }
+
 func (a *Teal_lteq_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("<=")
@@ -583,10 +598,11 @@ func (a *Teal_gteq) String() string {
 type Teal_gteq_op struct {
 }
 
-func Parse_Teal_gteq_op(a ParserArgs) *Teal_gteq_op {
+func Parse_Teal_gteq_op(ctx ParserContext) *Teal_gteq_op {
 	t := &Teal_gteq_op{}
 	return t
 }
+
 func (a *Teal_gteq_op) String() string {
 	res := strings.Builder{}
 	res.WriteString(">=")
@@ -618,10 +634,11 @@ func (a *Teal_andand) String() string {
 type Teal_andand_op struct {
 }
 
-func Parse_Teal_andand_op(a ParserArgs) *Teal_andand_op {
+func Parse_Teal_andand_op(ctx ParserContext) *Teal_andand_op {
 	t := &Teal_andand_op{}
 	return t
 }
+
 func (a *Teal_andand_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("&&")
@@ -653,10 +670,11 @@ func (a *Teal_oror) String() string {
 type Teal_oror_op struct {
 }
 
-func Parse_Teal_oror_op(a ParserArgs) *Teal_oror_op {
+func Parse_Teal_oror_op(ctx ParserContext) *Teal_oror_op {
 	t := &Teal_oror_op{}
 	return t
 }
+
 func (a *Teal_oror_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("||")
@@ -688,10 +706,11 @@ func (a *Teal_eqeq) String() string {
 type Teal_eqeq_op struct {
 }
 
-func Parse_Teal_eqeq_op(a ParserArgs) *Teal_eqeq_op {
+func Parse_Teal_eqeq_op(ctx ParserContext) *Teal_eqeq_op {
 	t := &Teal_eqeq_op{}
 	return t
 }
+
 func (a *Teal_eqeq_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("==")
@@ -723,10 +742,11 @@ func (a *Teal_noteq) String() string {
 type Teal_noteq_op struct {
 }
 
-func Parse_Teal_noteq_op(a ParserArgs) *Teal_noteq_op {
+func Parse_Teal_noteq_op(ctx ParserContext) *Teal_noteq_op {
 	t := &Teal_noteq_op{}
 	return t
 }
+
 func (a *Teal_noteq_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("!=")
@@ -753,10 +773,11 @@ func (a *Teal_not) String() string {
 type Teal_not_op struct {
 }
 
-func Parse_Teal_not_op(a ParserArgs) *Teal_not_op {
+func Parse_Teal_not_op(ctx ParserContext) *Teal_not_op {
 	t := &Teal_not_op{}
 	return t
 }
+
 func (a *Teal_not_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("!")
@@ -783,10 +804,11 @@ func (a *Teal_len) String() string {
 type Teal_len_op struct {
 }
 
-func Parse_Teal_len_op(a ParserArgs) *Teal_len_op {
+func Parse_Teal_len_op(ctx ParserContext) *Teal_len_op {
 	t := &Teal_len_op{}
 	return t
 }
+
 func (a *Teal_len_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("len")
@@ -813,10 +835,11 @@ func (a *Teal_itob) String() string {
 type Teal_itob_op struct {
 }
 
-func Parse_Teal_itob_op(a ParserArgs) *Teal_itob_op {
+func Parse_Teal_itob_op(ctx ParserContext) *Teal_itob_op {
 	t := &Teal_itob_op{}
 	return t
 }
+
 func (a *Teal_itob_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("itob")
@@ -843,10 +866,11 @@ func (a *Teal_btoi) String() string {
 type Teal_btoi_op struct {
 }
 
-func Parse_Teal_btoi_op(a ParserArgs) *Teal_btoi_op {
+func Parse_Teal_btoi_op(ctx ParserContext) *Teal_btoi_op {
 	t := &Teal_btoi_op{}
 	return t
 }
+
 func (a *Teal_btoi_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("btoi")
@@ -878,10 +902,11 @@ func (a *Teal_mod) String() string {
 type Teal_mod_op struct {
 }
 
-func Parse_Teal_mod_op(a ParserArgs) *Teal_mod_op {
+func Parse_Teal_mod_op(ctx ParserContext) *Teal_mod_op {
 	t := &Teal_mod_op{}
 	return t
 }
+
 func (a *Teal_mod_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("%")
@@ -913,10 +938,11 @@ func (a *Teal_or) String() string {
 type Teal_or_op struct {
 }
 
-func Parse_Teal_or_op(a ParserArgs) *Teal_or_op {
+func Parse_Teal_or_op(ctx ParserContext) *Teal_or_op {
 	t := &Teal_or_op{}
 	return t
 }
+
 func (a *Teal_or_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("|")
@@ -948,10 +974,11 @@ func (a *Teal_and) String() string {
 type Teal_and_op struct {
 }
 
-func Parse_Teal_and_op(a ParserArgs) *Teal_and_op {
+func Parse_Teal_and_op(ctx ParserContext) *Teal_and_op {
 	t := &Teal_and_op{}
 	return t
 }
+
 func (a *Teal_and_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("&")
@@ -983,10 +1010,11 @@ func (a *Teal_xor) String() string {
 type Teal_xor_op struct {
 }
 
-func Parse_Teal_xor_op(a ParserArgs) *Teal_xor_op {
+func Parse_Teal_xor_op(ctx ParserContext) *Teal_xor_op {
 	t := &Teal_xor_op{}
 	return t
 }
+
 func (a *Teal_xor_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("^")
@@ -1013,10 +1041,11 @@ func (a *Teal_inv) String() string {
 type Teal_inv_op struct {
 }
 
-func Parse_Teal_inv_op(a ParserArgs) *Teal_inv_op {
+func Parse_Teal_inv_op(ctx ParserContext) *Teal_inv_op {
 	t := &Teal_inv_op{}
 	return t
 }
+
 func (a *Teal_inv_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("~")
@@ -1048,10 +1077,11 @@ func (a *Teal_mulw) String() string {
 type Teal_mulw_op struct {
 }
 
-func Parse_Teal_mulw_op(a ParserArgs) *Teal_mulw_op {
+func Parse_Teal_mulw_op(ctx ParserContext) *Teal_mulw_op {
 	t := &Teal_mulw_op{}
 	return t
 }
+
 func (a *Teal_mulw_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("mulw")
@@ -1083,10 +1113,11 @@ func (a *Teal_addw) String() string {
 type Teal_addw_op struct {
 }
 
-func Parse_Teal_addw_op(a ParserArgs) *Teal_addw_op {
+func Parse_Teal_addw_op(ctx ParserContext) *Teal_addw_op {
 	t := &Teal_addw_op{}
 	return t
 }
+
 func (a *Teal_addw_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("addw")
@@ -1128,10 +1159,11 @@ func (a *Teal_divmodw) String() string {
 type Teal_divmodw_op struct {
 }
 
-func Parse_Teal_divmodw_op(a ParserArgs) *Teal_divmodw_op {
+func Parse_Teal_divmodw_op(ctx ParserContext) *Teal_divmodw_op {
 	t := &Teal_divmodw_op{}
 	return t
 }
+
 func (a *Teal_divmodw_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("divmodw")
@@ -1157,12 +1189,13 @@ type Teal_intcblock_op struct {
 	UINT1 [][]byte
 }
 
-func Parse_Teal_intcblock_op(a ParserArgs) *Teal_intcblock_op {
+func Parse_Teal_intcblock_op(ctx ParserContext) *Teal_intcblock_op {
 	t := &Teal_intcblock_op{
-		UINT1: a.Read_rrbyte(),
+		UINT1: ctx.Read_rrbyte(),
 	}
 	return t
 }
+
 func (a *Teal_intcblock_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("intcblock")
@@ -1190,12 +1223,13 @@ type Teal_intc_op struct {
 	I1 uint8
 }
 
-func Parse_Teal_intc_op(a ParserArgs) *Teal_intc_op {
+func Parse_Teal_intc_op(ctx ParserContext) *Teal_intc_op {
 	t := &Teal_intc_op{
-		I1: a.Read_uint8(),
+		I1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_intc_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("intc")
@@ -1219,10 +1253,11 @@ func (a *Teal_intc_0) String() string {
 type Teal_intc_0_op struct {
 }
 
-func Parse_Teal_intc_0_op(a ParserArgs) *Teal_intc_0_op {
+func Parse_Teal_intc_0_op(ctx ParserContext) *Teal_intc_0_op {
 	t := &Teal_intc_0_op{}
 	return t
 }
+
 func (a *Teal_intc_0_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("intc_0")
@@ -1244,10 +1279,11 @@ func (a *Teal_intc_1) String() string {
 type Teal_intc_1_op struct {
 }
 
-func Parse_Teal_intc_1_op(a ParserArgs) *Teal_intc_1_op {
+func Parse_Teal_intc_1_op(ctx ParserContext) *Teal_intc_1_op {
 	t := &Teal_intc_1_op{}
 	return t
 }
+
 func (a *Teal_intc_1_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("intc_1")
@@ -1269,10 +1305,11 @@ func (a *Teal_intc_2) String() string {
 type Teal_intc_2_op struct {
 }
 
-func Parse_Teal_intc_2_op(a ParserArgs) *Teal_intc_2_op {
+func Parse_Teal_intc_2_op(ctx ParserContext) *Teal_intc_2_op {
 	t := &Teal_intc_2_op{}
 	return t
 }
+
 func (a *Teal_intc_2_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("intc_2")
@@ -1294,10 +1331,11 @@ func (a *Teal_intc_3) String() string {
 type Teal_intc_3_op struct {
 }
 
-func Parse_Teal_intc_3_op(a ParserArgs) *Teal_intc_3_op {
+func Parse_Teal_intc_3_op(ctx ParserContext) *Teal_intc_3_op {
 	t := &Teal_intc_3_op{}
 	return t
 }
+
 func (a *Teal_intc_3_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("intc_3")
@@ -1323,12 +1361,13 @@ type Teal_bytecblock_op struct {
 	BYTES1 [][]byte
 }
 
-func Parse_Teal_bytecblock_op(a ParserArgs) *Teal_bytecblock_op {
+func Parse_Teal_bytecblock_op(ctx ParserContext) *Teal_bytecblock_op {
 	t := &Teal_bytecblock_op{
-		BYTES1: a.Read_rrbyte(),
+		BYTES1: ctx.Read_rrbyte(),
 	}
 	return t
 }
+
 func (a *Teal_bytecblock_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("bytecblock")
@@ -1356,12 +1395,13 @@ type Teal_bytec_op struct {
 	I1 uint8
 }
 
-func Parse_Teal_bytec_op(a ParserArgs) *Teal_bytec_op {
+func Parse_Teal_bytec_op(ctx ParserContext) *Teal_bytec_op {
 	t := &Teal_bytec_op{
-		I1: a.Read_uint8(),
+		I1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_bytec_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("bytec")
@@ -1385,10 +1425,11 @@ func (a *Teal_bytec_0) String() string {
 type Teal_bytec_0_op struct {
 }
 
-func Parse_Teal_bytec_0_op(a ParserArgs) *Teal_bytec_0_op {
+func Parse_Teal_bytec_0_op(ctx ParserContext) *Teal_bytec_0_op {
 	t := &Teal_bytec_0_op{}
 	return t
 }
+
 func (a *Teal_bytec_0_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("bytec_0")
@@ -1410,10 +1451,11 @@ func (a *Teal_bytec_1) String() string {
 type Teal_bytec_1_op struct {
 }
 
-func Parse_Teal_bytec_1_op(a ParserArgs) *Teal_bytec_1_op {
+func Parse_Teal_bytec_1_op(ctx ParserContext) *Teal_bytec_1_op {
 	t := &Teal_bytec_1_op{}
 	return t
 }
+
 func (a *Teal_bytec_1_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("bytec_1")
@@ -1435,10 +1477,11 @@ func (a *Teal_bytec_2) String() string {
 type Teal_bytec_2_op struct {
 }
 
-func Parse_Teal_bytec_2_op(a ParserArgs) *Teal_bytec_2_op {
+func Parse_Teal_bytec_2_op(ctx ParserContext) *Teal_bytec_2_op {
 	t := &Teal_bytec_2_op{}
 	return t
 }
+
 func (a *Teal_bytec_2_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("bytec_2")
@@ -1460,10 +1503,11 @@ func (a *Teal_bytec_3) String() string {
 type Teal_bytec_3_op struct {
 }
 
-func Parse_Teal_bytec_3_op(a ParserArgs) *Teal_bytec_3_op {
+func Parse_Teal_bytec_3_op(ctx ParserContext) *Teal_bytec_3_op {
 	t := &Teal_bytec_3_op{}
 	return t
 }
+
 func (a *Teal_bytec_3_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("bytec_3")
@@ -1489,12 +1533,13 @@ type Teal_arg_op struct {
 	N1 uint8
 }
 
-func Parse_Teal_arg_op(a ParserArgs) *Teal_arg_op {
+func Parse_Teal_arg_op(ctx ParserContext) *Teal_arg_op {
 	t := &Teal_arg_op{
-		N1: a.Read_uint8(),
+		N1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_arg_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("arg")
@@ -1518,10 +1563,11 @@ func (a *Teal_arg_0) String() string {
 type Teal_arg_0_op struct {
 }
 
-func Parse_Teal_arg_0_op(a ParserArgs) *Teal_arg_0_op {
+func Parse_Teal_arg_0_op(ctx ParserContext) *Teal_arg_0_op {
 	t := &Teal_arg_0_op{}
 	return t
 }
+
 func (a *Teal_arg_0_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("arg_0")
@@ -1543,10 +1589,11 @@ func (a *Teal_arg_1) String() string {
 type Teal_arg_1_op struct {
 }
 
-func Parse_Teal_arg_1_op(a ParserArgs) *Teal_arg_1_op {
+func Parse_Teal_arg_1_op(ctx ParserContext) *Teal_arg_1_op {
 	t := &Teal_arg_1_op{}
 	return t
 }
+
 func (a *Teal_arg_1_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("arg_1")
@@ -1568,10 +1615,11 @@ func (a *Teal_arg_2) String() string {
 type Teal_arg_2_op struct {
 }
 
-func Parse_Teal_arg_2_op(a ParserArgs) *Teal_arg_2_op {
+func Parse_Teal_arg_2_op(ctx ParserContext) *Teal_arg_2_op {
 	t := &Teal_arg_2_op{}
 	return t
 }
+
 func (a *Teal_arg_2_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("arg_2")
@@ -1593,10 +1641,11 @@ func (a *Teal_arg_3) String() string {
 type Teal_arg_3_op struct {
 }
 
-func Parse_Teal_arg_3_op(a ParserArgs) *Teal_arg_3_op {
+func Parse_Teal_arg_3_op(ctx ParserContext) *Teal_arg_3_op {
 	t := &Teal_arg_3_op{}
 	return t
 }
+
 func (a *Teal_arg_3_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("arg_3")
@@ -1622,12 +1671,13 @@ type Teal_txn_op struct {
 	F1 uint8
 }
 
-func Parse_Teal_txn_op(a ParserArgs) *Teal_txn_op {
+func Parse_Teal_txn_op(ctx ParserContext) *Teal_txn_op {
 	t := &Teal_txn_op{
-		F1: a.Read_uint8(),
+		F1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_txn_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("txn")
@@ -1655,12 +1705,13 @@ type Teal_global_op struct {
 	F1 uint8
 }
 
-func Parse_Teal_global_op(a ParserArgs) *Teal_global_op {
+func Parse_Teal_global_op(ctx ParserContext) *Teal_global_op {
 	t := &Teal_global_op{
-		F1: a.Read_uint8(),
+		F1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_global_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("global")
@@ -1692,13 +1743,14 @@ type Teal_gtxn_op struct {
 	F2 uint8
 }
 
-func Parse_Teal_gtxn_op(a ParserArgs) *Teal_gtxn_op {
+func Parse_Teal_gtxn_op(ctx ParserContext) *Teal_gtxn_op {
 	t := &Teal_gtxn_op{
-		T1: a.Read_uint8(),
-		F2: a.Read_uint8(),
+		T1: ctx.Read_uint8(),
+		F2: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_gtxn_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("gtxn")
@@ -1728,12 +1780,13 @@ type Teal_load_op struct {
 	I1 uint8
 }
 
-func Parse_Teal_load_op(a ParserArgs) *Teal_load_op {
+func Parse_Teal_load_op(ctx ParserContext) *Teal_load_op {
 	t := &Teal_load_op{
-		I1: a.Read_uint8(),
+		I1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_load_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("load")
@@ -1766,12 +1819,13 @@ type Teal_store_op struct {
 	I1 uint8
 }
 
-func Parse_Teal_store_op(a ParserArgs) *Teal_store_op {
+func Parse_Teal_store_op(ctx ParserContext) *Teal_store_op {
 	t := &Teal_store_op{
-		I1: a.Read_uint8(),
+		I1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_store_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("store")
@@ -1803,13 +1857,14 @@ type Teal_txna_op struct {
 	I2 uint8
 }
 
-func Parse_Teal_txna_op(a ParserArgs) *Teal_txna_op {
+func Parse_Teal_txna_op(ctx ParserContext) *Teal_txna_op {
 	t := &Teal_txna_op{
-		F1: a.Read_uint8(),
-		I2: a.Read_uint8(),
+		F1: ctx.Read_uint8(),
+		I2: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_txna_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("txna")
@@ -1847,14 +1902,15 @@ type Teal_gtxna_op struct {
 	I3 uint8
 }
 
-func Parse_Teal_gtxna_op(a ParserArgs) *Teal_gtxna_op {
+func Parse_Teal_gtxna_op(ctx ParserContext) *Teal_gtxna_op {
 	t := &Teal_gtxna_op{
-		T1: a.Read_uint8(),
-		F2: a.Read_uint8(),
-		I3: a.Read_uint8(),
+		T1: ctx.Read_uint8(),
+		F2: ctx.Read_uint8(),
+		I3: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_gtxna_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("gtxna")
@@ -1891,12 +1947,13 @@ type Teal_gtxns_op struct {
 	F1 uint8
 }
 
-func Parse_Teal_gtxns_op(a ParserArgs) *Teal_gtxns_op {
+func Parse_Teal_gtxns_op(ctx ParserContext) *Teal_gtxns_op {
 	t := &Teal_gtxns_op{
-		F1: a.Read_uint8(),
+		F1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_gtxns_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("gtxns")
@@ -1933,13 +1990,14 @@ type Teal_gtxnsa_op struct {
 	I2 uint8
 }
 
-func Parse_Teal_gtxnsa_op(a ParserArgs) *Teal_gtxnsa_op {
+func Parse_Teal_gtxnsa_op(ctx ParserContext) *Teal_gtxnsa_op {
 	t := &Teal_gtxnsa_op{
-		F1: a.Read_uint8(),
-		I2: a.Read_uint8(),
+		F1: ctx.Read_uint8(),
+		I2: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_gtxnsa_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("gtxnsa")
@@ -1973,13 +2031,14 @@ type Teal_gload_op struct {
 	I2 uint8
 }
 
-func Parse_Teal_gload_op(a ParserArgs) *Teal_gload_op {
+func Parse_Teal_gload_op(ctx ParserContext) *Teal_gload_op {
 	t := &Teal_gload_op{
-		T1: a.Read_uint8(),
-		I2: a.Read_uint8(),
+		T1: ctx.Read_uint8(),
+		I2: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_gload_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("gload")
@@ -2014,12 +2073,13 @@ type Teal_gloads_op struct {
 	I1 uint8
 }
 
-func Parse_Teal_gloads_op(a ParserArgs) *Teal_gloads_op {
+func Parse_Teal_gloads_op(ctx ParserContext) *Teal_gloads_op {
 	t := &Teal_gloads_op{
-		I1: a.Read_uint8(),
+		I1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_gloads_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("gloads")
@@ -2047,12 +2107,13 @@ type Teal_gaid_op struct {
 	T1 uint8
 }
 
-func Parse_Teal_gaid_op(a ParserArgs) *Teal_gaid_op {
+func Parse_Teal_gaid_op(ctx ParserContext) *Teal_gaid_op {
 	t := &Teal_gaid_op{
-		T1: a.Read_uint8(),
+		T1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_gaid_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("gaid")
@@ -2081,10 +2142,11 @@ func (a *Teal_gaids) String() string {
 type Teal_gaids_op struct {
 }
 
-func Parse_Teal_gaids_op(a ParserArgs) *Teal_gaids_op {
+func Parse_Teal_gaids_op(ctx ParserContext) *Teal_gaids_op {
 	t := &Teal_gaids_op{}
 	return t
 }
+
 func (a *Teal_gaids_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("gaids")
@@ -2111,10 +2173,11 @@ func (a *Teal_loads) String() string {
 type Teal_loads_op struct {
 }
 
-func Parse_Teal_loads_op(a ParserArgs) *Teal_loads_op {
+func Parse_Teal_loads_op(ctx ParserContext) *Teal_loads_op {
 	t := &Teal_loads_op{}
 	return t
 }
+
 func (a *Teal_loads_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("loads")
@@ -2146,10 +2209,11 @@ func (a *Teal_stores) String() string {
 type Teal_stores_op struct {
 }
 
-func Parse_Teal_stores_op(a ParserArgs) *Teal_stores_op {
+func Parse_Teal_stores_op(ctx ParserContext) *Teal_stores_op {
 	t := &Teal_stores_op{}
 	return t
 }
+
 func (a *Teal_stores_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("stores")
@@ -2180,12 +2244,13 @@ type Teal_bnz_op struct {
 	TARGET1 int16
 }
 
-func Parse_Teal_bnz_op(a ParserArgs) *Teal_bnz_op {
+func Parse_Teal_bnz_op(ctx ParserContext) *Teal_bnz_op {
 	t := &Teal_bnz_op{
-		TARGET1: a.Read_int16(),
+		TARGET1: ctx.Read_int16(),
 	}
 	return t
 }
+
 func (a *Teal_bnz_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("bnz")
@@ -2218,12 +2283,13 @@ type Teal_bz_op struct {
 	TARGET1 int16
 }
 
-func Parse_Teal_bz_op(a ParserArgs) *Teal_bz_op {
+func Parse_Teal_bz_op(ctx ParserContext) *Teal_bz_op {
 	t := &Teal_bz_op{
-		TARGET1: a.Read_int16(),
+		TARGET1: ctx.Read_int16(),
 	}
 	return t
 }
+
 func (a *Teal_bz_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("bz")
@@ -2251,12 +2317,13 @@ type Teal_b_op struct {
 	TARGET1 int16
 }
 
-func Parse_Teal_b_op(a ParserArgs) *Teal_b_op {
+func Parse_Teal_b_op(ctx ParserContext) *Teal_b_op {
 	t := &Teal_b_op{
-		TARGET1: a.Read_int16(),
+		TARGET1: ctx.Read_int16(),
 	}
 	return t
 }
+
 func (a *Teal_b_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("b")
@@ -2285,10 +2352,11 @@ func (a *Teal_return_) String() string {
 type Teal_return__op struct {
 }
 
-func Parse_Teal_return__op(a ParserArgs) *Teal_return__op {
+func Parse_Teal_return__op(ctx ParserContext) *Teal_return__op {
 	t := &Teal_return__op{}
 	return t
 }
+
 func (a *Teal_return__op) String() string {
 	res := strings.Builder{}
 	res.WriteString("return")
@@ -2315,10 +2383,11 @@ func (a *Teal_assert) String() string {
 type Teal_assert_op struct {
 }
 
-func Parse_Teal_assert_op(a ParserArgs) *Teal_assert_op {
+func Parse_Teal_assert_op(ctx ParserContext) *Teal_assert_op {
 	t := &Teal_assert_op{}
 	return t
 }
+
 func (a *Teal_assert_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("assert")
@@ -2349,12 +2418,13 @@ type Teal_bury_op struct {
 	N1 uint8
 }
 
-func Parse_Teal_bury_op(a ParserArgs) *Teal_bury_op {
+func Parse_Teal_bury_op(ctx ParserContext) *Teal_bury_op {
 	t := &Teal_bury_op{
-		N1: a.Read_uint8(),
+		N1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_bury_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("bury")
@@ -2382,12 +2452,13 @@ type Teal_popn_op struct {
 	N1 uint8
 }
 
-func Parse_Teal_popn_op(a ParserArgs) *Teal_popn_op {
+func Parse_Teal_popn_op(ctx ParserContext) *Teal_popn_op {
 	t := &Teal_popn_op{
-		N1: a.Read_uint8(),
+		N1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_popn_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("popn")
@@ -2420,12 +2491,13 @@ type Teal_dupn_op struct {
 	N1 uint8
 }
 
-func Parse_Teal_dupn_op(a ParserArgs) *Teal_dupn_op {
+func Parse_Teal_dupn_op(ctx ParserContext) *Teal_dupn_op {
 	t := &Teal_dupn_op{
-		N1: a.Read_uint8(),
+		N1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_dupn_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("dupn")
@@ -2454,10 +2526,11 @@ func (a *Teal_pop) String() string {
 type Teal_pop_op struct {
 }
 
-func Parse_Teal_pop_op(a ParserArgs) *Teal_pop_op {
+func Parse_Teal_pop_op(ctx ParserContext) *Teal_pop_op {
 	t := &Teal_pop_op{}
 	return t
 }
+
 func (a *Teal_pop_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("pop")
@@ -2484,10 +2557,11 @@ func (a *Teal_dup) String() string {
 type Teal_dup_op struct {
 }
 
-func Parse_Teal_dup_op(a ParserArgs) *Teal_dup_op {
+func Parse_Teal_dup_op(ctx ParserContext) *Teal_dup_op {
 	t := &Teal_dup_op{}
 	return t
 }
+
 func (a *Teal_dup_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("dup")
@@ -2519,10 +2593,11 @@ func (a *Teal_dup2) String() string {
 type Teal_dup2_op struct {
 }
 
-func Parse_Teal_dup2_op(a ParserArgs) *Teal_dup2_op {
+func Parse_Teal_dup2_op(ctx ParserContext) *Teal_dup2_op {
 	t := &Teal_dup2_op{}
 	return t
 }
+
 func (a *Teal_dup2_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("dup2")
@@ -2553,12 +2628,13 @@ type Teal_dig_op struct {
 	N1 uint8
 }
 
-func Parse_Teal_dig_op(a ParserArgs) *Teal_dig_op {
+func Parse_Teal_dig_op(ctx ParserContext) *Teal_dig_op {
 	t := &Teal_dig_op{
-		N1: a.Read_uint8(),
+		N1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_dig_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("dig")
@@ -2592,10 +2668,11 @@ func (a *Teal_swap) String() string {
 type Teal_swap_op struct {
 }
 
-func Parse_Teal_swap_op(a ParserArgs) *Teal_swap_op {
+func Parse_Teal_swap_op(ctx ParserContext) *Teal_swap_op {
 	t := &Teal_swap_op{}
 	return t
 }
+
 func (a *Teal_swap_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("swap")
@@ -2632,10 +2709,11 @@ func (a *Teal_select) String() string {
 type Teal_select_op struct {
 }
 
-func Parse_Teal_select_op(a ParserArgs) *Teal_select_op {
+func Parse_Teal_select_op(ctx ParserContext) *Teal_select_op {
 	t := &Teal_select_op{}
 	return t
 }
+
 func (a *Teal_select_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("select")
@@ -2666,12 +2744,13 @@ type Teal_cover_op struct {
 	N1 uint8
 }
 
-func Parse_Teal_cover_op(a ParserArgs) *Teal_cover_op {
+func Parse_Teal_cover_op(ctx ParserContext) *Teal_cover_op {
 	t := &Teal_cover_op{
-		N1: a.Read_uint8(),
+		N1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_cover_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("cover")
@@ -2704,12 +2783,13 @@ type Teal_uncover_op struct {
 	N1 uint8
 }
 
-func Parse_Teal_uncover_op(a ParserArgs) *Teal_uncover_op {
+func Parse_Teal_uncover_op(ctx ParserContext) *Teal_uncover_op {
 	t := &Teal_uncover_op{
-		N1: a.Read_uint8(),
+		N1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_uncover_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("uncover")
@@ -2743,10 +2823,11 @@ func (a *Teal_concat) String() string {
 type Teal_concat_op struct {
 }
 
-func Parse_Teal_concat_op(a ParserArgs) *Teal_concat_op {
+func Parse_Teal_concat_op(ctx ParserContext) *Teal_concat_op {
 	t := &Teal_concat_op{}
 	return t
 }
+
 func (a *Teal_concat_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("concat")
@@ -2781,13 +2862,14 @@ type Teal_substring_op struct {
 	E2 uint8
 }
 
-func Parse_Teal_substring_op(a ParserArgs) *Teal_substring_op {
+func Parse_Teal_substring_op(ctx ParserContext) *Teal_substring_op {
 	t := &Teal_substring_op{
-		S1: a.Read_uint8(),
-		E2: a.Read_uint8(),
+		S1: ctx.Read_uint8(),
+		E2: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_substring_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("substring")
@@ -2828,10 +2910,11 @@ func (a *Teal_substring3) String() string {
 type Teal_substring3_op struct {
 }
 
-func Parse_Teal_substring3_op(a ParserArgs) *Teal_substring3_op {
+func Parse_Teal_substring3_op(ctx ParserContext) *Teal_substring3_op {
 	t := &Teal_substring3_op{}
 	return t
 }
+
 func (a *Teal_substring3_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("substring3")
@@ -2863,10 +2946,11 @@ func (a *Teal_getbit) String() string {
 type Teal_getbit_op struct {
 }
 
-func Parse_Teal_getbit_op(a ParserArgs) *Teal_getbit_op {
+func Parse_Teal_getbit_op(ctx ParserContext) *Teal_getbit_op {
 	t := &Teal_getbit_op{}
 	return t
 }
+
 func (a *Teal_getbit_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("getbit")
@@ -2903,10 +2987,11 @@ func (a *Teal_setbit) String() string {
 type Teal_setbit_op struct {
 }
 
-func Parse_Teal_setbit_op(a ParserArgs) *Teal_setbit_op {
+func Parse_Teal_setbit_op(ctx ParserContext) *Teal_setbit_op {
 	t := &Teal_setbit_op{}
 	return t
 }
+
 func (a *Teal_setbit_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("setbit")
@@ -2938,10 +3023,11 @@ func (a *Teal_getbyte) String() string {
 type Teal_getbyte_op struct {
 }
 
-func Parse_Teal_getbyte_op(a ParserArgs) *Teal_getbyte_op {
+func Parse_Teal_getbyte_op(ctx ParserContext) *Teal_getbyte_op {
 	t := &Teal_getbyte_op{}
 	return t
 }
+
 func (a *Teal_getbyte_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("getbyte")
@@ -2978,10 +3064,11 @@ func (a *Teal_setbyte) String() string {
 type Teal_setbyte_op struct {
 }
 
-func Parse_Teal_setbyte_op(a ParserArgs) *Teal_setbyte_op {
+func Parse_Teal_setbyte_op(ctx ParserContext) *Teal_setbyte_op {
 	t := &Teal_setbyte_op{}
 	return t
 }
+
 func (a *Teal_setbyte_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("setbyte")
@@ -3016,13 +3103,14 @@ type Teal_extract_op struct {
 	L2 uint8
 }
 
-func Parse_Teal_extract_op(a ParserArgs) *Teal_extract_op {
+func Parse_Teal_extract_op(ctx ParserContext) *Teal_extract_op {
 	t := &Teal_extract_op{
-		S1: a.Read_uint8(),
-		L2: a.Read_uint8(),
+		S1: ctx.Read_uint8(),
+		L2: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_extract_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("extract")
@@ -3063,10 +3151,11 @@ func (a *Teal_extract3) String() string {
 type Teal_extract3_op struct {
 }
 
-func Parse_Teal_extract3_op(a ParserArgs) *Teal_extract3_op {
+func Parse_Teal_extract3_op(ctx ParserContext) *Teal_extract3_op {
 	t := &Teal_extract3_op{}
 	return t
 }
+
 func (a *Teal_extract3_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("extract3")
@@ -3098,10 +3187,11 @@ func (a *Teal_extract_uint16) String() string {
 type Teal_extract_uint16_op struct {
 }
 
-func Parse_Teal_extract_uint16_op(a ParserArgs) *Teal_extract_uint16_op {
+func Parse_Teal_extract_uint16_op(ctx ParserContext) *Teal_extract_uint16_op {
 	t := &Teal_extract_uint16_op{}
 	return t
 }
+
 func (a *Teal_extract_uint16_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("extract_uint16")
@@ -3133,10 +3223,11 @@ func (a *Teal_extract_uint32) String() string {
 type Teal_extract_uint32_op struct {
 }
 
-func Parse_Teal_extract_uint32_op(a ParserArgs) *Teal_extract_uint32_op {
+func Parse_Teal_extract_uint32_op(ctx ParserContext) *Teal_extract_uint32_op {
 	t := &Teal_extract_uint32_op{}
 	return t
 }
+
 func (a *Teal_extract_uint32_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("extract_uint32")
@@ -3168,10 +3259,11 @@ func (a *Teal_extract_uint64) String() string {
 type Teal_extract_uint64_op struct {
 }
 
-func Parse_Teal_extract_uint64_op(a ParserArgs) *Teal_extract_uint64_op {
+func Parse_Teal_extract_uint64_op(ctx ParserContext) *Teal_extract_uint64_op {
 	t := &Teal_extract_uint64_op{}
 	return t
 }
+
 func (a *Teal_extract_uint64_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("extract_uint64")
@@ -3207,12 +3299,13 @@ type Teal_replace2_op struct {
 	S1 uint8
 }
 
-func Parse_Teal_replace2_op(a ParserArgs) *Teal_replace2_op {
+func Parse_Teal_replace2_op(ctx ParserContext) *Teal_replace2_op {
 	t := &Teal_replace2_op{
-		S1: a.Read_uint8(),
+		S1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_replace2_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("replace2")
@@ -3251,10 +3344,11 @@ func (a *Teal_replace3) String() string {
 type Teal_replace3_op struct {
 }
 
-func Parse_Teal_replace3_op(a ParserArgs) *Teal_replace3_op {
+func Parse_Teal_replace3_op(ctx ParserContext) *Teal_replace3_op {
 	t := &Teal_replace3_op{}
 	return t
 }
+
 func (a *Teal_replace3_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("replace3")
@@ -3285,12 +3379,13 @@ type Teal_base64_decode_op struct {
 	E1 uint8
 }
 
-func Parse_Teal_base64_decode_op(a ParserArgs) *Teal_base64_decode_op {
+func Parse_Teal_base64_decode_op(ctx ParserContext) *Teal_base64_decode_op {
 	t := &Teal_base64_decode_op{
-		E1: a.Read_uint8(),
+		E1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_base64_decode_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("base64_decode")
@@ -3328,12 +3423,13 @@ type Teal_json_ref_op struct {
 	R1 uint8
 }
 
-func Parse_Teal_json_ref_op(a ParserArgs) *Teal_json_ref_op {
+func Parse_Teal_json_ref_op(ctx ParserContext) *Teal_json_ref_op {
 	t := &Teal_json_ref_op{
-		R1: a.Read_uint8(),
+		R1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_json_ref_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("json_ref")
@@ -3362,10 +3458,11 @@ func (a *Teal_balance) String() string {
 type Teal_balance_op struct {
 }
 
-func Parse_Teal_balance_op(a ParserArgs) *Teal_balance_op {
+func Parse_Teal_balance_op(ctx ParserContext) *Teal_balance_op {
 	t := &Teal_balance_op{}
 	return t
 }
+
 func (a *Teal_balance_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("balance")
@@ -3397,10 +3494,11 @@ func (a *Teal_app_opted_in) String() string {
 type Teal_app_opted_in_op struct {
 }
 
-func Parse_Teal_app_opted_in_op(a ParserArgs) *Teal_app_opted_in_op {
+func Parse_Teal_app_opted_in_op(ctx ParserContext) *Teal_app_opted_in_op {
 	t := &Teal_app_opted_in_op{}
 	return t
 }
+
 func (a *Teal_app_opted_in_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("app_opted_in")
@@ -3432,10 +3530,11 @@ func (a *Teal_app_local_get) String() string {
 type Teal_app_local_get_op struct {
 }
 
-func Parse_Teal_app_local_get_op(a ParserArgs) *Teal_app_local_get_op {
+func Parse_Teal_app_local_get_op(ctx ParserContext) *Teal_app_local_get_op {
 	t := &Teal_app_local_get_op{}
 	return t
 }
+
 func (a *Teal_app_local_get_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("app_local_get")
@@ -3472,10 +3571,11 @@ func (a *Teal_app_local_get_ex) String() string {
 type Teal_app_local_get_ex_op struct {
 }
 
-func Parse_Teal_app_local_get_ex_op(a ParserArgs) *Teal_app_local_get_ex_op {
+func Parse_Teal_app_local_get_ex_op(ctx ParserContext) *Teal_app_local_get_ex_op {
 	t := &Teal_app_local_get_ex_op{}
 	return t
 }
+
 func (a *Teal_app_local_get_ex_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("app_local_get_ex")
@@ -3502,10 +3602,11 @@ func (a *Teal_app_global_get) String() string {
 type Teal_app_global_get_op struct {
 }
 
-func Parse_Teal_app_global_get_op(a ParserArgs) *Teal_app_global_get_op {
+func Parse_Teal_app_global_get_op(ctx ParserContext) *Teal_app_global_get_op {
 	t := &Teal_app_global_get_op{}
 	return t
 }
+
 func (a *Teal_app_global_get_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("app_global_get")
@@ -3537,10 +3638,11 @@ func (a *Teal_app_global_get_ex) String() string {
 type Teal_app_global_get_ex_op struct {
 }
 
-func Parse_Teal_app_global_get_ex_op(a ParserArgs) *Teal_app_global_get_ex_op {
+func Parse_Teal_app_global_get_ex_op(ctx ParserContext) *Teal_app_global_get_ex_op {
 	t := &Teal_app_global_get_ex_op{}
 	return t
 }
+
 func (a *Teal_app_global_get_ex_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("app_global_get_ex")
@@ -3577,10 +3679,11 @@ func (a *Teal_app_local_put) String() string {
 type Teal_app_local_put_op struct {
 }
 
-func Parse_Teal_app_local_put_op(a ParserArgs) *Teal_app_local_put_op {
+func Parse_Teal_app_local_put_op(ctx ParserContext) *Teal_app_local_put_op {
 	t := &Teal_app_local_put_op{}
 	return t
 }
+
 func (a *Teal_app_local_put_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("app_local_put")
@@ -3612,10 +3715,11 @@ func (a *Teal_app_global_put) String() string {
 type Teal_app_global_put_op struct {
 }
 
-func Parse_Teal_app_global_put_op(a ParserArgs) *Teal_app_global_put_op {
+func Parse_Teal_app_global_put_op(ctx ParserContext) *Teal_app_global_put_op {
 	t := &Teal_app_global_put_op{}
 	return t
 }
+
 func (a *Teal_app_global_put_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("app_global_put")
@@ -3647,10 +3751,11 @@ func (a *Teal_app_local_del) String() string {
 type Teal_app_local_del_op struct {
 }
 
-func Parse_Teal_app_local_del_op(a ParserArgs) *Teal_app_local_del_op {
+func Parse_Teal_app_local_del_op(ctx ParserContext) *Teal_app_local_del_op {
 	t := &Teal_app_local_del_op{}
 	return t
 }
+
 func (a *Teal_app_local_del_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("app_local_del")
@@ -3677,10 +3782,11 @@ func (a *Teal_app_global_del) String() string {
 type Teal_app_global_del_op struct {
 }
 
-func Parse_Teal_app_global_del_op(a ParserArgs) *Teal_app_global_del_op {
+func Parse_Teal_app_global_del_op(ctx ParserContext) *Teal_app_global_del_op {
 	t := &Teal_app_global_del_op{}
 	return t
 }
+
 func (a *Teal_app_global_del_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("app_global_del")
@@ -3716,12 +3822,13 @@ type Teal_asset_holding_get_op struct {
 	F1 uint8
 }
 
-func Parse_Teal_asset_holding_get_op(a ParserArgs) *Teal_asset_holding_get_op {
+func Parse_Teal_asset_holding_get_op(ctx ParserContext) *Teal_asset_holding_get_op {
 	t := &Teal_asset_holding_get_op{
-		F1: a.Read_uint8(),
+		F1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_asset_holding_get_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("asset_holding_get")
@@ -3754,12 +3861,13 @@ type Teal_asset_params_get_op struct {
 	F1 uint8
 }
 
-func Parse_Teal_asset_params_get_op(a ParserArgs) *Teal_asset_params_get_op {
+func Parse_Teal_asset_params_get_op(ctx ParserContext) *Teal_asset_params_get_op {
 	t := &Teal_asset_params_get_op{
-		F1: a.Read_uint8(),
+		F1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_asset_params_get_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("asset_params_get")
@@ -3792,12 +3900,13 @@ type Teal_app_params_get_op struct {
 	F1 uint8
 }
 
-func Parse_Teal_app_params_get_op(a ParserArgs) *Teal_app_params_get_op {
+func Parse_Teal_app_params_get_op(ctx ParserContext) *Teal_app_params_get_op {
 	t := &Teal_app_params_get_op{
-		F1: a.Read_uint8(),
+		F1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_app_params_get_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("app_params_get")
@@ -3830,12 +3939,13 @@ type Teal_acct_params_get_op struct {
 	F1 uint8
 }
 
-func Parse_Teal_acct_params_get_op(a ParserArgs) *Teal_acct_params_get_op {
+func Parse_Teal_acct_params_get_op(ctx ParserContext) *Teal_acct_params_get_op {
 	t := &Teal_acct_params_get_op{
-		F1: a.Read_uint8(),
+		F1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_acct_params_get_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("acct_params_get")
@@ -3864,10 +3974,11 @@ func (a *Teal_min_balance) String() string {
 type Teal_min_balance_op struct {
 }
 
-func Parse_Teal_min_balance_op(a ParserArgs) *Teal_min_balance_op {
+func Parse_Teal_min_balance_op(ctx ParserContext) *Teal_min_balance_op {
 	t := &Teal_min_balance_op{}
 	return t
 }
+
 func (a *Teal_min_balance_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("min_balance")
@@ -3893,12 +4004,13 @@ type Teal_pushbytes_op struct {
 	BYTES1 []byte
 }
 
-func Parse_Teal_pushbytes_op(a ParserArgs) *Teal_pushbytes_op {
+func Parse_Teal_pushbytes_op(ctx ParserContext) *Teal_pushbytes_op {
 	t := &Teal_pushbytes_op{
-		BYTES1: a.Read_rbyte(),
+		BYTES1: ctx.Read_rbyte(),
 	}
 	return t
 }
+
 func (a *Teal_pushbytes_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("pushbytes")
@@ -3926,12 +4038,13 @@ type Teal_pushint_op struct {
 	UINT1 []byte
 }
 
-func Parse_Teal_pushint_op(a ParserArgs) *Teal_pushint_op {
+func Parse_Teal_pushint_op(ctx ParserContext) *Teal_pushint_op {
 	t := &Teal_pushint_op{
-		UINT1: a.Read_rbyte(),
+		UINT1: ctx.Read_rbyte(),
 	}
 	return t
 }
+
 func (a *Teal_pushint_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("pushint")
@@ -3959,12 +4072,13 @@ type Teal_pushbytess_op struct {
 	BYTES1 [][]byte
 }
 
-func Parse_Teal_pushbytess_op(a ParserArgs) *Teal_pushbytess_op {
+func Parse_Teal_pushbytess_op(ctx ParserContext) *Teal_pushbytess_op {
 	t := &Teal_pushbytess_op{
-		BYTES1: a.Read_rrbyte(),
+		BYTES1: ctx.Read_rrbyte(),
 	}
 	return t
 }
+
 func (a *Teal_pushbytess_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("pushbytess")
@@ -3992,12 +4106,13 @@ type Teal_pushints_op struct {
 	UINT1 [][]byte
 }
 
-func Parse_Teal_pushints_op(a ParserArgs) *Teal_pushints_op {
+func Parse_Teal_pushints_op(ctx ParserContext) *Teal_pushints_op {
 	t := &Teal_pushints_op{
-		UINT1: a.Read_rrbyte(),
+		UINT1: ctx.Read_rrbyte(),
 	}
 	return t
 }
+
 func (a *Teal_pushints_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("pushints")
@@ -4036,10 +4151,11 @@ func (a *Teal_ed25519verify_bare) String() string {
 type Teal_ed25519verify_bare_op struct {
 }
 
-func Parse_Teal_ed25519verify_bare_op(a ParserArgs) *Teal_ed25519verify_bare_op {
+func Parse_Teal_ed25519verify_bare_op(ctx ParserContext) *Teal_ed25519verify_bare_op {
 	t := &Teal_ed25519verify_bare_op{}
 	return t
 }
+
 func (a *Teal_ed25519verify_bare_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("ed25519verify_bare")
@@ -4065,12 +4181,13 @@ type Teal_callsub_op struct {
 	TARGET1 int16
 }
 
-func Parse_Teal_callsub_op(a ParserArgs) *Teal_callsub_op {
+func Parse_Teal_callsub_op(ctx ParserContext) *Teal_callsub_op {
 	t := &Teal_callsub_op{
-		TARGET1: a.Read_int16(),
+		TARGET1: ctx.Read_int16(),
 	}
 	return t
 }
+
 func (a *Teal_callsub_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("callsub")
@@ -4094,10 +4211,11 @@ func (a *Teal_retsub) String() string {
 type Teal_retsub_op struct {
 }
 
-func Parse_Teal_retsub_op(a ParserArgs) *Teal_retsub_op {
+func Parse_Teal_retsub_op(ctx ParserContext) *Teal_retsub_op {
 	t := &Teal_retsub_op{}
 	return t
 }
+
 func (a *Teal_retsub_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("retsub")
@@ -4127,13 +4245,14 @@ type Teal_proto_op struct {
 	R2 uint8
 }
 
-func Parse_Teal_proto_op(a ParserArgs) *Teal_proto_op {
+func Parse_Teal_proto_op(ctx ParserContext) *Teal_proto_op {
 	t := &Teal_proto_op{
-		A1: a.Read_uint8(),
-		R2: a.Read_uint8(),
+		A1: ctx.Read_uint8(),
+		R2: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_proto_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("proto")
@@ -4163,12 +4282,13 @@ type Teal_frame_dig_op struct {
 	I1 int8
 }
 
-func Parse_Teal_frame_dig_op(a ParserArgs) *Teal_frame_dig_op {
+func Parse_Teal_frame_dig_op(ctx ParserContext) *Teal_frame_dig_op {
 	t := &Teal_frame_dig_op{
-		I1: a.Read_int8(),
+		I1: ctx.Read_int8(),
 	}
 	return t
 }
+
 func (a *Teal_frame_dig_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("frame_dig")
@@ -4201,12 +4321,13 @@ type Teal_frame_bury_op struct {
 	I1 int8
 }
 
-func Parse_Teal_frame_bury_op(a ParserArgs) *Teal_frame_bury_op {
+func Parse_Teal_frame_bury_op(ctx ParserContext) *Teal_frame_bury_op {
 	t := &Teal_frame_bury_op{
-		I1: a.Read_int8(),
+		I1: ctx.Read_int8(),
 	}
 	return t
 }
+
 func (a *Teal_frame_bury_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("frame_bury")
@@ -4239,12 +4360,13 @@ type Teal_switch__op struct {
 	TARGET1 [][]byte
 }
 
-func Parse_Teal_switch__op(a ParserArgs) *Teal_switch__op {
+func Parse_Teal_switch__op(ctx ParserContext) *Teal_switch__op {
 	t := &Teal_switch__op{
-		TARGET1: a.Read_rrbyte(),
+		TARGET1: ctx.Read_rrbyte(),
 	}
 	return t
 }
+
 func (a *Teal_switch__op) String() string {
 	res := strings.Builder{}
 	res.WriteString("switch")
@@ -4272,12 +4394,13 @@ type Teal_match_op struct {
 	TARGET1 [][]byte
 }
 
-func Parse_Teal_match_op(a ParserArgs) *Teal_match_op {
+func Parse_Teal_match_op(ctx ParserContext) *Teal_match_op {
 	t := &Teal_match_op{
-		TARGET1: a.Read_rrbyte(),
+		TARGET1: ctx.Read_rrbyte(),
 	}
 	return t
 }
+
 func (a *Teal_match_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("match")
@@ -4311,10 +4434,11 @@ func (a *Teal_shl) String() string {
 type Teal_shl_op struct {
 }
 
-func Parse_Teal_shl_op(a ParserArgs) *Teal_shl_op {
+func Parse_Teal_shl_op(ctx ParserContext) *Teal_shl_op {
 	t := &Teal_shl_op{}
 	return t
 }
+
 func (a *Teal_shl_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("shl")
@@ -4346,10 +4470,11 @@ func (a *Teal_shr) String() string {
 type Teal_shr_op struct {
 }
 
-func Parse_Teal_shr_op(a ParserArgs) *Teal_shr_op {
+func Parse_Teal_shr_op(ctx ParserContext) *Teal_shr_op {
 	t := &Teal_shr_op{}
 	return t
 }
+
 func (a *Teal_shr_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("shr")
@@ -4376,10 +4501,11 @@ func (a *Teal_sqrt) String() string {
 type Teal_sqrt_op struct {
 }
 
-func Parse_Teal_sqrt_op(a ParserArgs) *Teal_sqrt_op {
+func Parse_Teal_sqrt_op(ctx ParserContext) *Teal_sqrt_op {
 	t := &Teal_sqrt_op{}
 	return t
 }
+
 func (a *Teal_sqrt_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("sqrt")
@@ -4406,10 +4532,11 @@ func (a *Teal_bitlen) String() string {
 type Teal_bitlen_op struct {
 }
 
-func Parse_Teal_bitlen_op(a ParserArgs) *Teal_bitlen_op {
+func Parse_Teal_bitlen_op(ctx ParserContext) *Teal_bitlen_op {
 	t := &Teal_bitlen_op{}
 	return t
 }
+
 func (a *Teal_bitlen_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("bitlen")
@@ -4441,10 +4568,11 @@ func (a *Teal_exp) String() string {
 type Teal_exp_op struct {
 }
 
-func Parse_Teal_exp_op(a ParserArgs) *Teal_exp_op {
+func Parse_Teal_exp_op(ctx ParserContext) *Teal_exp_op {
 	t := &Teal_exp_op{}
 	return t
 }
+
 func (a *Teal_exp_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("exp")
@@ -4476,10 +4604,11 @@ func (a *Teal_expw) String() string {
 type Teal_expw_op struct {
 }
 
-func Parse_Teal_expw_op(a ParserArgs) *Teal_expw_op {
+func Parse_Teal_expw_op(ctx ParserContext) *Teal_expw_op {
 	t := &Teal_expw_op{}
 	return t
 }
+
 func (a *Teal_expw_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("expw")
@@ -4506,10 +4635,11 @@ func (a *Teal_bsqrt) String() string {
 type Teal_bsqrt_op struct {
 }
 
-func Parse_Teal_bsqrt_op(a ParserArgs) *Teal_bsqrt_op {
+func Parse_Teal_bsqrt_op(ctx ParserContext) *Teal_bsqrt_op {
 	t := &Teal_bsqrt_op{}
 	return t
 }
+
 func (a *Teal_bsqrt_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("bsqrt")
@@ -4546,10 +4676,11 @@ func (a *Teal_divw) String() string {
 type Teal_divw_op struct {
 }
 
-func Parse_Teal_divw_op(a ParserArgs) *Teal_divw_op {
+func Parse_Teal_divw_op(ctx ParserContext) *Teal_divw_op {
 	t := &Teal_divw_op{}
 	return t
 }
+
 func (a *Teal_divw_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("divw")
@@ -4576,10 +4707,11 @@ func (a *Teal_sha3_256) String() string {
 type Teal_sha3_256_op struct {
 }
 
-func Parse_Teal_sha3_256_op(a ParserArgs) *Teal_sha3_256_op {
+func Parse_Teal_sha3_256_op(ctx ParserContext) *Teal_sha3_256_op {
 	t := &Teal_sha3_256_op{}
 	return t
 }
+
 func (a *Teal_sha3_256_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("sha3_256")
@@ -4611,10 +4743,11 @@ func (a *Teal_bplus) String() string {
 type Teal_bplus_op struct {
 }
 
-func Parse_Teal_bplus_op(a ParserArgs) *Teal_bplus_op {
+func Parse_Teal_bplus_op(ctx ParserContext) *Teal_bplus_op {
 	t := &Teal_bplus_op{}
 	return t
 }
+
 func (a *Teal_bplus_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("b+")
@@ -4646,10 +4779,11 @@ func (a *Teal_bminus) String() string {
 type Teal_bminus_op struct {
 }
 
-func Parse_Teal_bminus_op(a ParserArgs) *Teal_bminus_op {
+func Parse_Teal_bminus_op(ctx ParserContext) *Teal_bminus_op {
 	t := &Teal_bminus_op{}
 	return t
 }
+
 func (a *Teal_bminus_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("b-")
@@ -4681,10 +4815,11 @@ func (a *Teal_bdiv) String() string {
 type Teal_bdiv_op struct {
 }
 
-func Parse_Teal_bdiv_op(a ParserArgs) *Teal_bdiv_op {
+func Parse_Teal_bdiv_op(ctx ParserContext) *Teal_bdiv_op {
 	t := &Teal_bdiv_op{}
 	return t
 }
+
 func (a *Teal_bdiv_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("b/")
@@ -4716,10 +4851,11 @@ func (a *Teal_bmul) String() string {
 type Teal_bmul_op struct {
 }
 
-func Parse_Teal_bmul_op(a ParserArgs) *Teal_bmul_op {
+func Parse_Teal_bmul_op(ctx ParserContext) *Teal_bmul_op {
 	t := &Teal_bmul_op{}
 	return t
 }
+
 func (a *Teal_bmul_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("b*")
@@ -4751,10 +4887,11 @@ func (a *Teal_blt) String() string {
 type Teal_blt_op struct {
 }
 
-func Parse_Teal_blt_op(a ParserArgs) *Teal_blt_op {
+func Parse_Teal_blt_op(ctx ParserContext) *Teal_blt_op {
 	t := &Teal_blt_op{}
 	return t
 }
+
 func (a *Teal_blt_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("b<")
@@ -4786,10 +4923,11 @@ func (a *Teal_bgt) String() string {
 type Teal_bgt_op struct {
 }
 
-func Parse_Teal_bgt_op(a ParserArgs) *Teal_bgt_op {
+func Parse_Teal_bgt_op(ctx ParserContext) *Teal_bgt_op {
 	t := &Teal_bgt_op{}
 	return t
 }
+
 func (a *Teal_bgt_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("b>")
@@ -4821,10 +4959,11 @@ func (a *Teal_blteq) String() string {
 type Teal_blteq_op struct {
 }
 
-func Parse_Teal_blteq_op(a ParserArgs) *Teal_blteq_op {
+func Parse_Teal_blteq_op(ctx ParserContext) *Teal_blteq_op {
 	t := &Teal_blteq_op{}
 	return t
 }
+
 func (a *Teal_blteq_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("b<=")
@@ -4856,10 +4995,11 @@ func (a *Teal_bgteq) String() string {
 type Teal_bgteq_op struct {
 }
 
-func Parse_Teal_bgteq_op(a ParserArgs) *Teal_bgteq_op {
+func Parse_Teal_bgteq_op(ctx ParserContext) *Teal_bgteq_op {
 	t := &Teal_bgteq_op{}
 	return t
 }
+
 func (a *Teal_bgteq_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("b>=")
@@ -4891,10 +5031,11 @@ func (a *Teal_beqeq) String() string {
 type Teal_beqeq_op struct {
 }
 
-func Parse_Teal_beqeq_op(a ParserArgs) *Teal_beqeq_op {
+func Parse_Teal_beqeq_op(ctx ParserContext) *Teal_beqeq_op {
 	t := &Teal_beqeq_op{}
 	return t
 }
+
 func (a *Teal_beqeq_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("b==")
@@ -4926,10 +5067,11 @@ func (a *Teal_bnoteq) String() string {
 type Teal_bnoteq_op struct {
 }
 
-func Parse_Teal_bnoteq_op(a ParserArgs) *Teal_bnoteq_op {
+func Parse_Teal_bnoteq_op(ctx ParserContext) *Teal_bnoteq_op {
 	t := &Teal_bnoteq_op{}
 	return t
 }
+
 func (a *Teal_bnoteq_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("b!=")
@@ -4961,10 +5103,11 @@ func (a *Teal_bmod) String() string {
 type Teal_bmod_op struct {
 }
 
-func Parse_Teal_bmod_op(a ParserArgs) *Teal_bmod_op {
+func Parse_Teal_bmod_op(ctx ParserContext) *Teal_bmod_op {
 	t := &Teal_bmod_op{}
 	return t
 }
+
 func (a *Teal_bmod_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("b%")
@@ -4996,10 +5139,11 @@ func (a *Teal_bor) String() string {
 type Teal_bor_op struct {
 }
 
-func Parse_Teal_bor_op(a ParserArgs) *Teal_bor_op {
+func Parse_Teal_bor_op(ctx ParserContext) *Teal_bor_op {
 	t := &Teal_bor_op{}
 	return t
 }
+
 func (a *Teal_bor_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("b|")
@@ -5031,10 +5175,11 @@ func (a *Teal_band) String() string {
 type Teal_band_op struct {
 }
 
-func Parse_Teal_band_op(a ParserArgs) *Teal_band_op {
+func Parse_Teal_band_op(ctx ParserContext) *Teal_band_op {
 	t := &Teal_band_op{}
 	return t
 }
+
 func (a *Teal_band_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("b&")
@@ -5066,10 +5211,11 @@ func (a *Teal_bxor) String() string {
 type Teal_bxor_op struct {
 }
 
-func Parse_Teal_bxor_op(a ParserArgs) *Teal_bxor_op {
+func Parse_Teal_bxor_op(ctx ParserContext) *Teal_bxor_op {
 	t := &Teal_bxor_op{}
 	return t
 }
+
 func (a *Teal_bxor_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("b^")
@@ -5096,10 +5242,11 @@ func (a *Teal_binv) String() string {
 type Teal_binv_op struct {
 }
 
-func Parse_Teal_binv_op(a ParserArgs) *Teal_binv_op {
+func Parse_Teal_binv_op(ctx ParserContext) *Teal_binv_op {
 	t := &Teal_binv_op{}
 	return t
 }
+
 func (a *Teal_binv_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("b~")
@@ -5126,10 +5273,11 @@ func (a *Teal_bzero) String() string {
 type Teal_bzero_op struct {
 }
 
-func Parse_Teal_bzero_op(a ParserArgs) *Teal_bzero_op {
+func Parse_Teal_bzero_op(ctx ParserContext) *Teal_bzero_op {
 	t := &Teal_bzero_op{}
 	return t
 }
+
 func (a *Teal_bzero_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("bzero")
@@ -5156,10 +5304,11 @@ func (a *Teal_log) String() string {
 type Teal_log_op struct {
 }
 
-func Parse_Teal_log_op(a ParserArgs) *Teal_log_op {
+func Parse_Teal_log_op(ctx ParserContext) *Teal_log_op {
 	t := &Teal_log_op{}
 	return t
 }
+
 func (a *Teal_log_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("log")
@@ -5181,10 +5330,11 @@ func (a *Teal_itxn_begin) String() string {
 type Teal_itxn_begin_op struct {
 }
 
-func Parse_Teal_itxn_begin_op(a ParserArgs) *Teal_itxn_begin_op {
+func Parse_Teal_itxn_begin_op(ctx ParserContext) *Teal_itxn_begin_op {
 	t := &Teal_itxn_begin_op{}
 	return t
 }
+
 func (a *Teal_itxn_begin_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("itxn_begin")
@@ -5215,12 +5365,13 @@ type Teal_itxn_field_op struct {
 	F1 uint8
 }
 
-func Parse_Teal_itxn_field_op(a ParserArgs) *Teal_itxn_field_op {
+func Parse_Teal_itxn_field_op(ctx ParserContext) *Teal_itxn_field_op {
 	t := &Teal_itxn_field_op{
-		F1: a.Read_uint8(),
+		F1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_itxn_field_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("itxn_field")
@@ -5244,10 +5395,11 @@ func (a *Teal_itxn_submit) String() string {
 type Teal_itxn_submit_op struct {
 }
 
-func Parse_Teal_itxn_submit_op(a ParserArgs) *Teal_itxn_submit_op {
+func Parse_Teal_itxn_submit_op(ctx ParserContext) *Teal_itxn_submit_op {
 	t := &Teal_itxn_submit_op{}
 	return t
 }
+
 func (a *Teal_itxn_submit_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("itxn_submit")
@@ -5273,12 +5425,13 @@ type Teal_itxn_op struct {
 	F1 uint8
 }
 
-func Parse_Teal_itxn_op(a ParserArgs) *Teal_itxn_op {
+func Parse_Teal_itxn_op(ctx ParserContext) *Teal_itxn_op {
 	t := &Teal_itxn_op{
-		F1: a.Read_uint8(),
+		F1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_itxn_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("itxn")
@@ -5310,13 +5463,14 @@ type Teal_itxna_op struct {
 	I2 uint8
 }
 
-func Parse_Teal_itxna_op(a ParserArgs) *Teal_itxna_op {
+func Parse_Teal_itxna_op(ctx ParserContext) *Teal_itxna_op {
 	t := &Teal_itxna_op{
-		F1: a.Read_uint8(),
-		I2: a.Read_uint8(),
+		F1: ctx.Read_uint8(),
+		I2: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_itxna_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("itxna")
@@ -5342,10 +5496,11 @@ func (a *Teal_itxn_next) String() string {
 type Teal_itxn_next_op struct {
 }
 
-func Parse_Teal_itxn_next_op(a ParserArgs) *Teal_itxn_next_op {
+func Parse_Teal_itxn_next_op(ctx ParserContext) *Teal_itxn_next_op {
 	t := &Teal_itxn_next_op{}
 	return t
 }
+
 func (a *Teal_itxn_next_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("itxn_next")
@@ -5375,13 +5530,14 @@ type Teal_gitxn_op struct {
 	F2 uint8
 }
 
-func Parse_Teal_gitxn_op(a ParserArgs) *Teal_gitxn_op {
+func Parse_Teal_gitxn_op(ctx ParserContext) *Teal_gitxn_op {
 	t := &Teal_gitxn_op{
-		T1: a.Read_uint8(),
-		F2: a.Read_uint8(),
+		T1: ctx.Read_uint8(),
+		F2: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_gitxn_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("gitxn")
@@ -5419,14 +5575,15 @@ type Teal_gitxna_op struct {
 	I3 uint8
 }
 
-func Parse_Teal_gitxna_op(a ParserArgs) *Teal_gitxna_op {
+func Parse_Teal_gitxna_op(ctx ParserContext) *Teal_gitxna_op {
 	t := &Teal_gitxna_op{
-		T1: a.Read_uint8(),
-		F2: a.Read_uint8(),
-		I3: a.Read_uint8(),
+		T1: ctx.Read_uint8(),
+		F2: ctx.Read_uint8(),
+		I3: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_gitxna_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("gitxna")
@@ -5464,10 +5621,11 @@ func (a *Teal_box_create) String() string {
 type Teal_box_create_op struct {
 }
 
-func Parse_Teal_box_create_op(a ParserArgs) *Teal_box_create_op {
+func Parse_Teal_box_create_op(ctx ParserContext) *Teal_box_create_op {
 	t := &Teal_box_create_op{}
 	return t
 }
+
 func (a *Teal_box_create_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("box_create")
@@ -5504,10 +5662,11 @@ func (a *Teal_box_extract) String() string {
 type Teal_box_extract_op struct {
 }
 
-func Parse_Teal_box_extract_op(a ParserArgs) *Teal_box_extract_op {
+func Parse_Teal_box_extract_op(ctx ParserContext) *Teal_box_extract_op {
 	t := &Teal_box_extract_op{}
 	return t
 }
+
 func (a *Teal_box_extract_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("box_extract")
@@ -5544,10 +5703,11 @@ func (a *Teal_box_replace) String() string {
 type Teal_box_replace_op struct {
 }
 
-func Parse_Teal_box_replace_op(a ParserArgs) *Teal_box_replace_op {
+func Parse_Teal_box_replace_op(ctx ParserContext) *Teal_box_replace_op {
 	t := &Teal_box_replace_op{}
 	return t
 }
+
 func (a *Teal_box_replace_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("box_replace")
@@ -5574,10 +5734,11 @@ func (a *Teal_box_del) String() string {
 type Teal_box_del_op struct {
 }
 
-func Parse_Teal_box_del_op(a ParserArgs) *Teal_box_del_op {
+func Parse_Teal_box_del_op(ctx ParserContext) *Teal_box_del_op {
 	t := &Teal_box_del_op{}
 	return t
 }
+
 func (a *Teal_box_del_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("box_del")
@@ -5604,10 +5765,11 @@ func (a *Teal_box_len) String() string {
 type Teal_box_len_op struct {
 }
 
-func Parse_Teal_box_len_op(a ParserArgs) *Teal_box_len_op {
+func Parse_Teal_box_len_op(ctx ParserContext) *Teal_box_len_op {
 	t := &Teal_box_len_op{}
 	return t
 }
+
 func (a *Teal_box_len_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("box_len")
@@ -5634,10 +5796,11 @@ func (a *Teal_box_get) String() string {
 type Teal_box_get_op struct {
 }
 
-func Parse_Teal_box_get_op(a ParserArgs) *Teal_box_get_op {
+func Parse_Teal_box_get_op(ctx ParserContext) *Teal_box_get_op {
 	t := &Teal_box_get_op{}
 	return t
 }
+
 func (a *Teal_box_get_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("box_get")
@@ -5669,10 +5832,11 @@ func (a *Teal_box_put) String() string {
 type Teal_box_put_op struct {
 }
 
-func Parse_Teal_box_put_op(a ParserArgs) *Teal_box_put_op {
+func Parse_Teal_box_put_op(ctx ParserContext) *Teal_box_put_op {
 	t := &Teal_box_put_op{}
 	return t
 }
+
 func (a *Teal_box_put_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("box_put")
@@ -5703,12 +5867,13 @@ type Teal_txnas_op struct {
 	F1 uint8
 }
 
-func Parse_Teal_txnas_op(a ParserArgs) *Teal_txnas_op {
+func Parse_Teal_txnas_op(ctx ParserContext) *Teal_txnas_op {
 	t := &Teal_txnas_op{
-		F1: a.Read_uint8(),
+		F1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_txnas_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("txnas")
@@ -5745,13 +5910,14 @@ type Teal_gtxnas_op struct {
 	F2 uint8
 }
 
-func Parse_Teal_gtxnas_op(a ParserArgs) *Teal_gtxnas_op {
+func Parse_Teal_gtxnas_op(ctx ParserContext) *Teal_gtxnas_op {
 	t := &Teal_gtxnas_op{
-		T1: a.Read_uint8(),
-		F2: a.Read_uint8(),
+		T1: ctx.Read_uint8(),
+		F2: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_gtxnas_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("gtxnas")
@@ -5791,12 +5957,13 @@ type Teal_gtxnsas_op struct {
 	F1 uint8
 }
 
-func Parse_Teal_gtxnsas_op(a ParserArgs) *Teal_gtxnsas_op {
+func Parse_Teal_gtxnsas_op(ctx ParserContext) *Teal_gtxnsas_op {
 	t := &Teal_gtxnsas_op{
-		F1: a.Read_uint8(),
+		F1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_gtxnsas_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("gtxnsas")
@@ -5825,10 +5992,11 @@ func (a *Teal_args) String() string {
 type Teal_args_op struct {
 }
 
-func Parse_Teal_args_op(a ParserArgs) *Teal_args_op {
+func Parse_Teal_args_op(ctx ParserContext) *Teal_args_op {
 	t := &Teal_args_op{}
 	return t
 }
+
 func (a *Teal_args_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("args")
@@ -5860,10 +6028,11 @@ func (a *Teal_gloadss) String() string {
 type Teal_gloadss_op struct {
 }
 
-func Parse_Teal_gloadss_op(a ParserArgs) *Teal_gloadss_op {
+func Parse_Teal_gloadss_op(ctx ParserContext) *Teal_gloadss_op {
 	t := &Teal_gloadss_op{}
 	return t
 }
+
 func (a *Teal_gloadss_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("gloadss")
@@ -5894,12 +6063,13 @@ type Teal_itxnas_op struct {
 	F1 uint8
 }
 
-func Parse_Teal_itxnas_op(a ParserArgs) *Teal_itxnas_op {
+func Parse_Teal_itxnas_op(ctx ParserContext) *Teal_itxnas_op {
 	t := &Teal_itxnas_op{
-		F1: a.Read_uint8(),
+		F1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_itxnas_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("itxnas")
@@ -5936,13 +6106,14 @@ type Teal_gitxnas_op struct {
 	F2 uint8
 }
 
-func Parse_Teal_gitxnas_op(a ParserArgs) *Teal_gitxnas_op {
+func Parse_Teal_gitxnas_op(ctx ParserContext) *Teal_gitxnas_op {
 	t := &Teal_gitxnas_op{
-		T1: a.Read_uint8(),
-		F2: a.Read_uint8(),
+		T1: ctx.Read_uint8(),
+		F2: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_gitxnas_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("gitxnas")
@@ -5987,12 +6158,13 @@ type Teal_vrf_verify_op struct {
 	S1 uint8
 }
 
-func Parse_Teal_vrf_verify_op(a ParserArgs) *Teal_vrf_verify_op {
+func Parse_Teal_vrf_verify_op(ctx ParserContext) *Teal_vrf_verify_op {
 	t := &Teal_vrf_verify_op{
-		S1: a.Read_uint8(),
+		S1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_vrf_verify_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("vrf_verify")
@@ -6025,12 +6197,13 @@ type Teal_block_op struct {
 	F1 uint8
 }
 
-func Parse_Teal_block_op(a ParserArgs) *Teal_block_op {
+func Parse_Teal_block_op(ctx ParserContext) *Teal_block_op {
 	t := &Teal_block_op{
-		F1: a.Read_uint8(),
+		F1: ctx.Read_uint8(),
 	}
 	return t
 }
+
 func (a *Teal_block_op) String() string {
 	res := strings.Builder{}
 	res.WriteString("block")
@@ -6038,356 +6211,357 @@ func (a *Teal_block_op) String() string {
 	res.WriteString(fmt.Sprintf("%d", a.F1))
 	return res.String()
 }
-func parseTeal(a ParserArgs) TealOp {
-	first := a.Read()
+
+func parseTeal(ctx ParserContext) TealOp {
+	first := ctx.Read()
 	value := first.String()
 	switch value {
 	case "err":
-		return Parse_Teal_err_op(a)
+		return Parse_Teal_err_op(ctx)
 	case "sha256":
-		return Parse_Teal_sha256_op(a)
+		return Parse_Teal_sha256_op(ctx)
 	case "keccak256":
-		return Parse_Teal_keccak256_op(a)
+		return Parse_Teal_keccak256_op(ctx)
 	case "sha512_256":
-		return Parse_Teal_sha512_256_op(a)
+		return Parse_Teal_sha512_256_op(ctx)
 	case "ed25519verify":
-		return Parse_Teal_ed25519verify_op(a)
+		return Parse_Teal_ed25519verify_op(ctx)
 	case "ecdsa_verify":
-		return Parse_Teal_ecdsa_verify_op(a)
+		return Parse_Teal_ecdsa_verify_op(ctx)
 	case "ecdsa_pk_decompress":
-		return Parse_Teal_ecdsa_pk_decompress_op(a)
+		return Parse_Teal_ecdsa_pk_decompress_op(ctx)
 	case "ecdsa_pk_recover":
-		return Parse_Teal_ecdsa_pk_recover_op(a)
+		return Parse_Teal_ecdsa_pk_recover_op(ctx)
 	case "+":
-		return Parse_Teal_plus_op(a)
+		return Parse_Teal_plus_op(ctx)
 	case "-":
-		return Parse_Teal_minus_op(a)
+		return Parse_Teal_minus_op(ctx)
 	case "/":
-		return Parse_Teal_div_op(a)
+		return Parse_Teal_div_op(ctx)
 	case "*":
-		return Parse_Teal_mul_op(a)
+		return Parse_Teal_mul_op(ctx)
 	case "<":
-		return Parse_Teal_lt_op(a)
+		return Parse_Teal_lt_op(ctx)
 	case ">":
-		return Parse_Teal_gt_op(a)
+		return Parse_Teal_gt_op(ctx)
 	case "<=":
-		return Parse_Teal_lteq_op(a)
+		return Parse_Teal_lteq_op(ctx)
 	case ">=":
-		return Parse_Teal_gteq_op(a)
+		return Parse_Teal_gteq_op(ctx)
 	case "&&":
-		return Parse_Teal_andand_op(a)
+		return Parse_Teal_andand_op(ctx)
 	case "||":
-		return Parse_Teal_oror_op(a)
+		return Parse_Teal_oror_op(ctx)
 	case "==":
-		return Parse_Teal_eqeq_op(a)
+		return Parse_Teal_eqeq_op(ctx)
 	case "!=":
-		return Parse_Teal_noteq_op(a)
+		return Parse_Teal_noteq_op(ctx)
 	case "!":
-		return Parse_Teal_not_op(a)
+		return Parse_Teal_not_op(ctx)
 	case "len":
-		return Parse_Teal_len_op(a)
+		return Parse_Teal_len_op(ctx)
 	case "itob":
-		return Parse_Teal_itob_op(a)
+		return Parse_Teal_itob_op(ctx)
 	case "btoi":
-		return Parse_Teal_btoi_op(a)
+		return Parse_Teal_btoi_op(ctx)
 	case "%":
-		return Parse_Teal_mod_op(a)
+		return Parse_Teal_mod_op(ctx)
 	case "|":
-		return Parse_Teal_or_op(a)
+		return Parse_Teal_or_op(ctx)
 	case "&":
-		return Parse_Teal_and_op(a)
+		return Parse_Teal_and_op(ctx)
 	case "^":
-		return Parse_Teal_xor_op(a)
+		return Parse_Teal_xor_op(ctx)
 	case "~":
-		return Parse_Teal_inv_op(a)
+		return Parse_Teal_inv_op(ctx)
 	case "mulw":
-		return Parse_Teal_mulw_op(a)
+		return Parse_Teal_mulw_op(ctx)
 	case "addw":
-		return Parse_Teal_addw_op(a)
+		return Parse_Teal_addw_op(ctx)
 	case "divmodw":
-		return Parse_Teal_divmodw_op(a)
+		return Parse_Teal_divmodw_op(ctx)
 	case "intcblock":
-		return Parse_Teal_intcblock_op(a)
+		return Parse_Teal_intcblock_op(ctx)
 	case "intc":
-		return Parse_Teal_intc_op(a)
+		return Parse_Teal_intc_op(ctx)
 	case "intc_0":
-		return Parse_Teal_intc_0_op(a)
+		return Parse_Teal_intc_0_op(ctx)
 	case "intc_1":
-		return Parse_Teal_intc_1_op(a)
+		return Parse_Teal_intc_1_op(ctx)
 	case "intc_2":
-		return Parse_Teal_intc_2_op(a)
+		return Parse_Teal_intc_2_op(ctx)
 	case "intc_3":
-		return Parse_Teal_intc_3_op(a)
+		return Parse_Teal_intc_3_op(ctx)
 	case "bytecblock":
-		return Parse_Teal_bytecblock_op(a)
+		return Parse_Teal_bytecblock_op(ctx)
 	case "bytec":
-		return Parse_Teal_bytec_op(a)
+		return Parse_Teal_bytec_op(ctx)
 	case "bytec_0":
-		return Parse_Teal_bytec_0_op(a)
+		return Parse_Teal_bytec_0_op(ctx)
 	case "bytec_1":
-		return Parse_Teal_bytec_1_op(a)
+		return Parse_Teal_bytec_1_op(ctx)
 	case "bytec_2":
-		return Parse_Teal_bytec_2_op(a)
+		return Parse_Teal_bytec_2_op(ctx)
 	case "bytec_3":
-		return Parse_Teal_bytec_3_op(a)
+		return Parse_Teal_bytec_3_op(ctx)
 	case "arg":
-		return Parse_Teal_arg_op(a)
+		return Parse_Teal_arg_op(ctx)
 	case "arg_0":
-		return Parse_Teal_arg_0_op(a)
+		return Parse_Teal_arg_0_op(ctx)
 	case "arg_1":
-		return Parse_Teal_arg_1_op(a)
+		return Parse_Teal_arg_1_op(ctx)
 	case "arg_2":
-		return Parse_Teal_arg_2_op(a)
+		return Parse_Teal_arg_2_op(ctx)
 	case "arg_3":
-		return Parse_Teal_arg_3_op(a)
+		return Parse_Teal_arg_3_op(ctx)
 	case "txn":
-		return Parse_Teal_txn_op(a)
+		return Parse_Teal_txn_op(ctx)
 	case "global":
-		return Parse_Teal_global_op(a)
+		return Parse_Teal_global_op(ctx)
 	case "gtxn":
-		return Parse_Teal_gtxn_op(a)
+		return Parse_Teal_gtxn_op(ctx)
 	case "load":
-		return Parse_Teal_load_op(a)
+		return Parse_Teal_load_op(ctx)
 	case "store":
-		return Parse_Teal_store_op(a)
+		return Parse_Teal_store_op(ctx)
 	case "txna":
-		return Parse_Teal_txna_op(a)
+		return Parse_Teal_txna_op(ctx)
 	case "gtxna":
-		return Parse_Teal_gtxna_op(a)
+		return Parse_Teal_gtxna_op(ctx)
 	case "gtxns":
-		return Parse_Teal_gtxns_op(a)
+		return Parse_Teal_gtxns_op(ctx)
 	case "gtxnsa":
-		return Parse_Teal_gtxnsa_op(a)
+		return Parse_Teal_gtxnsa_op(ctx)
 	case "gload":
-		return Parse_Teal_gload_op(a)
+		return Parse_Teal_gload_op(ctx)
 	case "gloads":
-		return Parse_Teal_gloads_op(a)
+		return Parse_Teal_gloads_op(ctx)
 	case "gaid":
-		return Parse_Teal_gaid_op(a)
+		return Parse_Teal_gaid_op(ctx)
 	case "gaids":
-		return Parse_Teal_gaids_op(a)
+		return Parse_Teal_gaids_op(ctx)
 	case "loads":
-		return Parse_Teal_loads_op(a)
+		return Parse_Teal_loads_op(ctx)
 	case "stores":
-		return Parse_Teal_stores_op(a)
+		return Parse_Teal_stores_op(ctx)
 	case "bnz":
-		return Parse_Teal_bnz_op(a)
+		return Parse_Teal_bnz_op(ctx)
 	case "bz":
-		return Parse_Teal_bz_op(a)
+		return Parse_Teal_bz_op(ctx)
 	case "b":
-		return Parse_Teal_b_op(a)
+		return Parse_Teal_b_op(ctx)
 	case "return":
-		return Parse_Teal_return__op(a)
+		return Parse_Teal_return__op(ctx)
 	case "assert":
-		return Parse_Teal_assert_op(a)
+		return Parse_Teal_assert_op(ctx)
 	case "bury":
-		return Parse_Teal_bury_op(a)
+		return Parse_Teal_bury_op(ctx)
 	case "popn":
-		return Parse_Teal_popn_op(a)
+		return Parse_Teal_popn_op(ctx)
 	case "dupn":
-		return Parse_Teal_dupn_op(a)
+		return Parse_Teal_dupn_op(ctx)
 	case "pop":
-		return Parse_Teal_pop_op(a)
+		return Parse_Teal_pop_op(ctx)
 	case "dup":
-		return Parse_Teal_dup_op(a)
+		return Parse_Teal_dup_op(ctx)
 	case "dup2":
-		return Parse_Teal_dup2_op(a)
+		return Parse_Teal_dup2_op(ctx)
 	case "dig":
-		return Parse_Teal_dig_op(a)
+		return Parse_Teal_dig_op(ctx)
 	case "swap":
-		return Parse_Teal_swap_op(a)
+		return Parse_Teal_swap_op(ctx)
 	case "select":
-		return Parse_Teal_select_op(a)
+		return Parse_Teal_select_op(ctx)
 	case "cover":
-		return Parse_Teal_cover_op(a)
+		return Parse_Teal_cover_op(ctx)
 	case "uncover":
-		return Parse_Teal_uncover_op(a)
+		return Parse_Teal_uncover_op(ctx)
 	case "concat":
-		return Parse_Teal_concat_op(a)
+		return Parse_Teal_concat_op(ctx)
 	case "substring":
-		return Parse_Teal_substring_op(a)
+		return Parse_Teal_substring_op(ctx)
 	case "substring3":
-		return Parse_Teal_substring3_op(a)
+		return Parse_Teal_substring3_op(ctx)
 	case "getbit":
-		return Parse_Teal_getbit_op(a)
+		return Parse_Teal_getbit_op(ctx)
 	case "setbit":
-		return Parse_Teal_setbit_op(a)
+		return Parse_Teal_setbit_op(ctx)
 	case "getbyte":
-		return Parse_Teal_getbyte_op(a)
+		return Parse_Teal_getbyte_op(ctx)
 	case "setbyte":
-		return Parse_Teal_setbyte_op(a)
+		return Parse_Teal_setbyte_op(ctx)
 	case "extract":
-		return Parse_Teal_extract_op(a)
+		return Parse_Teal_extract_op(ctx)
 	case "extract3":
-		return Parse_Teal_extract3_op(a)
+		return Parse_Teal_extract3_op(ctx)
 	case "extract_uint16":
-		return Parse_Teal_extract_uint16_op(a)
+		return Parse_Teal_extract_uint16_op(ctx)
 	case "extract_uint32":
-		return Parse_Teal_extract_uint32_op(a)
+		return Parse_Teal_extract_uint32_op(ctx)
 	case "extract_uint64":
-		return Parse_Teal_extract_uint64_op(a)
+		return Parse_Teal_extract_uint64_op(ctx)
 	case "replace2":
-		return Parse_Teal_replace2_op(a)
+		return Parse_Teal_replace2_op(ctx)
 	case "replace3":
-		return Parse_Teal_replace3_op(a)
+		return Parse_Teal_replace3_op(ctx)
 	case "base64_decode":
-		return Parse_Teal_base64_decode_op(a)
+		return Parse_Teal_base64_decode_op(ctx)
 	case "json_ref":
-		return Parse_Teal_json_ref_op(a)
+		return Parse_Teal_json_ref_op(ctx)
 	case "balance":
-		return Parse_Teal_balance_op(a)
+		return Parse_Teal_balance_op(ctx)
 	case "app_opted_in":
-		return Parse_Teal_app_opted_in_op(a)
+		return Parse_Teal_app_opted_in_op(ctx)
 	case "app_local_get":
-		return Parse_Teal_app_local_get_op(a)
+		return Parse_Teal_app_local_get_op(ctx)
 	case "app_local_get_ex":
-		return Parse_Teal_app_local_get_ex_op(a)
+		return Parse_Teal_app_local_get_ex_op(ctx)
 	case "app_global_get":
-		return Parse_Teal_app_global_get_op(a)
+		return Parse_Teal_app_global_get_op(ctx)
 	case "app_global_get_ex":
-		return Parse_Teal_app_global_get_ex_op(a)
+		return Parse_Teal_app_global_get_ex_op(ctx)
 	case "app_local_put":
-		return Parse_Teal_app_local_put_op(a)
+		return Parse_Teal_app_local_put_op(ctx)
 	case "app_global_put":
-		return Parse_Teal_app_global_put_op(a)
+		return Parse_Teal_app_global_put_op(ctx)
 	case "app_local_del":
-		return Parse_Teal_app_local_del_op(a)
+		return Parse_Teal_app_local_del_op(ctx)
 	case "app_global_del":
-		return Parse_Teal_app_global_del_op(a)
+		return Parse_Teal_app_global_del_op(ctx)
 	case "asset_holding_get":
-		return Parse_Teal_asset_holding_get_op(a)
+		return Parse_Teal_asset_holding_get_op(ctx)
 	case "asset_params_get":
-		return Parse_Teal_asset_params_get_op(a)
+		return Parse_Teal_asset_params_get_op(ctx)
 	case "app_params_get":
-		return Parse_Teal_app_params_get_op(a)
+		return Parse_Teal_app_params_get_op(ctx)
 	case "acct_params_get":
-		return Parse_Teal_acct_params_get_op(a)
+		return Parse_Teal_acct_params_get_op(ctx)
 	case "min_balance":
-		return Parse_Teal_min_balance_op(a)
+		return Parse_Teal_min_balance_op(ctx)
 	case "pushbytes":
-		return Parse_Teal_pushbytes_op(a)
+		return Parse_Teal_pushbytes_op(ctx)
 	case "pushint":
-		return Parse_Teal_pushint_op(a)
+		return Parse_Teal_pushint_op(ctx)
 	case "pushbytess":
-		return Parse_Teal_pushbytess_op(a)
+		return Parse_Teal_pushbytess_op(ctx)
 	case "pushints":
-		return Parse_Teal_pushints_op(a)
+		return Parse_Teal_pushints_op(ctx)
 	case "ed25519verify_bare":
-		return Parse_Teal_ed25519verify_bare_op(a)
+		return Parse_Teal_ed25519verify_bare_op(ctx)
 	case "callsub":
-		return Parse_Teal_callsub_op(a)
+		return Parse_Teal_callsub_op(ctx)
 	case "retsub":
-		return Parse_Teal_retsub_op(a)
+		return Parse_Teal_retsub_op(ctx)
 	case "proto":
-		return Parse_Teal_proto_op(a)
+		return Parse_Teal_proto_op(ctx)
 	case "frame_dig":
-		return Parse_Teal_frame_dig_op(a)
+		return Parse_Teal_frame_dig_op(ctx)
 	case "frame_bury":
-		return Parse_Teal_frame_bury_op(a)
+		return Parse_Teal_frame_bury_op(ctx)
 	case "switch":
-		return Parse_Teal_switch__op(a)
+		return Parse_Teal_switch__op(ctx)
 	case "match":
-		return Parse_Teal_match_op(a)
+		return Parse_Teal_match_op(ctx)
 	case "shl":
-		return Parse_Teal_shl_op(a)
+		return Parse_Teal_shl_op(ctx)
 	case "shr":
-		return Parse_Teal_shr_op(a)
+		return Parse_Teal_shr_op(ctx)
 	case "sqrt":
-		return Parse_Teal_sqrt_op(a)
+		return Parse_Teal_sqrt_op(ctx)
 	case "bitlen":
-		return Parse_Teal_bitlen_op(a)
+		return Parse_Teal_bitlen_op(ctx)
 	case "exp":
-		return Parse_Teal_exp_op(a)
+		return Parse_Teal_exp_op(ctx)
 	case "expw":
-		return Parse_Teal_expw_op(a)
+		return Parse_Teal_expw_op(ctx)
 	case "bsqrt":
-		return Parse_Teal_bsqrt_op(a)
+		return Parse_Teal_bsqrt_op(ctx)
 	case "divw":
-		return Parse_Teal_divw_op(a)
+		return Parse_Teal_divw_op(ctx)
 	case "sha3_256":
-		return Parse_Teal_sha3_256_op(a)
+		return Parse_Teal_sha3_256_op(ctx)
 	case "b+":
-		return Parse_Teal_bplus_op(a)
+		return Parse_Teal_bplus_op(ctx)
 	case "b-":
-		return Parse_Teal_bminus_op(a)
+		return Parse_Teal_bminus_op(ctx)
 	case "b/":
-		return Parse_Teal_bdiv_op(a)
+		return Parse_Teal_bdiv_op(ctx)
 	case "b*":
-		return Parse_Teal_bmul_op(a)
+		return Parse_Teal_bmul_op(ctx)
 	case "b<":
-		return Parse_Teal_blt_op(a)
+		return Parse_Teal_blt_op(ctx)
 	case "b>":
-		return Parse_Teal_bgt_op(a)
+		return Parse_Teal_bgt_op(ctx)
 	case "b<=":
-		return Parse_Teal_blteq_op(a)
+		return Parse_Teal_blteq_op(ctx)
 	case "b>=":
-		return Parse_Teal_bgteq_op(a)
+		return Parse_Teal_bgteq_op(ctx)
 	case "b==":
-		return Parse_Teal_beqeq_op(a)
+		return Parse_Teal_beqeq_op(ctx)
 	case "b!=":
-		return Parse_Teal_bnoteq_op(a)
+		return Parse_Teal_bnoteq_op(ctx)
 	case "b%":
-		return Parse_Teal_bmod_op(a)
+		return Parse_Teal_bmod_op(ctx)
 	case "b|":
-		return Parse_Teal_bor_op(a)
+		return Parse_Teal_bor_op(ctx)
 	case "b&":
-		return Parse_Teal_band_op(a)
+		return Parse_Teal_band_op(ctx)
 	case "b^":
-		return Parse_Teal_bxor_op(a)
+		return Parse_Teal_bxor_op(ctx)
 	case "b~":
-		return Parse_Teal_binv_op(a)
+		return Parse_Teal_binv_op(ctx)
 	case "bzero":
-		return Parse_Teal_bzero_op(a)
+		return Parse_Teal_bzero_op(ctx)
 	case "log":
-		return Parse_Teal_log_op(a)
+		return Parse_Teal_log_op(ctx)
 	case "itxn_begin":
-		return Parse_Teal_itxn_begin_op(a)
+		return Parse_Teal_itxn_begin_op(ctx)
 	case "itxn_field":
-		return Parse_Teal_itxn_field_op(a)
+		return Parse_Teal_itxn_field_op(ctx)
 	case "itxn_submit":
-		return Parse_Teal_itxn_submit_op(a)
+		return Parse_Teal_itxn_submit_op(ctx)
 	case "itxn":
-		return Parse_Teal_itxn_op(a)
+		return Parse_Teal_itxn_op(ctx)
 	case "itxna":
-		return Parse_Teal_itxna_op(a)
+		return Parse_Teal_itxna_op(ctx)
 	case "itxn_next":
-		return Parse_Teal_itxn_next_op(a)
+		return Parse_Teal_itxn_next_op(ctx)
 	case "gitxn":
-		return Parse_Teal_gitxn_op(a)
+		return Parse_Teal_gitxn_op(ctx)
 	case "gitxna":
-		return Parse_Teal_gitxna_op(a)
+		return Parse_Teal_gitxna_op(ctx)
 	case "box_create":
-		return Parse_Teal_box_create_op(a)
+		return Parse_Teal_box_create_op(ctx)
 	case "box_extract":
-		return Parse_Teal_box_extract_op(a)
+		return Parse_Teal_box_extract_op(ctx)
 	case "box_replace":
-		return Parse_Teal_box_replace_op(a)
+		return Parse_Teal_box_replace_op(ctx)
 	case "box_del":
-		return Parse_Teal_box_del_op(a)
+		return Parse_Teal_box_del_op(ctx)
 	case "box_len":
-		return Parse_Teal_box_len_op(a)
+		return Parse_Teal_box_len_op(ctx)
 	case "box_get":
-		return Parse_Teal_box_get_op(a)
+		return Parse_Teal_box_get_op(ctx)
 	case "box_put":
-		return Parse_Teal_box_put_op(a)
+		return Parse_Teal_box_put_op(ctx)
 	case "txnas":
-		return Parse_Teal_txnas_op(a)
+		return Parse_Teal_txnas_op(ctx)
 	case "gtxnas":
-		return Parse_Teal_gtxnas_op(a)
+		return Parse_Teal_gtxnas_op(ctx)
 	case "gtxnsas":
-		return Parse_Teal_gtxnsas_op(a)
+		return Parse_Teal_gtxnsas_op(ctx)
 	case "args":
-		return Parse_Teal_args_op(a)
+		return Parse_Teal_args_op(ctx)
 	case "gloadss":
-		return Parse_Teal_gloadss_op(a)
+		return Parse_Teal_gloadss_op(ctx)
 	case "itxnas":
-		return Parse_Teal_itxnas_op(a)
+		return Parse_Teal_itxnas_op(ctx)
 	case "gitxnas":
-		return Parse_Teal_gitxnas_op(a)
+		return Parse_Teal_gitxnas_op(ctx)
 	case "vrf_verify":
-		return Parse_Teal_vrf_verify_op(a)
+		return Parse_Teal_vrf_verify_op(ctx)
 	case "block":
-		return Parse_Teal_block_op(a)
+		return Parse_Teal_block_op(ctx)
 	default:
 		panic(fmt.Sprintf("unexpected op: %s", value))
 	}

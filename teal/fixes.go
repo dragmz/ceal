@@ -1,6 +1,7 @@
 package teal
 
 import (
+	"encoding/base64"
 	"encoding/hex"
 	"fmt"
 	"strings"
@@ -13,7 +14,7 @@ type TealOp interface {
 type Teal []TealOp
 
 func (t Teal) String() string {
-	res := Lines{}
+	res := Source{}
 	for _, op := range t {
 		res.WriteLine(op.String())
 	}
@@ -175,7 +176,7 @@ func (a *Teal_byte) String() string {
 }
 
 type Teal_byte_value struct {
-	V string
+	V []byte
 }
 
 func (a *Teal_byte_value) Teal() Teal {
@@ -183,6 +184,18 @@ func (a *Teal_byte_value) Teal() Teal {
 }
 
 func (a *Teal_byte_value) String() string {
+	return fmt.Sprintf("b64 %s", base64.StdEncoding.EncodeToString(a.V))
+}
+
+type Teal_byte_string_value struct {
+	V string
+}
+
+func (a *Teal_byte_string_value) Teal() Teal {
+	return Teal{a}
+}
+
+func (a *Teal_byte_string_value) String() string {
 	return a.V
 }
 
@@ -232,7 +245,7 @@ func (a *Teal_retsub_fixed) Teal() Teal {
 }
 
 func (a *Teal_retsub_fixed) String() string {
-	res := Lines{}
+	res := Source{}
 
 	for _, v := range a.Values {
 		for _, op := range v.Teal() {
@@ -254,7 +267,7 @@ func (a *Teal_return_fixed) Teal() Teal {
 }
 
 func (a *Teal_return_fixed) String() string {
-	res := Lines{}
+	res := Source{}
 
 	if a.Value != nil {
 		for _, op := range a.Value.Teal() {
@@ -277,7 +290,7 @@ func (a *Teal_callsub_fixed) Teal() Teal {
 }
 
 func (a *Teal_callsub_fixed) String() string {
-	res := Lines{}
+	res := Source{}
 
 	for _, a := range a.Args {
 		for _, op := range a.Teal() {
@@ -312,7 +325,7 @@ func (a *Teal_call_builtin) Teal() Teal {
 }
 
 func (a *Teal_call_builtin) String() string {
-	res := Lines{}
+	res := Source{}
 
 	call := []string{
 		a.Name,
@@ -378,7 +391,12 @@ type Teal_int_op struct {
 	V int
 }
 
-func Parse_Teal_int_op(a ParserArgs) TealOp {
+func Parse_Teal_int_op(a ParserContext) TealOp {
 	v := a.Read()
 	return &Teal_named_int{V: &Teal_named_int_value{V: v.String()}}
+}
+
+func Parse_Teal_byte_op(a ParserContext) TealOp {
+	v := a.Read_rbyte()
+	return &Teal_byte{S: &Teal_byte_value{V: v}}
 }
