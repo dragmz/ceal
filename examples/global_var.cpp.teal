@@ -1,6 +1,6 @@
 #pragma version 8
 intcblock 123 234
-bytecblock "CValue" "DValue"
+bytecblock 0x224356616c756522 0x224456616c756522
 bytec 0
 log
 bytec 1

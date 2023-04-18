@@ -1,6 +1,7 @@
 package compiler
 
 import (
+	"encoding/hex"
 	"fmt"
 	"strings"
 )
@@ -85,8 +86,7 @@ func (a *Teal_bytecblock_fixed) String() string {
 
 	for _, v := range a.BYTES1 {
 		res.WriteString(" ")
-		// TODO: may need other formatting than string for non-printable bytes
-		res.WriteString(string(v))
+		res.WriteString(fmt.Sprintf("0x%s", hex.EncodeToString(v)))
 	}
 
 	return res.String()
