@@ -88,6 +88,9 @@ type CListener interface {
 	// EnterAndExpr is called when entering the AndExpr production.
 	EnterAndExpr(c *AndExprContext)
 
+	// EnterValueExpr is called when entering the ValueExpr production.
+	EnterValueExpr(c *ValueExprContext)
+
 	// EnterSubscriptExpr is called when entering the SubscriptExpr production.
 	EnterSubscriptExpr(c *SubscriptExprContext)
 
@@ -121,17 +124,11 @@ type CListener interface {
 	// EnterAssignSumDiffExpr is called when entering the AssignSumDiffExpr production.
 	EnterAssignSumDiffExpr(c *AssignSumDiffExprContext)
 
-	// EnterMemberExpr is called when entering the MemberExpr production.
-	EnterMemberExpr(c *MemberExprContext)
-
 	// EnterPostIncDecExpr is called when entering the PostIncDecExpr production.
 	EnterPostIncDecExpr(c *PostIncDecExprContext)
 
 	// EnterPreIncDecExpr is called when entering the PreIncDecExpr production.
 	EnterPreIncDecExpr(c *PreIncDecExprContext)
-
-	// EnterVariableExpr is called when entering the VariableExpr production.
-	EnterVariableExpr(c *VariableExprContext)
 
 	// EnterCallExpr is called when entering the CallExpr production.
 	EnterCallExpr(c *CallExprContext)
@@ -147,6 +144,12 @@ type CListener interface {
 
 	// EnterMinusExpr is called when entering the MinusExpr production.
 	EnterMinusExpr(c *MinusExprContext)
+
+	// EnterValue_expr is called when entering the value_expr production.
+	EnterValue_expr(c *Value_exprContext)
+
+	// EnterSubscript_expr is called when entering the subscript_expr production.
+	EnterSubscript_expr(c *Subscript_exprContext)
 
 	// EnterComment is called when entering the comment production.
 	EnterComment(c *CommentContext)
@@ -295,6 +298,9 @@ type CListener interface {
 	// ExitAndExpr is called when exiting the AndExpr production.
 	ExitAndExpr(c *AndExprContext)
 
+	// ExitValueExpr is called when exiting the ValueExpr production.
+	ExitValueExpr(c *ValueExprContext)
+
 	// ExitSubscriptExpr is called when exiting the SubscriptExpr production.
 	ExitSubscriptExpr(c *SubscriptExprContext)
 
@@ -328,17 +334,11 @@ type CListener interface {
 	// ExitAssignSumDiffExpr is called when exiting the AssignSumDiffExpr production.
 	ExitAssignSumDiffExpr(c *AssignSumDiffExprContext)
 
-	// ExitMemberExpr is called when exiting the MemberExpr production.
-	ExitMemberExpr(c *MemberExprContext)
-
 	// ExitPostIncDecExpr is called when exiting the PostIncDecExpr production.
 	ExitPostIncDecExpr(c *PostIncDecExprContext)
 
 	// ExitPreIncDecExpr is called when exiting the PreIncDecExpr production.
 	ExitPreIncDecExpr(c *PreIncDecExprContext)
-
-	// ExitVariableExpr is called when exiting the VariableExpr production.
-	ExitVariableExpr(c *VariableExprContext)
 
 	// ExitCallExpr is called when exiting the CallExpr production.
 	ExitCallExpr(c *CallExprContext)
@@ -354,6 +354,12 @@ type CListener interface {
 
 	// ExitMinusExpr is called when exiting the MinusExpr production.
 	ExitMinusExpr(c *MinusExprContext)
+
+	// ExitValue_expr is called when exiting the value_expr production.
+	ExitValue_expr(c *Value_exprContext)
+
+	// ExitSubscript_expr is called when exiting the subscript_expr production.
+	ExitSubscript_expr(c *Subscript_exprContext)
 
 	// ExitComment is called when exiting the comment production.
 	ExitComment(c *CommentContext)

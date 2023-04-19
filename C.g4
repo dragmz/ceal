@@ -55,14 +55,15 @@ expr:
     | assign_expr               # AssignExpr
     | asdexpr                   # AssignSumDiffExpr
     | condition=expr '?' true=expr ':' false=expr # ConditionalExpr
-    | ID                        # VariableExpr
     | constant                  # ConstantExpr
-    | ID '[' expr ']'           # SubscriptExpr
-    | ID '.' ID ('.' ID)*       # MemberExpr
+    | subscript_expr            # SubscriptExpr
+    | value_expr ('.' value_expr)* # ValueExpr
     | call_expr                 # CallExpr
     | '(' expr ')'              # GroupExpr
     ;
 
+value_expr: ID;
+subscript_expr: ID '[' expr ']';
 comment: (SINGLE_COMMENT | MULTILINE_COMMENT);
 constant: (INT | STRING);
 assign_expr: ID ('.' ID)* '=' expr;

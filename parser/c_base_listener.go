@@ -182,6 +182,12 @@ func (s *BaseCListener) EnterAndExpr(ctx *AndExprContext) {}
 // ExitAndExpr is called when production AndExpr is exited.
 func (s *BaseCListener) ExitAndExpr(ctx *AndExprContext) {}
 
+// EnterValueExpr is called when production ValueExpr is entered.
+func (s *BaseCListener) EnterValueExpr(ctx *ValueExprContext) {}
+
+// ExitValueExpr is called when production ValueExpr is exited.
+func (s *BaseCListener) ExitValueExpr(ctx *ValueExprContext) {}
+
 // EnterSubscriptExpr is called when production SubscriptExpr is entered.
 func (s *BaseCListener) EnterSubscriptExpr(ctx *SubscriptExprContext) {}
 
@@ -248,12 +254,6 @@ func (s *BaseCListener) EnterAssignSumDiffExpr(ctx *AssignSumDiffExprContext) {}
 // ExitAssignSumDiffExpr is called when production AssignSumDiffExpr is exited.
 func (s *BaseCListener) ExitAssignSumDiffExpr(ctx *AssignSumDiffExprContext) {}
 
-// EnterMemberExpr is called when production MemberExpr is entered.
-func (s *BaseCListener) EnterMemberExpr(ctx *MemberExprContext) {}
-
-// ExitMemberExpr is called when production MemberExpr is exited.
-func (s *BaseCListener) ExitMemberExpr(ctx *MemberExprContext) {}
-
 // EnterPostIncDecExpr is called when production PostIncDecExpr is entered.
 func (s *BaseCListener) EnterPostIncDecExpr(ctx *PostIncDecExprContext) {}
 
@@ -265,12 +265,6 @@ func (s *BaseCListener) EnterPreIncDecExpr(ctx *PreIncDecExprContext) {}
 
 // ExitPreIncDecExpr is called when production PreIncDecExpr is exited.
 func (s *BaseCListener) ExitPreIncDecExpr(ctx *PreIncDecExprContext) {}
-
-// EnterVariableExpr is called when production VariableExpr is entered.
-func (s *BaseCListener) EnterVariableExpr(ctx *VariableExprContext) {}
-
-// ExitVariableExpr is called when production VariableExpr is exited.
-func (s *BaseCListener) ExitVariableExpr(ctx *VariableExprContext) {}
 
 // EnterCallExpr is called when production CallExpr is entered.
 func (s *BaseCListener) EnterCallExpr(ctx *CallExprContext) {}
@@ -301,6 +295,18 @@ func (s *BaseCListener) EnterMinusExpr(ctx *MinusExprContext) {}
 
 // ExitMinusExpr is called when production MinusExpr is exited.
 func (s *BaseCListener) ExitMinusExpr(ctx *MinusExprContext) {}
+
+// EnterValue_expr is called when production value_expr is entered.
+func (s *BaseCListener) EnterValue_expr(ctx *Value_exprContext) {}
+
+// ExitValue_expr is called when production value_expr is exited.
+func (s *BaseCListener) ExitValue_expr(ctx *Value_exprContext) {}
+
+// EnterSubscript_expr is called when production subscript_expr is entered.
+func (s *BaseCListener) EnterSubscript_expr(ctx *Subscript_exprContext) {}
+
+// ExitSubscript_expr is called when production subscript_expr is exited.
+func (s *BaseCListener) ExitSubscript_expr(ctx *Subscript_exprContext) {}
 
 // EnterComment is called when production comment is entered.
 func (s *BaseCListener) EnterComment(ctx *CommentContext) {}

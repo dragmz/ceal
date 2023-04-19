@@ -42,15 +42,29 @@ func (v *AstVisitor) visitStatement(tree antlr.ParseTree) CealStatement {
 	return res.(CealStatement)
 }
 
-func (v *AstVisitor) VisitMemberExpr(ctx *parser.MemberExprContext) interface{} {
-	vr, f := v.mustResolve(ctx.AllID())
-	fun := v.global.functions[f.fun]
+func (v *AstVisitor) VisitValueExpr(ctx *parser.ValueExprContext) interface{} {
+	ids := []antlr.TerminalNode{}
 
-	ast := &CealStructField{
-		V:   vr,
-		T:   v.scope.resolveType(vr.t),
-		F:   f,
-		Fun: fun,
+	for _, e := range ctx.AllValue_expr() {
+		ids = append(ids, e.ID())
+	}
+
+	var ast CealStatement
+
+	vr, f := v.mustResolve(ids)
+	if f == nil {
+		ast = &CealVariable{
+			V: vr,
+		}
+	} else {
+		fun := v.global.functions[f.fun]
+
+		ast = &CealStructField{
+			V:   vr,
+			T:   v.scope.resolveType(vr.t),
+			F:   f,
+			Fun: fun,
+		}
 	}
 
 	return ast
@@ -99,17 +113,6 @@ func (v *AstVisitor) VisitDeclarationStmt(ctx *parser.DeclarationStmtContext) in
 	}
 
 	return nil
-}
-
-func (v *AstVisitor) VisitVariableExpr(ctx *parser.VariableExprContext) interface{} {
-	id := ctx.ID().GetText()
-	vr := v.mustResolveVariable(id)
-
-	ast := &CealVariable{
-		V: vr,
-	}
-
-	return ast
 }
 
 func (v *AstVisitor) VisitMinusExpr(ctx *parser.MinusExprContext) interface{} {
@@ -706,6 +709,10 @@ func (v *AstVisitor) VisitAsmStmt(ctx *parser.AsmStmtContext) interface{} {
 }
 
 func (v *AstVisitor) VisitSubscriptExpr(ctx *parser.SubscriptExprContext) interface{} {
+	return v.Visit(ctx.Subscript_expr())
+}
+
+func (v *AstVisitor) VisitSubscript_expr(ctx *parser.Subscript_exprContext) interface{} {
 	id := ctx.ID().GetText()
 	vr := v.mustResolveVariable(id)
 

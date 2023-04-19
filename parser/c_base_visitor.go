@@ -115,6 +115,10 @@ func (v *BaseCVisitor) VisitAndExpr(ctx *AndExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCVisitor) VisitValueExpr(ctx *ValueExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCVisitor) VisitSubscriptExpr(ctx *SubscriptExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -159,19 +163,11 @@ func (v *BaseCVisitor) VisitAssignSumDiffExpr(ctx *AssignSumDiffExprContext) int
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseCVisitor) VisitMemberExpr(ctx *MemberExprContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BaseCVisitor) VisitPostIncDecExpr(ctx *PostIncDecExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
 func (v *BaseCVisitor) VisitPreIncDecExpr(ctx *PreIncDecExprContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseCVisitor) VisitVariableExpr(ctx *VariableExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
@@ -192,6 +188,14 @@ func (v *BaseCVisitor) VisitBitXorExpr(ctx *BitXorExprContext) interface{} {
 }
 
 func (v *BaseCVisitor) VisitMinusExpr(ctx *MinusExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitValue_expr(ctx *Value_exprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitSubscript_expr(ctx *Subscript_exprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

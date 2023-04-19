@@ -88,6 +88,9 @@ type CVisitor interface {
 	// Visit a parse tree produced by CParser#AndExpr.
 	VisitAndExpr(ctx *AndExprContext) interface{}
 
+	// Visit a parse tree produced by CParser#ValueExpr.
+	VisitValueExpr(ctx *ValueExprContext) interface{}
+
 	// Visit a parse tree produced by CParser#SubscriptExpr.
 	VisitSubscriptExpr(ctx *SubscriptExprContext) interface{}
 
@@ -121,17 +124,11 @@ type CVisitor interface {
 	// Visit a parse tree produced by CParser#AssignSumDiffExpr.
 	VisitAssignSumDiffExpr(ctx *AssignSumDiffExprContext) interface{}
 
-	// Visit a parse tree produced by CParser#MemberExpr.
-	VisitMemberExpr(ctx *MemberExprContext) interface{}
-
 	// Visit a parse tree produced by CParser#PostIncDecExpr.
 	VisitPostIncDecExpr(ctx *PostIncDecExprContext) interface{}
 
 	// Visit a parse tree produced by CParser#PreIncDecExpr.
 	VisitPreIncDecExpr(ctx *PreIncDecExprContext) interface{}
-
-	// Visit a parse tree produced by CParser#VariableExpr.
-	VisitVariableExpr(ctx *VariableExprContext) interface{}
 
 	// Visit a parse tree produced by CParser#CallExpr.
 	VisitCallExpr(ctx *CallExprContext) interface{}
@@ -147,6 +144,12 @@ type CVisitor interface {
 
 	// Visit a parse tree produced by CParser#MinusExpr.
 	VisitMinusExpr(ctx *MinusExprContext) interface{}
+
+	// Visit a parse tree produced by CParser#value_expr.
+	VisitValue_expr(ctx *Value_exprContext) interface{}
+
+	// Visit a parse tree produced by CParser#subscript_expr.
+	VisitSubscript_expr(ctx *Subscript_exprContext) interface{}
 
 	// Visit a parse tree produced by CParser#comment.
 	VisitComment(ctx *CommentContext) interface{}
