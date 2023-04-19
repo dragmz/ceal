@@ -12,8 +12,9 @@ import (
 )
 
 type LangSpec struct {
-	EvalMaxVersion int          `json:"EvalMaxVersion"`
-	Ops            []LangSpecOp `json:"ops"`
+	EvalMaxVersion int                 `json:"EvalMaxVersion"`
+	NamedTypes     []LangSpecNamedType `json:"NamedTypes"`
+	Ops            []LangSpecOp        `json:"ops"`
 }
 
 type OpImmediateDetails struct {
@@ -38,6 +39,13 @@ type LangSpecOp struct {
 	ImmediateNote     []OpImmediateDetails `json:",omitempty"`
 	IntroducedVersion uint64
 	Groups            []string
+}
+
+type LangSpecNamedType struct {
+	Name         string    `json:"Name"`
+	Abbreviation string    `json:"Abbreviation"`
+	Bound        [2]uint64 `json:"Bound"`
+	AVMType      string    `json:"AVMType"`
 }
 
 type args struct {
