@@ -2,7 +2,14 @@
 txn Sender
 store 0
 load 0
+store 1
+load 0
 int 2
 int 1
 extract3
+load 1
+int 3
+int 1
+extract3
++
 return
