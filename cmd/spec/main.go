@@ -47,7 +47,7 @@ type args struct {
 
 func readType(t string) string {
 	switch t {
-	case "[]byte", "addr", "[32]byte", "key", "bigint":
+	case "[]byte", "addr", "[32]byte", "key", "bigint", "name":
 		return "bytes"
 	case "uint64", "bool":
 		return "uint64"
