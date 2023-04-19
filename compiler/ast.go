@@ -33,13 +33,13 @@ func (v *AstVisitor) VisitChildren(node antlr.RuleNode) interface{} {
 	return nil
 }
 
-func (v *AstVisitor) visitStatement(tree antlr.ParseTree) CealStatement {
+func (v *AstVisitor) visitAst(tree antlr.ParseTree) CealAst {
 	res := v.Visit(tree)
 	if res == nil {
 		return nil
 	}
 
-	return res.(CealStatement)
+	return res.(CealAst)
 }
 
 func (v *AstVisitor) VisitValueExpr(ctx *parser.ValueExprContext) interface{} {
@@ -49,7 +49,7 @@ func (v *AstVisitor) VisitValueExpr(ctx *parser.ValueExprContext) interface{} {
 		ids = append(ids, e.ID())
 	}
 
-	var ast CealStatement
+	var ast CealAst
 
 	vr, f := v.mustResolve(ids)
 	if f == nil {
@@ -98,7 +98,7 @@ func (v *AstVisitor) VisitAssign_expr(ctx *parser.Assign_exprContext) interface{
 		V:     vr,
 		T:     v.scope.resolveType(vr.t),
 		F:     f,
-		Value: v.visitStatement(ctx.Expr()),
+		Value: v.visitAst(ctx.Expr()),
 	}
 
 	return ast
@@ -117,14 +117,14 @@ func (v *AstVisitor) VisitDeclarationStmt(ctx *parser.DeclarationStmtContext) in
 
 func (v *AstVisitor) VisitMinusExpr(ctx *parser.MinusExprContext) interface{} {
 	return &CealNegate{
-		Value: v.visitStatement(ctx.Expr()),
+		Value: v.visitAst(ctx.Expr()),
 	}
 }
 
 func (v *AstVisitor) VisitAddSubExpr(ctx *parser.AddSubExprContext) interface{} {
 	return &CealBinop{
-		Left:  v.visitStatement(ctx.GetL()),
-		Right: v.visitStatement(ctx.GetR()),
+		Left:  v.visitAst(ctx.GetL()),
+		Right: v.visitAst(ctx.GetR()),
 		Op:    ctx.Addsub().GetText(),
 	}
 }
@@ -137,7 +137,7 @@ func (v *AstVisitor) VisitAssignSumDiffStmt(ctx *parser.AssignSumDiffStmtContext
 		V:      vr,
 		F:      f,
 		T:      t,
-		Value:  v.visitStatement(ctx.Asdexpr().Expr()),
+		Value:  v.visitAst(ctx.Asdexpr().Expr()),
 		Op:     ctx.Asdexpr().Asd().GetText(),
 		IsStmt: true,
 	}
@@ -150,7 +150,7 @@ func (v *AstVisitor) VisitAssignSumDiffExpr(ctx *parser.AssignSumDiffExprContext
 		V:     vr,
 		F:     f,
 		T:     t,
-		Value: v.visitStatement(ctx.Asdexpr().Expr()),
+		Value: v.visitAst(ctx.Asdexpr().Expr()),
 		Op:    ctx.Asdexpr().Asd().GetText(),
 	}
 }
@@ -158,8 +158,8 @@ func (v *AstVisitor) VisitAssignSumDiffExpr(ctx *parser.AssignSumDiffExprContext
 func (v *AstVisitor) VisitOrExpr(ctx *parser.OrExprContext) interface{} {
 	ast := &CealOr{
 		Index: v.index,
-		Left:  v.visitStatement(ctx.GetL()),
-		Right: v.visitStatement(ctx.GetR()),
+		Left:  v.visitAst(ctx.GetL()),
+		Right: v.visitAst(ctx.GetR()),
 	}
 
 	v.index++
@@ -170,8 +170,8 @@ func (v *AstVisitor) VisitOrExpr(ctx *parser.OrExprContext) interface{} {
 func (v *AstVisitor) VisitAndExpr(ctx *parser.AndExprContext) interface{} {
 	ast := &CealAnd{
 		Index: v.index,
-		Left:  v.visitStatement(ctx.GetL()),
-		Right: v.visitStatement(ctx.GetR()),
+		Left:  v.visitAst(ctx.GetL()),
+		Right: v.visitAst(ctx.GetR()),
 	}
 
 	v.index++
@@ -181,53 +181,53 @@ func (v *AstVisitor) VisitAndExpr(ctx *parser.AndExprContext) interface{} {
 
 func (v *AstVisitor) VisitMulDivExpr(ctx *parser.MulDivExprContext) interface{} {
 	return &CealBinop{
-		Left:  v.visitStatement(ctx.GetL()),
-		Right: v.visitStatement(ctx.GetR()),
+		Left:  v.visitAst(ctx.GetL()),
+		Right: v.visitAst(ctx.GetR()),
 		Op:    ctx.Muldiv().GetText(),
 	}
 }
 
 func (v *AstVisitor) VisitEqNeqExpr(ctx *parser.EqNeqExprContext) interface{} {
 	return &CealBinop{
-		Left:  v.visitStatement(ctx.GetL()),
-		Right: v.visitStatement(ctx.GetR()),
+		Left:  v.visitAst(ctx.GetL()),
+		Right: v.visitAst(ctx.GetR()),
 		Op:    ctx.Eqneq().GetText(),
 	}
 }
 
 func (v *AstVisitor) VisitBitAndExpr(ctx *parser.BitAndExprContext) interface{} {
 	return &CealBinop{
-		Left:  v.visitStatement(ctx.GetL()),
-		Right: v.visitStatement(ctx.GetR()),
+		Left:  v.visitAst(ctx.GetL()),
+		Right: v.visitAst(ctx.GetR()),
 		Op:    "&",
 	}
 }
 
 func (v *AstVisitor) VisitBitXorExpr(ctx *parser.BitXorExprContext) interface{} {
 	return &CealBinop{
-		Left:  v.visitStatement(ctx.GetL()),
-		Right: v.visitStatement(ctx.GetR()),
+		Left:  v.visitAst(ctx.GetL()),
+		Right: v.visitAst(ctx.GetR()),
 		Op:    "^",
 	}
 }
 
 func (v *AstVisitor) VisitBitOrExpr(ctx *parser.BitOrExprContext) interface{} {
 	return &CealBinop{
-		Left:  v.visitStatement(ctx.GetL()),
-		Right: v.visitStatement(ctx.GetR()),
+		Left:  v.visitAst(ctx.GetL()),
+		Right: v.visitAst(ctx.GetR()),
 		Op:    "|",
 	}
 }
 
 func (v *AstVisitor) VisitNotExpr(ctx *parser.NotExprContext) interface{} {
 	return &CealUnaryOp{
-		Statement: v.visitStatement(ctx.Expr()),
+		Statement: v.visitAst(ctx.Expr()),
 		Op:        "!",
 	}
 }
 
 func (v *AstVisitor) VisitConstantExpr(ctx *parser.ConstantExprContext) interface{} {
-	var res CealStatement
+	var res CealAst
 
 	c := ctx.Constant()
 
@@ -269,7 +269,7 @@ func (v *AstVisitor) VisitCall_expr(ctx *parser.Call_exprContext) interface{} {
 
 	id := ids[0].GetText()
 
-	imms := []CealStatement{}
+	imms := []CealAst{}
 
 	if len(ids) > 1 {
 		vr := v.mustResolveVariable(id)
@@ -301,7 +301,7 @@ func (v *AstVisitor) VisitCall_expr(ctx *parser.Call_exprContext) interface{} {
 	}
 
 	for _, arg := range ctx.Args().AllExpr() {
-		stmt := v.visitStatement(arg)
+		stmt := v.visitAst(arg)
 		ast.Args = append(ast.Args, stmt)
 	}
 
@@ -316,7 +316,7 @@ func (v *AstVisitor) VisitReturnStmt(ctx *parser.ReturnStmtContext) interface{} 
 	}
 
 	if ctx.Expr() != nil {
-		ast.Value = v.visitStatement(ctx.Expr())
+		ast.Value = v.visitAst(ctx.Expr())
 	}
 
 	return ast
@@ -332,11 +332,11 @@ func (v *AstVisitor) VisitIfStmt(ctx *parser.IfStmtContext) interface{} {
 	v.index++
 
 	alt := &CealIfAlternative{
-		Condition: v.visitStatement(ctx.Expr()),
+		Condition: v.visitAst(ctx.Expr()),
 	}
 
 	for _, item := range ctx.AllStmt() {
-		if stmt := v.visitStatement(item); stmt != nil {
+		if stmt := v.visitAst(item); stmt != nil {
 			alt.Statements = append(alt.Statements, stmt)
 		}
 	}
@@ -345,11 +345,11 @@ func (v *AstVisitor) VisitIfStmt(ctx *parser.IfStmtContext) interface{} {
 
 	for _, elif := range ctx.AllElseif() {
 		alt := &CealIfAlternative{
-			Condition: v.visitStatement(elif.Expr()),
+			Condition: v.visitAst(elif.Expr()),
 		}
 
 		for _, item := range elif.AllStmt() {
-			if stmt := v.visitStatement(item); stmt != nil {
+			if stmt := v.visitAst(item); stmt != nil {
 				alt.Statements = append(alt.Statements, stmt)
 			}
 		}
@@ -361,7 +361,7 @@ func (v *AstVisitor) VisitIfStmt(ctx *parser.IfStmtContext) interface{} {
 		alt := &CealIfAlternative{}
 
 		for _, item := range ctx.Else_().AllStmt() {
-			stmt := v.visitStatement(item)
+			stmt := v.visitAst(item)
 			alt.Statements = append(alt.Statements, stmt)
 		}
 
@@ -423,7 +423,7 @@ func (v *AstVisitor) VisitDefinition(ctx *parser.DefinitionContext) interface{} 
 	ast := &CealAssign{
 		V:     vr,
 		T:     t,
-		Value: v.visitStatement(e),
+		Value: v.visitAst(e),
 	}
 
 	return ast
@@ -438,7 +438,7 @@ func (v *AstVisitor) VisitDefinitionStmt(ctx *parser.DefinitionStmtContext) inte
 	ast := &CealDefine{
 		V:     vr,
 		T:     t,
-		Value: v.visitStatement(e),
+		Value: v.visitAst(e),
 	}
 
 	return ast
@@ -454,7 +454,7 @@ func (v *AstVisitor) VisitFunction(ctx *parser.FunctionContext) interface{} {
 			Fun: fun,
 		}
 		for _, item := range ctx.AllStmt() {
-			if stmt := v.visitStatement(item); stmt != nil {
+			if stmt := v.visitAst(item); stmt != nil {
 				ast.Statements = append(ast.Statements, stmt)
 			}
 		}
@@ -471,7 +471,7 @@ func (v *AstVisitor) VisitBlockStmt(ctx *parser.BlockStmtContext) interface{} {
 	v.scope = v.scope.enter()
 	{
 		for _, item := range ctx.AllStmt() {
-			stmt := v.visitStatement(item)
+			stmt := v.visitAst(item)
 			if stmt != nil {
 				ast.Statements = append(ast.Statements, stmt)
 			}
@@ -530,10 +530,10 @@ func (v *AstVisitor) VisitForStmt(ctx *parser.ForStmtContext) interface{} {
 	v.scope = v.scope.enter()
 	loop := v.loops.Push("for")
 
-	init := []CealStatement{}
+	init := []CealAst{}
 
 	if ctx.ForInit().Definition() != nil {
-		ast := v.visitStatement(ctx.ForInit().Definition())
+		ast := v.visitAst(ctx.ForInit().Definition())
 		if e, ok := ast.(CealExpr); ok {
 			e.ToStmt()
 		}
@@ -541,7 +541,7 @@ func (v *AstVisitor) VisitForStmt(ctx *parser.ForStmtContext) interface{} {
 	}
 
 	for _, e := range ctx.ForInit().AllExpr() {
-		ast := v.visitStatement(e)
+		ast := v.visitAst(e)
 		if e, ok := ast.(CealExpr); ok {
 			e.ToStmt()
 		}
@@ -549,12 +549,12 @@ func (v *AstVisitor) VisitForStmt(ctx *parser.ForStmtContext) interface{} {
 		init = append(init, ast)
 	}
 
-	condition := v.visitStatement(ctx.ForCondition().Expr())
+	condition := v.visitAst(ctx.ForCondition().Expr())
 
-	iter := []CealStatement{}
+	iter := []CealAst{}
 
 	for _, e := range ctx.ForIter().AllExpr() {
-		ast := v.visitStatement(e)
+		ast := v.visitAst(e)
 		if e, ok := ast.(CealExpr); ok {
 			e.ToStmt()
 		}
@@ -562,7 +562,7 @@ func (v *AstVisitor) VisitForStmt(ctx *parser.ForStmtContext) interface{} {
 		iter = append(iter, ast)
 	}
 
-	stmt := v.visitStatement(ctx.Stmt())
+	stmt := v.visitAst(ctx.Stmt())
 
 	ast := &CealFor{
 		Index:     v.index,
@@ -585,8 +585,8 @@ func (v *AstVisitor) VisitWhileStmt(ctx *parser.WhileStmtContext) interface{} {
 	ast := &CealWhile{
 		Index:     v.index,
 		Loop:      v.loops.Push("while"),
-		Condition: v.visitStatement(ctx.Expr()),
-		Statement: v.visitStatement(ctx.Stmt()),
+		Condition: v.visitAst(ctx.Expr()),
+		Statement: v.visitAst(ctx.Stmt()),
 	}
 
 	v.index++
@@ -600,8 +600,8 @@ func (v *AstVisitor) VisitDoWhileStmt(ctx *parser.DoWhileStmtContext) interface{
 	ast := &CealDoWhile{
 		Index:     v.index,
 		Loop:      v.loops.Push("do"),
-		Condition: v.visitStatement(ctx.Expr()),
-		Statement: v.visitStatement(ctx.Stmt()),
+		Condition: v.visitAst(ctx.Expr()),
+		Statement: v.visitAst(ctx.Stmt()),
 	}
 
 	v.index++
@@ -629,18 +629,18 @@ func (v *AstVisitor) VisitSwitchStmt(ctx *parser.SwitchStmtContext) interface{} 
 	ast := &CealSwitch{
 		Index: v.index,
 		Loop:  v.loops.Push("switch"),
-		Value: v.visitStatement(ctx.Expr()),
+		Value: v.visitAst(ctx.Expr()),
 	}
 
 	for _, c := range ctx.AllCase_() {
-		stmts := []CealStatement{}
+		stmts := []CealAst{}
 
 		for _, item := range c.AllStmt() {
-			stmts = append(stmts, v.visitStatement(item))
+			stmts = append(stmts, v.visitAst(item))
 		}
 
 		sc := &CealSwitchCase{
-			Value:      v.visitStatement(c.Expr()),
+			Value:      v.visitAst(c.Expr()),
 			Statements: stmts,
 		}
 
@@ -648,10 +648,10 @@ func (v *AstVisitor) VisitSwitchStmt(ctx *parser.SwitchStmtContext) interface{} 
 	}
 
 	if ctx.Default_() != nil {
-		stmts := []CealStatement{}
+		stmts := []CealAst{}
 
 		for _, item := range ctx.Default_().AllStmt() {
-			stmts = append(stmts, v.visitStatement(item))
+			stmts = append(stmts, v.visitAst(item))
 		}
 
 		ast.Default = stmts
@@ -666,9 +666,9 @@ func (v *AstVisitor) VisitSwitchStmt(ctx *parser.SwitchStmtContext) interface{} 
 func (v *AstVisitor) VisitConditionalExpr(ctx *parser.ConditionalExprContext) interface{} {
 	ast := &CealConditional{
 		Index:     v.index,
-		Condition: v.visitStatement(ctx.GetCondition()),
-		True:      v.visitStatement(ctx.GetTrue_()),
-		False:     v.visitStatement(ctx.GetFalse_()),
+		Condition: v.visitAst(ctx.GetCondition()),
+		True:      v.visitAst(ctx.GetTrue_()),
+		False:     v.visitAst(ctx.GetFalse_()),
 	}
 
 	v.index++
@@ -718,6 +718,6 @@ func (v *AstVisitor) VisitSubscript_expr(ctx *parser.Subscript_exprContext) inte
 
 	return &CealSubscript{
 		V:     vr,
-		Index: v.visitStatement(ctx.Expr()),
+		Index: v.visitAst(ctx.Expr()),
 	}
 }

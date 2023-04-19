@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-type CealStatement interface {
+type CealAst interface {
 	TealAst() teal.TealAst
 }
 
@@ -102,18 +102,18 @@ func (a *CealBreak) TealAst() teal.TealAst {
 }
 
 type CealSwitchCase struct {
-	Value      CealStatement
-	Statements []CealStatement
+	Value      CealAst
+	Statements []CealAst
 }
 
 type CealSwitch struct {
 	Index int
 	Loop  *LoopScopeItem
 
-	Value CealStatement
+	Value CealAst
 	Cases []*CealSwitchCase
 
-	Default []CealStatement
+	Default []CealAst
 }
 
 func (a *CealSwitch) TealAst() teal.TealAst {
@@ -161,8 +161,8 @@ func (a *CealSwitch) TealAst() teal.TealAst {
 type CealDoWhile struct {
 	Index     int
 	Loop      *LoopScopeItem
-	Condition CealStatement
-	Statement CealStatement
+	Condition CealAst
+	Statement CealAst
 }
 
 func (a *CealDoWhile) TealAst() teal.TealAst {
@@ -191,8 +191,8 @@ func (a *CealDoWhile) TealAst() teal.TealAst {
 type CealWhile struct {
 	Index     int
 	Loop      *LoopScopeItem
-	Condition CealStatement
-	Statement CealStatement
+	Condition CealAst
+	Statement CealAst
 }
 
 func (a *CealWhile) TealAst() teal.TealAst {
@@ -226,10 +226,10 @@ func (a *CealWhile) TealAst() teal.TealAst {
 type CealFor struct {
 	Index     int
 	Loop      *LoopScopeItem
-	Init      []CealStatement
-	Condition CealStatement
-	Statement CealStatement
-	Iter      []CealStatement
+	Init      []CealAst
+	Condition CealAst
+	Statement CealAst
+	Iter      []CealAst
 }
 
 func (a *CealFor) TealAst() teal.TealAst {
@@ -423,7 +423,7 @@ func (a *CealVariable) TealAst() teal.TealAst {
 
 type CealUnaryOp struct {
 	Op        string
-	Statement CealStatement
+	Statement CealAst
 }
 
 func (a *CealUnaryOp) TealAst() teal.TealAst {
@@ -441,7 +441,7 @@ type CealAssignSumDiff struct {
 	V     *Variable
 	F     *StructField
 	T     *Type
-	Value CealStatement
+	Value CealAst
 	Op    string
 
 	IsStmt bool
@@ -478,8 +478,8 @@ func (a *CealAssignSumDiff) TealAst() teal.TealAst {
 type CealAnd struct {
 	Index int
 
-	Left  CealStatement
-	Right CealStatement
+	Left  CealAst
+	Right CealAst
 }
 
 func (a *CealAnd) TealAst() teal.TealAst {
@@ -502,8 +502,8 @@ func (a *CealAnd) TealAst() teal.TealAst {
 
 type CealOr struct {
 	Index int
-	Left  CealStatement
-	Right CealStatement
+	Left  CealAst
+	Right CealAst
 }
 
 func (a *CealOr) TealAst() teal.TealAst {
@@ -528,9 +528,9 @@ func (a *CealOr) TealAst() teal.TealAst {
 }
 
 type CealBinop struct {
-	Left  CealStatement
+	Left  CealAst
 	Op    string
-	Right CealStatement
+	Right CealAst
 }
 
 func (a *CealBinop) TealAst() teal.TealAst {
@@ -573,7 +573,7 @@ func (a *CealBinop) TealAst() teal.TealAst {
 }
 
 type CealNegate struct {
-	Value CealStatement
+	Value CealAst
 }
 
 func (a *CealNegate) TealAst() teal.TealAst {
@@ -587,7 +587,7 @@ type CealDefine struct {
 	V *Variable
 	T *Type
 
-	Value CealStatement
+	Value CealAst
 }
 
 func (a *CealDefine) TealAst() teal.TealAst {
@@ -609,7 +609,7 @@ type CealAssign struct {
 	F   *StructField
 	Fun *Function
 
-	Value CealStatement
+	Value CealAst
 
 	IsStmt bool
 }
@@ -709,7 +709,7 @@ func (a *CealStructField) TealAst() teal.TealAst {
 
 type CealCall struct {
 	Fun  *Function
-	Args []CealStatement
+	Args []CealAst
 
 	IsStmt bool
 }
@@ -853,7 +853,7 @@ func (a *CealStringConstant) TealAst() teal.TealAst {
 }
 
 type CealReturn struct {
-	Value CealStatement
+	Value CealAst
 	Fun   *Function
 }
 
@@ -887,7 +887,7 @@ func (a *CealReturn) TealAst() teal.TealAst {
 }
 
 type CealBlock struct {
-	Statements []CealStatement
+	Statements []CealAst
 }
 
 func (a *CealBlock) TealAst() teal.TealAst {
@@ -903,10 +903,10 @@ func (a *CealBlock) TealAst() teal.TealAst {
 type CealConditional struct {
 	Index int
 
-	Condition CealStatement
+	Condition CealAst
 
-	True  CealStatement
-	False CealStatement
+	True  CealAst
+	False CealAst
 }
 
 func (a *CealConditional) TealAst() teal.TealAst {
@@ -931,8 +931,8 @@ func (a *CealConditional) TealAst() teal.TealAst {
 }
 
 type CealIfAlternative struct {
-	Condition  CealStatement
-	Statements []CealStatement
+	Condition  CealAst
+	Statements []CealAst
 }
 
 type CealIf struct {
@@ -990,7 +990,7 @@ func (a *CealIf) TealAst() teal.TealAst {
 
 type CealFunction struct {
 	Fun        *Function
-	Statements []CealStatement
+	Statements []CealAst
 }
 
 func (a *CealFunction) TealAst() teal.TealAst {
@@ -1043,7 +1043,7 @@ func (a *CealRaw) TealAst() teal.TealAst {
 
 type CealSubscript struct {
 	V     *Variable
-	Index CealStatement
+	Index CealAst
 }
 
 func (a *CealSubscript) TealAst() teal.TealAst {
