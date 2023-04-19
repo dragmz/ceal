@@ -291,32 +291,32 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 		str := includes[i].STRING().GetText()
 		name := str[1 : len(str)-1]
 
+		var incsrc string
+
 		// TODO: is a hardcoded avm.hpp okay?
-		if name == "avm.hpp" {
-			continue
+		if name != "avm.hpp" {
+			for _, dir := range c.Includes {
+				ip := path.Join(dir, name)
+
+				bs, err := os.ReadFile(ip)
+				if os.IsNotExist(err) {
+					continue
+				}
+
+				if err != nil {
+					panic(fmt.Sprintf("failed to read #include file: '%s'", name))
+				}
+
+				incsrc = string(bs)
+
+				break
+			}
 		}
 
-		for _, dir := range c.Includes {
-			ip := path.Join(dir, name)
+		prefix := src[:include.GetStart().GetStart()]
+		suffix := src[include.GetStop().GetStop()+1:]
 
-			bs, err := os.ReadFile(ip)
-			if os.IsNotExist(err) {
-				continue
-			}
-
-			if err != nil {
-				panic(fmt.Sprintf("failed to read #include file: '%s'", name))
-			}
-
-			incsrc := string(bs)
-
-			prefix := src[:include.GetStart().GetStart()]
-			suffix := src[include.GetStop().GetStop()+1:]
-
-			src = prefix + incsrc + suffix
-
-			break
-		}
+		src = prefix + incsrc + suffix
 	}
 
 	input = antlr.NewInputStream(src)

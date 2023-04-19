@@ -6,6 +6,11 @@ import (
 	"strings"
 )
 
+type CealAffixable interface {
+	AddPrefix([]CealAst)
+	AddSuffix([]CealAst)
+}
+
 type CealAst interface {
 	TealAst() teal.TealAst
 }
@@ -69,20 +74,20 @@ func (a *CealProgram) TealAst() teal.TealAst {
 			continue
 		}
 
-		writeAffix(ast.Pre)
+		writeAffix(ast.pre)
 		res.Write(&teal.Teal_label{Name: ast.Fun.name})
 		res.Write(ast.TealAst())
-		writeAffix(ast.Post)
+		writeAffix(ast.post)
 	}
 
-	writeAffix(main.Pre)
+	writeAffix(main.pre)
 
 	if len(a.Functions) > 1 {
 		res.Write(&teal.Teal_label{Name: main.Fun.name})
 	}
 
 	res.Write(main.TealAst())
-	writeAffix(main.Post)
+	writeAffix(main.post)
 
 	return res.Build()
 }
@@ -999,9 +1004,22 @@ func (a *CealIf) TealAst() teal.TealAst {
 	return res.Build()
 }
 
+type cealAffixableImpl struct {
+	pre  []CealAst
+	post []CealAst
+}
+
+func (a *cealAffixableImpl) AddPrefix(items []CealAst) {
+	a.pre = append(a.pre, items...)
+}
+
+func (a *cealAffixableImpl) AddSuffix(items []CealAst) {
+	a.post = append(a.post, items...)
+}
+
 type CealFunction struct {
-	Pre        []CealAst
-	Post       []CealAst
+	cealAffixableImpl
+
 	Fun        *Function
 	Statements []CealAst
 }

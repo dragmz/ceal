@@ -447,17 +447,16 @@ func (v *AstVisitor) VisitDefinitionStmt(ctx *parser.DefinitionStmtContext) inte
 }
 
 func (v *AstVisitor) VisitFunction(ctx *parser.FunctionContext) interface{} {
+	var ast *CealFunction
+
 	id := ctx.ID().GetText()
 	fun := v.global.functions[id]
 
 	v.scope = fun.user.scope
 	{
-		ast := &CealFunction{
-			Pre: v.comments,
+		ast = &CealFunction{
 			Fun: fun,
 		}
-
-		v.comments = []CealAst{}
 
 		for _, item := range ctx.AllStmt() {
 			if stmt := v.visitAst(item); stmt != nil {
@@ -468,7 +467,7 @@ func (v *AstVisitor) VisitFunction(ctx *parser.FunctionContext) interface{} {
 	}
 	v.scope = v.scope.exit()
 
-	return nil
+	return ast
 }
 
 func (v *AstVisitor) VisitBlockStmt(ctx *parser.BlockStmtContext) interface{} {
@@ -490,16 +489,30 @@ func (v *AstVisitor) VisitBlockStmt(ctx *parser.BlockStmtContext) interface{} {
 
 func (v *AstVisitor) VisitProgram(ctx *parser.ProgramContext) interface{} {
 	v.scope = v.global
+
+	var aff CealAffixable
+
 	{
-		v.VisitChildren(ctx)
+		for _, ch := range ctx.GetChildren() {
+			tree := ch.(antlr.ParseTree)
+			res := tree.Accept(v)
+
+			if e, ok := res.(CealAffixable); ok {
+				aff = e
+
+				e.AddPrefix(v.comments)
+				v.comments = []CealAst{}
+			}
+		}
 	}
+
 	if len(v.comments) > 0 {
-		if len(v.program.FunctionNames) > 0 {
-			last := v.program.Functions[v.program.FunctionNames[len(v.program.FunctionNames)-1]]
-			last.Post = v.comments
+		if aff != nil {
+			aff.AddSuffix(v.comments)
 			v.comments = []CealAst{}
 		}
 	}
+
 	v.scope = nil
 
 	return nil
