@@ -2,7 +2,6 @@ package teal
 
 import (
 	"encoding/base64"
-	"encoding/hex"
 	"fmt"
 	"strings"
 )
@@ -53,84 +52,6 @@ func (t *Teal_pragma_version) String() string {
 	return fmt.Sprintf("#pragma version %d", t.Version)
 }
 
-type Teal_intcblock_fixed struct {
-	UINT1 []uint64
-}
-
-func (a *Teal_intcblock_fixed) Teal() Teal {
-	return Teal{a}
-}
-
-func (a *Teal_intcblock_fixed) String() string {
-	res := strings.Builder{}
-	res.WriteString("intcblock")
-
-	for _, v := range a.UINT1 {
-		res.WriteString(" ")
-		res.WriteString(fmt.Sprintf("%d", v))
-	}
-
-	return res.String()
-}
-
-type Teal_bytecblock_fixed struct {
-	BYTES1 [][]byte
-}
-
-func (a *Teal_bytecblock_fixed) Teal() Teal {
-	return Teal{a}
-}
-
-func (a *Teal_bytecblock_fixed) String() string {
-	res := strings.Builder{}
-	res.WriteString("bytecblock")
-
-	for _, v := range a.BYTES1 {
-		res.WriteString(" ")
-		res.WriteString(fmt.Sprintf("0x%s", hex.EncodeToString(v)))
-	}
-
-	return res.String()
-}
-
-type Teal_b_fixed struct {
-	TARGET1 string
-}
-
-func (a *Teal_b_fixed) Teal() Teal {
-	return Teal{a}
-}
-
-func (a *Teal_b_fixed) String() string {
-	return fmt.Sprintf("b %s", a.TARGET1)
-}
-
-type Teal_bnz_fixed struct {
-	S1      TealAst
-	TARGET1 string
-}
-
-func (a *Teal_bnz_fixed) Teal() Teal {
-	return Teal{a}
-}
-
-func (a *Teal_bnz_fixed) String() string {
-	return fmt.Sprintf("%s\nbnz %s", a.S1.Teal().String(), a.TARGET1)
-}
-
-type Teal_bz_fixed struct {
-	S1      TealAst
-	TARGET1 string
-}
-
-func (a *Teal_bz_fixed) Teal() Teal {
-	return Teal{a}
-}
-
-func (a *Teal_bz_fixed) String() string {
-	return fmt.Sprintf("%s\nbz %s", a.S1.Teal().String(), a.TARGET1)
-}
-
 type Teal_label struct {
 	Name string
 }
@@ -141,26 +62,6 @@ func (a *Teal_label) Teal() Teal {
 
 func (a *Teal_label) String() string {
 	return fmt.Sprintf("%s:", a.Name)
-}
-
-type Teal_match_fixed struct {
-	TARGET1 []string
-}
-
-func (a *Teal_match_fixed) Teal() Teal {
-	return Teal{a}
-}
-
-func (a *Teal_match_fixed) String() string {
-	res := strings.Builder{}
-	res.WriteString("match")
-
-	for _, v := range a.TARGET1 {
-		res.WriteString(" ")
-		res.WriteString(v)
-	}
-
-	return res.String()
 }
 
 type Teal_byte struct {

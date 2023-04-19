@@ -1205,12 +1205,12 @@ func (a *Teal_intcblock) String() string {
 }
 
 type Teal_intcblock_op struct {
-	UINT1 [][]byte
+	UINT1 []uint64
 }
 
 func Parse_Teal_intcblock_op(ctx ParserContext) *Teal_intcblock_op {
 	t := &Teal_intcblock_op{
-		UINT1: ctx.Read_rrbyte(),
+		UINT1: ctx.Read_ruint64(),
 	}
 	return t
 }
@@ -1220,7 +1220,7 @@ func (a *Teal_intcblock_op) String() string {
 	res.WriteString("intcblock")
 	for _, v := range a.UINT1 {
 		res.WriteString(" ")
-		res.WriteString(hex.EncodeToString(v))
+		res.WriteString(fmt.Sprintf("%d", v))
 	}
 	return res.String()
 }
@@ -1393,6 +1393,7 @@ func (a *Teal_bytecblock_op) String() string {
 	res.WriteString("bytecblock")
 	for _, v := range a.BYTES1 {
 		res.WriteString(" ")
+		res.WriteString("0x")
 		res.WriteString(hex.EncodeToString(v))
 	}
 	return res.String()
@@ -4010,6 +4011,7 @@ func (a *Teal_pushbytess_op) String() string {
 	res.WriteString("pushbytess")
 	for _, v := range a.BYTES1 {
 		res.WriteString(" ")
+		res.WriteString("0x")
 		res.WriteString(hex.EncodeToString(v))
 	}
 	return res.String()
@@ -4029,12 +4031,12 @@ func (a *Teal_pushints) String() string {
 }
 
 type Teal_pushints_op struct {
-	UINT1 [][]byte
+	UINT1 []uint64
 }
 
 func Parse_Teal_pushints_op(ctx ParserContext) *Teal_pushints_op {
 	t := &Teal_pushints_op{
-		UINT1: ctx.Read_rrbyte(),
+		UINT1: ctx.Read_ruint64(),
 	}
 	return t
 }
@@ -4044,7 +4046,7 @@ func (a *Teal_pushints_op) String() string {
 	res.WriteString("pushints")
 	for _, v := range a.UINT1 {
 		res.WriteString(" ")
-		res.WriteString(hex.EncodeToString(v))
+		res.WriteString(fmt.Sprintf("%d", v))
 	}
 	return res.String()
 }

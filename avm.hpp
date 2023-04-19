@@ -262,7 +262,7 @@ divmodw - W,X = (A,B / C,D); Y,Z = (A,B modulo C,D)
 The notation J,K indicates that two uint64 values J and K are interpreted as a uint128 value, with J as the high uint64 and K the low.
 */
 avm_divmodw_result_t avm_divmodw(STACK uint64 STACK_1, STACK uint64 STACK_2, STACK uint64 STACK_3, STACK uint64 STACK_4);
-void avm_intcblock_op(IMMEDIATE bytes UINT1, ...);
+void avm_intcblock_op(IMMEDIATE uint64 UINT1, ...);
 /*
 intcblock - prepare block of uint64 constants for use by intc
 
@@ -1198,7 +1198,7 @@ struct avm_pushbytess_t
 {
 };
 extern avm_pushbytess_t avm_pushbytess;
-void avm_pushints_op(IMMEDIATE bytes UINT1, ...);
+void avm_pushints_op(IMMEDIATE uint64 UINT1, ...);
 /*
 pushints - push sequence of immediate uints to stack in the order they appear (first uint being deepest)
 

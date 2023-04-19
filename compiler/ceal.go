@@ -39,17 +39,21 @@ func (a *CealProgram) TealAst() teal.TealAst {
 			items = append(items, uint64(v))
 		}
 
-		res.Write(&teal.Teal_intcblock_fixed{UINT1: items})
+		res.Write(&teal.Teal_intcblock{Teal_intcblock_op: teal.Teal_intcblock_op{UINT1: items}})
 	}
 
 	if len(a.ConstBytes) > 0 {
-		res.Write(&teal.Teal_bytecblock_fixed{BYTES1: a.ConstBytes})
+		res.Write(&teal.Teal_bytecblock{Teal_bytecblock_op: teal.Teal_bytecblock_op{BYTES1: a.ConstBytes}})
 	}
 
 	main := a.Functions[AvmMainName]
 
 	if len(a.Functions) > 1 {
-		res.Write(&teal.Teal_b_fixed{TARGET1: main.Fun.name})
+		res.Write(&teal.Teal_b{
+			Teal_b_op: teal.Teal_b_op{
+				TARGET1: main.Fun.name,
+			},
+		})
 	}
 
 	for _, name := range a.FunctionNames {
@@ -78,7 +82,10 @@ type CealContinue struct {
 }
 
 func (a *CealContinue) TealAst() teal.TealAst {
-	return &teal.Teal_b_fixed{TARGET1: fmt.Sprintf("%s_%d_continue", a.Label, a.Index)}
+	return &teal.Teal_b{
+		Teal_b_op: teal.Teal_b_op{
+			TARGET1: fmt.Sprintf("%s_%d_continue", a.Label, a.Index)},
+	}
 }
 
 type CealBreak struct {
@@ -87,7 +94,11 @@ type CealBreak struct {
 }
 
 func (a *CealBreak) TealAst() teal.TealAst {
-	return &teal.Teal_b_fixed{TARGET1: fmt.Sprintf("%s_%d_end", a.Label, a.Index)}
+	return &teal.Teal_b{
+		Teal_b_op: teal.Teal_b_op{
+			TARGET1: fmt.Sprintf("%s_%d_end", a.Label, a.Index),
+		},
+	}
 }
 
 type CealSwitchCase struct {
@@ -118,7 +129,11 @@ func (a *CealSwitch) TealAst() teal.TealAst {
 	}
 
 	res.Write(a.Value.TealAst())
-	res.Write(&teal.Teal_match_fixed{TARGET1: labels})
+	res.Write(&teal.Teal_match{
+		Teal_match_op: teal.Teal_match_op{
+			TARGET1: labels,
+		},
+	})
 
 	if len(a.Default) > 0 {
 		for _, stmt := range a.Default {
@@ -159,9 +174,11 @@ func (a *CealDoWhile) TealAst() teal.TealAst {
 		res.Write(&teal.Teal_label{Name: fmt.Sprintf("do_%d_continue", a.Index)})
 	}
 
-	res.Write(&teal.Teal_bnz_fixed{
-		S1:      a.Condition.TealAst(),
-		TARGET1: fmt.Sprintf("do_%d", a.Index),
+	res.Write(&teal.Teal_bnz{
+		Teal_bnz_op: teal.Teal_bnz_op{
+			TARGET1: fmt.Sprintf("do_%d", a.Index),
+		},
+		STACK_1: a.Condition.TealAst(),
 	})
 
 	if a.Loop.breaks {
@@ -182,9 +199,11 @@ func (a *CealWhile) TealAst() teal.TealAst {
 	res := &teal.TealAstBuilder{}
 
 	res.Write(&teal.Teal_label{Name: fmt.Sprintf("while_%d", a.Index)})
-	res.Write(&teal.Teal_bz_fixed{
-		S1:      a.Condition.TealAst(),
-		TARGET1: fmt.Sprintf("while_%d_end", a.Index),
+	res.Write(&teal.Teal_bz{
+		Teal_bz_op: teal.Teal_bz_op{
+			TARGET1: fmt.Sprintf("while_%d_end", a.Index),
+		},
+		STACK_1: a.Condition.TealAst(),
 	})
 
 	res.Write(a.Statement.TealAst())
@@ -193,7 +212,12 @@ func (a *CealWhile) TealAst() teal.TealAst {
 		res.Write(&teal.Teal_label{Name: fmt.Sprintf("while_%d_continue", a.Index)})
 	}
 
-	res.Write(&teal.Teal_b_fixed{TARGET1: fmt.Sprintf("while_%d", a.Index)})
+	res.Write(&teal.Teal_b{
+		Teal_b_op: teal.Teal_b_op{
+			TARGET1: fmt.Sprintf("while_%d", a.Index),
+		},
+	})
+
 	res.Write(&teal.Teal_label{Name: fmt.Sprintf("while_%d_end", a.Index)})
 
 	return res.Build()
@@ -216,9 +240,11 @@ func (a *CealFor) TealAst() teal.TealAst {
 	}
 
 	res.Write(&teal.Teal_label{Name: fmt.Sprintf("for_%d", a.Index)})
-	res.Write(&teal.Teal_bz_fixed{
-		S1:      a.Condition.TealAst(),
-		TARGET1: fmt.Sprintf("for_%d_end", a.Index),
+	res.Write(&teal.Teal_bz{
+		Teal_bz_op: teal.Teal_bz_op{
+			TARGET1: fmt.Sprintf("for_%d_end", a.Index),
+		},
+		STACK_1: a.Condition.TealAst(),
 	})
 	res.Write(a.Statement.TealAst())
 
@@ -230,7 +256,11 @@ func (a *CealFor) TealAst() teal.TealAst {
 		res.Write(stmt.TealAst())
 	}
 
-	res.Write(&teal.Teal_b_fixed{TARGET1: fmt.Sprintf("for_%d", a.Index)})
+	res.Write(&teal.Teal_b{
+		Teal_b_op: teal.Teal_b_op{
+			TARGET1: fmt.Sprintf("for_%d", a.Index),
+		},
+	})
 	res.Write(&teal.Teal_label{Name: fmt.Sprintf("for_%d_end", a.Index)})
 
 	return res.Build()
@@ -339,7 +369,11 @@ type CealGoto struct {
 }
 
 func (a *CealGoto) TealAst() teal.TealAst {
-	return &teal.Teal_b_fixed{TARGET1: fmt.Sprintf("label_%s", a.Label)}
+	return &teal.Teal_b{
+		Teal_b_op: teal.Teal_b_op{
+			TARGET1: fmt.Sprintf("label_%s", a.Label),
+		},
+	}
 }
 
 type CealVariable struct {
@@ -452,9 +486,11 @@ func (a *CealAnd) TealAst() teal.TealAst {
 	res := &teal.TealAstBuilder{}
 
 	res.Write(&teal.Teal_andand{
-		STACK_1: &teal.Teal_bz_fixed{
-			S1:      &teal.Teal_dup{STACK_1: a.Left.TealAst()},
-			TARGET1: fmt.Sprintf("and_%d_end", a.Index),
+		STACK_1: &teal.Teal_bz{
+			Teal_bz_op: teal.Teal_bz_op{
+				TARGET1: fmt.Sprintf("and_%d_end", a.Index),
+			},
+			STACK_1: &teal.Teal_dup{STACK_1: a.Left.TealAst()},
 		},
 		STACK_2: a.Right.TealAst(),
 	})
@@ -475,11 +511,13 @@ func (a *CealOr) TealAst() teal.TealAst {
 
 	res.Write(
 		&teal.Teal_oror{
-			STACK_1: &teal.Teal_bnz_fixed{
-				S1: &teal.Teal_dup{
+			STACK_1: &teal.Teal_bnz{
+				Teal_bnz_op: teal.Teal_bnz_op{
+					TARGET1: fmt.Sprintf("or_%d_end", a.Index),
+				},
+				STACK_1: &teal.Teal_dup{
 					STACK_1: a.Left.TealAst(),
 				},
-				TARGET1: fmt.Sprintf("or_%d_end", a.Index),
 			},
 			STACK_2: a.Right.TealAst(),
 		})
@@ -868,12 +906,14 @@ func (a *CealConditional) TealAst() teal.TealAst {
 	false_label := fmt.Sprintf("conditional_%d_false", a.Index)
 	end_label := fmt.Sprintf("conditional_%d_end", a.Index)
 
-	res.Write(&teal.Teal_bz_fixed{
-		S1:      a.Condition.TealAst(),
-		TARGET1: false_label,
+	res.Write(&teal.Teal_bz{
+		STACK_1: a.Condition.TealAst(),
+		Teal_bz_op: teal.Teal_bz_op{
+			TARGET1: false_label,
+		},
 	})
 	res.Write(a.True.TealAst())
-	res.Write(&teal.Teal_b_fixed{TARGET1: end_label})
+	res.Write(&teal.Teal_b{Teal_b_op: teal.Teal_b_op{TARGET1: end_label}})
 	res.Write(&teal.Teal_label{Name: false_label})
 	res.Write(a.False.TealAst())
 	res.Write(&teal.Teal_label{Name: end_label})
@@ -899,14 +939,18 @@ func (a *CealIf) TealAst() teal.TealAst {
 	for i, alt := range a.Alternatives {
 		if alt.Condition != nil {
 			if i < len(a.Alternatives)-1 {
-				res.Write(&teal.Teal_bz_fixed{
-					S1:      alt.Condition.TealAst(),
-					TARGET1: fmt.Sprintf("if_skip_%d_%d", a.Index, i),
+				res.Write(&teal.Teal_bz{
+					Teal_bz_op: teal.Teal_bz_op{
+						TARGET1: fmt.Sprintf("if_skip_%d_%d", a.Index, i),
+					},
+					STACK_1: alt.Condition.TealAst(),
 				})
 			} else {
-				res.Write(&teal.Teal_bz_fixed{
-					S1:      alt.Condition.TealAst(),
-					TARGET1: end_label,
+				res.Write(&teal.Teal_bz{
+					Teal_bz_op: teal.Teal_bz_op{
+						TARGET1: end_label,
+					},
+					STACK_1: alt.Condition.TealAst(),
 				})
 			}
 		}
@@ -916,7 +960,11 @@ func (a *CealIf) TealAst() teal.TealAst {
 		}
 
 		if i < len(a.Alternatives)-1 {
-			res.Write(&teal.Teal_b_fixed{TARGET1: end_label})
+			res.Write(&teal.Teal_b{
+				Teal_b_op: teal.Teal_b_op{
+					TARGET1: end_label,
+				},
+			})
 		}
 
 		if alt.Condition != nil {

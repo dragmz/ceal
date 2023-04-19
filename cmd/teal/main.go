@@ -148,7 +148,10 @@ type TealAst interface
 
 					switch arg.Type {
 					case "bytes":
+						bw.WriteString("\t\tres.WriteString(\"0x\")\n")
 						bw.WriteString("\t\tres.WriteString(hex.EncodeToString(v))\n")
+					case "uint64":
+						bw.WriteString("\tres.WriteString(fmt.Sprintf(\"%d\", v))\n")
 					default:
 						bw.WriteString("\t\tres.WriteString(v)\n")
 					}

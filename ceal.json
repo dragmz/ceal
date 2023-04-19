@@ -857,7 +857,7 @@
 			"name": "intcblock",
 			"imms": [
 				{
-					"type": "bytes",
+					"type": "uint64",
 					"name": "UINT1",
 					"array": true
 				}
@@ -3841,7 +3841,7 @@
 			"name": "pushints",
 			"imms": [
 				{
-					"type": "bytes",
+					"type": "uint64",
 					"name": "UINT1",
 					"array": true
 				}

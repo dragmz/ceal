@@ -452,14 +452,14 @@ var builtin_functions = []BuiltinFunctionData{
 		t: "void", name: "avm_intcblock", op: "intcblock",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "bytes", name: "UINT1", array: true},
+			{t: "uint64", name: "UINT1", array: true},
 		},
 		returns: 0,
 	},
 	{
 		t: "void", name: "avm_intcblock_op", op: "intcblock",
 		imm: []BuiltinFunctionParamData{
-			{t: "bytes", name: "UINT1", array: true},
+			{t: "uint64", name: "UINT1", array: true},
 		},
 	},
 	{
@@ -1577,14 +1577,14 @@ var builtin_functions = []BuiltinFunctionData{
 		t: "void", name: "avm_pushints", op: "pushints",
 		stack: []BuiltinFunctionParamData{},
 		imm: []BuiltinFunctionParamData{
-			{t: "bytes", name: "UINT1", array: true},
+			{t: "uint64", name: "UINT1", array: true},
 		},
 		returns: 0,
 	},
 	{
 		t: "void", name: "avm_pushints_op", op: "pushints",
 		imm: []BuiltinFunctionParamData{
-			{t: "bytes", name: "UINT1", array: true},
+			{t: "uint64", name: "UINT1", array: true},
 		},
 	},
 	{

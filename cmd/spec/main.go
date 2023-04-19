@@ -122,7 +122,7 @@ func readImms(op LangSpecOp) []ceal.CealArg {
 			t = "label"
 			array = true
 		case "varuint count, [varuint ...]":
-			t = "bytes"
+			t = "uint64"
 			array = true
 		case "varuint count, [varuint length, bytes ...]":
 			t = "bytes"

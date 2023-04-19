@@ -21,6 +21,11 @@ type ParserContext interface {
 	Read_rrbyte() [][]byte
 	Read_string() string
 	Read_rstring() []string
+	Read_ruint64() []uint64
+}
+
+func (a *parserContext) Read_ruint64() []uint64 {
+	return a.readUint64Array()
 }
 
 func (a *parserContext) Read_rstring() []string {
@@ -228,6 +233,17 @@ func (c *parserContext) parseInt16() int16 {
 	}
 
 	return v
+}
+
+func (c *parserContext) readUint64Array() []uint64 {
+	res := []uint64{}
+
+	for c.args.Scan() {
+		i := c.parseUint64()
+		res = append(res, i)
+	}
+
+	return res
 }
 
 func (c *parserContext) readBytesArray() [][]byte {
