@@ -462,8 +462,6 @@ func ParseTeal(src string) Teal {
 						op = Parse_Teal_int_op(ctx)
 					case "byte":
 						op = Parse_Teal_byte_op(ctx)
-					case "callsub":
-						op = Parse_Teal_callsub_op_fixed(ctx)
 					default:
 						pa := &parserContext{args: &arguments{ts: sub.Tokens}}
 						op = tryParseTealOp(pa)

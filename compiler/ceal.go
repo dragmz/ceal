@@ -773,10 +773,15 @@ func (a *CealCall) TealAst() teal.TealAst {
 			args = append(args, arg.TealAst())
 		}
 
-		res.Write(&teal.Teal_callsub_fixed{
-			Args:   args,
-			Target: a.Fun.name,
+		seq := teal.Teal_seq{}
+		seq = append(seq, args...)
+		seq = append(seq, &teal.Teal_callsub{
+			Teal_callsub_op: teal.Teal_callsub_op{
+				TARGET1: a.Fun.name,
+			},
 		})
+
+		res.Write(seq)
 	}
 
 	if a.IsStmt {
@@ -865,12 +870,16 @@ func (a *CealReturn) TealAst() teal.TealAst {
 			values = append(values, a.Value.TealAst())
 		}
 
-		op = &teal.Teal_retsub_fixed{
-			Values: values,
-		}
+		seq := teal.Teal_seq{}
+
+		seq = append(seq, values...)
+		seq = append(seq, &teal.Teal_retsub{})
+
+		op = seq
 	} else {
-		op = &teal.Teal_return_fixed{
-			Value: a.Value.TealAst(),
+		op = &teal.Teal_return{
+			Teal_return_op: teal.Teal_return_op{},
+			STACK_1:        a.Value.TealAst(),
 		}
 	}
 

@@ -149,73 +149,6 @@ func (a *Teal_int) String() string {
 	return fmt.Sprintf("int %d", a.V)
 }
 
-type Teal_retsub_fixed struct {
-	Values []TealAst
-}
-
-func (a *Teal_retsub_fixed) Teal() Teal {
-	return Teal{a}
-}
-
-func (a *Teal_retsub_fixed) String() string {
-	res := Source{}
-
-	for _, v := range a.Values {
-		for _, op := range v.Teal() {
-			res.WriteLine(op.String())
-		}
-	}
-
-	res.WriteLine("retsub")
-
-	return res.String()
-}
-
-type Teal_return_fixed struct {
-	Value TealAst
-}
-
-func (a *Teal_return_fixed) Teal() Teal {
-	return Teal{a}
-}
-
-func (a *Teal_return_fixed) String() string {
-	res := Source{}
-
-	if a.Value != nil {
-		for _, op := range a.Value.Teal() {
-			res.WriteLine(op.String())
-		}
-	}
-
-	res.WriteLine("return")
-
-	return res.String()
-}
-
-type Teal_callsub_fixed struct {
-	Args   []TealAst
-	Target string
-}
-
-func (a *Teal_callsub_fixed) Teal() Teal {
-	return Teal{a}
-}
-
-func (a *Teal_callsub_fixed) String() string {
-	res := Source{}
-
-	for _, a := range a.Args {
-		for _, op := range a.Teal() {
-			res.WriteLine(op.String())
-		}
-	}
-
-	res.WriteLine(fmt.Sprintf("callsub %s", a.Target))
-
-	return res.String()
-}
-
 type Teal_call_builtin struct {
 	Name string
 
@@ -308,10 +241,4 @@ func Parse_Teal_int_op(a ParserContext) TealOp {
 func Parse_Teal_byte_op(a ParserContext) TealOp {
 	v := a.Read_rbyte()
 	return &Teal_byte{S: &Teal_byte_value{V: v}}
-}
-
-func Parse_Teal_callsub_op_fixed(a ParserContext) TealOp {
-	v := a.Read()
-	// TODO: should actually return Teal_callsub_op
-	return &Teal_callsub_fixed{Target: v.String()}
 }
