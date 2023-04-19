@@ -292,9 +292,7 @@ type CealValue interface {
 }
 
 type CealPrefix struct {
-	V *Variable
-	F *StructField
-	T *Type
+	D dotData
 
 	Op string
 
@@ -306,17 +304,8 @@ func (a *CealPrefix) ToStmt() {
 }
 
 func (a *CealPrefix) TealAst() teal.TealAst {
-	if a.V.constant {
+	if a.D.V.constant {
 		panic("cannot modify const var")
-	}
-
-	var slot uint8
-
-	if a.T.complex != nil {
-		v := a.V.fields[a.F.name]
-		slot = uint8(v.local.slot)
-	} else {
-		slot = uint8(a.V.local.slot)
 	}
 
 	var op teal.TealAst
@@ -324,12 +313,12 @@ func (a *CealPrefix) TealAst() teal.TealAst {
 	switch a.Op {
 	case "++":
 		op = &teal.Teal_plus{
-			STACK_1: &teal.Teal_load{Teal_load_op: teal.Teal_load_op{I1: uint8(slot)}},
+			STACK_1: a.D.Load(),
 			STACK_2: &teal.Teal_int{V: 1},
 		}
 	case "--":
 		op = &teal.Teal_minus{
-			STACK_1: &teal.Teal_load{Teal_load_op: teal.Teal_load_op{I1: uint8(slot)}},
+			STACK_1: a.D.Load(),
 			STACK_2: &teal.Teal_int{V: 1},
 		}
 	default:
@@ -337,19 +326,17 @@ func (a *CealPrefix) TealAst() teal.TealAst {
 	}
 
 	res := &teal.TealAstBuilder{}
-	res.Write(&teal.Teal_store{STACK_1: op, Teal_store_op: teal.Teal_store_op{I1: uint8(slot)}})
+	res.Write(a.D.Store(op))
 
 	if !a.IsStmt {
-		res.Write(&teal.Teal_load{Teal_load_op: teal.Teal_load_op{I1: uint8(slot)}})
+		res.Write(a.D.Load())
 	}
 
 	return res.Build()
 }
 
 type CealPostfix struct {
-	V *Variable
-	F *StructField
-	T *Type
+	D dotData
 
 	Op string
 
@@ -361,21 +348,12 @@ func (a *CealPostfix) ToStmt() {
 }
 
 func (a *CealPostfix) TealAst() teal.TealAst {
-	if a.V.constant {
+	if a.D.V.constant {
 		panic("cannot modify const var")
 	}
 
-	var slot uint8
-
-	if a.T.complex != nil {
-		v := a.V.fields[a.F.name]
-		slot = uint8(v.local.slot)
-	} else {
-		slot = uint8(a.V.local.slot)
-	}
-
 	var s1 teal.TealAst
-	s1 = &teal.Teal_load{Teal_load_op: teal.Teal_load_op{I1: uint8(slot)}}
+	s1 = a.D.Load()
 
 	if !a.IsStmt {
 		s1 = &teal.Teal_dup{STACK_1: s1}
@@ -393,7 +371,7 @@ func (a *CealPostfix) TealAst() teal.TealAst {
 		panic(fmt.Sprintf("postfix operator not supported: '%s'", a.Op))
 	}
 
-	return &teal.Teal_store{STACK_1: op, Teal_store_op: teal.Teal_store_op{I1: uint8(slot)}}
+	return a.D.Store(op)
 }
 
 type CealLabel struct {
@@ -417,45 +395,46 @@ func (a *CealGoto) TealAst() teal.TealAst {
 }
 
 type CealVariable struct {
-	V *Variable
+	D dotData
 }
 
 func (a *CealVariable) TealAst() teal.TealAst {
 	res := &teal.TealAstBuilder{}
 
-	if a.V.local != nil {
-		ast := &teal.Teal_load{Teal_load_op: teal.Teal_load_op{I1: uint8(a.V.local.slot)}}
+	if a.D.V.local != nil {
+		ast := a.D.Load()
+		res.Write(ast)
+
+		return res.Build()
+	}
+
+	if a.D.V.param != nil {
+		ast := &teal.Teal_frame_dig{Teal_frame_dig_op: teal.Teal_frame_dig_op{I1: int8(a.D.V.param.index)}}
 		res.Write(ast)
 		return res.Build()
 	}
 
-	if a.V.param != nil {
-		ast := &teal.Teal_frame_dig{Teal_frame_dig_op: teal.Teal_frame_dig_op{I1: int8(a.V.param.index)}}
-		res.Write(ast)
-		return res.Build()
-	}
-
-	if a.V.const_ != nil {
-		switch a.V.const_.kind {
+	if a.D.V.const_ != nil {
+		switch a.D.V.const_.kind {
 		case SimpleTypeInt:
-			ast := &teal.Teal_intc{Teal_intc_op: teal.Teal_intc_op{I1: uint8(a.V.const_.index)}}
+			ast := &teal.Teal_intc{Teal_intc_op: teal.Teal_intc_op{I1: uint8(a.D.V.const_.index)}}
 			res.Write(ast)
 			return res.Build()
 		case SimpleTypeBytes:
-			ast := &teal.Teal_bytec{Teal_bytec_op: teal.Teal_bytec_op{I1: uint8(a.V.const_.index)}}
+			ast := &teal.Teal_bytec{Teal_bytec_op: teal.Teal_bytec_op{I1: uint8(a.D.V.const_.index)}}
 			res.Write(ast)
 			return res.Build()
 		}
 	}
 
-	switch a.V.t {
+	switch a.D.V.t {
 	case "uint64":
-		res.Write(&teal.Teal_named_int{V: &teal.Teal_named_int_value{V: a.V.name}})
+		res.Write(&teal.Teal_named_int{V: &teal.Teal_named_int_value{V: a.D.V.name}})
 		return res.Build()
 	case "bytes":
-		res.Write(&teal.Teal_byte{S: &teal.Teal_byte_string_value{V: a.V.name}})
+		res.Write(&teal.Teal_byte{S: &teal.Teal_byte_string_value{V: a.D.V.name}})
 	default:
-		panic(fmt.Sprintf("type '%s' is not supported", a.V.t))
+		panic(fmt.Sprintf("type '%s' is not supported", a.D.V.t))
 	}
 
 	return res.Build()
@@ -478,9 +457,7 @@ func (a *CealUnaryOp) TealAst() teal.TealAst {
 }
 
 type CealAssignSumDiff struct {
-	V     *Variable
-	F     *StructField
-	T     *Type
+	D     dotData
 	Value CealAst
 	Op    string
 
@@ -488,16 +465,7 @@ type CealAssignSumDiff struct {
 }
 
 func (a *CealAssignSumDiff) TealAst() teal.TealAst {
-	var slot uint8
-
-	if a.T.complex != nil {
-		v := a.V.fields[a.F.name]
-		slot = uint8(v.local.slot)
-	} else {
-		slot = uint8(a.V.local.slot)
-	}
-
-	s1 := &teal.Teal_load{Teal_load_op: teal.Teal_load_op{I1: slot}}
+	s1 := a.D.Load()
 
 	var op teal.TealAst
 
@@ -512,7 +480,7 @@ func (a *CealAssignSumDiff) TealAst() teal.TealAst {
 		op = &teal.Teal_dup{STACK_1: op}
 	}
 
-	return &teal.Teal_store{STACK_1: op, Teal_store_op: teal.Teal_store_op{I1: slot}}
+	return a.D.Store(op)
 }
 
 type CealAnd struct {
@@ -624,30 +592,23 @@ func (a *CealNegate) TealAst() teal.TealAst {
 }
 
 type CealDefine struct {
-	V *Variable
-	T *Type
+	D dotData
 
 	Value CealAst
 }
 
 func (a *CealDefine) TealAst() teal.TealAst {
-	if a.T.complex != nil {
+	if a.D.T.complex != nil {
 		panic("defining complex variable is not supported yet")
 	}
 
-	ast := &teal.Teal_store{
-		STACK_1:       a.Value.TealAst(),
-		Teal_store_op: teal.Teal_store_op{I1: uint8(a.V.local.slot)},
-	}
+	ast := a.D.Store(a.Value.TealAst())
 
 	return ast
 }
 
 type CealAssign struct {
-	V   *Variable
-	T   *Type
-	F   *StructField
-	Fun *Function
+	D dotData
 
 	Value CealAst
 
@@ -659,53 +620,41 @@ func (a *CealAssign) ToStmt() {
 }
 
 func (a *CealAssign) TealAst() teal.TealAst {
-	if a.V.constant {
+	if a.D.V.constant {
 		panic("cannot assign to a const var")
 	}
 
-	if a.V.param != nil {
+	if a.D.V.param != nil {
 		// TODO: add param var assignment support
 		panic("cannot assign param var")
 	}
 
 	res := &teal.TealAstBuilder{}
 
-	if a.T.complex != nil {
-		if a.T.complex.builtin != nil {
+	if a.D.T.complex != nil {
+		if a.D.T.complex.builtin != nil {
 			res.Write(&teal.Teal_call_builtin{
-				Name: a.Fun.builtin.op,
+				Name: a.D.Fun.builtin.op,
 				Imms: []teal.TealAst{&teal.Teal_named_int_value{
-					V: a.F.name,
+					V: a.D.F.name,
 				}},
 			})
 			return res.Build()
 		} else {
-			if a.V.param != nil {
+			if a.D.V.param != nil {
 				panic("accessing struct param fields is not supported yet")
 			}
 
-			v := a.V.fields[a.F.name]
-			ast := &teal.Teal_store{
-				STACK_1:       a.Value.TealAst(),
-				Teal_store_op: teal.Teal_store_op{I1: uint8(v.local.slot)},
-			}
-
+			ast := a.D.Store(a.Value.TealAst())
 			res.Write(ast)
 		}
 	} else {
-		ast := &teal.Teal_store{
-			STACK_1:       a.Value.TealAst(),
-			Teal_store_op: teal.Teal_store_op{I1: uint8(a.V.local.slot)},
-		}
-
+		ast := a.D.Store(a.Value.TealAst())
 		res.Write(ast)
 	}
 
 	if !a.IsStmt {
-		load := &teal.Teal_load{
-			Teal_load_op: teal.Teal_load_op{I1: uint8(a.V.local.slot)},
-		}
-
+		load := a.D.Load()
 		res.Write(load)
 	}
 
@@ -713,35 +662,27 @@ func (a *CealAssign) TealAst() teal.TealAst {
 }
 
 type CealStructField struct {
-	V   *Variable
-	T   *Type
-	F   *StructField
-	Fun *Function
+	D dotData
 }
 
 func (a *CealStructField) TealAst() teal.TealAst {
 	res := &teal.TealAstBuilder{}
 
-	if a.T.complex.builtin != nil {
+	if a.D.T.complex.builtin != nil {
 		res.Write(&teal.Teal_call_builtin{
-			Name: a.Fun.builtin.op,
+			Name: a.D.Fun.builtin.op,
 			Imms: []teal.TealAst{&teal.Teal_named_int_value{
-				V: a.F.name,
+				V: a.D.F.name,
 			}},
 		})
 		return res.Build()
 	}
 
-	if a.V.param != nil {
+	if a.D.V.param != nil {
 		panic("accessing struct param fields is not supported yet")
 	}
 
-	v := a.V.fields[a.F.name]
-
-	ast := &teal.Teal_load{
-		Teal_load_op: teal.Teal_load_op{I1: uint8(v.local.slot)},
-	}
-
+	ast := a.D.Load()
 	res.Write(ast)
 
 	return res.Build()
@@ -1097,9 +1038,7 @@ func (a *CealRaw) TealAst() teal.TealAst {
 }
 
 type CealSubscript struct {
-	V *Variable
-	F *StructField
-	T *Type
+	D dotData
 
 	Index CealAst
 }
@@ -1107,21 +1046,10 @@ type CealSubscript struct {
 func (a *CealSubscript) TealAst() teal.TealAst {
 	var value teal.TealAst
 
-	var slot uint8
-
-	if a.T.complex != nil {
-		v := a.V.fields[a.F.name]
-		slot = uint8(v.local.slot)
-	} else {
-		slot = uint8(a.V.local.slot)
-	}
-
-	if a.V.param != nil {
-		value = &teal.Teal_frame_dig{Teal_frame_dig_op: teal.Teal_frame_dig_op{I1: int8(a.V.param.index)}}
-	} else if a.V.local != nil {
-		value = &teal.Teal_load{Teal_load_op: teal.Teal_load_op{
-			I1: uint8(slot),
-		}}
+	if a.D.V.param != nil {
+		value = &teal.Teal_frame_dig{Teal_frame_dig_op: teal.Teal_frame_dig_op{I1: int8(a.D.V.param.index)}}
+	} else if a.D.V.local != nil {
+		value = a.D.Load()
 	} else {
 		panic("unsupported variable type")
 	}

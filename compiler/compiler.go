@@ -378,7 +378,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 						panic("abi_encode data argument expects a variable")
 					}
 
-					vt := global.resolveType(v.V.t)
+					vt := global.resolveType(v.D.V.t)
 
 					if vt.simple != nil {
 						// TODO: implement
@@ -422,7 +422,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 						panic("abi_decode data argument expects a variable")
 					}
 
-					v1t := global.resolveType(v1.V.t)
+					v1t := global.resolveType(v1.D.V.t)
 
 					if v1t.simple == nil || v1t.simple.kind != SimpleTypeBytes {
 						panic("abi_decode data argument must be of bytes type")
@@ -433,7 +433,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 						panic("abi_decode out argument expects a variable")
 					}
 
-					v2t := global.resolveType(v2.V.t)
+					v2t := global.resolveType(v2.D.V.t)
 
 					if v2t.simple != nil {
 						// TODO: implement
