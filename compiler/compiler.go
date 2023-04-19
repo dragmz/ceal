@@ -48,13 +48,6 @@ type StructField struct {
 	fun  string
 }
 
-type StructFunction struct {
-	t    string
-	name string
-
-	params []*FunctionParam
-}
-
 type BuiltinStruct struct {
 }
 
@@ -62,12 +55,12 @@ type Struct struct {
 	fields      map[string]*StructField
 	fieldsNames []string
 
-	functions map[string]*StructFunction
+	functions map[string]*Function
 
 	builtin *BuiltinStruct
 }
 
-func (s *Struct) registerFunction(f *StructFunction) {
+func (s *Struct) registerFunction(f *Function) {
 	if _, ok := s.functions[f.name]; ok {
 		panic(fmt.Sprintf("function '%s' is already defined", f.name))
 	}
@@ -504,7 +497,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 		s := &Struct{
 			builtin:   &BuiltinStruct{},
 			fields:    map[string]*StructField{},
-			functions: map[string]*StructFunction{},
+			functions: map[string]*Function{},
 		}
 
 		for _, item := range item.fields {
@@ -516,13 +509,14 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 		}
 
 		for _, item := range item.functions {
-			f := &StructFunction{
-				t:    item.t,
-				name: item.name,
+			f := &Function{
+				t:       item.t,
+				name:    item.name,
+				builtin: &BuiltinFunction{},
 			}
 
 			for _, item := range item.params {
-				f.params = append(f.params, &FunctionParam{
+				f.builtin.imm = append(f.builtin.imm, &FunctionParam{
 					t:    item.t,
 					name: item.name,
 				})
