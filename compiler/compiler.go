@@ -515,7 +515,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 				builtin: &BuiltinFunction{},
 			}
 
-			for _, item := range item.params {
+			for _, item := range item.imms {
 				f.builtin.imm = append(f.builtin.imm, &FunctionParam{
 					t:    item.t,
 					name: item.name,

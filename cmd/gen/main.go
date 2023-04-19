@@ -156,7 +156,9 @@ type BuiltinStructFunctionData struct
 	t string
 	name string
 	fun string
-	params []BuiltinStructFunctionParamData
+
+	stacks []BuiltinStructFunctionParamData
+	imms []BuiltinStructFunctionParamData
 };
 	
 type BuiltinStructData struct
@@ -201,10 +203,16 @@ var builtin_structs = []BuiltinStructData {
 			for _, e := range op.Enum {
 				bw.WriteString("\t\t\t{\n")
 				fmt.Fprintf(bw, "\t\t\t\tt: \"%s\", name: \"%s\", fun: \"avm_%s\",\n", e.Type, e.Name, name)
-				bw.WriteString("\t\t\t\tparams: []BuiltinStructFunctionParamData{\n")
-				for i := 1; i < len(op.Imms); i++ {
-					imm := op.Imms[i]
-					fmt.Fprintf(bw, "\t\t\t\t\t{ t: \"%s\", name: \"%s\" },\n", imm.Type, imm.Name)
+				bw.WriteString("\t\t\t\tstacks: []BuiltinStructFunctionParamData{\n")
+				for i := 0; i < len(op.Stacks); i++ {
+					arg := op.Stacks[i]
+					fmt.Fprintf(bw, "\t\t\t\t\t{ t: \"%s\", name: \"%s\" },\n", arg.Type, arg.Name)
+				}
+				bw.WriteString("\t\t\t\t},\n")
+				bw.WriteString("\t\t\t\timms: []BuiltinStructFunctionParamData{\n")
+				for i := 0; i < len(op.Imms); i++ {
+					arg := op.Imms[i]
+					fmt.Fprintf(bw, "\t\t\t\t\t{ t: \"%s\", name: \"%s\" },\n", arg.Type, arg.Name)
 				}
 				bw.WriteString("\t\t\t\t},\n")
 				bw.WriteString("\t\t\t},\n")
