@@ -56,6 +56,12 @@ func (a *CealProgram) TealAst() teal.TealAst {
 		})
 	}
 
+	writePre := func(f *CealFunction) {
+		for _, pre := range f.Pre {
+			res.Write(pre.TealAst())
+		}
+	}
+
 	for _, name := range a.FunctionNames {
 		ast := a.Functions[name]
 
@@ -63,9 +69,12 @@ func (a *CealProgram) TealAst() teal.TealAst {
 			continue
 		}
 
+		writePre(ast)
 		res.Write(&teal.Teal_label{Name: ast.Fun.name})
 		res.Write(ast.TealAst())
 	}
+
+	writePre(main)
 
 	if len(a.Functions) > 1 {
 		res.Write(&teal.Teal_label{Name: main.Fun.name})
@@ -989,6 +998,7 @@ func (a *CealIf) TealAst() teal.TealAst {
 }
 
 type CealFunction struct {
+	Pre        []CealAst
 	Fun        *Function
 	Statements []CealAst
 }

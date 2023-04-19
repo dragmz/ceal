@@ -20,6 +20,8 @@ type AstVisitor struct {
 	slot  int
 
 	loops *LoopScope
+
+	comments []CealAst
 }
 
 func (v *AstVisitor) Visit(tree antlr.ParseTree) interface{} {
@@ -451,8 +453,12 @@ func (v *AstVisitor) VisitFunction(ctx *parser.FunctionContext) interface{} {
 	v.scope = fun.user.scope
 	{
 		ast := &CealFunction{
+			Pre: v.comments,
 			Fun: fun,
 		}
+
+		v.comments = []CealAst{}
+
 		for _, item := range ctx.AllStmt() {
 			if stmt := v.visitAst(item); stmt != nil {
 				ast.Statements = append(ast.Statements, stmt)
@@ -679,19 +685,28 @@ func (v *AstVisitor) VisitConditionalExpr(ctx *parser.ConditionalExprContext) in
 
 func (v *AstVisitor) VisitCommentStmt(ctx *parser.CommentStmtContext) interface{} {
 	comment := ctx.Comment()
+	return v.visitComment(comment)
+}
 
-	if comment.SINGLE_COMMENT() != nil {
+func (v *AstVisitor) VisitComment(ctx *parser.CommentContext) interface{} {
+	ast := v.visitComment(ctx)
+	v.comments = append(v.comments, ast)
+	return nil
+}
+
+func (v *AstVisitor) visitComment(ctx parser.ICommentContext) CealAst {
+	if ctx.SINGLE_COMMENT() != nil {
 		return &CealSingleLineComment{
 			Line: strings.TrimPrefix(
-				strings.Trim(comment.GetText(), "\r\n"),
+				strings.Trim(ctx.GetText(), "\r\n"),
 				"//",
 			),
 		}
 	}
 
-	if comment.MULTILINE_COMMENT() != nil {
+	if ctx.MULTILINE_COMMENT() != nil {
 		return &CealMultiLineComment{
-			Text: strings.TrimSuffix(strings.TrimPrefix(comment.GetText(), "/*"), "*/"),
+			Text: strings.TrimSuffix(strings.TrimPrefix(ctx.GetText(), "/*"), "*/"),
 		}
 	}
 
