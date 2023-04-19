@@ -493,6 +493,13 @@ func (v *AstVisitor) VisitProgram(ctx *parser.ProgramContext) interface{} {
 	{
 		v.VisitChildren(ctx)
 	}
+	if len(v.comments) > 0 {
+		if len(v.program.FunctionNames) > 0 {
+			last := v.program.Functions[v.program.FunctionNames[len(v.program.FunctionNames)-1]]
+			last.Post = v.comments
+			v.comments = []CealAst{}
+		}
+	}
 	v.scope = nil
 
 	return nil

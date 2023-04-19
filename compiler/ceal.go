@@ -56,9 +56,9 @@ func (a *CealProgram) TealAst() teal.TealAst {
 		})
 	}
 
-	writePre := func(f *CealFunction) {
-		for _, pre := range f.Pre {
-			res.Write(pre.TealAst())
+	writeAffix := func(items []CealAst) {
+		for _, item := range items {
+			res.Write(item.TealAst())
 		}
 	}
 
@@ -69,18 +69,20 @@ func (a *CealProgram) TealAst() teal.TealAst {
 			continue
 		}
 
-		writePre(ast)
+		writeAffix(ast.Pre)
 		res.Write(&teal.Teal_label{Name: ast.Fun.name})
 		res.Write(ast.TealAst())
+		writeAffix(ast.Post)
 	}
 
-	writePre(main)
+	writeAffix(main.Pre)
 
 	if len(a.Functions) > 1 {
 		res.Write(&teal.Teal_label{Name: main.Fun.name})
 	}
 
 	res.Write(main.TealAst())
+	writeAffix(main.Post)
 
 	return res.Build()
 }
@@ -999,6 +1001,7 @@ func (a *CealIf) TealAst() teal.TealAst {
 
 type CealFunction struct {
 	Pre        []CealAst
+	Post       []CealAst
 	Fun        *Function
 	Statements []CealAst
 }

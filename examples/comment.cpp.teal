@@ -7,7 +7,7 @@ test_fun1:
 // plus
 //    some more
 //    lines
-//    
+//
 //    here
 retsub
 // test_fun2 is a test fun 2
@@ -15,6 +15,9 @@ test_fun2:
 // test fun 2 body goes here
 // and here (test fun 2)
 retsub
+// some extra comments
+// after
+//test_fun2
 // avm_main is the contract entrypoint
 avm_main:
 // Comment line 1
