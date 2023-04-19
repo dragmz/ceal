@@ -22,7 +22,7 @@ stmt:
     declaration ';'                                                 # DeclarationStmt
     | definition ';'                                                # DefinitionStmt
     | assign_expr ';'                                               # AssignStmt
-    | asdexpr ';'                                                   # AssignSumDiffStmt
+    | asd_expr ';'                                                  # AssignSumDiffStmt
     | 'asm' '(' STRING* ')' ';'                                     # AsmStmt
     | call_expr ';'                                                 # CallStmt
     | 'if' '(' expr ')' (('{' stmt* '}') | stmt) elseif* else?      # IfStmt
@@ -40,8 +40,8 @@ stmt:
     ;
 
 expr:
-    ID incdec                   # PostIncDecExpr
-    | incdec ID                 # PreIncDecExpr
+    dot_expr incdec             # PostIncDecExpr
+    | incdec dot_expr           # PreIncDecExpr
     | '-' expr                  # MinusExpr
     | '!' expr                  # NotExpr
     | l=expr muldiv r=expr      # MulDivExpr
@@ -53,22 +53,23 @@ expr:
     | l=expr '&&' r=expr        # AndExpr
     | l=expr '||' r=expr        # OrExpr
     | assign_expr               # AssignExpr
-    | asdexpr                   # AssignSumDiffExpr
+    | asd_expr                  # AssignSumDiffExpr
     | condition=expr '?' true=expr ':' false=expr # ConditionalExpr
     | constant                  # ConstantExpr
     | subscript_expr            # SubscriptExpr
-    | value_expr ('.' value_expr)* # ValueExpr
+    | dot_expr                  # DotExpr
     | call_expr                 # CallExpr
     | '(' expr ')'              # GroupExpr
     ;
 
+dot_expr: value_expr ('.' value_expr)*;
 value_expr: ID;
-subscript_expr: ID '[' expr ']';
+subscript_expr: dot_expr '[' expr ']';
 comment: (SINGLE_COMMENT | MULTILINE_COMMENT);
 constant: (INT | STRING);
-assign_expr: ID ('.' ID)* '=' expr;
+assign_expr: dot_expr '=' expr;
 const: 'const';
-asdexpr: ID ('.' ID)* asd expr;
+asd_expr: dot_expr asd expr;
 asd: '+=' | '-=';
 case: 'case' expr ':' stmt*;
 default: 'default' ':' stmt*;

@@ -88,9 +88,6 @@ type CListener interface {
 	// EnterAndExpr is called when entering the AndExpr production.
 	EnterAndExpr(c *AndExprContext)
 
-	// EnterValueExpr is called when entering the ValueExpr production.
-	EnterValueExpr(c *ValueExprContext)
-
 	// EnterSubscriptExpr is called when entering the SubscriptExpr production.
 	EnterSubscriptExpr(c *SubscriptExprContext)
 
@@ -99,6 +96,9 @@ type CListener interface {
 
 	// EnterBitAndExpr is called when entering the BitAndExpr production.
 	EnterBitAndExpr(c *BitAndExprContext)
+
+	// EnterDotExpr is called when entering the DotExpr production.
+	EnterDotExpr(c *DotExprContext)
 
 	// EnterEqNeqExpr is called when entering the EqNeqExpr production.
 	EnterEqNeqExpr(c *EqNeqExprContext)
@@ -145,6 +145,9 @@ type CListener interface {
 	// EnterMinusExpr is called when entering the MinusExpr production.
 	EnterMinusExpr(c *MinusExprContext)
 
+	// EnterDot_expr is called when entering the dot_expr production.
+	EnterDot_expr(c *Dot_exprContext)
+
 	// EnterValue_expr is called when entering the value_expr production.
 	EnterValue_expr(c *Value_exprContext)
 
@@ -163,8 +166,8 @@ type CListener interface {
 	// EnterConst is called when entering the const production.
 	EnterConst(c *ConstContext)
 
-	// EnterAsdexpr is called when entering the asdexpr production.
-	EnterAsdexpr(c *AsdexprContext)
+	// EnterAsd_expr is called when entering the asd_expr production.
+	EnterAsd_expr(c *Asd_exprContext)
 
 	// EnterAsd is called when entering the asd production.
 	EnterAsd(c *AsdContext)
@@ -298,9 +301,6 @@ type CListener interface {
 	// ExitAndExpr is called when exiting the AndExpr production.
 	ExitAndExpr(c *AndExprContext)
 
-	// ExitValueExpr is called when exiting the ValueExpr production.
-	ExitValueExpr(c *ValueExprContext)
-
 	// ExitSubscriptExpr is called when exiting the SubscriptExpr production.
 	ExitSubscriptExpr(c *SubscriptExprContext)
 
@@ -309,6 +309,9 @@ type CListener interface {
 
 	// ExitBitAndExpr is called when exiting the BitAndExpr production.
 	ExitBitAndExpr(c *BitAndExprContext)
+
+	// ExitDotExpr is called when exiting the DotExpr production.
+	ExitDotExpr(c *DotExprContext)
 
 	// ExitEqNeqExpr is called when exiting the EqNeqExpr production.
 	ExitEqNeqExpr(c *EqNeqExprContext)
@@ -355,6 +358,9 @@ type CListener interface {
 	// ExitMinusExpr is called when exiting the MinusExpr production.
 	ExitMinusExpr(c *MinusExprContext)
 
+	// ExitDot_expr is called when exiting the dot_expr production.
+	ExitDot_expr(c *Dot_exprContext)
+
 	// ExitValue_expr is called when exiting the value_expr production.
 	ExitValue_expr(c *Value_exprContext)
 
@@ -373,8 +379,8 @@ type CListener interface {
 	// ExitConst is called when exiting the const production.
 	ExitConst(c *ConstContext)
 
-	// ExitAsdexpr is called when exiting the asdexpr production.
-	ExitAsdexpr(c *AsdexprContext)
+	// ExitAsd_expr is called when exiting the asd_expr production.
+	ExitAsd_expr(c *Asd_exprContext)
 
 	// ExitAsd is called when exiting the asd production.
 	ExitAsd(c *AsdContext)

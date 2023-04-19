@@ -88,9 +88,6 @@ type CVisitor interface {
 	// Visit a parse tree produced by CParser#AndExpr.
 	VisitAndExpr(ctx *AndExprContext) interface{}
 
-	// Visit a parse tree produced by CParser#ValueExpr.
-	VisitValueExpr(ctx *ValueExprContext) interface{}
-
 	// Visit a parse tree produced by CParser#SubscriptExpr.
 	VisitSubscriptExpr(ctx *SubscriptExprContext) interface{}
 
@@ -99,6 +96,9 @@ type CVisitor interface {
 
 	// Visit a parse tree produced by CParser#BitAndExpr.
 	VisitBitAndExpr(ctx *BitAndExprContext) interface{}
+
+	// Visit a parse tree produced by CParser#DotExpr.
+	VisitDotExpr(ctx *DotExprContext) interface{}
 
 	// Visit a parse tree produced by CParser#EqNeqExpr.
 	VisitEqNeqExpr(ctx *EqNeqExprContext) interface{}
@@ -145,6 +145,9 @@ type CVisitor interface {
 	// Visit a parse tree produced by CParser#MinusExpr.
 	VisitMinusExpr(ctx *MinusExprContext) interface{}
 
+	// Visit a parse tree produced by CParser#dot_expr.
+	VisitDot_expr(ctx *Dot_exprContext) interface{}
+
 	// Visit a parse tree produced by CParser#value_expr.
 	VisitValue_expr(ctx *Value_exprContext) interface{}
 
@@ -163,8 +166,8 @@ type CVisitor interface {
 	// Visit a parse tree produced by CParser#const.
 	VisitConst(ctx *ConstContext) interface{}
 
-	// Visit a parse tree produced by CParser#asdexpr.
-	VisitAsdexpr(ctx *AsdexprContext) interface{}
+	// Visit a parse tree produced by CParser#asd_expr.
+	VisitAsd_expr(ctx *Asd_exprContext) interface{}
 
 	// Visit a parse tree produced by CParser#asd.
 	VisitAsd(ctx *AsdContext) interface{}

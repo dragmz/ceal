@@ -44,16 +44,10 @@ func (v *AstVisitor) visitAst(tree antlr.ParseTree) CealAst {
 	return res.(CealAst)
 }
 
-func (v *AstVisitor) VisitValueExpr(ctx *parser.ValueExprContext) interface{} {
-	ids := []antlr.TerminalNode{}
-
-	for _, e := range ctx.AllValue_expr() {
-		ids = append(ids, e.ID())
-	}
-
+func (v *AstVisitor) VisitDotExpr(ctx *parser.DotExprContext) interface{} {
 	var ast CealAst
 
-	vr, f := v.mustResolve(ids)
+	vr, f, t := v.mustResolveDot(ctx.Dot_expr())
 	if f == nil {
 		ast = &CealVariable{
 			V: vr,
@@ -63,8 +57,8 @@ func (v *AstVisitor) VisitValueExpr(ctx *parser.ValueExprContext) interface{} {
 
 		ast = &CealStructField{
 			V:   vr,
-			T:   v.scope.resolveType(vr.t),
 			F:   f,
+			T:   t,
 			Fun: fun,
 		}
 	}
@@ -85,9 +79,8 @@ func (v *AstVisitor) VisitAssignStmt(ctx *parser.AssignStmtContext) interface{} 
 }
 
 func (v *AstVisitor) VisitAssign_expr(ctx *parser.Assign_exprContext) interface{} {
-	ids := ctx.AllID()
+	vr, f, t := v.mustResolveDot(ctx.Dot_expr())
 
-	vr, f := v.mustResolve(ids)
 	if vr.readonly {
 		panic(fmt.Sprintf("variable '%s' is read only", vr.name))
 	}
@@ -98,8 +91,8 @@ func (v *AstVisitor) VisitAssign_expr(ctx *parser.Assign_exprContext) interface{
 
 	ast := &CealAssign{
 		V:     vr,
-		T:     v.scope.resolveType(vr.t),
 		F:     f,
+		T:     t,
 		Value: v.visitAst(ctx.Expr()),
 	}
 
@@ -132,28 +125,26 @@ func (v *AstVisitor) VisitAddSubExpr(ctx *parser.AddSubExprContext) interface{} 
 }
 
 func (v *AstVisitor) VisitAssignSumDiffStmt(ctx *parser.AssignSumDiffStmtContext) interface{} {
-	vr, f := v.mustResolve(ctx.Asdexpr().AllID())
-	t := v.scope.resolveType(vr.t)
+	vr, f, t := v.mustResolveDot(ctx.Asd_expr().Dot_expr())
 
 	return &CealAssignSumDiff{
 		V:      vr,
 		F:      f,
 		T:      t,
-		Value:  v.visitAst(ctx.Asdexpr().Expr()),
-		Op:     ctx.Asdexpr().Asd().GetText(),
+		Value:  v.visitAst(ctx.Asd_expr().Expr()),
+		Op:     ctx.Asd_expr().Asd().GetText(),
 		IsStmt: true,
 	}
 }
 func (v *AstVisitor) VisitAssignSumDiffExpr(ctx *parser.AssignSumDiffExprContext) interface{} {
-	vr, f := v.mustResolve(ctx.Asdexpr().AllID())
-	t := v.scope.resolveType(vr.t)
+	vr, f, t := v.mustResolveDot(ctx.Asd_expr().Dot_expr())
 
 	return &CealAssignSumDiff{
 		V:     vr,
 		F:     f,
 		T:     t,
-		Value: v.visitAst(ctx.Asdexpr().Expr()),
-		Op:    ctx.Asdexpr().Asd().GetText(),
+		Value: v.visitAst(ctx.Asd_expr().Expr()),
+		Op:    ctx.Asd_expr().Asd().GetText(),
 	}
 }
 
@@ -534,9 +525,26 @@ func (v *AstVisitor) VisitLabelStmt(ctx *parser.LabelStmtContext) interface{} {
 	return ast
 }
 
+func (v *AstVisitor) mustResolveDot(ctx parser.IDot_exprContext) (*Variable, *StructField, *Type) {
+	var ids []antlr.TerminalNode
+
+	for _, e := range ctx.AllValue_expr() {
+		ids = append(ids, e.ID())
+	}
+
+	vr, f := v.mustResolve(ids)
+	t := v.scope.resolveType(vr.t)
+
+	return vr, f, t
+}
+
 func (v *AstVisitor) VisitPostIncDecExpr(ctx *parser.PostIncDecExprContext) interface{} {
+	vr, f, t := v.mustResolveDot(ctx.Dot_expr())
+
 	ast := &CealPostfix{
-		V:  v.mustResolveVariable(ctx.ID().GetText()),
+		V:  vr,
+		F:  f,
+		T:  t,
 		Op: ctx.Incdec().GetText(),
 	}
 
@@ -544,8 +552,12 @@ func (v *AstVisitor) VisitPostIncDecExpr(ctx *parser.PostIncDecExprContext) inte
 }
 
 func (v *AstVisitor) VisitPreIncDecExpr(ctx *parser.PreIncDecExprContext) interface{} {
+	vr, f, t := v.mustResolveDot(ctx.Dot_expr())
+
 	ast := &CealPrefix{
-		V:  v.mustResolveVariable(ctx.ID().GetText()),
+		V:  vr,
+		F:  f,
+		T:  t,
 		Op: ctx.Incdec().GetText(),
 	}
 
@@ -748,11 +760,12 @@ func (v *AstVisitor) VisitSubscriptExpr(ctx *parser.SubscriptExprContext) interf
 }
 
 func (v *AstVisitor) VisitSubscript_expr(ctx *parser.Subscript_exprContext) interface{} {
-	id := ctx.ID().GetText()
-	vr := v.mustResolveVariable(id)
+	vr, f, t := v.mustResolveDot(ctx.Dot_expr())
 
 	return &CealSubscript{
 		V:     vr,
+		F:     f,
+		T:     t,
 		Index: v.visitAst(ctx.Expr()),
 	}
 }

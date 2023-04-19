@@ -182,12 +182,6 @@ func (s *BaseCListener) EnterAndExpr(ctx *AndExprContext) {}
 // ExitAndExpr is called when production AndExpr is exited.
 func (s *BaseCListener) ExitAndExpr(ctx *AndExprContext) {}
 
-// EnterValueExpr is called when production ValueExpr is entered.
-func (s *BaseCListener) EnterValueExpr(ctx *ValueExprContext) {}
-
-// ExitValueExpr is called when production ValueExpr is exited.
-func (s *BaseCListener) ExitValueExpr(ctx *ValueExprContext) {}
-
 // EnterSubscriptExpr is called when production SubscriptExpr is entered.
 func (s *BaseCListener) EnterSubscriptExpr(ctx *SubscriptExprContext) {}
 
@@ -205,6 +199,12 @@ func (s *BaseCListener) EnterBitAndExpr(ctx *BitAndExprContext) {}
 
 // ExitBitAndExpr is called when production BitAndExpr is exited.
 func (s *BaseCListener) ExitBitAndExpr(ctx *BitAndExprContext) {}
+
+// EnterDotExpr is called when production DotExpr is entered.
+func (s *BaseCListener) EnterDotExpr(ctx *DotExprContext) {}
+
+// ExitDotExpr is called when production DotExpr is exited.
+func (s *BaseCListener) ExitDotExpr(ctx *DotExprContext) {}
 
 // EnterEqNeqExpr is called when production EqNeqExpr is entered.
 func (s *BaseCListener) EnterEqNeqExpr(ctx *EqNeqExprContext) {}
@@ -296,6 +296,12 @@ func (s *BaseCListener) EnterMinusExpr(ctx *MinusExprContext) {}
 // ExitMinusExpr is called when production MinusExpr is exited.
 func (s *BaseCListener) ExitMinusExpr(ctx *MinusExprContext) {}
 
+// EnterDot_expr is called when production dot_expr is entered.
+func (s *BaseCListener) EnterDot_expr(ctx *Dot_exprContext) {}
+
+// ExitDot_expr is called when production dot_expr is exited.
+func (s *BaseCListener) ExitDot_expr(ctx *Dot_exprContext) {}
+
 // EnterValue_expr is called when production value_expr is entered.
 func (s *BaseCListener) EnterValue_expr(ctx *Value_exprContext) {}
 
@@ -332,11 +338,11 @@ func (s *BaseCListener) EnterConst(ctx *ConstContext) {}
 // ExitConst is called when production const is exited.
 func (s *BaseCListener) ExitConst(ctx *ConstContext) {}
 
-// EnterAsdexpr is called when production asdexpr is entered.
-func (s *BaseCListener) EnterAsdexpr(ctx *AsdexprContext) {}
+// EnterAsd_expr is called when production asd_expr is entered.
+func (s *BaseCListener) EnterAsd_expr(ctx *Asd_exprContext) {}
 
-// ExitAsdexpr is called when production asdexpr is exited.
-func (s *BaseCListener) ExitAsdexpr(ctx *AsdexprContext) {}
+// ExitAsd_expr is called when production asd_expr is exited.
+func (s *BaseCListener) ExitAsd_expr(ctx *Asd_exprContext) {}
 
 // EnterAsd is called when production asd is entered.
 func (s *BaseCListener) EnterAsd(ctx *AsdContext) {}
