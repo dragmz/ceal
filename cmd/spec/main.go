@@ -61,6 +61,8 @@ func readType(t string) string {
 		return "uint64"
 	case "any":
 		return "any"
+	case "none":
+		return "none"
 	default:
 		panic(fmt.Sprintf("unsupported type: '%s'", t))
 	}
@@ -76,7 +78,7 @@ func readEnum(op LangSpecOp) []ceal.CealEnum {
 		case 0:
 			t = "void"
 		default:
-			t = readType(op.ArgEnumTypes[i])
+			t = ceal.ReadStackType(op.ArgEnumTypes[i])
 		}
 
 		e := ceal.CealEnum{
@@ -94,7 +96,7 @@ func readReturns(op LangSpecOp) []ceal.CealReturn {
 	rs := []ceal.CealReturn{}
 
 	for i := range op.Returns {
-		rt := readType(op.Returns[i])
+		rt := ceal.ReadStackType(op.Returns[i])
 		rs = append(rs, ceal.CealReturn{
 			Type: rt,
 			Name: fmt.Sprintf("r%d", i+1),
@@ -158,7 +160,7 @@ func readStacks(op LangSpecOp) []ceal.CealArg {
 
 	for i := 0; i < stacks; i++ {
 		p := ceal.CealArg{
-			Type: readType(op.Args[i]),
+			Type: ceal.ReadStackType(op.Args[i]),
 			Name: fmt.Sprintf("STACK_%d", i+1),
 		}
 
@@ -186,6 +188,17 @@ func run(a args) error {
 
 	cs := ceal.CealSpec{
 		Version: ls.EvalMaxVersion,
+	}
+
+	for _, t := range ls.NamedTypes {
+		name := ceal.ReadStackType(t.Name)
+
+		ct := ceal.CealSpecType{
+			Name: name,
+			Type: readType(t.AVMType),
+		}
+
+		cs.Types = append(cs.Types, ct)
 	}
 
 	for _, op := range ls.Ops {

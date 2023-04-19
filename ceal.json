@@ -1,5 +1,51 @@
 {
 	"version": 8,
+	"types": [
+		{
+			"Name": "uint64_t",
+			"Type": "uint64"
+		},
+		{
+			"Name": "none_t",
+			"Type": "none"
+		},
+		{
+			"Name": "name_t",
+			"Type": "bytes"
+		},
+		{
+			"Name": "method_t",
+			"Type": "bytes"
+		},
+		{
+			"Name": "key_t",
+			"Type": "bytes"
+		},
+		{
+			"Name": "bool_t",
+			"Type": "uint64"
+		},
+		{
+			"Name": "bigint_t",
+			"Type": "bytes"
+		},
+		{
+			"Name": "any_t",
+			"Type": "any"
+		},
+		{
+			"Name": "addr_t",
+			"Type": "bytes"
+		},
+		{
+			"Name": "r_byte_t",
+			"Type": "bytes"
+		},
+		{
+			"Name": "r32_byte_t",
+			"Type": "bytes"
+		}
+	],
 	"ops": [
 		{
 			"name": "err",
@@ -15,14 +61,14 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "r1"
 				}
 			],
@@ -35,14 +81,14 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "r1"
 				}
 			],
@@ -55,14 +101,14 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "r1"
 				}
 			],
@@ -75,24 +121,24 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_2",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_3",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r1"
 				}
 			],
@@ -111,34 +157,34 @@
 			],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_2",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_3",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_4",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_5",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r1"
 				}
 			],
@@ -166,18 +212,18 @@
 			],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r2"
 				}
 			],
@@ -205,33 +251,33 @@
 			],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_3",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_4",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r2"
 				}
 			],
@@ -253,19 +299,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -278,19 +324,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -303,19 +349,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -328,19 +374,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -353,19 +399,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r1"
 				}
 			],
@@ -378,19 +424,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r1"
 				}
 			],
@@ -403,19 +449,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r1"
 				}
 			],
@@ -428,19 +474,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r1"
 				}
 			],
@@ -453,19 +499,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r1"
 				}
 			],
@@ -478,19 +524,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r1"
 				}
 			],
@@ -503,19 +549,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r1"
 				}
 			],
@@ -528,19 +574,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r1"
 				}
 			],
@@ -553,14 +599,14 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -573,14 +619,14 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -593,14 +639,14 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -613,14 +659,14 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -633,19 +679,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -658,19 +704,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -683,19 +729,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -708,19 +754,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -733,14 +779,14 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -753,23 +799,23 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r2"
 				}
 			],
@@ -782,23 +828,23 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r2"
 				}
 			],
@@ -811,41 +857,41 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_3",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_4",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r2"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r3"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r4"
 				}
 			],
@@ -880,7 +926,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -894,7 +940,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -908,7 +954,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -922,7 +968,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -936,7 +982,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -971,7 +1017,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -985,7 +1031,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -999,7 +1045,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -1013,7 +1059,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -1027,7 +1073,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -1047,7 +1093,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -1061,7 +1107,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -1075,7 +1121,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -1089,7 +1135,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -1103,7 +1149,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -1123,7 +1169,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -1131,275 +1177,275 @@
 			"docExtra": "",
 			"enum": [
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Sender"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Fee"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "FirstValid"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "FirstValidTime"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "LastValid"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Note"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "Lease"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Receiver"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Amount"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "CloseRemainderTo"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "VotePK"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "SelectionPK"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "VoteFirst"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "VoteLast"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "VoteKeyDilution"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Type"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "TypeEnum"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "XferAsset"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AssetAmount"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AssetSender"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AssetReceiver"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AssetCloseTo"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "GroupIndex"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "TxID"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ApplicationID"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "OnCompletion"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApplicationArgs"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumAppArgs"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Accounts"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumAccounts"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApprovalProgram"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ClearStateProgram"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "RekeyTo"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ConfigAsset"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ConfigAssetTotal"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ConfigAssetDecimals"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "ConfigAssetDefaultFrozen"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ConfigAssetUnitName"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ConfigAssetName"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ConfigAssetURL"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "ConfigAssetMetadataHash"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ConfigAssetManager"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ConfigAssetReserve"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ConfigAssetFreeze"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ConfigAssetClawback"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "FreezeAsset"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "FreezeAssetAccount"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "FreezeAssetFrozen"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Assets"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumAssets"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Applications"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumApplications"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "GlobalNumUint"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "GlobalNumByteSlice"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "LocalNumUint"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "LocalNumByteSlice"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ExtraProgramPages"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "Nonparticipation"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Logs"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumLogs"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "CreatedAssetID"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "CreatedApplicationID"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "LastLog"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "StateProofPK"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApprovalProgramPages"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumApprovalProgramPages"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ClearStateProgramPages"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumClearStateProgramPages"
 				}
 			]
@@ -1416,7 +1462,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -1424,63 +1470,63 @@
 			"docExtra": "",
 			"enum": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "MinTxnFee"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "MinBalance"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "MaxTxnLife"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ZeroAddress"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "GroupSize"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "LogicSigVersion"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Round"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "LatestTimestamp"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "CurrentApplicationID"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "CreatorAddress"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "CurrentApplicationAddress"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "GroupID"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "OpcodeBudget"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "CallerApplicationID"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "CallerApplicationAddress"
 				}
 			]
@@ -1502,7 +1548,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -1510,275 +1556,275 @@
 			"docExtra": "for notes on transaction fields available, see `txn`. If this transaction is _i_ in the group, `gtxn i field` is equivalent to `txn field`.",
 			"enum": [
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Sender"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Fee"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "FirstValid"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "FirstValidTime"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "LastValid"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Note"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "Lease"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Receiver"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Amount"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "CloseRemainderTo"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "VotePK"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "SelectionPK"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "VoteFirst"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "VoteLast"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "VoteKeyDilution"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Type"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "TypeEnum"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "XferAsset"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AssetAmount"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AssetSender"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AssetReceiver"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AssetCloseTo"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "GroupIndex"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "TxID"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ApplicationID"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "OnCompletion"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApplicationArgs"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumAppArgs"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Accounts"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumAccounts"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApprovalProgram"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ClearStateProgram"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "RekeyTo"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ConfigAsset"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ConfigAssetTotal"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ConfigAssetDecimals"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "ConfigAssetDefaultFrozen"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ConfigAssetUnitName"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ConfigAssetName"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ConfigAssetURL"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "ConfigAssetMetadataHash"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ConfigAssetManager"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ConfigAssetReserve"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ConfigAssetFreeze"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ConfigAssetClawback"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "FreezeAsset"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "FreezeAssetAccount"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "FreezeAssetFrozen"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Assets"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumAssets"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Applications"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumApplications"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "GlobalNumUint"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "GlobalNumByteSlice"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "LocalNumUint"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "LocalNumByteSlice"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ExtraProgramPages"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "Nonparticipation"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Logs"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumLogs"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "CreatedAssetID"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "CreatedApplicationID"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "LastLog"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "StateProofPK"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApprovalProgramPages"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumApprovalProgramPages"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ClearStateProgramPages"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumClearStateProgramPages"
 				}
 			]
@@ -1795,7 +1841,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -1814,7 +1860,7 @@
 			],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				}
@@ -1841,7 +1887,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -1849,31 +1895,31 @@
 			"docExtra": "",
 			"enum": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApplicationArgs"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Accounts"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Assets"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Applications"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Logs"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApprovalProgramPages"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ClearStateProgramPages"
 				}
 			]
@@ -1900,7 +1946,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -1908,31 +1954,31 @@
 			"docExtra": "",
 			"enum": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApplicationArgs"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Accounts"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Assets"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Applications"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Logs"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApprovalProgramPages"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ClearStateProgramPages"
 				}
 			]
@@ -1948,14 +1994,14 @@
 			],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -1963,275 +2009,275 @@
 			"docExtra": "for notes on transaction fields available, see `txn`. If top of stack is _i_, `gtxns field` is equivalent to `gtxn _i_ field`. gtxns exists so that _i_ can be calculated, often based on the index of the current transaction.",
 			"enum": [
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Sender"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Fee"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "FirstValid"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "FirstValidTime"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "LastValid"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Note"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "Lease"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Receiver"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Amount"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "CloseRemainderTo"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "VotePK"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "SelectionPK"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "VoteFirst"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "VoteLast"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "VoteKeyDilution"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Type"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "TypeEnum"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "XferAsset"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AssetAmount"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AssetSender"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AssetReceiver"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AssetCloseTo"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "GroupIndex"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "TxID"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ApplicationID"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "OnCompletion"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApplicationArgs"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumAppArgs"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Accounts"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumAccounts"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApprovalProgram"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ClearStateProgram"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "RekeyTo"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ConfigAsset"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ConfigAssetTotal"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ConfigAssetDecimals"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "ConfigAssetDefaultFrozen"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ConfigAssetUnitName"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ConfigAssetName"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ConfigAssetURL"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "ConfigAssetMetadataHash"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ConfigAssetManager"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ConfigAssetReserve"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ConfigAssetFreeze"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ConfigAssetClawback"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "FreezeAsset"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "FreezeAssetAccount"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "FreezeAssetFrozen"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Assets"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumAssets"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Applications"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumApplications"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "GlobalNumUint"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "GlobalNumByteSlice"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "LocalNumUint"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "LocalNumByteSlice"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ExtraProgramPages"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "Nonparticipation"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Logs"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumLogs"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "CreatedAssetID"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "CreatedApplicationID"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "LastLog"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "StateProofPK"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApprovalProgramPages"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumApprovalProgramPages"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ClearStateProgramPages"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumClearStateProgramPages"
 				}
 			]
@@ -2252,14 +2298,14 @@
 			],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -2267,31 +2313,31 @@
 			"docExtra": "",
 			"enum": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApplicationArgs"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Accounts"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Assets"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Applications"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Logs"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApprovalProgramPages"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ClearStateProgramPages"
 				}
 			]
@@ -2313,7 +2359,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -2332,14 +2378,14 @@
 			],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -2359,7 +2405,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -2372,14 +2418,14 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -2392,14 +2438,14 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -2412,12 +2458,12 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_2",
 					"array": false
 				}
@@ -2438,7 +2484,7 @@
 			],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				}
@@ -2459,7 +2505,7 @@
 			],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				}
@@ -2489,7 +2535,7 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				}
@@ -2504,7 +2550,7 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				}
@@ -2525,7 +2571,7 @@
 			],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				}
@@ -2561,7 +2607,7 @@
 			],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				}
@@ -2576,7 +2622,7 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				}
@@ -2591,18 +2637,18 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				},
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r2"
 				}
 			],
@@ -2615,31 +2661,31 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				},
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r2"
 				},
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r3"
 				},
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r4"
 				}
 			],
@@ -2658,18 +2704,18 @@
 			],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				},
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r2"
 				}
 			],
@@ -2682,23 +2728,23 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				},
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r2"
 				}
 			],
@@ -2711,24 +2757,24 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_2",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_3",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -2747,14 +2793,14 @@
 			],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -2773,14 +2819,14 @@
 			],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -2793,19 +2839,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -2829,14 +2875,14 @@
 			],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -2849,24 +2895,24 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_3",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -2879,19 +2925,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -2904,24 +2950,24 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_3",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -2934,19 +2980,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -2959,24 +3005,24 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_3",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -3000,14 +3046,14 @@
 			],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -3020,24 +3066,24 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_3",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -3050,19 +3096,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -3075,19 +3121,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -3100,19 +3146,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -3131,19 +3177,19 @@
 			],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -3156,24 +3202,24 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_3",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -3192,14 +3238,14 @@
 			],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -3207,11 +3253,11 @@
 			"docExtra": "*Warning*: Usage should be restricted to very rare use cases. In almost all cases, smart contracts should directly handle non-encoded byte-strings.\tThis opcode should only be used in cases where base64 is the only available option, e.g. interoperability with a third-party that only signs base64 strings.\n\n Decodes A using the base64 encoding E. Specify the encoding with an immediate arg either as URL and Filename Safe (`URLEncoding`) or Standard (`StdEncoding`). See [RFC 4648 sections 4 and 5](https://rfc-editor.org/rfc/rfc4648.html#section-4). It is assumed that the encoding ends with the exact number of `=` padding characters as required by the RFC. When padding occurs, any unused pad bits in the encoding must be set to zero or the decoding will fail. The special cases of `\\n` and `\\r` are allowed but completely ignored. An error will result when attempting to decode a string with a character that is not in the encoding alphabet or not one of `=`, `\\r`, or `\\n`.",
 			"enum": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "URLEncoding"
 				},
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "StdEncoding"
 				}
 			]
@@ -3227,19 +3273,19 @@
 			],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -3247,15 +3293,15 @@
 			"docExtra": "*Warning*: Usage should be restricted to very rare use cases, as JSON decoding is expensive and quite limited. In addition, JSON objects are large and not optimized for size.\n\nAlmost all smart contracts should use simpler and smaller methods (such as the [ABI](https://arc.algorand.foundation/ARCs/arc-0004). This opcode should only be used in cases where JSON is only available option, e.g. when a third-party only signs JSON.",
 			"enum": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "JSONString"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "JSONUint64"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "JSONObject"
 				}
 			]
@@ -3265,14 +3311,14 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -3285,19 +3331,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r1"
 				}
 			],
@@ -3310,19 +3356,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "key_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -3335,28 +3381,28 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "key_t",
 					"name": "STACK_3",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r2"
 				}
 			],
@@ -3369,14 +3415,14 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "key_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -3389,23 +3435,23 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "key_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r2"
 				}
 			],
@@ -3418,17 +3464,17 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "key_t",
 					"name": "STACK_2",
 					"array": false
 				},
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_3",
 					"array": false
 				}
@@ -3443,12 +3489,12 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "key_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_2",
 					"array": false
 				}
@@ -3463,12 +3509,12 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "key_t",
 					"name": "STACK_2",
 					"array": false
 				}
@@ -3483,7 +3529,7 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "key_t",
 					"name": "STACK_1",
 					"array": false
 				}
@@ -3504,23 +3550,23 @@
 			],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r2"
 				}
 			],
@@ -3528,11 +3574,11 @@
 			"docExtra": "params: Txn.Accounts offset (or, since v4, an _available_ address), asset id (or, since v4, a Txn.ForeignAssets offset). Return: did_exist flag (1 if the asset existed and 0 otherwise), value.",
 			"enum": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AssetBalance"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "AssetFrozen"
 				}
 			]
@@ -3548,18 +3594,18 @@
 			],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r2"
 				}
 			],
@@ -3567,51 +3613,51 @@
 			"docExtra": "params: Txn.ForeignAssets offset (or, since v4, an _available_ asset id. Return: did_exist flag (1 if the asset existed and 0 otherwise), value.",
 			"enum": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AssetTotal"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AssetDecimals"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "AssetDefaultFrozen"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "AssetUnitName"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "AssetName"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "AssetURL"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "AssetMetadataHash"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AssetManager"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AssetReserve"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AssetFreeze"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AssetClawback"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AssetCreator"
 				}
 			]
@@ -3627,18 +3673,18 @@
 			],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r2"
 				}
 			],
@@ -3646,39 +3692,39 @@
 			"docExtra": "params: Txn.ForeignApps offset or an _available_ app id. Return: did_exist flag (1 if the application existed and 0 otherwise), value.",
 			"enum": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "AppApprovalProgram"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "AppClearStateProgram"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AppGlobalNumUint"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AppGlobalNumByteSlice"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AppLocalNumUint"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AppLocalNumByteSlice"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AppExtraProgramPages"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AppCreator"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AppAddress"
 				}
 			]
@@ -3694,18 +3740,18 @@
 			],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r2"
 				}
 			],
@@ -3713,51 +3759,51 @@
 			"docExtra": "",
 			"enum": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AcctBalance"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AcctMinBalance"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AcctAuthAddr"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AcctTotalNumUint"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AcctTotalNumByteSlice"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AcctTotalExtraAppPages"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AcctTotalAppsCreated"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AcctTotalAppsOptedIn"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AcctTotalAssetsCreated"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AcctTotalAssets"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AcctTotalBoxes"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AcctTotalBoxBytes"
 				}
 			]
@@ -3767,14 +3813,14 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -3794,7 +3840,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -3814,7 +3860,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -3857,24 +3903,24 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_2",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_3",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r1"
 				}
 			],
@@ -3938,7 +3984,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -3957,7 +4003,7 @@
 			],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				}
@@ -3978,7 +4024,7 @@
 			],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				}
@@ -4008,19 +4054,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -4033,19 +4079,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -4058,14 +4104,14 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -4078,14 +4124,14 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -4098,19 +4144,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -4123,23 +4169,23 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r2"
 				}
 			],
@@ -4152,14 +4198,14 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -4172,24 +4218,24 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_3",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				}
 			],
@@ -4202,14 +4248,14 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -4222,19 +4268,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "bigint_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "bigint_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -4247,19 +4293,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "bigint_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "bigint_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "bigint_t",
 					"name": "r1"
 				}
 			],
@@ -4272,19 +4318,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "bigint_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "bigint_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "bigint_t",
 					"name": "r1"
 				}
 			],
@@ -4297,19 +4343,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "bigint_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "bigint_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -4322,19 +4368,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "bigint_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "bigint_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r1"
 				}
 			],
@@ -4347,19 +4393,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "bigint_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "bigint_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r1"
 				}
 			],
@@ -4372,19 +4418,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "bigint_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "bigint_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r1"
 				}
 			],
@@ -4397,19 +4443,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "bigint_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "bigint_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r1"
 				}
 			],
@@ -4422,19 +4468,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "bigint_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "bigint_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r1"
 				}
 			],
@@ -4447,19 +4493,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "bigint_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "bigint_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r1"
 				}
 			],
@@ -4472,19 +4518,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -4497,19 +4543,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -4522,19 +4568,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -4547,19 +4593,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -4572,14 +4618,14 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -4592,14 +4638,14 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -4612,7 +4658,7 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				}
@@ -4642,7 +4688,7 @@
 			],
 			"stacks": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "STACK_1",
 					"array": false
 				}
@@ -4652,207 +4698,207 @@
 			"docExtra": "`itxn_field` fails if A is of the wrong type for F, including a byte array of the wrong size for use as an address when F is an address field. `itxn_field` also fails if A is an account, asset, or app that is not _available_, or an attempt is made extend an array field beyond the limit imposed by consensus parameters. (Addresses set into asset params of acfg transactions need not be _available_.)",
 			"enum": [
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Sender"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Fee"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Note"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Receiver"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Amount"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "CloseRemainderTo"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "VotePK"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "SelectionPK"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "VoteFirst"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "VoteLast"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "VoteKeyDilution"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Type"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "TypeEnum"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "XferAsset"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AssetAmount"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AssetSender"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AssetReceiver"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AssetCloseTo"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ApplicationID"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "OnCompletion"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApplicationArgs"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Accounts"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApprovalProgram"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ClearStateProgram"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "RekeyTo"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ConfigAsset"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ConfigAssetTotal"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ConfigAssetDecimals"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "ConfigAssetDefaultFrozen"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ConfigAssetUnitName"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ConfigAssetName"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ConfigAssetURL"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "ConfigAssetMetadataHash"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ConfigAssetManager"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ConfigAssetReserve"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ConfigAssetFreeze"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ConfigAssetClawback"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "FreezeAsset"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "FreezeAssetAccount"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "FreezeAssetFrozen"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Assets"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Applications"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "GlobalNumUint"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "GlobalNumByteSlice"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "LocalNumUint"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "LocalNumByteSlice"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ExtraProgramPages"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "Nonparticipation"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "StateProofPK"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApprovalProgramPages"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ClearStateProgramPages"
 				}
 			]
@@ -4878,7 +4924,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -4886,275 +4932,275 @@
 			"docExtra": "",
 			"enum": [
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Sender"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Fee"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "FirstValid"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "FirstValidTime"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "LastValid"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Note"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "Lease"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Receiver"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Amount"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "CloseRemainderTo"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "VotePK"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "SelectionPK"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "VoteFirst"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "VoteLast"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "VoteKeyDilution"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Type"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "TypeEnum"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "XferAsset"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AssetAmount"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AssetSender"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AssetReceiver"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AssetCloseTo"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "GroupIndex"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "TxID"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ApplicationID"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "OnCompletion"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApplicationArgs"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumAppArgs"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Accounts"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumAccounts"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApprovalProgram"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ClearStateProgram"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "RekeyTo"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ConfigAsset"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ConfigAssetTotal"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ConfigAssetDecimals"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "ConfigAssetDefaultFrozen"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ConfigAssetUnitName"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ConfigAssetName"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ConfigAssetURL"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "ConfigAssetMetadataHash"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ConfigAssetManager"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ConfigAssetReserve"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ConfigAssetFreeze"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ConfigAssetClawback"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "FreezeAsset"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "FreezeAssetAccount"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "FreezeAssetFrozen"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Assets"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumAssets"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Applications"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumApplications"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "GlobalNumUint"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "GlobalNumByteSlice"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "LocalNumUint"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "LocalNumByteSlice"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ExtraProgramPages"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "Nonparticipation"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Logs"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumLogs"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "CreatedAssetID"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "CreatedApplicationID"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "LastLog"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "StateProofPK"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApprovalProgramPages"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumApprovalProgramPages"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ClearStateProgramPages"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumClearStateProgramPages"
 				}
 			]
@@ -5176,7 +5222,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -5184,31 +5230,31 @@
 			"docExtra": "",
 			"enum": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApplicationArgs"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Accounts"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Assets"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Applications"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Logs"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApprovalProgramPages"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ClearStateProgramPages"
 				}
 			]
@@ -5239,7 +5285,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -5247,275 +5293,275 @@
 			"docExtra": "",
 			"enum": [
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Sender"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Fee"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "FirstValid"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "FirstValidTime"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "LastValid"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Note"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "Lease"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Receiver"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Amount"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "CloseRemainderTo"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "VotePK"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "SelectionPK"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "VoteFirst"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "VoteLast"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "VoteKeyDilution"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Type"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "TypeEnum"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "XferAsset"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "AssetAmount"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AssetSender"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AssetReceiver"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "AssetCloseTo"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "GroupIndex"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "TxID"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ApplicationID"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "OnCompletion"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApplicationArgs"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumAppArgs"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Accounts"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumAccounts"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApprovalProgram"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ClearStateProgram"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "RekeyTo"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ConfigAsset"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ConfigAssetTotal"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ConfigAssetDecimals"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "ConfigAssetDefaultFrozen"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ConfigAssetUnitName"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ConfigAssetName"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ConfigAssetURL"
 				},
 				{
-					"type": "bytes",
+					"type": "r32_byte_t",
 					"name": "ConfigAssetMetadataHash"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ConfigAssetManager"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ConfigAssetReserve"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ConfigAssetFreeze"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "ConfigAssetClawback"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "FreezeAsset"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "FreezeAssetAccount"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "FreezeAssetFrozen"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Assets"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumAssets"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Applications"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumApplications"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "GlobalNumUint"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "GlobalNumByteSlice"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "LocalNumUint"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "LocalNumByteSlice"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "ExtraProgramPages"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "Nonparticipation"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Logs"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumLogs"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "CreatedAssetID"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "CreatedApplicationID"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "LastLog"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "StateProofPK"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApprovalProgramPages"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumApprovalProgramPages"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ClearStateProgramPages"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "NumClearStateProgramPages"
 				}
 			]
@@ -5542,7 +5588,7 @@
 			"stacks": [],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -5550,31 +5596,31 @@
 			"docExtra": "",
 			"enum": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApplicationArgs"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Accounts"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Assets"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Applications"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Logs"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApprovalProgramPages"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ClearStateProgramPages"
 				}
 			]
@@ -5584,19 +5630,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "name_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r1"
 				}
 			],
@@ -5609,24 +5655,24 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "name_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_3",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -5639,17 +5685,17 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "name_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_3",
 					"array": false
 				}
@@ -5664,14 +5710,14 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "name_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r1"
 				}
 			],
@@ -5684,18 +5730,18 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "name_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "r1"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r2"
 				}
 			],
@@ -5708,18 +5754,18 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "name_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r2"
 				}
 			],
@@ -5732,12 +5778,12 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "name_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_2",
 					"array": false
 				}
@@ -5758,14 +5804,14 @@
 			],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -5773,31 +5819,31 @@
 			"docExtra": "",
 			"enum": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApplicationArgs"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Accounts"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Assets"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Applications"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Logs"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApprovalProgramPages"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ClearStateProgramPages"
 				}
 			]
@@ -5818,14 +5864,14 @@
 			],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -5833,31 +5879,31 @@
 			"docExtra": "",
 			"enum": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApplicationArgs"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Accounts"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Assets"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Applications"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Logs"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApprovalProgramPages"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ClearStateProgramPages"
 				}
 			]
@@ -5873,19 +5919,19 @@
 			],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -5893,31 +5939,31 @@
 			"docExtra": "",
 			"enum": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApplicationArgs"
 				},
 				{
-					"type": "bytes",
+					"type": "addr_t",
 					"name": "Accounts"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Assets"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "Applications"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "Logs"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ApprovalProgramPages"
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "ClearStateProgramPages"
 				}
 			]
@@ -5927,14 +5973,14 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				}
 			],
@@ -5947,19 +5993,19 @@
 			"imms": [],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_2",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -5978,14 +6024,14 @@
 			],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -6009,14 +6055,14 @@
 			],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -6035,28 +6081,28 @@
 			],
 			"stacks": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_1",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_2",
 					"array": false
 				},
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "STACK_3",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "r1"
 				},
 				{
-					"type": "uint64",
+					"type": "bool_t",
 					"name": "r2"
 				}
 			],
@@ -6080,14 +6126,14 @@
 			],
 			"stacks": [
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "STACK_1",
 					"array": false
 				}
 			],
 			"returns": [
 				{
-					"type": "any",
+					"type": "any_t",
 					"name": "r1"
 				}
 			],
@@ -6095,11 +6141,11 @@
 			"docExtra": "",
 			"enum": [
 				{
-					"type": "bytes",
+					"type": "r_byte_t",
 					"name": "BlkSeed"
 				},
 				{
-					"type": "uint64",
+					"type": "uint64_t",
 					"name": "BlkTimestamp"
 				}
 			]

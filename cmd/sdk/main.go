@@ -92,11 +92,20 @@ func run(a args) error {
 #define STACK
 
 using uint64 = unsigned long long;
-using uint16 = unsigned short;
-using int16 = signed short;
 using uint8 = unsigned char;
 using int8 = signed char;
+using none = void;
 
+`)
+
+	for _, t := range cs.Types {
+		if t.Name == t.Type {
+			continue
+		}
+		fmt.Fprintf(bw, "using %s = %s;\n", t.Name, t.Type)
+	}
+
+	bw.WriteString(`
 struct bytes
 {
 	bytes() {}

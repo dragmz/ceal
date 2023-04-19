@@ -2,6 +2,7 @@ package ceal
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
 )
 
@@ -31,9 +32,15 @@ type CealSpecOp struct {
 	Enum     []CealEnum   `json:"enum"`
 }
 
+type CealSpecType struct {
+	Name string `json:"Name"`
+	Type string `json:"Type"`
+}
+
 type CealSpec struct {
-	Version int          `json:"version"`
-	Ops     []CealSpecOp `json:"ops"`
+	Version int            `json:"version"`
+	Types   []CealSpecType `json:"types"`
+	Ops     []CealSpecOp   `json:"ops"`
 }
 
 var replaceMap = map[string]string{
@@ -72,4 +79,17 @@ func ReadReturnTypeName(op CealSpecOp) string {
 	}
 
 	return rt
+}
+
+var ArrayRegex = regexp.MustCompile(`^\[(\d+?)\]`)
+
+func ReadStackType(name string) string {
+	arr := ArrayRegex.FindStringSubmatch(name)
+	if arr != nil {
+		name = strings.ReplaceAll(name, arr[0], fmt.Sprintf("r%s_", arr[1]))
+	}
+
+	name = strings.ReplaceAll(name, "[]", "r_")
+	name = fmt.Sprintf("%s_t", name)
+	return name
 }

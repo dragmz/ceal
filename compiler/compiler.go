@@ -341,6 +341,20 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 	})
 
 	global.registerType(&Type{
+		name: "bool",
+		simple: &SimpleType{
+			kind: SimpleTypeInt,
+		},
+	})
+
+	global.registerType(&Type{
+		name: "uint8",
+		simple: &SimpleType{
+			kind: SimpleTypeInt,
+		},
+	})
+
+	global.registerType(&Type{
 		name: "uint64",
 		simple: &SimpleType{
 			kind: SimpleTypeInt,
