@@ -1032,6 +1032,32 @@ func (a *CealRaw) TealAst() teal.TealAst {
 	return a
 }
 
+type CealSubscript struct {
+	V     *Variable
+	Index CealStatement
+}
+
+func (a *CealSubscript) TealAst() teal.TealAst {
+	var value teal.TealAst
+
+	if a.V.param != nil {
+		value = &teal.Teal_frame_dig{Teal_frame_dig_op: teal.Teal_frame_dig_op{I1: int8(a.V.param.index)}}
+	} else if a.V.local != nil {
+		value = &teal.Teal_load{Teal_load_op: teal.Teal_load_op{
+			I1: uint8(a.V.local.slot),
+		}}
+	} else {
+		panic("unsupported variable type")
+	}
+
+	return &teal.Teal_extract3{
+		Teal_extract3_op: teal.Teal_extract3_op{},
+		STACK_1:          value,
+		STACK_2:          a.Index.TealAst(),
+		STACK_3:          &teal.Teal_int{V: 1},
+	}
+}
+
 type CealAsm struct {
 	Value string
 }

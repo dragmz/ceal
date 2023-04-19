@@ -88,6 +88,9 @@ type CVisitor interface {
 	// Visit a parse tree produced by CParser#AndExpr.
 	VisitAndExpr(ctx *AndExprContext) interface{}
 
+	// Visit a parse tree produced by CParser#SubscriptExpr.
+	VisitSubscriptExpr(ctx *SubscriptExprContext) interface{}
+
 	// Visit a parse tree produced by CParser#ConstantExpr.
 	VisitConstantExpr(ctx *ConstantExprContext) interface{}
 

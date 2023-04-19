@@ -709,6 +709,12 @@ func (v *AstVisitor) VisitAsmStmt(ctx *parser.AsmStmtContext) interface{} {
 	}
 }
 
-func ceal_TrimSTRINGQuotes(v string) string {
-	return strings.TrimSuffix(strings.TrimPrefix(v, "\""), "\"")
+func (v *AstVisitor) VisitSubscriptExpr(ctx *parser.SubscriptExprContext) interface{} {
+	id := ctx.ID().GetText()
+	vr := v.mustResolveVariable(id)
+
+	return &CealSubscript{
+		V:     vr,
+		Index: v.visitStatement(ctx.Expr()),
+	}
 }

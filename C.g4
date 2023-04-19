@@ -56,6 +56,7 @@ expr:
     | condition=expr '?' true=expr ':' false=expr    # ConditionalExpr
     | ID                        # VariableExpr
     | constant                  # ConstantExpr
+    | ID '[' expr ']'           # SubscriptExpr
     | ID '.' ID ('.' ID)*       # MemberExpr
     | call_expr                 # CallExpr
     | '(' expr ')'              # GroupExpr

@@ -1,0 +1,8 @@
+#pragma version 8
+txn Sender
+store 0
+load 0
+int 2
+int 1
+extract3
+return

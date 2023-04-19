@@ -182,6 +182,12 @@ func (s *BaseCListener) EnterAndExpr(ctx *AndExprContext) {}
 // ExitAndExpr is called when production AndExpr is exited.
 func (s *BaseCListener) ExitAndExpr(ctx *AndExprContext) {}
 
+// EnterSubscriptExpr is called when production SubscriptExpr is entered.
+func (s *BaseCListener) EnterSubscriptExpr(ctx *SubscriptExprContext) {}
+
+// ExitSubscriptExpr is called when production SubscriptExpr is exited.
+func (s *BaseCListener) ExitSubscriptExpr(ctx *SubscriptExprContext) {}
+
 // EnterConstantExpr is called when production ConstantExpr is entered.
 func (s *BaseCListener) EnterConstantExpr(ctx *ConstantExprContext) {}
 

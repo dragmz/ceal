@@ -115,6 +115,10 @@ func (v *BaseCVisitor) VisitAndExpr(ctx *AndExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCVisitor) VisitSubscriptExpr(ctx *SubscriptExprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCVisitor) VisitConstantExpr(ctx *ConstantExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }

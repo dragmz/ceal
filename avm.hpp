@@ -1,7 +1,6 @@
 
 #pragma once
 
-#include <variant>
 #include <string>
 
 #define IMMEDIATE
@@ -12,7 +11,15 @@ using uint16 = unsigned short;
 using int16 = signed short;
 using uint8 = unsigned char;
 using int8 = signed char;
-using bytes = std::variant<const char *, const unsigned char *>;
+
+struct bytes
+{
+	bytes() {}
+	bytes(const char *) {}
+	bytes(const unsigned char *) {}
+	uint64 operator[](const uint64 index) const {}
+};
+
 using label = std::string;
 
 template <typename T>

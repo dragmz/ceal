@@ -48,6 +48,9 @@ func TestParseToSelf(t *testing.T) {
 		`swap`,
 		`itob`,
 		`extract 1 2`,
+		`extract_uint16`,
+		`extract3`,
+		`getbyte`,
 	}
 
 	for _, source := range sources {

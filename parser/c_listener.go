@@ -88,6 +88,9 @@ type CListener interface {
 	// EnterAndExpr is called when entering the AndExpr production.
 	EnterAndExpr(c *AndExprContext)
 
+	// EnterSubscriptExpr is called when entering the SubscriptExpr production.
+	EnterSubscriptExpr(c *SubscriptExprContext)
+
 	// EnterConstantExpr is called when entering the ConstantExpr production.
 	EnterConstantExpr(c *ConstantExprContext)
 
@@ -288,6 +291,9 @@ type CListener interface {
 
 	// ExitAndExpr is called when exiting the AndExpr production.
 	ExitAndExpr(c *AndExprContext)
+
+	// ExitSubscriptExpr is called when exiting the SubscriptExpr production.
+	ExitSubscriptExpr(c *SubscriptExprContext)
 
 	// ExitConstantExpr is called when exiting the ConstantExpr production.
 	ExitConstantExpr(c *ConstantExprContext)
