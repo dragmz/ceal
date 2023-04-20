@@ -37,6 +37,12 @@ type CVisitor interface {
 	// Visit a parse tree produced by CParser#DefinitionStmt.
 	VisitDefinitionStmt(ctx *DefinitionStmtContext) interface{}
 
+	// Visit a parse tree produced by CParser#PreIncDecStmt.
+	VisitPreIncDecStmt(ctx *PreIncDecStmtContext) interface{}
+
+	// Visit a parse tree produced by CParser#PostIncDecStmt.
+	VisitPostIncDecStmt(ctx *PostIncDecStmtContext) interface{}
+
 	// Visit a parse tree produced by CParser#AssignStmt.
 	VisitAssignStmt(ctx *AssignStmtContext) interface{}
 
@@ -145,11 +151,17 @@ type CVisitor interface {
 	// Visit a parse tree produced by CParser#MinusExpr.
 	VisitMinusExpr(ctx *MinusExprContext) interface{}
 
+	// Visit a parse tree produced by CParser#value_access_expr.
+	VisitValue_access_expr(ctx *Value_access_exprContext) interface{}
+
+	// Visit a parse tree produced by CParser#pre_incdec_expr.
+	VisitPre_incdec_expr(ctx *Pre_incdec_exprContext) interface{}
+
+	// Visit a parse tree produced by CParser#post_incdec_expr.
+	VisitPost_incdec_expr(ctx *Post_incdec_exprContext) interface{}
+
 	// Visit a parse tree produced by CParser#dot_expr.
 	VisitDot_expr(ctx *Dot_exprContext) interface{}
-
-	// Visit a parse tree produced by CParser#value_expr.
-	VisitValue_expr(ctx *Value_exprContext) interface{}
 
 	// Visit a parse tree produced by CParser#subscript_expr.
 	VisitSubscript_expr(ctx *Subscript_exprContext) interface{}

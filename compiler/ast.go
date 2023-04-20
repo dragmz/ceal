@@ -75,22 +75,40 @@ func (v *AstVisitor) VisitAssignStmt(ctx *parser.AssignStmtContext) interface{} 
 }
 
 func (v *AstVisitor) VisitAssign_expr(ctx *parser.Assign_exprContext) interface{} {
-	de := v.mustResolveDot(ctx.Dot_expr())
+	dd, index := v.mustResolveValueAccess(ctx.Value_access_expr())
 
-	if de.V.readonly {
-		panic(fmt.Sprintf("variable '%s' is read only", de.V.name))
-	}
-
-	if de.V.readonly {
-		panic(fmt.Sprintf("variable '%s' is read only", de.V.name))
+	if dd.V.readonly {
+		panic(fmt.Sprintf("variable '%s' is read only", dd.V.name))
 	}
 
 	ast := &CealAssign{
-		D:     de,
+		D:     dd,
+		Index: index,
 		Value: v.visitAst(ctx.Expr()),
 	}
 
 	return ast
+}
+
+func (v *AstVisitor) mustResolveValueAccess(ctx parser.IValue_access_exprContext) (dotData, CealAst) {
+	return v.mustResolveDotSub(ctx.Dot_expr(), ctx.Subscript_expr())
+}
+
+func (v *AstVisitor) mustResolveDotSub(dot parser.IDot_exprContext, sub parser.ISubscript_exprContext) (dotData, CealAst) {
+	var de parser.IDot_exprContext
+
+	var index CealAst
+
+	if sub != nil {
+		de = sub.Dot_expr()
+		index = v.visitAst(sub.Expr())
+	} else {
+		de = dot
+	}
+
+	dd := v.mustResolveDot(de)
+
+	return dd, index
 }
 
 func (v *AstVisitor) VisitDeclarationStmt(ctx *parser.DeclarationStmtContext) interface{} {
@@ -119,20 +137,26 @@ func (v *AstVisitor) VisitAddSubExpr(ctx *parser.AddSubExprContext) interface{} 
 }
 
 func (v *AstVisitor) VisitAssignSumDiffStmt(ctx *parser.AssignSumDiffStmtContext) interface{} {
-	de := v.mustResolveDot(ctx.Asd_expr().Dot_expr())
+	de, index := v.mustResolveValueAccess(ctx.Asd_expr().Value_access_expr())
 
 	return &CealAssignSumDiff{
 		D:      de,
+		Index:  index,
 		Value:  v.visitAst(ctx.Asd_expr().Expr()),
 		Op:     ctx.Asd_expr().Asd().GetText(),
 		IsStmt: true,
 	}
 }
 func (v *AstVisitor) VisitAssignSumDiffExpr(ctx *parser.AssignSumDiffExprContext) interface{} {
-	de := v.mustResolveDot(ctx.Asd_expr().Dot_expr())
+	dd, index := v.mustResolveValueAccess(ctx.Asd_expr().Value_access_expr())
+
+	if dd.V.readonly {
+		panic(fmt.Sprintf("variable '%s' is read only", dd.V.name))
+	}
 
 	return &CealAssignSumDiff{
-		D:     de,
+		D:     dd,
+		Index: index,
 		Value: v.visitAst(ctx.Asd_expr().Expr()),
 		Op:    ctx.Asd_expr().Asd().GetText(),
 	}
@@ -540,19 +564,34 @@ func (d dotData) Slot() uint8 {
 }
 
 func (d dotData) Load() teal.TealAst {
+	if d.V.param != nil {
+		return &teal.Teal_frame_dig{Teal_frame_dig_op: teal.Teal_frame_dig_op{I1: int8(d.V.param.index)}}
+	}
+
 	return &teal.Teal_load{Teal_load_op: teal.Teal_load_op{I1: uint8(d.Slot())}}
 }
 
-func (d dotData) Store(op teal.TealAst) teal.TealAst {
-	return &teal.Teal_store{STACK_1: op, Teal_store_op: teal.Teal_store_op{I1: uint8(d.Slot())}}
+func (d dotData) Store(op teal.TealAst, index teal.TealAst) teal.TealAst {
+	var ast teal.TealAst
+
+	if index != nil {
+		ast = &teal.Teal_setbyte{
+			Teal_setbyte_op: teal.Teal_setbyte_op{},
+			STACK_1:         d.Load(),
+			STACK_2:         index,
+			STACK_3:         op,
+		}
+	} else {
+		ast = &teal.Teal_store{STACK_1: op, Teal_store_op: teal.Teal_store_op{I1: uint8(d.Slot())}}
+	}
+
+	return ast
 }
 
 func (v *AstVisitor) mustResolveDot(ctx parser.IDot_exprContext) dotData {
 	var ids []antlr.TerminalNode
 
-	for _, e := range ctx.AllValue_expr() {
-		ids = append(ids, e.ID())
-	}
+	ids = append(ids, ctx.AllID()...)
 
 	vr, f := v.mustResolve(ids)
 	t := v.scope.resolveType(vr.t)
@@ -570,23 +609,53 @@ func (v *AstVisitor) mustResolveDot(ctx parser.IDot_exprContext) dotData {
 	}
 }
 
-func (v *AstVisitor) VisitPostIncDecExpr(ctx *parser.PostIncDecExprContext) interface{} {
-	de := v.mustResolveDot(ctx.Dot_expr())
+func (v *AstVisitor) VisitPostIncDecStmt(ctx *parser.PostIncDecStmtContext) interface{} {
+	ast := v.Visit(ctx.Post_incdec_expr())
 
-	ast := &CealPostfix{
-		D:  de,
-		Op: ctx.Incdec().GetText(),
+	if e, ok := ast.(CealExpr); ok {
+		e.ToStmt()
 	}
 
 	return ast
 }
 
+func (v *AstVisitor) VisitPost_incdec_expr(ctx *parser.Post_incdec_exprContext) interface{} {
+	de, index := v.mustResolveValueAccess(ctx.Value_access_expr())
+
+	ast := &CealPostfix{
+		D:     de,
+		Index: index,
+		Op:    ctx.Incdec().GetText(),
+	}
+
+	return ast
+}
+
+func (v *AstVisitor) VisitPostIncDecExpr(ctx *parser.PostIncDecExprContext) interface{} {
+	return v.Visit(ctx.Post_incdec_expr())
+}
+
 func (v *AstVisitor) VisitPreIncDecExpr(ctx *parser.PreIncDecExprContext) interface{} {
-	de := v.mustResolveDot(ctx.Dot_expr())
+	return v.Visit(ctx.Pre_incdec_expr())
+}
+
+func (v *AstVisitor) VisitPreIncDecStmt(ctx *parser.PreIncDecStmtContext) interface{} {
+	ast := v.Visit(ctx.Pre_incdec_expr())
+
+	if e, ok := ast.(CealExpr); ok {
+		e.ToStmt()
+	}
+
+	return ast
+}
+
+func (v *AstVisitor) VisitPre_incdec_expr(ctx *parser.Pre_incdec_exprContext) interface{} {
+	de, index := v.mustResolveValueAccess(ctx.Value_access_expr())
 
 	ast := &CealPrefix{
-		D:  de,
-		Op: ctx.Incdec().GetText(),
+		D:     de,
+		Index: index,
+		Op:    ctx.Incdec().GetText(),
 	}
 
 	return ast

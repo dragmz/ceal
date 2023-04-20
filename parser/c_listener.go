@@ -37,6 +37,12 @@ type CListener interface {
 	// EnterDefinitionStmt is called when entering the DefinitionStmt production.
 	EnterDefinitionStmt(c *DefinitionStmtContext)
 
+	// EnterPreIncDecStmt is called when entering the PreIncDecStmt production.
+	EnterPreIncDecStmt(c *PreIncDecStmtContext)
+
+	// EnterPostIncDecStmt is called when entering the PostIncDecStmt production.
+	EnterPostIncDecStmt(c *PostIncDecStmtContext)
+
 	// EnterAssignStmt is called when entering the AssignStmt production.
 	EnterAssignStmt(c *AssignStmtContext)
 
@@ -145,11 +151,17 @@ type CListener interface {
 	// EnterMinusExpr is called when entering the MinusExpr production.
 	EnterMinusExpr(c *MinusExprContext)
 
+	// EnterValue_access_expr is called when entering the value_access_expr production.
+	EnterValue_access_expr(c *Value_access_exprContext)
+
+	// EnterPre_incdec_expr is called when entering the pre_incdec_expr production.
+	EnterPre_incdec_expr(c *Pre_incdec_exprContext)
+
+	// EnterPost_incdec_expr is called when entering the post_incdec_expr production.
+	EnterPost_incdec_expr(c *Post_incdec_exprContext)
+
 	// EnterDot_expr is called when entering the dot_expr production.
 	EnterDot_expr(c *Dot_exprContext)
-
-	// EnterValue_expr is called when entering the value_expr production.
-	EnterValue_expr(c *Value_exprContext)
 
 	// EnterSubscript_expr is called when entering the subscript_expr production.
 	EnterSubscript_expr(c *Subscript_exprContext)
@@ -249,6 +261,12 @@ type CListener interface {
 
 	// ExitDefinitionStmt is called when exiting the DefinitionStmt production.
 	ExitDefinitionStmt(c *DefinitionStmtContext)
+
+	// ExitPreIncDecStmt is called when exiting the PreIncDecStmt production.
+	ExitPreIncDecStmt(c *PreIncDecStmtContext)
+
+	// ExitPostIncDecStmt is called when exiting the PostIncDecStmt production.
+	ExitPostIncDecStmt(c *PostIncDecStmtContext)
 
 	// ExitAssignStmt is called when exiting the AssignStmt production.
 	ExitAssignStmt(c *AssignStmtContext)
@@ -358,11 +376,17 @@ type CListener interface {
 	// ExitMinusExpr is called when exiting the MinusExpr production.
 	ExitMinusExpr(c *MinusExprContext)
 
+	// ExitValue_access_expr is called when exiting the value_access_expr production.
+	ExitValue_access_expr(c *Value_access_exprContext)
+
+	// ExitPre_incdec_expr is called when exiting the pre_incdec_expr production.
+	ExitPre_incdec_expr(c *Pre_incdec_exprContext)
+
+	// ExitPost_incdec_expr is called when exiting the post_incdec_expr production.
+	ExitPost_incdec_expr(c *Post_incdec_exprContext)
+
 	// ExitDot_expr is called when exiting the dot_expr production.
 	ExitDot_expr(c *Dot_exprContext)
-
-	// ExitValue_expr is called when exiting the value_expr production.
-	ExitValue_expr(c *Value_exprContext)
 
 	// ExitSubscript_expr is called when exiting the subscript_expr production.
 	ExitSubscript_expr(c *Subscript_exprContext)

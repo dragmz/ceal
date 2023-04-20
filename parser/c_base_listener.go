@@ -80,6 +80,18 @@ func (s *BaseCListener) EnterDefinitionStmt(ctx *DefinitionStmtContext) {}
 // ExitDefinitionStmt is called when production DefinitionStmt is exited.
 func (s *BaseCListener) ExitDefinitionStmt(ctx *DefinitionStmtContext) {}
 
+// EnterPreIncDecStmt is called when production PreIncDecStmt is entered.
+func (s *BaseCListener) EnterPreIncDecStmt(ctx *PreIncDecStmtContext) {}
+
+// ExitPreIncDecStmt is called when production PreIncDecStmt is exited.
+func (s *BaseCListener) ExitPreIncDecStmt(ctx *PreIncDecStmtContext) {}
+
+// EnterPostIncDecStmt is called when production PostIncDecStmt is entered.
+func (s *BaseCListener) EnterPostIncDecStmt(ctx *PostIncDecStmtContext) {}
+
+// ExitPostIncDecStmt is called when production PostIncDecStmt is exited.
+func (s *BaseCListener) ExitPostIncDecStmt(ctx *PostIncDecStmtContext) {}
+
 // EnterAssignStmt is called when production AssignStmt is entered.
 func (s *BaseCListener) EnterAssignStmt(ctx *AssignStmtContext) {}
 
@@ -296,17 +308,29 @@ func (s *BaseCListener) EnterMinusExpr(ctx *MinusExprContext) {}
 // ExitMinusExpr is called when production MinusExpr is exited.
 func (s *BaseCListener) ExitMinusExpr(ctx *MinusExprContext) {}
 
+// EnterValue_access_expr is called when production value_access_expr is entered.
+func (s *BaseCListener) EnterValue_access_expr(ctx *Value_access_exprContext) {}
+
+// ExitValue_access_expr is called when production value_access_expr is exited.
+func (s *BaseCListener) ExitValue_access_expr(ctx *Value_access_exprContext) {}
+
+// EnterPre_incdec_expr is called when production pre_incdec_expr is entered.
+func (s *BaseCListener) EnterPre_incdec_expr(ctx *Pre_incdec_exprContext) {}
+
+// ExitPre_incdec_expr is called when production pre_incdec_expr is exited.
+func (s *BaseCListener) ExitPre_incdec_expr(ctx *Pre_incdec_exprContext) {}
+
+// EnterPost_incdec_expr is called when production post_incdec_expr is entered.
+func (s *BaseCListener) EnterPost_incdec_expr(ctx *Post_incdec_exprContext) {}
+
+// ExitPost_incdec_expr is called when production post_incdec_expr is exited.
+func (s *BaseCListener) ExitPost_incdec_expr(ctx *Post_incdec_exprContext) {}
+
 // EnterDot_expr is called when production dot_expr is entered.
 func (s *BaseCListener) EnterDot_expr(ctx *Dot_exprContext) {}
 
 // ExitDot_expr is called when production dot_expr is exited.
 func (s *BaseCListener) ExitDot_expr(ctx *Dot_exprContext) {}
-
-// EnterValue_expr is called when production value_expr is entered.
-func (s *BaseCListener) EnterValue_expr(ctx *Value_exprContext) {}
-
-// ExitValue_expr is called when production value_expr is exited.
-func (s *BaseCListener) ExitValue_expr(ctx *Value_exprContext) {}
 
 // EnterSubscript_expr is called when production subscript_expr is entered.
 func (s *BaseCListener) EnterSubscript_expr(ctx *Subscript_exprContext) {}

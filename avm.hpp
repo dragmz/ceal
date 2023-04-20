@@ -28,7 +28,7 @@ struct bytes
 	bytes() {}
 	bytes(const char *) {}
 	bytes(const unsigned char *) {}
-	uint64 operator[](const uint64 index) const {}
+	uint8& operator[](const uint64 index) const {}
 };
 
 using label = std::string;

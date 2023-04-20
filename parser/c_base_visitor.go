@@ -47,6 +47,14 @@ func (v *BaseCVisitor) VisitDefinitionStmt(ctx *DefinitionStmtContext) interface
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCVisitor) VisitPreIncDecStmt(ctx *PreIncDecStmtContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitPostIncDecStmt(ctx *PostIncDecStmtContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCVisitor) VisitAssignStmt(ctx *AssignStmtContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -191,11 +199,19 @@ func (v *BaseCVisitor) VisitMinusExpr(ctx *MinusExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseCVisitor) VisitDot_expr(ctx *Dot_exprContext) interface{} {
+func (v *BaseCVisitor) VisitValue_access_expr(ctx *Value_access_exprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseCVisitor) VisitValue_expr(ctx *Value_exprContext) interface{} {
+func (v *BaseCVisitor) VisitPre_incdec_expr(ctx *Pre_incdec_exprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitPost_incdec_expr(ctx *Post_incdec_exprContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitDot_expr(ctx *Dot_exprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 

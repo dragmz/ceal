@@ -292,7 +292,8 @@ type CealValue interface {
 }
 
 type CealPrefix struct {
-	D dotData
+	D     dotData
+	Index CealAst
 
 	Op string
 
@@ -326,7 +327,14 @@ func (a *CealPrefix) TealAst() teal.TealAst {
 	}
 
 	res := &teal.TealAstBuilder{}
-	res.Write(a.D.Store(op))
+
+	var index teal.TealAst
+
+	if a.Index != nil {
+		index = a.Index.TealAst()
+	}
+
+	res.Write(a.D.Store(op, index))
 
 	if !a.IsStmt {
 		res.Write(a.D.Load())
@@ -336,7 +344,8 @@ func (a *CealPrefix) TealAst() teal.TealAst {
 }
 
 type CealPostfix struct {
-	D dotData
+	D     dotData
+	Index CealAst
 
 	Op string
 
@@ -371,7 +380,13 @@ func (a *CealPostfix) TealAst() teal.TealAst {
 		panic(fmt.Sprintf("postfix operator not supported: '%s'", a.Op))
 	}
 
-	return a.D.Store(op)
+	var index teal.TealAst
+
+	if a.Index != nil {
+		index = a.Index.TealAst()
+	}
+
+	return a.D.Store(op, index)
 }
 
 type CealLabel struct {
@@ -409,7 +424,7 @@ func (a *CealVariable) TealAst() teal.TealAst {
 	}
 
 	if a.D.V.param != nil {
-		ast := &teal.Teal_frame_dig{Teal_frame_dig_op: teal.Teal_frame_dig_op{I1: int8(a.D.V.param.index)}}
+		ast := a.D.Load()
 		res.Write(ast)
 		return res.Build()
 	}
@@ -458,6 +473,7 @@ func (a *CealUnaryOp) TealAst() teal.TealAst {
 
 type CealAssignSumDiff struct {
 	D     dotData
+	Index CealAst
 	Value CealAst
 	Op    string
 
@@ -480,7 +496,15 @@ func (a *CealAssignSumDiff) TealAst() teal.TealAst {
 		op = &teal.Teal_dup{STACK_1: op}
 	}
 
-	return a.D.Store(op)
+	var index teal.TealAst
+
+	if a.Index != nil {
+		index = a.Index.TealAst()
+	}
+
+	ast := a.D.Store(op, index)
+
+	return ast
 }
 
 type CealAnd struct {
@@ -602,13 +626,14 @@ func (a *CealDefine) TealAst() teal.TealAst {
 		panic("defining complex variable is not supported yet")
 	}
 
-	ast := a.D.Store(a.Value.TealAst())
+	ast := a.D.Store(a.Value.TealAst(), nil)
 
 	return ast
 }
 
 type CealAssign struct {
-	D dotData
+	D     dotData
+	Index CealAst
 
 	Value CealAst
 
@@ -631,27 +656,19 @@ func (a *CealAssign) TealAst() teal.TealAst {
 
 	res := &teal.TealAstBuilder{}
 
-	if a.D.T.complex != nil {
-		if a.D.T.complex.builtin != nil {
-			res.Write(&teal.Teal_call_builtin{
-				Name: a.D.Fun.builtin.op,
-				Imms: []teal.TealAst{&teal.Teal_named_int_value{
-					V: a.D.F.name,
-				}},
-			})
-			return res.Build()
-		} else {
-			if a.D.V.param != nil {
-				panic("accessing struct param fields is not supported yet")
-			}
-
-			ast := a.D.Store(a.Value.TealAst())
-			res.Write(ast)
-		}
-	} else {
-		ast := a.D.Store(a.Value.TealAst())
-		res.Write(ast)
+	if a.D.T.complex != nil && a.D.T.complex.builtin != nil {
+		panic("cannot assign to built-in op")
 	}
+
+	var index teal.TealAst
+
+	if a.Index != nil {
+		index = a.Index.TealAst()
+	}
+
+	ast := a.D.Store(a.Value.TealAst(), index)
+
+	res.Write(ast)
 
 	if !a.IsStmt {
 		load := a.D.Load()
@@ -1047,7 +1064,7 @@ func (a *CealSubscript) TealAst() teal.TealAst {
 	var value teal.TealAst
 
 	if a.D.V.param != nil {
-		value = &teal.Teal_frame_dig{Teal_frame_dig_op: teal.Teal_frame_dig_op{I1: int8(a.D.V.param.index)}}
+		value = a.D.Load()
 	} else if a.D.V.local != nil {
 		value = a.D.Load()
 	} else {

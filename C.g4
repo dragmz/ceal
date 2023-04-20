@@ -21,6 +21,8 @@ param: type ID;
 stmt:
     declaration ';'                                                 # DeclarationStmt
     | definition ';'                                                # DefinitionStmt
+    | pre_incdec_expr ';'                                           # PreIncDecStmt
+    | post_incdec_expr ';'                                          # PostIncDecStmt
     | assign_expr ';'                                               # AssignStmt
     | asd_expr ';'                                                  # AssignSumDiffStmt
     | 'asm' '(' STRING* ')' ';'                                     # AsmStmt
@@ -40,8 +42,8 @@ stmt:
     ;
 
 expr:
-    dot_expr incdec             # PostIncDecExpr
-    | incdec dot_expr           # PreIncDecExpr
+    post_incdec_expr            # PostIncDecExpr
+    | pre_incdec_expr           # PreIncDecExpr
     | '-' expr                  # MinusExpr
     | '!' expr                  # NotExpr
     | l=expr muldiv r=expr      # MulDivExpr
@@ -62,14 +64,16 @@ expr:
     | '(' expr ')'              # GroupExpr
     ;
 
-dot_expr: value_expr ('.' value_expr)*;
-value_expr: ID;
+value_access_expr: (dot_expr | subscript_expr);
+pre_incdec_expr: incdec value_access_expr;
+post_incdec_expr: value_access_expr incdec;
+dot_expr: ID ('.' ID)*;
 subscript_expr: dot_expr '[' expr ']';
 comment: (SINGLE_COMMENT | MULTILINE_COMMENT);
 constant: (INT | STRING);
-assign_expr: dot_expr '=' expr;
+assign_expr: value_access_expr '=' expr;
 const: 'const';
-asd_expr: dot_expr asd expr;
+asd_expr: value_access_expr asd expr;
 asd: '+=' | '-=';
 case: 'case' expr ':' stmt*;
 default: 'default' ':' stmt*;
