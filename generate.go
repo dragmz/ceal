@@ -1,5 +1,6 @@
 package ceal
 
+//go:generate go run cmd\tests\main.go -path examples -out examples_gen_test.go
 //go:generate java -jar antlr-4.12.0-complete.jar -Dlanguage=Go -package parser -visitor C.g4 -o parser
 
 //go:generate go run cmd/spec/main.go -spec langspec.json --out ceal.json
