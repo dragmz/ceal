@@ -11,6 +11,7 @@ int 4
 int 1
 extract3
 setbyte
+store 1
 // test.data[4] += 2
 load 1
 int 4
@@ -18,6 +19,7 @@ load 1
 int 2
 +
 setbyte
+store 1
 // test.data[5]++
 load 1
 int 5
@@ -25,6 +27,7 @@ load 1
 int 1
 +
 setbyte
+store 1
 // ++test.data[6];
 load 1
 int 6
@@ -32,6 +35,7 @@ load 1
 int 1
 +
 setbyte
+store 1
 // return sender[2] + test.data[3]
 load 0
 int 2

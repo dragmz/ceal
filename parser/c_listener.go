@@ -10,27 +10,6 @@ type CListener interface {
 	// EnterProgram is called when entering the program production.
 	EnterProgram(c *ProgramContext)
 
-	// EnterInclude is called when entering the include production.
-	EnterInclude(c *IncludeContext)
-
-	// EnterFunction is called when entering the function production.
-	EnterFunction(c *FunctionContext)
-
-	// EnterStruct is called when entering the struct production.
-	EnterStruct(c *StructContext)
-
-	// EnterField is called when entering the field production.
-	EnterField(c *FieldContext)
-
-	// EnterType is called when entering the type production.
-	EnterType(c *TypeContext)
-
-	// EnterParams is called when entering the params production.
-	EnterParams(c *ParamsContext)
-
-	// EnterParam is called when entering the param production.
-	EnterParam(c *ParamContext)
-
 	// EnterDeclarationStmt is called when entering the DeclarationStmt production.
 	EnterDeclarationStmt(c *DeclarationStmtContext)
 
@@ -151,6 +130,30 @@ type CListener interface {
 	// EnterMinusExpr is called when entering the MinusExpr production.
 	EnterMinusExpr(c *MinusExprContext)
 
+	// EnterInclude is called when entering the include production.
+	EnterInclude(c *IncludeContext)
+
+	// EnterFunction is called when entering the function production.
+	EnterFunction(c *FunctionContext)
+
+	// EnterStruct is called when entering the struct production.
+	EnterStruct(c *StructContext)
+
+	// EnterGlobal is called when entering the global production.
+	EnterGlobal(c *GlobalContext)
+
+	// EnterField is called when entering the field production.
+	EnterField(c *FieldContext)
+
+	// EnterType is called when entering the type production.
+	EnterType(c *TypeContext)
+
+	// EnterParams is called when entering the params production.
+	EnterParams(c *ParamsContext)
+
+	// EnterParam is called when entering the param production.
+	EnterParam(c *ParamContext)
+
 	// EnterValue_access_expr is called when entering the value_access_expr production.
 	EnterValue_access_expr(c *Value_access_exprContext)
 
@@ -199,9 +202,6 @@ type CListener interface {
 	// EnterForIter is called when entering the forIter production.
 	EnterForIter(c *ForIterContext)
 
-	// EnterGlobal is called when entering the global production.
-	EnterGlobal(c *GlobalContext)
-
 	// EnterDeclaration is called when entering the declaration production.
 	EnterDeclaration(c *DeclarationContext)
 
@@ -234,27 +234,6 @@ type CListener interface {
 
 	// ExitProgram is called when exiting the program production.
 	ExitProgram(c *ProgramContext)
-
-	// ExitInclude is called when exiting the include production.
-	ExitInclude(c *IncludeContext)
-
-	// ExitFunction is called when exiting the function production.
-	ExitFunction(c *FunctionContext)
-
-	// ExitStruct is called when exiting the struct production.
-	ExitStruct(c *StructContext)
-
-	// ExitField is called when exiting the field production.
-	ExitField(c *FieldContext)
-
-	// ExitType is called when exiting the type production.
-	ExitType(c *TypeContext)
-
-	// ExitParams is called when exiting the params production.
-	ExitParams(c *ParamsContext)
-
-	// ExitParam is called when exiting the param production.
-	ExitParam(c *ParamContext)
 
 	// ExitDeclarationStmt is called when exiting the DeclarationStmt production.
 	ExitDeclarationStmt(c *DeclarationStmtContext)
@@ -376,6 +355,30 @@ type CListener interface {
 	// ExitMinusExpr is called when exiting the MinusExpr production.
 	ExitMinusExpr(c *MinusExprContext)
 
+	// ExitInclude is called when exiting the include production.
+	ExitInclude(c *IncludeContext)
+
+	// ExitFunction is called when exiting the function production.
+	ExitFunction(c *FunctionContext)
+
+	// ExitStruct is called when exiting the struct production.
+	ExitStruct(c *StructContext)
+
+	// ExitGlobal is called when exiting the global production.
+	ExitGlobal(c *GlobalContext)
+
+	// ExitField is called when exiting the field production.
+	ExitField(c *FieldContext)
+
+	// ExitType is called when exiting the type production.
+	ExitType(c *TypeContext)
+
+	// ExitParams is called when exiting the params production.
+	ExitParams(c *ParamsContext)
+
+	// ExitParam is called when exiting the param production.
+	ExitParam(c *ParamContext)
+
 	// ExitValue_access_expr is called when exiting the value_access_expr production.
 	ExitValue_access_expr(c *Value_access_exprContext)
 
@@ -423,9 +426,6 @@ type CListener interface {
 
 	// ExitForIter is called when exiting the forIter production.
 	ExitForIter(c *ForIterContext)
-
-	// ExitGlobal is called when exiting the global production.
-	ExitGlobal(c *GlobalContext)
 
 	// ExitDeclaration is called when exiting the declaration production.
 	ExitDeclaration(c *DeclarationContext)

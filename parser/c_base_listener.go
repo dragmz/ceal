@@ -26,48 +26,6 @@ func (s *BaseCListener) EnterProgram(ctx *ProgramContext) {}
 // ExitProgram is called when production program is exited.
 func (s *BaseCListener) ExitProgram(ctx *ProgramContext) {}
 
-// EnterInclude is called when production include is entered.
-func (s *BaseCListener) EnterInclude(ctx *IncludeContext) {}
-
-// ExitInclude is called when production include is exited.
-func (s *BaseCListener) ExitInclude(ctx *IncludeContext) {}
-
-// EnterFunction is called when production function is entered.
-func (s *BaseCListener) EnterFunction(ctx *FunctionContext) {}
-
-// ExitFunction is called when production function is exited.
-func (s *BaseCListener) ExitFunction(ctx *FunctionContext) {}
-
-// EnterStruct is called when production struct is entered.
-func (s *BaseCListener) EnterStruct(ctx *StructContext) {}
-
-// ExitStruct is called when production struct is exited.
-func (s *BaseCListener) ExitStruct(ctx *StructContext) {}
-
-// EnterField is called when production field is entered.
-func (s *BaseCListener) EnterField(ctx *FieldContext) {}
-
-// ExitField is called when production field is exited.
-func (s *BaseCListener) ExitField(ctx *FieldContext) {}
-
-// EnterType is called when production type is entered.
-func (s *BaseCListener) EnterType(ctx *TypeContext) {}
-
-// ExitType is called when production type is exited.
-func (s *BaseCListener) ExitType(ctx *TypeContext) {}
-
-// EnterParams is called when production params is entered.
-func (s *BaseCListener) EnterParams(ctx *ParamsContext) {}
-
-// ExitParams is called when production params is exited.
-func (s *BaseCListener) ExitParams(ctx *ParamsContext) {}
-
-// EnterParam is called when production param is entered.
-func (s *BaseCListener) EnterParam(ctx *ParamContext) {}
-
-// ExitParam is called when production param is exited.
-func (s *BaseCListener) ExitParam(ctx *ParamContext) {}
-
 // EnterDeclarationStmt is called when production DeclarationStmt is entered.
 func (s *BaseCListener) EnterDeclarationStmt(ctx *DeclarationStmtContext) {}
 
@@ -308,6 +266,54 @@ func (s *BaseCListener) EnterMinusExpr(ctx *MinusExprContext) {}
 // ExitMinusExpr is called when production MinusExpr is exited.
 func (s *BaseCListener) ExitMinusExpr(ctx *MinusExprContext) {}
 
+// EnterInclude is called when production include is entered.
+func (s *BaseCListener) EnterInclude(ctx *IncludeContext) {}
+
+// ExitInclude is called when production include is exited.
+func (s *BaseCListener) ExitInclude(ctx *IncludeContext) {}
+
+// EnterFunction is called when production function is entered.
+func (s *BaseCListener) EnterFunction(ctx *FunctionContext) {}
+
+// ExitFunction is called when production function is exited.
+func (s *BaseCListener) ExitFunction(ctx *FunctionContext) {}
+
+// EnterStruct is called when production struct is entered.
+func (s *BaseCListener) EnterStruct(ctx *StructContext) {}
+
+// ExitStruct is called when production struct is exited.
+func (s *BaseCListener) ExitStruct(ctx *StructContext) {}
+
+// EnterGlobal is called when production global is entered.
+func (s *BaseCListener) EnterGlobal(ctx *GlobalContext) {}
+
+// ExitGlobal is called when production global is exited.
+func (s *BaseCListener) ExitGlobal(ctx *GlobalContext) {}
+
+// EnterField is called when production field is entered.
+func (s *BaseCListener) EnterField(ctx *FieldContext) {}
+
+// ExitField is called when production field is exited.
+func (s *BaseCListener) ExitField(ctx *FieldContext) {}
+
+// EnterType is called when production type is entered.
+func (s *BaseCListener) EnterType(ctx *TypeContext) {}
+
+// ExitType is called when production type is exited.
+func (s *BaseCListener) ExitType(ctx *TypeContext) {}
+
+// EnterParams is called when production params is entered.
+func (s *BaseCListener) EnterParams(ctx *ParamsContext) {}
+
+// ExitParams is called when production params is exited.
+func (s *BaseCListener) ExitParams(ctx *ParamsContext) {}
+
+// EnterParam is called when production param is entered.
+func (s *BaseCListener) EnterParam(ctx *ParamContext) {}
+
+// ExitParam is called when production param is exited.
+func (s *BaseCListener) ExitParam(ctx *ParamContext) {}
+
 // EnterValue_access_expr is called when production value_access_expr is entered.
 func (s *BaseCListener) EnterValue_access_expr(ctx *Value_access_exprContext) {}
 
@@ -403,12 +409,6 @@ func (s *BaseCListener) EnterForIter(ctx *ForIterContext) {}
 
 // ExitForIter is called when production forIter is exited.
 func (s *BaseCListener) ExitForIter(ctx *ForIterContext) {}
-
-// EnterGlobal is called when production global is entered.
-func (s *BaseCListener) EnterGlobal(ctx *GlobalContext) {}
-
-// ExitGlobal is called when production global is exited.
-func (s *BaseCListener) ExitGlobal(ctx *GlobalContext) {}
 
 // EnterDeclaration is called when production declaration is entered.
 func (s *BaseCListener) EnterDeclaration(ctx *DeclarationContext) {}

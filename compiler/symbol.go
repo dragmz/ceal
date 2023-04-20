@@ -201,9 +201,10 @@ func (v *SymbolTableVisitor) VisitFunction(ctx *parser.FunctionContext) interfac
 		index++
 
 		vr := &Variable{
-			t:     pctx.Type_().ID().GetText(),
-			name:  id,
-			param: param,
+			constant: pctx.Type_().Const_() != nil,
+			t:        pctx.Type_().ID().GetText(),
+			name:     id,
+			param:    param,
 		}
 
 		v.initVariable(vr)

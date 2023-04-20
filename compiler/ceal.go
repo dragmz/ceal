@@ -292,8 +292,7 @@ type CealValue interface {
 }
 
 type CealPrefix struct {
-	D     dotData
-	Index CealAst
+	D valueData
 
 	Op string
 
@@ -328,13 +327,7 @@ func (a *CealPrefix) TealAst() teal.TealAst {
 
 	res := &teal.TealAstBuilder{}
 
-	var index teal.TealAst
-
-	if a.Index != nil {
-		index = a.Index.TealAst()
-	}
-
-	res.Write(a.D.Store(op, index))
+	res.Write(a.D.Store(op))
 
 	if !a.IsStmt {
 		res.Write(a.D.Load())
@@ -344,8 +337,7 @@ func (a *CealPrefix) TealAst() teal.TealAst {
 }
 
 type CealPostfix struct {
-	D     dotData
-	Index CealAst
+	D valueData
 
 	Op string
 
@@ -380,13 +372,7 @@ func (a *CealPostfix) TealAst() teal.TealAst {
 		panic(fmt.Sprintf("postfix operator not supported: '%s'", a.Op))
 	}
 
-	var index teal.TealAst
-
-	if a.Index != nil {
-		index = a.Index.TealAst()
-	}
-
-	return a.D.Store(op, index)
+	return a.D.Store(op)
 }
 
 type CealLabel struct {
@@ -410,7 +396,7 @@ func (a *CealGoto) TealAst() teal.TealAst {
 }
 
 type CealVariable struct {
-	D dotData
+	D valueData
 }
 
 func (a *CealVariable) TealAst() teal.TealAst {
@@ -472,8 +458,7 @@ func (a *CealUnaryOp) TealAst() teal.TealAst {
 }
 
 type CealAssignSumDiff struct {
-	D     dotData
-	Index CealAst
+	D     valueData
 	Value CealAst
 	Op    string
 
@@ -496,13 +481,7 @@ func (a *CealAssignSumDiff) TealAst() teal.TealAst {
 		op = &teal.Teal_dup{STACK_1: op}
 	}
 
-	var index teal.TealAst
-
-	if a.Index != nil {
-		index = a.Index.TealAst()
-	}
-
-	ast := a.D.Store(op, index)
+	ast := a.D.Store(op)
 
 	return ast
 }
@@ -616,7 +595,7 @@ func (a *CealNegate) TealAst() teal.TealAst {
 }
 
 type CealDefine struct {
-	D dotData
+	D valueData
 
 	Value CealAst
 }
@@ -626,14 +605,13 @@ func (a *CealDefine) TealAst() teal.TealAst {
 		panic("defining complex variable is not supported yet")
 	}
 
-	ast := a.D.Store(a.Value.TealAst(), nil)
+	ast := a.D.Store(a.Value.TealAst())
 
 	return ast
 }
 
 type CealAssign struct {
-	D     dotData
-	Index CealAst
+	D valueData
 
 	Value CealAst
 
@@ -660,13 +638,7 @@ func (a *CealAssign) TealAst() teal.TealAst {
 		panic("cannot assign to built-in op")
 	}
 
-	var index teal.TealAst
-
-	if a.Index != nil {
-		index = a.Index.TealAst()
-	}
-
-	ast := a.D.Store(a.Value.TealAst(), index)
+	ast := a.D.Store(a.Value.TealAst())
 
 	res.Write(ast)
 
@@ -679,7 +651,7 @@ func (a *CealAssign) TealAst() teal.TealAst {
 }
 
 type CealStructField struct {
-	D dotData
+	D valueData
 }
 
 func (a *CealStructField) TealAst() teal.TealAst {
@@ -1055,9 +1027,7 @@ func (a *CealRaw) TealAst() teal.TealAst {
 }
 
 type CealSubscript struct {
-	D dotData
-
-	Index CealAst
+	D valueData
 }
 
 func (a *CealSubscript) TealAst() teal.TealAst {
@@ -1074,7 +1044,7 @@ func (a *CealSubscript) TealAst() teal.TealAst {
 	return &teal.Teal_extract3{
 		Teal_extract3_op: teal.Teal_extract3_op{},
 		STACK_1:          value,
-		STACK_2:          a.Index.TealAst(),
+		STACK_2:          a.D.Index.TealAst(),
 		STACK_3:          &teal.Teal_int{V: 1},
 	}
 }

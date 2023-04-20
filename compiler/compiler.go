@@ -105,8 +105,6 @@ type Variable struct {
 	t    string
 	name string
 
-	readonly bool
-
 	local  *LocalVariable
 	param  *ParameterVariable
 	const_ *ConstVariable

@@ -9,15 +9,6 @@ program:
         | struct ';'
     )* EOF;
 
-include: '#include' STRING;
-function: type ID '(' params ')' '{' stmt* '}';
-
-struct: 'struct' ID '{' field* '}';
-field: type ID ';';
-
-type: const? ID;
-params: (param (',' param)*)?;
-param: type ID;
 stmt:
     declaration ';'                                                 # DeclarationStmt
     | definition ';'                                                # DefinitionStmt
@@ -64,6 +55,14 @@ expr:
     | '(' expr ')'              # GroupExpr
     ;
 
+include: '#include' STRING;
+function: type ID '(' params ')' '{' stmt* '}';
+struct: 'struct' ID '{' field* '}';
+global: type ID '=' constant;
+field: type ID ';';
+type: const? ID;
+params: (param (',' param)*)?;
+param: type ID;
 value_access_expr: (dot_expr | subscript_expr);
 pre_incdec_expr: incdec value_access_expr;
 post_incdec_expr: value_access_expr incdec;
@@ -77,27 +76,15 @@ asd_expr: value_access_expr asd expr;
 asd: '+=' | '-=';
 case: 'case' expr ':' stmt*;
 default: 'default' ':' stmt*;
-
-forInit:
-    definition
-    | expr*
-    ;
-
-forCondition:
-    expr
-    ;
-
-forIter:
-    expr (',' expr)*
-    ;
-
-global: type ID '=' constant;
+forInit: definition | expr*;
+forCondition: expr ;
+forIter: expr (',' expr)*;
 declaration: type ID;
 definition: type ID '=' expr;
 elseif: 'else if' '(' expr ')' (('{' stmt* '}') | stmt);
 else: 'else' (('{' stmt* '}') | stmt);
 args: (expr (',' expr)*)?;
-call_expr: ID ('.' ID)* '(' args ')';
+call_expr: value_access_expr '(' args ')';
 muldiv: '*' | '/' | '%';
 addsub: ('+' | '-');
 eqneq: ('==' | '!=' | '<' | '>' | '<=' | '>=');

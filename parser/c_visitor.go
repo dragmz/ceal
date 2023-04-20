@@ -10,27 +10,6 @@ type CVisitor interface {
 	// Visit a parse tree produced by CParser#program.
 	VisitProgram(ctx *ProgramContext) interface{}
 
-	// Visit a parse tree produced by CParser#include.
-	VisitInclude(ctx *IncludeContext) interface{}
-
-	// Visit a parse tree produced by CParser#function.
-	VisitFunction(ctx *FunctionContext) interface{}
-
-	// Visit a parse tree produced by CParser#struct.
-	VisitStruct(ctx *StructContext) interface{}
-
-	// Visit a parse tree produced by CParser#field.
-	VisitField(ctx *FieldContext) interface{}
-
-	// Visit a parse tree produced by CParser#type.
-	VisitType(ctx *TypeContext) interface{}
-
-	// Visit a parse tree produced by CParser#params.
-	VisitParams(ctx *ParamsContext) interface{}
-
-	// Visit a parse tree produced by CParser#param.
-	VisitParam(ctx *ParamContext) interface{}
-
 	// Visit a parse tree produced by CParser#DeclarationStmt.
 	VisitDeclarationStmt(ctx *DeclarationStmtContext) interface{}
 
@@ -151,6 +130,30 @@ type CVisitor interface {
 	// Visit a parse tree produced by CParser#MinusExpr.
 	VisitMinusExpr(ctx *MinusExprContext) interface{}
 
+	// Visit a parse tree produced by CParser#include.
+	VisitInclude(ctx *IncludeContext) interface{}
+
+	// Visit a parse tree produced by CParser#function.
+	VisitFunction(ctx *FunctionContext) interface{}
+
+	// Visit a parse tree produced by CParser#struct.
+	VisitStruct(ctx *StructContext) interface{}
+
+	// Visit a parse tree produced by CParser#global.
+	VisitGlobal(ctx *GlobalContext) interface{}
+
+	// Visit a parse tree produced by CParser#field.
+	VisitField(ctx *FieldContext) interface{}
+
+	// Visit a parse tree produced by CParser#type.
+	VisitType(ctx *TypeContext) interface{}
+
+	// Visit a parse tree produced by CParser#params.
+	VisitParams(ctx *ParamsContext) interface{}
+
+	// Visit a parse tree produced by CParser#param.
+	VisitParam(ctx *ParamContext) interface{}
+
 	// Visit a parse tree produced by CParser#value_access_expr.
 	VisitValue_access_expr(ctx *Value_access_exprContext) interface{}
 
@@ -198,9 +201,6 @@ type CVisitor interface {
 
 	// Visit a parse tree produced by CParser#forIter.
 	VisitForIter(ctx *ForIterContext) interface{}
-
-	// Visit a parse tree produced by CParser#global.
-	VisitGlobal(ctx *GlobalContext) interface{}
 
 	// Visit a parse tree produced by CParser#declaration.
 	VisitDeclaration(ctx *DeclarationContext) interface{}

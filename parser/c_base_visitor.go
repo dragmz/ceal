@@ -11,34 +11,6 @@ func (v *BaseCVisitor) VisitProgram(ctx *ProgramContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseCVisitor) VisitInclude(ctx *IncludeContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseCVisitor) VisitFunction(ctx *FunctionContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseCVisitor) VisitStruct(ctx *StructContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseCVisitor) VisitField(ctx *FieldContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseCVisitor) VisitType(ctx *TypeContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseCVisitor) VisitParams(ctx *ParamsContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseCVisitor) VisitParam(ctx *ParamContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BaseCVisitor) VisitDeclarationStmt(ctx *DeclarationStmtContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -199,6 +171,38 @@ func (v *BaseCVisitor) VisitMinusExpr(ctx *MinusExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
+func (v *BaseCVisitor) VisitInclude(ctx *IncludeContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitFunction(ctx *FunctionContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitStruct(ctx *StructContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitGlobal(ctx *GlobalContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitField(ctx *FieldContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitType(ctx *TypeContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitParams(ctx *ParamsContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
+func (v *BaseCVisitor) VisitParam(ctx *ParamContext) interface{} {
+	return v.VisitChildren(ctx)
+}
+
 func (v *BaseCVisitor) VisitValue_access_expr(ctx *Value_access_exprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
@@ -260,10 +264,6 @@ func (v *BaseCVisitor) VisitForCondition(ctx *ForConditionContext) interface{} {
 }
 
 func (v *BaseCVisitor) VisitForIter(ctx *ForIterContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
-func (v *BaseCVisitor) VisitGlobal(ctx *GlobalContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
