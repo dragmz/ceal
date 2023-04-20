@@ -32,6 +32,12 @@ type CompilerFunction struct {
 	handler    func(args []CealAst) teal.TealAst
 }
 
+type StructFunction struct {
+	t    string
+	name string
+	f    *Function
+}
+
 type Function struct {
 	t    string
 	name string
@@ -56,12 +62,12 @@ type Struct struct {
 	fields      map[string]*StructField
 	fieldsNames []string
 
-	functions map[string]*Function
+	functions map[string]*StructFunction
 
 	builtin *BuiltinStruct
 }
 
-func (s *Struct) registerFunction(f *Function) {
+func (s *Struct) registerFunction(f *StructFunction) {
 	if _, ok := s.functions[f.name]; ok {
 		panic(fmt.Sprintf("function '%s' is already defined", f.name))
 	}
@@ -498,7 +504,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 		s := &Struct{
 			builtin:   &BuiltinStruct{},
 			fields:    map[string]*StructField{},
-			functions: map[string]*Function{},
+			functions: map[string]*StructFunction{},
 		}
 
 		for _, item := range item.fields {
@@ -512,21 +518,10 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 		for _, item := range item.functions {
 			bf := global.functions[item.fun]
 
-			f := &Function{
+			f := &StructFunction{
 				t:    item.t,
 				name: item.name,
-				builtin: &BuiltinFunction{
-					op: bf.builtin.op,
-				},
-			}
-
-			for _, item := range item.imms {
-				f.builtin.imm = append(f.builtin.imm, &FunctionParam{
-					t:     item.t,
-					name:  item.name,
-					array: item.array,
-					field: item.field,
-				})
+				f:    bf,
 			}
 
 			s.registerFunction(f)

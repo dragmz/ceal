@@ -2397,9 +2397,6 @@ type BuiltinStructFunctionData struct {
 	t    string
 	name string
 	fun  string
-
-	stacks []BuiltinStructFunctionParamData
-	imms   []BuiltinStructFunctionParamData
 }
 
 type BuiltinStructData struct {
@@ -2410,20 +2407,28 @@ type BuiltinStructData struct {
 
 var builtin_structs = []BuiltinStructData{
 	{
-		name: "avm_ecdsa_verify_t",
-		fields: []BuiltinStructFieldData{
-			{t: "void", name: "Secp256k1", fun: "avm_ecdsa_verify"},
-			{t: "void", name: "Secp256r1", fun: "avm_ecdsa_verify"},
+		name:   "avm_ecdsa_verify_t",
+		fields: []BuiltinStructFieldData{},
+		functions: []BuiltinStructFunctionData{
+			{
+				t: "void", name: "Secp256k1", fun: "avm_ecdsa_verify",
+			},
+			{
+				t: "void", name: "Secp256r1", fun: "avm_ecdsa_verify",
+			},
 		},
-		functions: []BuiltinStructFunctionData{},
 	},
 	{
-		name: "avm_ecdsa_pk_decompress_t",
-		fields: []BuiltinStructFieldData{
-			{t: "void", name: "Secp256k1", fun: "avm_ecdsa_pk_decompress"},
-			{t: "void", name: "Secp256r1", fun: "avm_ecdsa_pk_decompress"},
+		name:   "avm_ecdsa_pk_decompress_t",
+		fields: []BuiltinStructFieldData{},
+		functions: []BuiltinStructFunctionData{
+			{
+				t: "void", name: "Secp256k1", fun: "avm_ecdsa_pk_decompress",
+			},
+			{
+				t: "void", name: "Secp256r1", fun: "avm_ecdsa_pk_decompress",
+			},
 		},
-		functions: []BuiltinStructFunctionData{},
 	},
 	{
 		name: "avm_ecdsa_pk_decompress_result_t",
@@ -2434,12 +2439,16 @@ var builtin_structs = []BuiltinStructData{
 		functions: []BuiltinStructFunctionData{},
 	},
 	{
-		name: "avm_ecdsa_pk_recover_t",
-		fields: []BuiltinStructFieldData{
-			{t: "void", name: "Secp256k1", fun: "avm_ecdsa_pk_recover"},
-			{t: "void", name: "Secp256r1", fun: "avm_ecdsa_pk_recover"},
+		name:   "avm_ecdsa_pk_recover_t",
+		fields: []BuiltinStructFieldData{},
+		functions: []BuiltinStructFunctionData{
+			{
+				t: "void", name: "Secp256k1", fun: "avm_ecdsa_pk_recover",
+			},
+			{
+				t: "void", name: "Secp256r1", fun: "avm_ecdsa_pk_recover",
+			},
 		},
-		functions: []BuiltinStructFunctionData{},
 	},
 	{
 		name: "avm_ecdsa_pk_recover_result_t",
@@ -2576,547 +2585,207 @@ var builtin_structs = []BuiltinStructData{
 		functions: []BuiltinStructFunctionData{
 			{
 				t: "addr_t", name: "Sender", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "Fee", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "FirstValid", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "FirstValidTime", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "LastValid", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "Note", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r32_byte_t", name: "Lease", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "Receiver", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "Amount", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "CloseRemainderTo", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r32_byte_t", name: "VotePK", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r32_byte_t", name: "SelectionPK", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "VoteFirst", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "VoteLast", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "VoteKeyDilution", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "Type", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "TypeEnum", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "XferAsset", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "AssetAmount", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "AssetSender", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "AssetReceiver", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "AssetCloseTo", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "GroupIndex", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r32_byte_t", name: "TxID", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "ApplicationID", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "OnCompletion", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ApplicationArgs", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "NumAppArgs", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "Accounts", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "NumAccounts", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ApprovalProgram", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ClearStateProgram", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "RekeyTo", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "ConfigAsset", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "ConfigAssetTotal", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "ConfigAssetDecimals", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "bool_t", name: "ConfigAssetDefaultFrozen", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ConfigAssetUnitName", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ConfigAssetName", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ConfigAssetURL", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r32_byte_t", name: "ConfigAssetMetadataHash", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "ConfigAssetManager", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "ConfigAssetReserve", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "ConfigAssetFreeze", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "ConfigAssetClawback", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "FreezeAsset", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "FreezeAssetAccount", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "bool_t", name: "FreezeAssetFrozen", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "Assets", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "NumAssets", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "Applications", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "NumApplications", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "GlobalNumUint", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "GlobalNumByteSlice", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "LocalNumUint", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "LocalNumByteSlice", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "ExtraProgramPages", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "bool_t", name: "Nonparticipation", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "Logs", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "NumLogs", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "CreatedAssetID", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "CreatedApplicationID", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "LastLog", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "StateProofPK", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ApprovalProgramPages", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "NumApprovalProgramPages", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ClearStateProgramPages", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "NumClearStateProgramPages", fun: "avm_gtxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 		},
 	},
@@ -3126,59 +2795,24 @@ var builtin_structs = []BuiltinStructData{
 		functions: []BuiltinStructFunctionData{
 			{
 				t: "r_byte_t", name: "ApplicationArgs", fun: "avm_txna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "F1", array: false, field: true},
-					{t: "uint8", name: "I2", array: false, field: false},
-				},
 			},
 			{
 				t: "addr_t", name: "Accounts", fun: "avm_txna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "F1", array: false, field: true},
-					{t: "uint8", name: "I2", array: false, field: false},
-				},
 			},
 			{
 				t: "uint64_t", name: "Assets", fun: "avm_txna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "F1", array: false, field: true},
-					{t: "uint8", name: "I2", array: false, field: false},
-				},
 			},
 			{
 				t: "uint64_t", name: "Applications", fun: "avm_txna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "F1", array: false, field: true},
-					{t: "uint8", name: "I2", array: false, field: false},
-				},
 			},
 			{
 				t: "r_byte_t", name: "Logs", fun: "avm_txna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "F1", array: false, field: true},
-					{t: "uint8", name: "I2", array: false, field: false},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ApprovalProgramPages", fun: "avm_txna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "F1", array: false, field: true},
-					{t: "uint8", name: "I2", array: false, field: false},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ClearStateProgramPages", fun: "avm_txna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "F1", array: false, field: true},
-					{t: "uint8", name: "I2", array: false, field: false},
-				},
 			},
 		},
 	},
@@ -3188,142 +2822,236 @@ var builtin_structs = []BuiltinStructData{
 		functions: []BuiltinStructFunctionData{
 			{
 				t: "r_byte_t", name: "ApplicationArgs", fun: "avm_gtxna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-					{t: "uint8", name: "I3", array: false, field: false},
-				},
 			},
 			{
 				t: "addr_t", name: "Accounts", fun: "avm_gtxna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-					{t: "uint8", name: "I3", array: false, field: false},
-				},
 			},
 			{
 				t: "uint64_t", name: "Assets", fun: "avm_gtxna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-					{t: "uint8", name: "I3", array: false, field: false},
-				},
 			},
 			{
 				t: "uint64_t", name: "Applications", fun: "avm_gtxna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-					{t: "uint8", name: "I3", array: false, field: false},
-				},
 			},
 			{
 				t: "r_byte_t", name: "Logs", fun: "avm_gtxna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-					{t: "uint8", name: "I3", array: false, field: false},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ApprovalProgramPages", fun: "avm_gtxna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-					{t: "uint8", name: "I3", array: false, field: false},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ClearStateProgramPages", fun: "avm_gtxna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-					{t: "uint8", name: "I3", array: false, field: false},
-				},
 			},
 		},
 	},
 	{
-		name: "avm_gtxns_t",
-		fields: []BuiltinStructFieldData{
-			{t: "addr_t", name: "Sender", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "Fee", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "FirstValid", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "FirstValidTime", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "LastValid", fun: "avm_gtxns"},
-			{t: "r_byte_t", name: "Note", fun: "avm_gtxns"},
-			{t: "r32_byte_t", name: "Lease", fun: "avm_gtxns"},
-			{t: "addr_t", name: "Receiver", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "Amount", fun: "avm_gtxns"},
-			{t: "addr_t", name: "CloseRemainderTo", fun: "avm_gtxns"},
-			{t: "r32_byte_t", name: "VotePK", fun: "avm_gtxns"},
-			{t: "r32_byte_t", name: "SelectionPK", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "VoteFirst", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "VoteLast", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "VoteKeyDilution", fun: "avm_gtxns"},
-			{t: "r_byte_t", name: "Type", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "TypeEnum", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "XferAsset", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "AssetAmount", fun: "avm_gtxns"},
-			{t: "addr_t", name: "AssetSender", fun: "avm_gtxns"},
-			{t: "addr_t", name: "AssetReceiver", fun: "avm_gtxns"},
-			{t: "addr_t", name: "AssetCloseTo", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "GroupIndex", fun: "avm_gtxns"},
-			{t: "r32_byte_t", name: "TxID", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "ApplicationID", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "OnCompletion", fun: "avm_gtxns"},
-			{t: "r_byte_t", name: "ApplicationArgs", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "NumAppArgs", fun: "avm_gtxns"},
-			{t: "addr_t", name: "Accounts", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "NumAccounts", fun: "avm_gtxns"},
-			{t: "r_byte_t", name: "ApprovalProgram", fun: "avm_gtxns"},
-			{t: "r_byte_t", name: "ClearStateProgram", fun: "avm_gtxns"},
-			{t: "addr_t", name: "RekeyTo", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "ConfigAsset", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "ConfigAssetTotal", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "ConfigAssetDecimals", fun: "avm_gtxns"},
-			{t: "bool_t", name: "ConfigAssetDefaultFrozen", fun: "avm_gtxns"},
-			{t: "r_byte_t", name: "ConfigAssetUnitName", fun: "avm_gtxns"},
-			{t: "r_byte_t", name: "ConfigAssetName", fun: "avm_gtxns"},
-			{t: "r_byte_t", name: "ConfigAssetURL", fun: "avm_gtxns"},
-			{t: "r32_byte_t", name: "ConfigAssetMetadataHash", fun: "avm_gtxns"},
-			{t: "addr_t", name: "ConfigAssetManager", fun: "avm_gtxns"},
-			{t: "addr_t", name: "ConfigAssetReserve", fun: "avm_gtxns"},
-			{t: "addr_t", name: "ConfigAssetFreeze", fun: "avm_gtxns"},
-			{t: "addr_t", name: "ConfigAssetClawback", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "FreezeAsset", fun: "avm_gtxns"},
-			{t: "addr_t", name: "FreezeAssetAccount", fun: "avm_gtxns"},
-			{t: "bool_t", name: "FreezeAssetFrozen", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "Assets", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "NumAssets", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "Applications", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "NumApplications", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "GlobalNumUint", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "GlobalNumByteSlice", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "LocalNumUint", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "LocalNumByteSlice", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "ExtraProgramPages", fun: "avm_gtxns"},
-			{t: "bool_t", name: "Nonparticipation", fun: "avm_gtxns"},
-			{t: "r_byte_t", name: "Logs", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "NumLogs", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "CreatedAssetID", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "CreatedApplicationID", fun: "avm_gtxns"},
-			{t: "r_byte_t", name: "LastLog", fun: "avm_gtxns"},
-			{t: "r_byte_t", name: "StateProofPK", fun: "avm_gtxns"},
-			{t: "r_byte_t", name: "ApprovalProgramPages", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "NumApprovalProgramPages", fun: "avm_gtxns"},
-			{t: "r_byte_t", name: "ClearStateProgramPages", fun: "avm_gtxns"},
-			{t: "uint64_t", name: "NumClearStateProgramPages", fun: "avm_gtxns"},
+		name:   "avm_gtxns_t",
+		fields: []BuiltinStructFieldData{},
+		functions: []BuiltinStructFunctionData{
+			{
+				t: "addr_t", name: "Sender", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "Fee", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "FirstValid", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "FirstValidTime", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "LastValid", fun: "avm_gtxns",
+			},
+			{
+				t: "r_byte_t", name: "Note", fun: "avm_gtxns",
+			},
+			{
+				t: "r32_byte_t", name: "Lease", fun: "avm_gtxns",
+			},
+			{
+				t: "addr_t", name: "Receiver", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "Amount", fun: "avm_gtxns",
+			},
+			{
+				t: "addr_t", name: "CloseRemainderTo", fun: "avm_gtxns",
+			},
+			{
+				t: "r32_byte_t", name: "VotePK", fun: "avm_gtxns",
+			},
+			{
+				t: "r32_byte_t", name: "SelectionPK", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "VoteFirst", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "VoteLast", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "VoteKeyDilution", fun: "avm_gtxns",
+			},
+			{
+				t: "r_byte_t", name: "Type", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "TypeEnum", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "XferAsset", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "AssetAmount", fun: "avm_gtxns",
+			},
+			{
+				t: "addr_t", name: "AssetSender", fun: "avm_gtxns",
+			},
+			{
+				t: "addr_t", name: "AssetReceiver", fun: "avm_gtxns",
+			},
+			{
+				t: "addr_t", name: "AssetCloseTo", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "GroupIndex", fun: "avm_gtxns",
+			},
+			{
+				t: "r32_byte_t", name: "TxID", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "ApplicationID", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "OnCompletion", fun: "avm_gtxns",
+			},
+			{
+				t: "r_byte_t", name: "ApplicationArgs", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "NumAppArgs", fun: "avm_gtxns",
+			},
+			{
+				t: "addr_t", name: "Accounts", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "NumAccounts", fun: "avm_gtxns",
+			},
+			{
+				t: "r_byte_t", name: "ApprovalProgram", fun: "avm_gtxns",
+			},
+			{
+				t: "r_byte_t", name: "ClearStateProgram", fun: "avm_gtxns",
+			},
+			{
+				t: "addr_t", name: "RekeyTo", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "ConfigAsset", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "ConfigAssetTotal", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "ConfigAssetDecimals", fun: "avm_gtxns",
+			},
+			{
+				t: "bool_t", name: "ConfigAssetDefaultFrozen", fun: "avm_gtxns",
+			},
+			{
+				t: "r_byte_t", name: "ConfigAssetUnitName", fun: "avm_gtxns",
+			},
+			{
+				t: "r_byte_t", name: "ConfigAssetName", fun: "avm_gtxns",
+			},
+			{
+				t: "r_byte_t", name: "ConfigAssetURL", fun: "avm_gtxns",
+			},
+			{
+				t: "r32_byte_t", name: "ConfigAssetMetadataHash", fun: "avm_gtxns",
+			},
+			{
+				t: "addr_t", name: "ConfigAssetManager", fun: "avm_gtxns",
+			},
+			{
+				t: "addr_t", name: "ConfigAssetReserve", fun: "avm_gtxns",
+			},
+			{
+				t: "addr_t", name: "ConfigAssetFreeze", fun: "avm_gtxns",
+			},
+			{
+				t: "addr_t", name: "ConfigAssetClawback", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "FreezeAsset", fun: "avm_gtxns",
+			},
+			{
+				t: "addr_t", name: "FreezeAssetAccount", fun: "avm_gtxns",
+			},
+			{
+				t: "bool_t", name: "FreezeAssetFrozen", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "Assets", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "NumAssets", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "Applications", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "NumApplications", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "GlobalNumUint", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "GlobalNumByteSlice", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "LocalNumUint", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "LocalNumByteSlice", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "ExtraProgramPages", fun: "avm_gtxns",
+			},
+			{
+				t: "bool_t", name: "Nonparticipation", fun: "avm_gtxns",
+			},
+			{
+				t: "r_byte_t", name: "Logs", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "NumLogs", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "CreatedAssetID", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "CreatedApplicationID", fun: "avm_gtxns",
+			},
+			{
+				t: "r_byte_t", name: "LastLog", fun: "avm_gtxns",
+			},
+			{
+				t: "r_byte_t", name: "StateProofPK", fun: "avm_gtxns",
+			},
+			{
+				t: "r_byte_t", name: "ApprovalProgramPages", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "NumApprovalProgramPages", fun: "avm_gtxns",
+			},
+			{
+				t: "r_byte_t", name: "ClearStateProgramPages", fun: "avm_gtxns",
+			},
+			{
+				t: "uint64_t", name: "NumClearStateProgramPages", fun: "avm_gtxns",
+			},
 		},
-		functions: []BuiltinStructFunctionData{},
 	},
 	{
 		name:   "avm_gtxnsa_t",
@@ -3331,73 +3059,24 @@ var builtin_structs = []BuiltinStructData{
 		functions: []BuiltinStructFunctionData{
 			{
 				t: "r_byte_t", name: "ApplicationArgs", fun: "avm_gtxnsa",
-				stacks: []BuiltinStructFunctionParamData{
-					{t: "uint64_t", name: "STACK_1", array: false, field: false},
-				},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "F1", array: false, field: true},
-					{t: "uint8", name: "I2", array: false, field: false},
-				},
 			},
 			{
 				t: "addr_t", name: "Accounts", fun: "avm_gtxnsa",
-				stacks: []BuiltinStructFunctionParamData{
-					{t: "uint64_t", name: "STACK_1", array: false, field: false},
-				},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "F1", array: false, field: true},
-					{t: "uint8", name: "I2", array: false, field: false},
-				},
 			},
 			{
 				t: "uint64_t", name: "Assets", fun: "avm_gtxnsa",
-				stacks: []BuiltinStructFunctionParamData{
-					{t: "uint64_t", name: "STACK_1", array: false, field: false},
-				},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "F1", array: false, field: true},
-					{t: "uint8", name: "I2", array: false, field: false},
-				},
 			},
 			{
 				t: "uint64_t", name: "Applications", fun: "avm_gtxnsa",
-				stacks: []BuiltinStructFunctionParamData{
-					{t: "uint64_t", name: "STACK_1", array: false, field: false},
-				},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "F1", array: false, field: true},
-					{t: "uint8", name: "I2", array: false, field: false},
-				},
 			},
 			{
 				t: "r_byte_t", name: "Logs", fun: "avm_gtxnsa",
-				stacks: []BuiltinStructFunctionParamData{
-					{t: "uint64_t", name: "STACK_1", array: false, field: false},
-				},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "F1", array: false, field: true},
-					{t: "uint8", name: "I2", array: false, field: false},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ApprovalProgramPages", fun: "avm_gtxnsa",
-				stacks: []BuiltinStructFunctionParamData{
-					{t: "uint64_t", name: "STACK_1", array: false, field: false},
-				},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "F1", array: false, field: true},
-					{t: "uint8", name: "I2", array: false, field: false},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ClearStateProgramPages", fun: "avm_gtxnsa",
-				stacks: []BuiltinStructFunctionParamData{
-					{t: "uint64_t", name: "STACK_1", array: false, field: false},
-				},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "F1", array: false, field: true},
-					{t: "uint8", name: "I2", array: false, field: false},
-				},
 			},
 		},
 	},
@@ -3436,21 +3115,31 @@ var builtin_structs = []BuiltinStructData{
 		functions: []BuiltinStructFunctionData{},
 	},
 	{
-		name: "avm_base64_decode_t",
-		fields: []BuiltinStructFieldData{
-			{t: "any_t", name: "URLEncoding", fun: "avm_base64_decode"},
-			{t: "any_t", name: "StdEncoding", fun: "avm_base64_decode"},
+		name:   "avm_base64_decode_t",
+		fields: []BuiltinStructFieldData{},
+		functions: []BuiltinStructFunctionData{
+			{
+				t: "any_t", name: "URLEncoding", fun: "avm_base64_decode",
+			},
+			{
+				t: "any_t", name: "StdEncoding", fun: "avm_base64_decode",
+			},
 		},
-		functions: []BuiltinStructFunctionData{},
 	},
 	{
-		name: "avm_json_ref_t",
-		fields: []BuiltinStructFieldData{
-			{t: "r_byte_t", name: "JSONString", fun: "avm_json_ref"},
-			{t: "uint64_t", name: "JSONUint64", fun: "avm_json_ref"},
-			{t: "r_byte_t", name: "JSONObject", fun: "avm_json_ref"},
+		name:   "avm_json_ref_t",
+		fields: []BuiltinStructFieldData{},
+		functions: []BuiltinStructFunctionData{
+			{
+				t: "r_byte_t", name: "JSONString", fun: "avm_json_ref",
+			},
+			{
+				t: "uint64_t", name: "JSONUint64", fun: "avm_json_ref",
+			},
+			{
+				t: "r_byte_t", name: "JSONObject", fun: "avm_json_ref",
+			},
 		},
-		functions: []BuiltinStructFunctionData{},
 	},
 	{
 		name: "avm_app_local_get_ex_result_t",
@@ -3469,12 +3158,16 @@ var builtin_structs = []BuiltinStructData{
 		functions: []BuiltinStructFunctionData{},
 	},
 	{
-		name: "avm_asset_holding_get_t",
-		fields: []BuiltinStructFieldData{
-			{t: "uint64_t", name: "AssetBalance", fun: "avm_asset_holding_get"},
-			{t: "bool_t", name: "AssetFrozen", fun: "avm_asset_holding_get"},
+		name:   "avm_asset_holding_get_t",
+		fields: []BuiltinStructFieldData{},
+		functions: []BuiltinStructFunctionData{
+			{
+				t: "uint64_t", name: "AssetBalance", fun: "avm_asset_holding_get",
+			},
+			{
+				t: "bool_t", name: "AssetFrozen", fun: "avm_asset_holding_get",
+			},
 		},
-		functions: []BuiltinStructFunctionData{},
 	},
 	{
 		name: "avm_asset_holding_get_result_t",
@@ -3485,22 +3178,46 @@ var builtin_structs = []BuiltinStructData{
 		functions: []BuiltinStructFunctionData{},
 	},
 	{
-		name: "avm_asset_params_get_t",
-		fields: []BuiltinStructFieldData{
-			{t: "uint64_t", name: "AssetTotal", fun: "avm_asset_params_get"},
-			{t: "uint64_t", name: "AssetDecimals", fun: "avm_asset_params_get"},
-			{t: "bool_t", name: "AssetDefaultFrozen", fun: "avm_asset_params_get"},
-			{t: "r_byte_t", name: "AssetUnitName", fun: "avm_asset_params_get"},
-			{t: "r_byte_t", name: "AssetName", fun: "avm_asset_params_get"},
-			{t: "r_byte_t", name: "AssetURL", fun: "avm_asset_params_get"},
-			{t: "r32_byte_t", name: "AssetMetadataHash", fun: "avm_asset_params_get"},
-			{t: "addr_t", name: "AssetManager", fun: "avm_asset_params_get"},
-			{t: "addr_t", name: "AssetReserve", fun: "avm_asset_params_get"},
-			{t: "addr_t", name: "AssetFreeze", fun: "avm_asset_params_get"},
-			{t: "addr_t", name: "AssetClawback", fun: "avm_asset_params_get"},
-			{t: "addr_t", name: "AssetCreator", fun: "avm_asset_params_get"},
+		name:   "avm_asset_params_get_t",
+		fields: []BuiltinStructFieldData{},
+		functions: []BuiltinStructFunctionData{
+			{
+				t: "uint64_t", name: "AssetTotal", fun: "avm_asset_params_get",
+			},
+			{
+				t: "uint64_t", name: "AssetDecimals", fun: "avm_asset_params_get",
+			},
+			{
+				t: "bool_t", name: "AssetDefaultFrozen", fun: "avm_asset_params_get",
+			},
+			{
+				t: "r_byte_t", name: "AssetUnitName", fun: "avm_asset_params_get",
+			},
+			{
+				t: "r_byte_t", name: "AssetName", fun: "avm_asset_params_get",
+			},
+			{
+				t: "r_byte_t", name: "AssetURL", fun: "avm_asset_params_get",
+			},
+			{
+				t: "r32_byte_t", name: "AssetMetadataHash", fun: "avm_asset_params_get",
+			},
+			{
+				t: "addr_t", name: "AssetManager", fun: "avm_asset_params_get",
+			},
+			{
+				t: "addr_t", name: "AssetReserve", fun: "avm_asset_params_get",
+			},
+			{
+				t: "addr_t", name: "AssetFreeze", fun: "avm_asset_params_get",
+			},
+			{
+				t: "addr_t", name: "AssetClawback", fun: "avm_asset_params_get",
+			},
+			{
+				t: "addr_t", name: "AssetCreator", fun: "avm_asset_params_get",
+			},
 		},
-		functions: []BuiltinStructFunctionData{},
 	},
 	{
 		name: "avm_asset_params_get_result_t",
@@ -3511,19 +3228,37 @@ var builtin_structs = []BuiltinStructData{
 		functions: []BuiltinStructFunctionData{},
 	},
 	{
-		name: "avm_app_params_get_t",
-		fields: []BuiltinStructFieldData{
-			{t: "r_byte_t", name: "AppApprovalProgram", fun: "avm_app_params_get"},
-			{t: "r_byte_t", name: "AppClearStateProgram", fun: "avm_app_params_get"},
-			{t: "uint64_t", name: "AppGlobalNumUint", fun: "avm_app_params_get"},
-			{t: "uint64_t", name: "AppGlobalNumByteSlice", fun: "avm_app_params_get"},
-			{t: "uint64_t", name: "AppLocalNumUint", fun: "avm_app_params_get"},
-			{t: "uint64_t", name: "AppLocalNumByteSlice", fun: "avm_app_params_get"},
-			{t: "uint64_t", name: "AppExtraProgramPages", fun: "avm_app_params_get"},
-			{t: "addr_t", name: "AppCreator", fun: "avm_app_params_get"},
-			{t: "addr_t", name: "AppAddress", fun: "avm_app_params_get"},
+		name:   "avm_app_params_get_t",
+		fields: []BuiltinStructFieldData{},
+		functions: []BuiltinStructFunctionData{
+			{
+				t: "r_byte_t", name: "AppApprovalProgram", fun: "avm_app_params_get",
+			},
+			{
+				t: "r_byte_t", name: "AppClearStateProgram", fun: "avm_app_params_get",
+			},
+			{
+				t: "uint64_t", name: "AppGlobalNumUint", fun: "avm_app_params_get",
+			},
+			{
+				t: "uint64_t", name: "AppGlobalNumByteSlice", fun: "avm_app_params_get",
+			},
+			{
+				t: "uint64_t", name: "AppLocalNumUint", fun: "avm_app_params_get",
+			},
+			{
+				t: "uint64_t", name: "AppLocalNumByteSlice", fun: "avm_app_params_get",
+			},
+			{
+				t: "uint64_t", name: "AppExtraProgramPages", fun: "avm_app_params_get",
+			},
+			{
+				t: "addr_t", name: "AppCreator", fun: "avm_app_params_get",
+			},
+			{
+				t: "addr_t", name: "AppAddress", fun: "avm_app_params_get",
+			},
 		},
-		functions: []BuiltinStructFunctionData{},
 	},
 	{
 		name: "avm_app_params_get_result_t",
@@ -3534,22 +3269,46 @@ var builtin_structs = []BuiltinStructData{
 		functions: []BuiltinStructFunctionData{},
 	},
 	{
-		name: "avm_acct_params_get_t",
-		fields: []BuiltinStructFieldData{
-			{t: "uint64_t", name: "AcctBalance", fun: "avm_acct_params_get"},
-			{t: "uint64_t", name: "AcctMinBalance", fun: "avm_acct_params_get"},
-			{t: "addr_t", name: "AcctAuthAddr", fun: "avm_acct_params_get"},
-			{t: "uint64_t", name: "AcctTotalNumUint", fun: "avm_acct_params_get"},
-			{t: "uint64_t", name: "AcctTotalNumByteSlice", fun: "avm_acct_params_get"},
-			{t: "uint64_t", name: "AcctTotalExtraAppPages", fun: "avm_acct_params_get"},
-			{t: "uint64_t", name: "AcctTotalAppsCreated", fun: "avm_acct_params_get"},
-			{t: "uint64_t", name: "AcctTotalAppsOptedIn", fun: "avm_acct_params_get"},
-			{t: "uint64_t", name: "AcctTotalAssetsCreated", fun: "avm_acct_params_get"},
-			{t: "uint64_t", name: "AcctTotalAssets", fun: "avm_acct_params_get"},
-			{t: "uint64_t", name: "AcctTotalBoxes", fun: "avm_acct_params_get"},
-			{t: "uint64_t", name: "AcctTotalBoxBytes", fun: "avm_acct_params_get"},
+		name:   "avm_acct_params_get_t",
+		fields: []BuiltinStructFieldData{},
+		functions: []BuiltinStructFunctionData{
+			{
+				t: "uint64_t", name: "AcctBalance", fun: "avm_acct_params_get",
+			},
+			{
+				t: "uint64_t", name: "AcctMinBalance", fun: "avm_acct_params_get",
+			},
+			{
+				t: "addr_t", name: "AcctAuthAddr", fun: "avm_acct_params_get",
+			},
+			{
+				t: "uint64_t", name: "AcctTotalNumUint", fun: "avm_acct_params_get",
+			},
+			{
+				t: "uint64_t", name: "AcctTotalNumByteSlice", fun: "avm_acct_params_get",
+			},
+			{
+				t: "uint64_t", name: "AcctTotalExtraAppPages", fun: "avm_acct_params_get",
+			},
+			{
+				t: "uint64_t", name: "AcctTotalAppsCreated", fun: "avm_acct_params_get",
+			},
+			{
+				t: "uint64_t", name: "AcctTotalAppsOptedIn", fun: "avm_acct_params_get",
+			},
+			{
+				t: "uint64_t", name: "AcctTotalAssetsCreated", fun: "avm_acct_params_get",
+			},
+			{
+				t: "uint64_t", name: "AcctTotalAssets", fun: "avm_acct_params_get",
+			},
+			{
+				t: "uint64_t", name: "AcctTotalBoxes", fun: "avm_acct_params_get",
+			},
+			{
+				t: "uint64_t", name: "AcctTotalBoxBytes", fun: "avm_acct_params_get",
+			},
 		},
-		functions: []BuiltinStructFunctionData{},
 	},
 	{
 		name: "avm_acct_params_get_result_t",
@@ -3568,61 +3327,163 @@ var builtin_structs = []BuiltinStructData{
 		functions: []BuiltinStructFunctionData{},
 	},
 	{
-		name: "avm_itxn_field_t",
-		fields: []BuiltinStructFieldData{
-			{t: "addr_t", name: "Sender", fun: "avm_itxn_field"},
-			{t: "uint64_t", name: "Fee", fun: "avm_itxn_field"},
-			{t: "r_byte_t", name: "Note", fun: "avm_itxn_field"},
-			{t: "addr_t", name: "Receiver", fun: "avm_itxn_field"},
-			{t: "uint64_t", name: "Amount", fun: "avm_itxn_field"},
-			{t: "addr_t", name: "CloseRemainderTo", fun: "avm_itxn_field"},
-			{t: "r32_byte_t", name: "VotePK", fun: "avm_itxn_field"},
-			{t: "r32_byte_t", name: "SelectionPK", fun: "avm_itxn_field"},
-			{t: "uint64_t", name: "VoteFirst", fun: "avm_itxn_field"},
-			{t: "uint64_t", name: "VoteLast", fun: "avm_itxn_field"},
-			{t: "uint64_t", name: "VoteKeyDilution", fun: "avm_itxn_field"},
-			{t: "r_byte_t", name: "Type", fun: "avm_itxn_field"},
-			{t: "uint64_t", name: "TypeEnum", fun: "avm_itxn_field"},
-			{t: "uint64_t", name: "XferAsset", fun: "avm_itxn_field"},
-			{t: "uint64_t", name: "AssetAmount", fun: "avm_itxn_field"},
-			{t: "addr_t", name: "AssetSender", fun: "avm_itxn_field"},
-			{t: "addr_t", name: "AssetReceiver", fun: "avm_itxn_field"},
-			{t: "addr_t", name: "AssetCloseTo", fun: "avm_itxn_field"},
-			{t: "uint64_t", name: "ApplicationID", fun: "avm_itxn_field"},
-			{t: "uint64_t", name: "OnCompletion", fun: "avm_itxn_field"},
-			{t: "r_byte_t", name: "ApplicationArgs", fun: "avm_itxn_field"},
-			{t: "addr_t", name: "Accounts", fun: "avm_itxn_field"},
-			{t: "r_byte_t", name: "ApprovalProgram", fun: "avm_itxn_field"},
-			{t: "r_byte_t", name: "ClearStateProgram", fun: "avm_itxn_field"},
-			{t: "addr_t", name: "RekeyTo", fun: "avm_itxn_field"},
-			{t: "uint64_t", name: "ConfigAsset", fun: "avm_itxn_field"},
-			{t: "uint64_t", name: "ConfigAssetTotal", fun: "avm_itxn_field"},
-			{t: "uint64_t", name: "ConfigAssetDecimals", fun: "avm_itxn_field"},
-			{t: "bool_t", name: "ConfigAssetDefaultFrozen", fun: "avm_itxn_field"},
-			{t: "r_byte_t", name: "ConfigAssetUnitName", fun: "avm_itxn_field"},
-			{t: "r_byte_t", name: "ConfigAssetName", fun: "avm_itxn_field"},
-			{t: "r_byte_t", name: "ConfigAssetURL", fun: "avm_itxn_field"},
-			{t: "r32_byte_t", name: "ConfigAssetMetadataHash", fun: "avm_itxn_field"},
-			{t: "addr_t", name: "ConfigAssetManager", fun: "avm_itxn_field"},
-			{t: "addr_t", name: "ConfigAssetReserve", fun: "avm_itxn_field"},
-			{t: "addr_t", name: "ConfigAssetFreeze", fun: "avm_itxn_field"},
-			{t: "addr_t", name: "ConfigAssetClawback", fun: "avm_itxn_field"},
-			{t: "uint64_t", name: "FreezeAsset", fun: "avm_itxn_field"},
-			{t: "addr_t", name: "FreezeAssetAccount", fun: "avm_itxn_field"},
-			{t: "bool_t", name: "FreezeAssetFrozen", fun: "avm_itxn_field"},
-			{t: "uint64_t", name: "Assets", fun: "avm_itxn_field"},
-			{t: "uint64_t", name: "Applications", fun: "avm_itxn_field"},
-			{t: "uint64_t", name: "GlobalNumUint", fun: "avm_itxn_field"},
-			{t: "uint64_t", name: "GlobalNumByteSlice", fun: "avm_itxn_field"},
-			{t: "uint64_t", name: "LocalNumUint", fun: "avm_itxn_field"},
-			{t: "uint64_t", name: "LocalNumByteSlice", fun: "avm_itxn_field"},
-			{t: "uint64_t", name: "ExtraProgramPages", fun: "avm_itxn_field"},
-			{t: "bool_t", name: "Nonparticipation", fun: "avm_itxn_field"},
-			{t: "r_byte_t", name: "StateProofPK", fun: "avm_itxn_field"},
-			{t: "r_byte_t", name: "ApprovalProgramPages", fun: "avm_itxn_field"},
-			{t: "r_byte_t", name: "ClearStateProgramPages", fun: "avm_itxn_field"},
+		name:   "avm_itxn_field_t",
+		fields: []BuiltinStructFieldData{},
+		functions: []BuiltinStructFunctionData{
+			{
+				t: "addr_t", name: "Sender", fun: "avm_itxn_field",
+			},
+			{
+				t: "uint64_t", name: "Fee", fun: "avm_itxn_field",
+			},
+			{
+				t: "r_byte_t", name: "Note", fun: "avm_itxn_field",
+			},
+			{
+				t: "addr_t", name: "Receiver", fun: "avm_itxn_field",
+			},
+			{
+				t: "uint64_t", name: "Amount", fun: "avm_itxn_field",
+			},
+			{
+				t: "addr_t", name: "CloseRemainderTo", fun: "avm_itxn_field",
+			},
+			{
+				t: "r32_byte_t", name: "VotePK", fun: "avm_itxn_field",
+			},
+			{
+				t: "r32_byte_t", name: "SelectionPK", fun: "avm_itxn_field",
+			},
+			{
+				t: "uint64_t", name: "VoteFirst", fun: "avm_itxn_field",
+			},
+			{
+				t: "uint64_t", name: "VoteLast", fun: "avm_itxn_field",
+			},
+			{
+				t: "uint64_t", name: "VoteKeyDilution", fun: "avm_itxn_field",
+			},
+			{
+				t: "r_byte_t", name: "Type", fun: "avm_itxn_field",
+			},
+			{
+				t: "uint64_t", name: "TypeEnum", fun: "avm_itxn_field",
+			},
+			{
+				t: "uint64_t", name: "XferAsset", fun: "avm_itxn_field",
+			},
+			{
+				t: "uint64_t", name: "AssetAmount", fun: "avm_itxn_field",
+			},
+			{
+				t: "addr_t", name: "AssetSender", fun: "avm_itxn_field",
+			},
+			{
+				t: "addr_t", name: "AssetReceiver", fun: "avm_itxn_field",
+			},
+			{
+				t: "addr_t", name: "AssetCloseTo", fun: "avm_itxn_field",
+			},
+			{
+				t: "uint64_t", name: "ApplicationID", fun: "avm_itxn_field",
+			},
+			{
+				t: "uint64_t", name: "OnCompletion", fun: "avm_itxn_field",
+			},
+			{
+				t: "r_byte_t", name: "ApplicationArgs", fun: "avm_itxn_field",
+			},
+			{
+				t: "addr_t", name: "Accounts", fun: "avm_itxn_field",
+			},
+			{
+				t: "r_byte_t", name: "ApprovalProgram", fun: "avm_itxn_field",
+			},
+			{
+				t: "r_byte_t", name: "ClearStateProgram", fun: "avm_itxn_field",
+			},
+			{
+				t: "addr_t", name: "RekeyTo", fun: "avm_itxn_field",
+			},
+			{
+				t: "uint64_t", name: "ConfigAsset", fun: "avm_itxn_field",
+			},
+			{
+				t: "uint64_t", name: "ConfigAssetTotal", fun: "avm_itxn_field",
+			},
+			{
+				t: "uint64_t", name: "ConfigAssetDecimals", fun: "avm_itxn_field",
+			},
+			{
+				t: "bool_t", name: "ConfigAssetDefaultFrozen", fun: "avm_itxn_field",
+			},
+			{
+				t: "r_byte_t", name: "ConfigAssetUnitName", fun: "avm_itxn_field",
+			},
+			{
+				t: "r_byte_t", name: "ConfigAssetName", fun: "avm_itxn_field",
+			},
+			{
+				t: "r_byte_t", name: "ConfigAssetURL", fun: "avm_itxn_field",
+			},
+			{
+				t: "r32_byte_t", name: "ConfigAssetMetadataHash", fun: "avm_itxn_field",
+			},
+			{
+				t: "addr_t", name: "ConfigAssetManager", fun: "avm_itxn_field",
+			},
+			{
+				t: "addr_t", name: "ConfigAssetReserve", fun: "avm_itxn_field",
+			},
+			{
+				t: "addr_t", name: "ConfigAssetFreeze", fun: "avm_itxn_field",
+			},
+			{
+				t: "addr_t", name: "ConfigAssetClawback", fun: "avm_itxn_field",
+			},
+			{
+				t: "uint64_t", name: "FreezeAsset", fun: "avm_itxn_field",
+			},
+			{
+				t: "addr_t", name: "FreezeAssetAccount", fun: "avm_itxn_field",
+			},
+			{
+				t: "bool_t", name: "FreezeAssetFrozen", fun: "avm_itxn_field",
+			},
+			{
+				t: "uint64_t", name: "Assets", fun: "avm_itxn_field",
+			},
+			{
+				t: "uint64_t", name: "Applications", fun: "avm_itxn_field",
+			},
+			{
+				t: "uint64_t", name: "GlobalNumUint", fun: "avm_itxn_field",
+			},
+			{
+				t: "uint64_t", name: "GlobalNumByteSlice", fun: "avm_itxn_field",
+			},
+			{
+				t: "uint64_t", name: "LocalNumUint", fun: "avm_itxn_field",
+			},
+			{
+				t: "uint64_t", name: "LocalNumByteSlice", fun: "avm_itxn_field",
+			},
+			{
+				t: "uint64_t", name: "ExtraProgramPages", fun: "avm_itxn_field",
+			},
+			{
+				t: "bool_t", name: "Nonparticipation", fun: "avm_itxn_field",
+			},
+			{
+				t: "r_byte_t", name: "StateProofPK", fun: "avm_itxn_field",
+			},
+			{
+				t: "r_byte_t", name: "ApprovalProgramPages", fun: "avm_itxn_field",
+			},
+			{
+				t: "r_byte_t", name: "ClearStateProgramPages", fun: "avm_itxn_field",
+			},
 		},
-		functions: []BuiltinStructFunctionData{},
 	},
 	{
 		name: "avm_itxn_t",
@@ -3704,59 +3565,24 @@ var builtin_structs = []BuiltinStructData{
 		functions: []BuiltinStructFunctionData{
 			{
 				t: "r_byte_t", name: "ApplicationArgs", fun: "avm_itxna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "F1", array: false, field: true},
-					{t: "uint8", name: "I2", array: false, field: false},
-				},
 			},
 			{
 				t: "addr_t", name: "Accounts", fun: "avm_itxna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "F1", array: false, field: true},
-					{t: "uint8", name: "I2", array: false, field: false},
-				},
 			},
 			{
 				t: "uint64_t", name: "Assets", fun: "avm_itxna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "F1", array: false, field: true},
-					{t: "uint8", name: "I2", array: false, field: false},
-				},
 			},
 			{
 				t: "uint64_t", name: "Applications", fun: "avm_itxna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "F1", array: false, field: true},
-					{t: "uint8", name: "I2", array: false, field: false},
-				},
 			},
 			{
 				t: "r_byte_t", name: "Logs", fun: "avm_itxna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "F1", array: false, field: true},
-					{t: "uint8", name: "I2", array: false, field: false},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ApprovalProgramPages", fun: "avm_itxna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "F1", array: false, field: true},
-					{t: "uint8", name: "I2", array: false, field: false},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ClearStateProgramPages", fun: "avm_itxna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "F1", array: false, field: true},
-					{t: "uint8", name: "I2", array: false, field: false},
-				},
 			},
 		},
 	},
@@ -3766,547 +3592,207 @@ var builtin_structs = []BuiltinStructData{
 		functions: []BuiltinStructFunctionData{
 			{
 				t: "addr_t", name: "Sender", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "Fee", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "FirstValid", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "FirstValidTime", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "LastValid", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "Note", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r32_byte_t", name: "Lease", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "Receiver", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "Amount", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "CloseRemainderTo", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r32_byte_t", name: "VotePK", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r32_byte_t", name: "SelectionPK", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "VoteFirst", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "VoteLast", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "VoteKeyDilution", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "Type", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "TypeEnum", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "XferAsset", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "AssetAmount", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "AssetSender", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "AssetReceiver", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "AssetCloseTo", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "GroupIndex", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r32_byte_t", name: "TxID", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "ApplicationID", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "OnCompletion", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ApplicationArgs", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "NumAppArgs", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "Accounts", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "NumAccounts", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ApprovalProgram", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ClearStateProgram", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "RekeyTo", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "ConfigAsset", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "ConfigAssetTotal", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "ConfigAssetDecimals", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "bool_t", name: "ConfigAssetDefaultFrozen", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ConfigAssetUnitName", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ConfigAssetName", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ConfigAssetURL", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r32_byte_t", name: "ConfigAssetMetadataHash", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "ConfigAssetManager", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "ConfigAssetReserve", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "ConfigAssetFreeze", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "ConfigAssetClawback", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "FreezeAsset", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "FreezeAssetAccount", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "bool_t", name: "FreezeAssetFrozen", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "Assets", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "NumAssets", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "Applications", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "NumApplications", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "GlobalNumUint", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "GlobalNumByteSlice", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "LocalNumUint", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "LocalNumByteSlice", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "ExtraProgramPages", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "bool_t", name: "Nonparticipation", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "Logs", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "NumLogs", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "CreatedAssetID", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "CreatedApplicationID", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "LastLog", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "StateProofPK", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ApprovalProgramPages", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "NumApprovalProgramPages", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ClearStateProgramPages", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "NumClearStateProgramPages", fun: "avm_gitxn",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 		},
 	},
@@ -4316,66 +3802,24 @@ var builtin_structs = []BuiltinStructData{
 		functions: []BuiltinStructFunctionData{
 			{
 				t: "r_byte_t", name: "ApplicationArgs", fun: "avm_gitxna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-					{t: "uint8", name: "I3", array: false, field: false},
-				},
 			},
 			{
 				t: "addr_t", name: "Accounts", fun: "avm_gitxna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-					{t: "uint8", name: "I3", array: false, field: false},
-				},
 			},
 			{
 				t: "uint64_t", name: "Assets", fun: "avm_gitxna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-					{t: "uint8", name: "I3", array: false, field: false},
-				},
 			},
 			{
 				t: "uint64_t", name: "Applications", fun: "avm_gitxna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-					{t: "uint8", name: "I3", array: false, field: false},
-				},
 			},
 			{
 				t: "r_byte_t", name: "Logs", fun: "avm_gitxna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-					{t: "uint8", name: "I3", array: false, field: false},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ApprovalProgramPages", fun: "avm_gitxna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-					{t: "uint8", name: "I3", array: false, field: false},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ClearStateProgramPages", fun: "avm_gitxna",
-				stacks: []BuiltinStructFunctionParamData{},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-					{t: "uint8", name: "I3", array: false, field: false},
-				},
 			},
 		},
 	},
@@ -4396,17 +3840,31 @@ var builtin_structs = []BuiltinStructData{
 		functions: []BuiltinStructFunctionData{},
 	},
 	{
-		name: "avm_txnas_t",
-		fields: []BuiltinStructFieldData{
-			{t: "r_byte_t", name: "ApplicationArgs", fun: "avm_txnas"},
-			{t: "addr_t", name: "Accounts", fun: "avm_txnas"},
-			{t: "uint64_t", name: "Assets", fun: "avm_txnas"},
-			{t: "uint64_t", name: "Applications", fun: "avm_txnas"},
-			{t: "r_byte_t", name: "Logs", fun: "avm_txnas"},
-			{t: "r_byte_t", name: "ApprovalProgramPages", fun: "avm_txnas"},
-			{t: "r_byte_t", name: "ClearStateProgramPages", fun: "avm_txnas"},
+		name:   "avm_txnas_t",
+		fields: []BuiltinStructFieldData{},
+		functions: []BuiltinStructFunctionData{
+			{
+				t: "r_byte_t", name: "ApplicationArgs", fun: "avm_txnas",
+			},
+			{
+				t: "addr_t", name: "Accounts", fun: "avm_txnas",
+			},
+			{
+				t: "uint64_t", name: "Assets", fun: "avm_txnas",
+			},
+			{
+				t: "uint64_t", name: "Applications", fun: "avm_txnas",
+			},
+			{
+				t: "r_byte_t", name: "Logs", fun: "avm_txnas",
+			},
+			{
+				t: "r_byte_t", name: "ApprovalProgramPages", fun: "avm_txnas",
+			},
+			{
+				t: "r_byte_t", name: "ClearStateProgramPages", fun: "avm_txnas",
+			},
 		},
-		functions: []BuiltinStructFunctionData{},
 	},
 	{
 		name:   "avm_gtxnas_t",
@@ -4414,95 +3872,62 @@ var builtin_structs = []BuiltinStructData{
 		functions: []BuiltinStructFunctionData{
 			{
 				t: "r_byte_t", name: "ApplicationArgs", fun: "avm_gtxnas",
-				stacks: []BuiltinStructFunctionParamData{
-					{t: "uint64_t", name: "STACK_1", array: false, field: false},
-				},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "addr_t", name: "Accounts", fun: "avm_gtxnas",
-				stacks: []BuiltinStructFunctionParamData{
-					{t: "uint64_t", name: "STACK_1", array: false, field: false},
-				},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "Assets", fun: "avm_gtxnas",
-				stacks: []BuiltinStructFunctionParamData{
-					{t: "uint64_t", name: "STACK_1", array: false, field: false},
-				},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "uint64_t", name: "Applications", fun: "avm_gtxnas",
-				stacks: []BuiltinStructFunctionParamData{
-					{t: "uint64_t", name: "STACK_1", array: false, field: false},
-				},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "Logs", fun: "avm_gtxnas",
-				stacks: []BuiltinStructFunctionParamData{
-					{t: "uint64_t", name: "STACK_1", array: false, field: false},
-				},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ApprovalProgramPages", fun: "avm_gtxnas",
-				stacks: []BuiltinStructFunctionParamData{
-					{t: "uint64_t", name: "STACK_1", array: false, field: false},
-				},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 			{
 				t: "r_byte_t", name: "ClearStateProgramPages", fun: "avm_gtxnas",
-				stacks: []BuiltinStructFunctionParamData{
-					{t: "uint64_t", name: "STACK_1", array: false, field: false},
-				},
-				imms: []BuiltinStructFunctionParamData{
-					{t: "uint8", name: "T1", array: false, field: false},
-					{t: "uint8", name: "F2", array: false, field: true},
-				},
 			},
 		},
 	},
 	{
-		name: "avm_gtxnsas_t",
-		fields: []BuiltinStructFieldData{
-			{t: "r_byte_t", name: "ApplicationArgs", fun: "avm_gtxnsas"},
-			{t: "addr_t", name: "Accounts", fun: "avm_gtxnsas"},
-			{t: "uint64_t", name: "Assets", fun: "avm_gtxnsas"},
-			{t: "uint64_t", name: "Applications", fun: "avm_gtxnsas"},
-			{t: "r_byte_t", name: "Logs", fun: "avm_gtxnsas"},
-			{t: "r_byte_t", name: "ApprovalProgramPages", fun: "avm_gtxnsas"},
-			{t: "r_byte_t", name: "ClearStateProgramPages", fun: "avm_gtxnsas"},
+		name:   "avm_gtxnsas_t",
+		fields: []BuiltinStructFieldData{},
+		functions: []BuiltinStructFunctionData{
+			{
+				t: "r_byte_t", name: "ApplicationArgs", fun: "avm_gtxnsas",
+			},
+			{
+				t: "addr_t", name: "Accounts", fun: "avm_gtxnsas",
+			},
+			{
+				t: "uint64_t", name: "Assets", fun: "avm_gtxnsas",
+			},
+			{
+				t: "uint64_t", name: "Applications", fun: "avm_gtxnsas",
+			},
+			{
+				t: "r_byte_t", name: "Logs", fun: "avm_gtxnsas",
+			},
+			{
+				t: "r_byte_t", name: "ApprovalProgramPages", fun: "avm_gtxnsas",
+			},
+			{
+				t: "r_byte_t", name: "ClearStateProgramPages", fun: "avm_gtxnsas",
+			},
 		},
-		functions: []BuiltinStructFunctionData{},
 	},
 	{
-		name: "avm_vrf_verify_t",
-		fields: []BuiltinStructFieldData{
-			{t: "void", name: "VrfAlgorand", fun: "avm_vrf_verify"},
+		name:   "avm_vrf_verify_t",
+		fields: []BuiltinStructFieldData{},
+		functions: []BuiltinStructFunctionData{
+			{
+				t: "void", name: "VrfAlgorand", fun: "avm_vrf_verify",
+			},
 		},
-		functions: []BuiltinStructFunctionData{},
 	},
 	{
 		name: "avm_vrf_verify_result_t",
@@ -4513,12 +3938,16 @@ var builtin_structs = []BuiltinStructData{
 		functions: []BuiltinStructFunctionData{},
 	},
 	{
-		name: "avm_block_t",
-		fields: []BuiltinStructFieldData{
-			{t: "r_byte_t", name: "BlkSeed", fun: "avm_block"},
-			{t: "uint64_t", name: "BlkTimestamp", fun: "avm_block"},
+		name:   "avm_block_t",
+		fields: []BuiltinStructFieldData{},
+		functions: []BuiltinStructFunctionData{
+			{
+				t: "r_byte_t", name: "BlkSeed", fun: "avm_block",
+			},
+			{
+				t: "uint64_t", name: "BlkTimestamp", fun: "avm_block",
+			},
 		},
-		functions: []BuiltinStructFunctionData{},
 	},
 }
 

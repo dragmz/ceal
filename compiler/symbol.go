@@ -113,7 +113,7 @@ func (v *SymbolTableVisitor) VisitStruct(ctx *parser.StructContext) interface{} 
 
 	s := &Struct{
 		fields:    map[string]*StructField{},
-		functions: map[string]*Function{},
+		functions: map[string]*StructFunction{},
 	}
 
 	for _, item := range ctx.AllField() {

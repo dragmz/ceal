@@ -273,25 +273,23 @@ func (v *AstVisitor) VisitCallStmt(ctx *parser.CallStmtContext) interface{} {
 }
 
 func (v *AstVisitor) VisitCall_expr(ctx *parser.Call_exprContext) interface{} {
-	vd := v.mustResolveValueAccess(ctx.Value_access_expr())
-
-	var imms []CealAst
+	sf, f := v.mustResolveFunction(ctx.Value_access_expr().Dot_expr().AllID())
 
 	var field CealAst
 
-	if vd.Fun.builtin != nil {
-		if vd.F != nil {
-			field = &CealRaw{Value: vd.F.name}
-		} else if vd.Fun != nil {
-			// TODO: refactor the ^ and v conditions
-			if vd.V != nil && vd.Fun.builtin != nil {
-				field = &CealRaw{Value: vd.Fun.name}
-			}
+	if sf != nil {
+		f = sf.f
+	}
+
+	if f.builtin != nil {
+		// TODO: refactor the ^ and v conditions
+		if sf != nil {
+			field = &CealRaw{Value: sf.name}
 		}
 	}
 
 	ast := &CealCall{
-		Fun:   vd.Fun,
+		Fun:   f,
 		Field: field,
 	}
 
@@ -299,8 +297,6 @@ func (v *AstVisitor) VisitCall_expr(ctx *parser.Call_exprContext) interface{} {
 		stmt := v.visitAst(arg)
 		ast.Args = append(ast.Args, stmt)
 	}
-
-	ast.Args = append(ast.Args, imms...)
 
 	return ast
 }
@@ -396,25 +392,50 @@ func (v *AstVisitor) resolveFunction(name string) *Function {
 	return nil
 }
 
-func (v *AstVisitor) mustResolve(ids []antlr.TerminalNode) (*Variable, *StructField, *Function) {
-	var fun *Function
+func (v *AstVisitor) mustResolveFunction(ids []antlr.TerminalNode) (*StructFunction, *Function) {
+	name := ids[len(ids)-1].GetText()
 
-	id := ids[0].GetText()
-	vr := v.resolveVariable(id)
-	if vr == nil {
-		// TODO: shouldn't really guess if a field or function is being resolved - pass the context
-		fun = v.resolveFunction(id)
-		if fun == nil {
-			panic(fmt.Sprintf("failed to resolve id: '%s", id))
+	if len(ids) > 1 {
+		vr := v.resolveVariable(ids[0].GetText())
+
+		nvr := vr
+		for i := 1; i < len(ids)-1; i++ {
+			vr = nvr
+			id := ids[i].GetText()
+			nvr = vr.fields[id]
 		}
 
-		return nil, nil, fun
+		t := v.scope.resolveType(vr.t)
+		sf := t.complex.functions[name]
+
+		if sf == nil {
+			panic(fmt.Sprintf("failed to resolve id: '%s'", name))
+		}
+
+		return sf, nil
+	} else {
+		fun := v.resolveFunction(name)
+
+		if fun == nil {
+			panic(fmt.Sprintf("failed to resolve id: '%s'", name))
+		}
+
+		return nil, fun
+	}
+}
+
+func (v *AstVisitor) mustResolve(ids []antlr.TerminalNode) (*Variable, *StructField) {
+	id := ids[0].GetText()
+
+	vr := v.resolveVariable(id)
+	if vr == nil {
+		panic(fmt.Sprintf("failed to resolve id: '%s", id))
 	}
 
 	t := v.scope.resolveType(vr.t)
 
 	if len(ids) == 1 {
-		return vr, nil, fun
+		return vr, nil
 	}
 
 	if t.simple != nil {
@@ -431,17 +452,10 @@ func (v *AstVisitor) mustResolve(ids []antlr.TerminalNode) (*Variable, *StructFi
 
 		id := ids[i].GetText()
 		f = t.complex.fields[id]
-
-		if f == nil {
-			if i == len(ids)-1 {
-				fun = t.complex.functions[id]
-			}
-		} else {
-			nvr = vr.fields[id]
-		}
+		nvr = vr.fields[id]
 	}
 
-	return vr, f, fun
+	return vr, f
 }
 
 func (v *AstVisitor) VisitDefinition(ctx *parser.DefinitionContext) interface{} {
@@ -642,24 +656,19 @@ func (v *AstVisitor) mustResolveDot(ctx parser.IDot_exprContext) dotData {
 
 	ids = append(ids, ctx.AllID()...)
 
-	vr, f, fun := v.mustResolve(ids)
-	if vr == nil {
-		return dotData{
-			Fun: fun,
-		}
-	} else {
-		t := v.scope.resolveType(vr.t)
+	vr, f := v.mustResolve(ids)
+	t := v.scope.resolveType(vr.t)
 
-		if f != nil {
-			fun = v.global.functions[f.fun]
-		}
+	var fun *Function
+	if f != nil {
+		fun = v.global.functions[f.fun]
+	}
 
-		return dotData{
-			V:   vr,
-			F:   f,
-			T:   t,
-			Fun: fun,
-		}
+	return dotData{
+		V:   vr,
+		F:   f,
+		T:   t,
+		Fun: fun,
 	}
 }
 
