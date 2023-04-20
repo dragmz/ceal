@@ -71,6 +71,12 @@ func TestExample_goto(t *testing.T) {
 func TestExample_group(t *testing.T) {
 	testExample(t, "examples/group.cpp")
 }
+func TestExample_gtxn(t *testing.T) {
+	testExample(t, "examples/gtxn.cpp")
+}
+func TestExample_gtxna(t *testing.T) {
+	testExample(t, "examples/gtxna.cpp")
+}
 func TestExample_if(t *testing.T) {
 	testExample(t, "examples/if.cpp")
 }

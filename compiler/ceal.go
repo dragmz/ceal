@@ -678,7 +678,9 @@ func (a *CealStructField) TealAst() teal.TealAst {
 }
 
 type CealCall struct {
-	Fun  *Function
+	Fun   *Function
+	Field CealAst // TODO: not sure the Field should be here or filled in as an Arg already
+
 	Args []CealAst
 
 	IsStmt bool
@@ -699,23 +701,38 @@ func (a *CealCall) TealAst() teal.TealAst {
 	}
 
 	if a.Fun.builtin != nil {
-		i := 0
+		sl := len(a.Fun.builtin.stack)
 
-		for ; i < len(a.Fun.builtin.stack); i++ {
+		for i := 0; i < sl; i++ {
 			arg := a.Args[i]
 			args = append(args, arg.TealAst())
 		}
 
 		var imms []teal.TealAst
 
-		ii := 0
-		for ; i < len(a.Args); i++ {
-			arg := a.Args[i]
+		imm_index := 0
+		arg_index := 0
+
+		l := len(a.Args) - sl
+		if a.Field != nil {
+			l++
+		}
+
+		for i := 0; i < l; i++ {
+			var arg CealAst
+
+			imm := a.Fun.builtin.imm[imm_index]
+			if imm.field {
+				arg = a.Field
+			} else {
+				arg = a.Args[arg_index+len(a.Fun.builtin.stack)]
+				arg_index++
+			}
+
 			if e, ok := arg.(CealValue); ok {
 				e.ToValue()
 			}
 
-			imm := a.Fun.builtin.imm[ii]
 			if e, ok := arg.(*CealStringConstant); ok {
 				switch imm.t {
 				case "label":
@@ -727,7 +744,7 @@ func (a *CealCall) TealAst() teal.TealAst {
 			imms = append(imms, ast)
 
 			if !imm.array {
-				ii++
+				imm_index++
 			}
 		}
 

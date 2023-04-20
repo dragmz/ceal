@@ -18,6 +18,7 @@ type FunctionParam struct {
 	t     string
 	name  string
 	array bool
+	field bool
 }
 
 type BuiltinFunction struct {
@@ -477,6 +478,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 				t:     item.t,
 				name:  item.name,
 				array: item.array,
+				field: item.field,
 			})
 		}
 
@@ -485,6 +487,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 				t:     item.t,
 				name:  item.name,
 				array: item.array,
+				field: item.field,
 			})
 		}
 
@@ -507,16 +510,22 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 		}
 
 		for _, item := range item.functions {
+			bf := global.functions[item.fun]
+
 			f := &Function{
-				t:       item.t,
-				name:    item.name,
-				builtin: &BuiltinFunction{},
+				t:    item.t,
+				name: item.name,
+				builtin: &BuiltinFunction{
+					op: bf.builtin.op,
+				},
 			}
 
 			for _, item := range item.imms {
 				f.builtin.imm = append(f.builtin.imm, &FunctionParam{
-					t:    item.t,
-					name: item.name,
+					t:     item.t,
+					name:  item.name,
+					array: item.array,
+					field: item.field,
 				})
 			}
 

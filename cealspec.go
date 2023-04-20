@@ -10,6 +10,7 @@ type CealArg struct {
 	Type  string `json:"type"`
 	Name  string `json:"name"`
 	Array bool   `json:"array"`
+	Field bool   `json:"field"`
 }
 
 type CealReturn struct {

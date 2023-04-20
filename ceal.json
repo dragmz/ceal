@@ -63,7 +63,8 @@
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -83,7 +84,8 @@
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -103,7 +105,8 @@
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -123,17 +126,20 @@
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "r_byte_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "r_byte_t",
 					"name": "STACK_3",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -152,34 +158,40 @@
 				{
 					"type": "uint8",
 					"name": "V1",
-					"array": false
+					"array": false,
+					"field": true
 				}
 			],
 			"stacks": [
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "r_byte_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "r_byte_t",
 					"name": "STACK_3",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "r_byte_t",
 					"name": "STACK_4",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "r_byte_t",
 					"name": "STACK_5",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -207,14 +219,16 @@
 				{
 					"type": "uint8",
 					"name": "V1",
-					"array": false
+					"array": false,
+					"field": true
 				}
 			],
 			"stacks": [
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -246,29 +260,34 @@
 				{
 					"type": "uint8",
 					"name": "V1",
-					"array": false
+					"array": false,
+					"field": true
 				}
 			],
 			"stacks": [
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "r_byte_t",
 					"name": "STACK_3",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "r_byte_t",
 					"name": "STACK_4",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -301,12 +320,14 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -326,12 +347,14 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -351,12 +374,14 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -376,12 +401,14 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -401,12 +428,14 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -426,12 +455,14 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -451,12 +482,14 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -476,12 +509,14 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -501,12 +536,14 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -526,12 +563,14 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -551,12 +590,14 @@
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "any_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -576,12 +617,14 @@
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "any_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -601,7 +644,8 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -621,7 +665,8 @@
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -641,7 +686,8 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -661,7 +707,8 @@
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -681,12 +728,14 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -706,12 +755,14 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -731,12 +782,14 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -756,12 +809,14 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -781,7 +836,8 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -801,12 +857,14 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -830,12 +888,14 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -859,22 +919,26 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_3",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_4",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -905,7 +969,8 @@
 				{
 					"type": "uint64",
 					"name": "UINT1",
-					"array": true
+					"array": true,
+					"field": false
 				}
 			],
 			"stacks": [],
@@ -920,7 +985,8 @@
 				{
 					"type": "uint8",
 					"name": "I1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [],
@@ -996,7 +1062,8 @@
 				{
 					"type": "bytes",
 					"name": "BYTES1",
-					"array": true
+					"array": true,
+					"field": false
 				}
 			],
 			"stacks": [],
@@ -1011,7 +1078,8 @@
 				{
 					"type": "uint8",
 					"name": "I1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [],
@@ -1087,7 +1155,8 @@
 				{
 					"type": "uint8",
 					"name": "N1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [],
@@ -1163,7 +1232,8 @@
 				{
 					"type": "uint8",
 					"name": "F1",
-					"array": false
+					"array": false,
+					"field": true
 				}
 			],
 			"stacks": [],
@@ -1456,7 +1526,8 @@
 				{
 					"type": "uint8",
 					"name": "F1",
-					"array": false
+					"array": false,
+					"field": true
 				}
 			],
 			"stacks": [],
@@ -1537,12 +1608,14 @@
 				{
 					"type": "uint8",
 					"name": "T1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint8",
 					"name": "F2",
-					"array": false
+					"array": false,
+					"field": true
 				}
 			],
 			"stacks": [],
@@ -1835,7 +1908,8 @@
 				{
 					"type": "uint8",
 					"name": "I1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [],
@@ -1855,14 +1929,16 @@
 				{
 					"type": "uint8",
 					"name": "I1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [],
@@ -1876,12 +1952,14 @@
 				{
 					"type": "uint8",
 					"name": "F1",
-					"array": false
+					"array": false,
+					"field": true
 				},
 				{
 					"type": "uint8",
 					"name": "I2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [],
@@ -1930,17 +2008,20 @@
 				{
 					"type": "uint8",
 					"name": "T1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint8",
 					"name": "F2",
-					"array": false
+					"array": false,
+					"field": true
 				},
 				{
 					"type": "uint8",
 					"name": "I3",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [],
@@ -1989,14 +2070,16 @@
 				{
 					"type": "uint8",
 					"name": "F1",
-					"array": false
+					"array": false,
+					"field": true
 				}
 			],
 			"stacks": [
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -2288,19 +2371,22 @@
 				{
 					"type": "uint8",
 					"name": "F1",
-					"array": false
+					"array": false,
+					"field": true
 				},
 				{
 					"type": "uint8",
 					"name": "I2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -2348,12 +2434,14 @@
 				{
 					"type": "uint8",
 					"name": "T1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint8",
 					"name": "I2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [],
@@ -2373,14 +2461,16 @@
 				{
 					"type": "uint8",
 					"name": "I1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -2399,7 +2489,8 @@
 				{
 					"type": "uint8",
 					"name": "T1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [],
@@ -2420,7 +2511,8 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -2440,7 +2532,8 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -2460,12 +2553,14 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "any_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [],
@@ -2479,14 +2574,16 @@
 				{
 					"type": "label",
 					"name": "TARGET1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [],
@@ -2500,14 +2597,16 @@
 				{
 					"type": "label",
 					"name": "TARGET1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [],
@@ -2521,7 +2620,8 @@
 				{
 					"type": "label",
 					"name": "TARGET1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [],
@@ -2537,7 +2637,8 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [],
@@ -2552,7 +2653,8 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [],
@@ -2566,14 +2668,16 @@
 				{
 					"type": "uint8",
 					"name": "N1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [],
@@ -2587,7 +2691,8 @@
 				{
 					"type": "uint8",
 					"name": "N1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [],
@@ -2602,14 +2707,16 @@
 				{
 					"type": "uint8",
 					"name": "N1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [],
@@ -2624,7 +2731,8 @@
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [],
@@ -2639,7 +2747,8 @@
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -2663,12 +2772,14 @@
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "any_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -2699,14 +2810,16 @@
 				{
 					"type": "uint8",
 					"name": "N1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -2730,12 +2843,14 @@
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "any_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -2759,17 +2874,20 @@
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "any_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_3",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -2788,14 +2906,16 @@
 				{
 					"type": "uint8",
 					"name": "N1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -2814,14 +2934,16 @@
 				{
 					"type": "uint8",
 					"name": "N1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -2841,12 +2963,14 @@
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "r_byte_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -2865,19 +2989,22 @@
 				{
 					"type": "uint8",
 					"name": "S1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint8",
 					"name": "E2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -2897,17 +3024,20 @@
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_3",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -2927,12 +3057,14 @@
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -2952,17 +3084,20 @@
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_3",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -2982,12 +3117,14 @@
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -3007,17 +3144,20 @@
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_3",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -3036,19 +3176,22 @@
 				{
 					"type": "uint8",
 					"name": "S1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint8",
 					"name": "L2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -3068,17 +3211,20 @@
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_3",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -3098,12 +3244,14 @@
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -3123,12 +3271,14 @@
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -3148,12 +3298,14 @@
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -3172,19 +3324,22 @@
 				{
 					"type": "uint8",
 					"name": "S1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "r_byte_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -3204,17 +3359,20 @@
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "r_byte_t",
 					"name": "STACK_3",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -3233,14 +3391,16 @@
 				{
 					"type": "uint8",
 					"name": "E1",
-					"array": false
+					"array": false,
+					"field": true
 				}
 			],
 			"stacks": [
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -3268,19 +3428,22 @@
 				{
 					"type": "uint8",
 					"name": "R1",
-					"array": false
+					"array": false,
+					"field": true
 				}
 			],
 			"stacks": [
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "r_byte_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -3313,7 +3476,8 @@
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -3333,12 +3497,14 @@
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -3358,12 +3524,14 @@
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "key_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -3383,17 +3551,20 @@
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "key_t",
 					"name": "STACK_3",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -3417,7 +3588,8 @@
 				{
 					"type": "key_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -3437,12 +3609,14 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "key_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -3466,17 +3640,20 @@
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "key_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "any_t",
 					"name": "STACK_3",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [],
@@ -3491,12 +3668,14 @@
 				{
 					"type": "key_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "any_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [],
@@ -3511,12 +3690,14 @@
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "key_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [],
@@ -3531,7 +3712,8 @@
 				{
 					"type": "key_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [],
@@ -3545,19 +3727,22 @@
 				{
 					"type": "uint8",
 					"name": "F1",
-					"array": false
+					"array": false,
+					"field": true
 				}
 			],
 			"stacks": [
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -3589,14 +3774,16 @@
 				{
 					"type": "uint8",
 					"name": "F1",
-					"array": false
+					"array": false,
+					"field": true
 				}
 			],
 			"stacks": [
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -3668,14 +3855,16 @@
 				{
 					"type": "uint8",
 					"name": "F1",
-					"array": false
+					"array": false,
+					"field": true
 				}
 			],
 			"stacks": [
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -3735,14 +3924,16 @@
 				{
 					"type": "uint8",
 					"name": "F1",
-					"array": false
+					"array": false,
+					"field": true
 				}
 			],
 			"stacks": [
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -3815,7 +4006,8 @@
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -3834,7 +4026,8 @@
 				{
 					"type": "bytes",
 					"name": "BYTES1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [],
@@ -3854,7 +4047,8 @@
 				{
 					"type": "bytes",
 					"name": "UINT1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [],
@@ -3874,7 +4068,8 @@
 				{
 					"type": "bytes",
 					"name": "BYTES1",
-					"array": true
+					"array": true,
+					"field": false
 				}
 			],
 			"stacks": [],
@@ -3889,7 +4084,8 @@
 				{
 					"type": "uint64",
 					"name": "UINT1",
-					"array": true
+					"array": true,
+					"field": false
 				}
 			],
 			"stacks": [],
@@ -3905,17 +4101,20 @@
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "r_byte_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "r_byte_t",
 					"name": "STACK_3",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -3934,7 +4133,8 @@
 				{
 					"type": "label",
 					"name": "TARGET1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [],
@@ -3958,12 +4158,14 @@
 				{
 					"type": "uint8",
 					"name": "A1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint8",
 					"name": "R2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [],
@@ -3978,7 +4180,8 @@
 				{
 					"type": "int8",
 					"name": "I1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [],
@@ -3998,14 +4201,16 @@
 				{
 					"type": "int8",
 					"name": "I1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [],
@@ -4019,14 +4224,16 @@
 				{
 					"type": "label",
 					"name": "TARGET1",
-					"array": true
+					"array": true,
+					"field": false
 				}
 			],
 			"stacks": [
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [],
@@ -4040,7 +4247,8 @@
 				{
 					"type": "label",
 					"name": "TARGET1",
-					"array": true
+					"array": true,
+					"field": false
 				}
 			],
 			"stacks": [],
@@ -4056,12 +4264,14 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4081,12 +4291,14 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4106,7 +4318,8 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4126,7 +4339,8 @@
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4146,12 +4360,14 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4171,12 +4387,14 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4200,7 +4418,8 @@
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4220,17 +4439,20 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_3",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4250,7 +4472,8 @@
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4270,12 +4493,14 @@
 				{
 					"type": "bigint_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "bigint_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4295,12 +4520,14 @@
 				{
 					"type": "bigint_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "bigint_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4320,12 +4547,14 @@
 				{
 					"type": "bigint_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "bigint_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4345,12 +4574,14 @@
 				{
 					"type": "bigint_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "bigint_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4370,12 +4601,14 @@
 				{
 					"type": "bigint_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "bigint_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4395,12 +4628,14 @@
 				{
 					"type": "bigint_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "bigint_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4420,12 +4655,14 @@
 				{
 					"type": "bigint_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "bigint_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4445,12 +4682,14 @@
 				{
 					"type": "bigint_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "bigint_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4470,12 +4709,14 @@
 				{
 					"type": "bigint_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "bigint_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4495,12 +4736,14 @@
 				{
 					"type": "bigint_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "bigint_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4520,12 +4763,14 @@
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "r_byte_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4545,12 +4790,14 @@
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "r_byte_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4570,12 +4817,14 @@
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "r_byte_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4595,12 +4844,14 @@
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "r_byte_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4620,7 +4871,8 @@
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4640,7 +4892,8 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -4660,7 +4913,8 @@
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [],
@@ -4683,14 +4937,16 @@
 				{
 					"type": "uint8",
 					"name": "F1",
-					"array": false
+					"array": false,
+					"field": true
 				}
 			],
 			"stacks": [
 				{
 					"type": "any_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [],
@@ -4918,7 +5174,8 @@
 				{
 					"type": "uint8",
 					"name": "F1",
-					"array": false
+					"array": false,
+					"field": true
 				}
 			],
 			"stacks": [],
@@ -5211,12 +5468,14 @@
 				{
 					"type": "uint8",
 					"name": "F1",
-					"array": false
+					"array": false,
+					"field": true
 				},
 				{
 					"type": "uint8",
 					"name": "I2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [],
@@ -5274,12 +5533,14 @@
 				{
 					"type": "uint8",
 					"name": "T1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint8",
 					"name": "F2",
-					"array": false
+					"array": false,
+					"field": true
 				}
 			],
 			"stacks": [],
@@ -5572,17 +5833,20 @@
 				{
 					"type": "uint8",
 					"name": "T1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint8",
 					"name": "F2",
-					"array": false
+					"array": false,
+					"field": true
 				},
 				{
 					"type": "uint8",
 					"name": "I3",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"stacks": [],
@@ -5632,12 +5896,14 @@
 				{
 					"type": "name_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -5657,17 +5923,20 @@
 				{
 					"type": "name_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_3",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -5687,17 +5956,20 @@
 				{
 					"type": "name_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "r_byte_t",
 					"name": "STACK_3",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [],
@@ -5712,7 +5984,8 @@
 				{
 					"type": "name_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -5732,7 +6005,8 @@
 				{
 					"type": "name_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -5756,7 +6030,8 @@
 				{
 					"type": "name_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -5780,12 +6055,14 @@
 				{
 					"type": "name_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "r_byte_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [],
@@ -5799,14 +6076,16 @@
 				{
 					"type": "uint8",
 					"name": "F1",
-					"array": false
+					"array": false,
+					"field": true
 				}
 			],
 			"stacks": [
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -5854,19 +6133,22 @@
 				{
 					"type": "uint8",
 					"name": "T1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint8",
 					"name": "F2",
-					"array": false
+					"array": false,
+					"field": true
 				}
 			],
 			"stacks": [
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -5914,19 +6196,22 @@
 				{
 					"type": "uint8",
 					"name": "F1",
-					"array": false
+					"array": false,
+					"field": true
 				}
 			],
 			"stacks": [
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -5975,7 +6260,8 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -5995,12 +6281,14 @@
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint64_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -6019,14 +6307,16 @@
 				{
 					"type": "uint8",
 					"name": "F1",
-					"array": false
+					"array": false,
+					"field": true
 				}
 			],
 			"stacks": [
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -6045,19 +6335,22 @@
 				{
 					"type": "uint8",
 					"name": "T1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "uint8",
 					"name": "F2",
-					"array": false
+					"array": false,
+					"field": true
 				}
 			],
 			"stacks": [
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -6076,24 +6369,28 @@
 				{
 					"type": "uint8",
 					"name": "S1",
-					"array": false
+					"array": false,
+					"field": true
 				}
 			],
 			"stacks": [
 				{
 					"type": "r_byte_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "r_byte_t",
 					"name": "STACK_2",
-					"array": false
+					"array": false,
+					"field": false
 				},
 				{
 					"type": "r_byte_t",
 					"name": "STACK_3",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [
@@ -6121,14 +6418,16 @@
 				{
 					"type": "uint8",
 					"name": "F1",
-					"array": false
+					"array": false,
+					"field": true
 				}
 			],
 			"stacks": [
 				{
 					"type": "uint64_t",
 					"name": "STACK_1",
-					"array": false
+					"array": false,
+					"field": false
 				}
 			],
 			"returns": [

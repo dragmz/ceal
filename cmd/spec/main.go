@@ -118,7 +118,10 @@ func readImms(op LangSpecOp) []ceal.CealArg {
 		imm := op.ImmediateNote[i]
 
 		t := "uint64"
+
 		array := false
+		field := len(imm.Reference) > 0
+
 		switch imm.Encoding {
 		case "uint8":
 			t = "uint8"
@@ -148,6 +151,7 @@ func readImms(op LangSpecOp) []ceal.CealArg {
 			Type:  t,
 			Name:  name,
 			Array: array,
+			Field: field,
 		}
 	}
 	return ps

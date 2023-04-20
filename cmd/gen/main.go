@@ -87,6 +87,7 @@ type BuiltinFunctionParamData struct
 	t string
 	name string
 	array bool
+	field bool
 };
 
 type BuiltinFunctionData struct
@@ -113,12 +114,12 @@ var builtin_functions = []BuiltinFunctionData {
 		fmt.Fprintf(bw, "\t\tt: \"%s\", name: \"avm_%s\", op: \"%s\",\n", ret, name, op.Name)
 		bw.WriteString("\t\tstack: []BuiltinFunctionParamData{\n")
 		for _, arg := range op.Stacks {
-			fmt.Fprintf(bw, "\t\t\t{ t: \"%s\", name: \"%s\", array: %t },\n", arg.Type, arg.Name, arg.Array)
+			fmt.Fprintf(bw, "\t\t\t{ t: \"%s\", name: \"%s\", array: %t, field: %t },\n", arg.Type, arg.Name, arg.Array, arg.Field)
 		}
 		bw.WriteString("\t\t},\n")
 		bw.WriteString("\t\timm: []BuiltinFunctionParamData{\n")
 		for _, arg := range op.Imms {
-			fmt.Fprintf(bw, "\t\t\t{ t: \"%s\", name: \"%s\", array: %t },\n", arg.Type, arg.Name, arg.Array)
+			fmt.Fprintf(bw, "\t\t\t{ t: \"%s\", name: \"%s\", array: %t, field: %t },\n", arg.Type, arg.Name, arg.Array, arg.Field)
 		}
 		bw.WriteString("\t\t},\n")
 		fmt.Fprintf(bw, "\t\treturns: %d,\n", len(op.Returns))
@@ -128,7 +129,7 @@ var builtin_functions = []BuiltinFunctionData {
 		fmt.Fprintf(bw, "\t\tt: \"%s\", name: \"avm_%s_op\", op: \"%s\",\n", ret, name, op.Name)
 		bw.WriteString("\t\timm: []BuiltinFunctionParamData{\n")
 		for _, arg := range op.Imms {
-			fmt.Fprintf(bw, "\t\t\t{ t: \"%s\", name: \"%s\", array: %t },\n", arg.Type, arg.Name, arg.Array)
+			fmt.Fprintf(bw, "\t\t\t{ t: \"%s\", name: \"%s\", array: %t, field: %t },\n", arg.Type, arg.Name, arg.Array, arg.Field)
 		}
 		bw.WriteString("\t\t},\n")
 		bw.WriteString("\t},\n")
@@ -149,6 +150,8 @@ type BuiltinStructFunctionParamData struct
 {
 	t string
 	name string
+	array bool
+	field bool
 };
 
 type BuiltinStructFunctionData struct
@@ -206,13 +209,13 @@ var builtin_structs = []BuiltinStructData {
 				bw.WriteString("\t\t\t\tstacks: []BuiltinStructFunctionParamData{\n")
 				for i := 0; i < len(op.Stacks); i++ {
 					arg := op.Stacks[i]
-					fmt.Fprintf(bw, "\t\t\t\t\t{ t: \"%s\", name: \"%s\" },\n", arg.Type, arg.Name)
+					fmt.Fprintf(bw, "\t\t\t\t\t{ t: \"%s\", name: \"%s\", array: %t, field: %t },\n", arg.Type, arg.Name, arg.Array, arg.Field)
 				}
 				bw.WriteString("\t\t\t\t},\n")
 				bw.WriteString("\t\t\t\timms: []BuiltinStructFunctionParamData{\n")
 				for i := 0; i < len(op.Imms); i++ {
 					arg := op.Imms[i]
-					fmt.Fprintf(bw, "\t\t\t\t\t{ t: \"%s\", name: \"%s\" },\n", arg.Type, arg.Name)
+					fmt.Fprintf(bw, "\t\t\t\t\t{ t: \"%s\", name: \"%s\", array: %t, field: %t },\n", arg.Type, arg.Name, arg.Array, arg.Field)
 				}
 				bw.WriteString("\t\t\t\t},\n")
 				bw.WriteString("\t\t\t},\n")

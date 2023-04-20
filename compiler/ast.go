@@ -275,16 +275,24 @@ func (v *AstVisitor) VisitCallStmt(ctx *parser.CallStmtContext) interface{} {
 func (v *AstVisitor) VisitCall_expr(ctx *parser.Call_exprContext) interface{} {
 	vd := v.mustResolveValueAccess(ctx.Value_access_expr())
 
-	ast := &CealCall{
-		Fun: vd.Fun,
-	}
-
 	var imms []CealAst
+
+	var field CealAst
 
 	if vd.Fun.builtin != nil {
 		if vd.F != nil {
-			imms = append(imms, &CealRaw{Value: vd.F.name})
+			field = &CealRaw{Value: vd.F.name}
+		} else if vd.Fun != nil {
+			// TODO: refactor the ^ and v conditions
+			if vd.V != nil && vd.Fun.builtin != nil {
+				field = &CealRaw{Value: vd.Fun.name}
+			}
 		}
+	}
+
+	ast := &CealCall{
+		Fun:   vd.Fun,
+		Field: field,
 	}
 
 	for _, arg := range ctx.Args().AllExpr() {
@@ -394,6 +402,7 @@ func (v *AstVisitor) mustResolve(ids []antlr.TerminalNode) (*Variable, *StructFi
 	id := ids[0].GetText()
 	vr := v.resolveVariable(id)
 	if vr == nil {
+		// TODO: shouldn't really guess if a field or function is being resolved - pass the context
 		fun = v.resolveFunction(id)
 		if fun == nil {
 			panic(fmt.Sprintf("failed to resolve id: '%s", id))
@@ -405,7 +414,7 @@ func (v *AstVisitor) mustResolve(ids []antlr.TerminalNode) (*Variable, *StructFi
 	t := v.scope.resolveType(vr.t)
 
 	if len(ids) == 1 {
-		return vr, nil, nil
+		return vr, nil, fun
 	}
 
 	if t.simple != nil {
@@ -419,12 +428,20 @@ func (v *AstVisitor) mustResolve(ids []antlr.TerminalNode) (*Variable, *StructFi
 	for i := 1; i < len(ids); i++ {
 		vr = nvr
 		t = v.scope.resolveType(vr.t)
+
 		id := ids[i].GetText()
 		f = t.complex.fields[id]
-		nvr = vr.fields[id]
+
+		if f == nil {
+			if i == len(ids)-1 {
+				fun = t.complex.functions[id]
+			}
+		} else {
+			nvr = vr.fields[id]
+		}
 	}
 
-	return vr, f, nil
+	return vr, f, fun
 }
 
 func (v *AstVisitor) VisitDefinition(ctx *parser.DefinitionContext) interface{} {
@@ -633,7 +650,6 @@ func (v *AstVisitor) mustResolveDot(ctx parser.IDot_exprContext) dotData {
 	} else {
 		t := v.scope.resolveType(vr.t)
 
-		var fun *Function
 		if f != nil {
 			fun = v.global.functions[f.fun]
 		}
