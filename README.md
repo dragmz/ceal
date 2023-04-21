@@ -2,7 +2,14 @@
 
 C to Algorand TEAL compiler (transpiler)
 
-AKA use your favorite C++ IDE to write Algorand contracts
+AKA:
+
+- use your favorite C++ IDE to write Algorand contracts
+- a teal seal:
+
+<div align="center">
+	<img src="logo.jpeg" width="256" height="256" />
+</div>
 
 ## Usage
 
@@ -35,6 +42,7 @@ uint64 avm_main()
 	noop();
 }
 ```
+
 ```bash
 go run cmd/ceal/main -path contract.cpp
 ```
