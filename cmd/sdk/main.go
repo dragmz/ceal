@@ -88,6 +88,12 @@ func run(a args) error {
 
 #include <string>
 
+constexpr uint64_t fnv1a_hash(const char* str, uint64_t hash = 14695981039346656037u) {
+    return (*str == '\0') ? hash : fnv1a_hash(str + 1, (hash ^ static_cast<uint64_t>(*str)) * 1099511628211u);
+}
+
+#define avm_method(x) fnv1a_hash(#x)
+
 #define IMMEDIATE
 #define STACK
 

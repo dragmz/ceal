@@ -154,9 +154,19 @@ func (v *SymbolTableVisitor) VisitProgram(ctx *parser.ProgramContext) interface{
 func (v *SymbolTableVisitor) VisitFunction(ctx *parser.FunctionContext) interface{} {
 	id := ctx.ID().GetText()
 
+	var args []*FunctionParam
+
+	for _, p := range ctx.Params().AllParam() {
+		arg := &FunctionParam{
+			t:    p.Type_().ID().GetText(),
+			name: p.ID().GetText(),
+		}
+
+		args = append(args, arg)
+	}
 	user := &UserFunction{
 		scope: NewScope(v.scope),
-		args:  len(ctx.Params().AllParam()),
+		args:  args,
 	}
 
 	ret := ctx.Type_().ID().GetText()
@@ -169,18 +179,31 @@ func (v *SymbolTableVisitor) VisitFunction(ctx *parser.FunctionContext) interfac
 	}
 
 	if t.complex != nil {
-		fun.returns = len(t.complex.fields)
-	} else {
-		if t.simple.empty {
-			fun.returns = 0
-		} else {
-			fun.returns = 1
+		for _, name := range t.complex.fieldsNames {
+			f := t.complex.fields[name]
+			fun.returns = append(fun.returns, &FunctionParam{
+				t:    f.t,
+				name: name,
+			})
+		}
+	} else if !t.simple.empty {
+		fun.returns = []*FunctionParam{
+			{
+				t:    t.name,
+				name: "r1",
+			},
 		}
 	}
 
 	user.sub = id != AvmMainName
 
 	v.scope.registerFunction(fun)
+
+	v.scope.variables[fun.name] = &Variable{
+		t:    "method",
+		name: fun.name,
+		fun:  fun,
+	}
 
 	v.scope = user.scope
 	v.scope.function = fun

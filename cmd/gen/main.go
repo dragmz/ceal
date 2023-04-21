@@ -90,6 +90,12 @@ type BuiltinFunctionParamData struct
 	field bool
 };
 
+type BuiltinFunctionReturnData struct
+{
+	t string
+	name string
+}
+
 type BuiltinFunctionData struct
 {
 	t string
@@ -98,7 +104,7 @@ type BuiltinFunctionData struct
 
 	stack []BuiltinFunctionParamData
 	imm []BuiltinFunctionParamData
-	returns int
+	returns []BuiltinFunctionReturnData
 };
 `)
 
@@ -122,7 +128,11 @@ var builtin_functions = []BuiltinFunctionData {
 			fmt.Fprintf(bw, "\t\t\t{ t: \"%s\", name: \"%s\", array: %t, field: %t },\n", arg.Type, arg.Name, arg.Array, arg.Field)
 		}
 		bw.WriteString("\t\t},\n")
-		fmt.Fprintf(bw, "\t\treturns: %d,\n", len(op.Returns))
+		bw.WriteString("\t\treturns: []BuiltinFunctionReturnData{\n")
+		for _, r := range op.Returns {
+			fmt.Fprintf(bw, "\t\t\t{ t: \"%s\", name: \"%s\" },\n", r.Type, r.Name)
+		}
+		bw.WriteString("\t\t},\n")
 		bw.WriteString("\t},\n")
 		//
 		bw.WriteString("\t{\n")

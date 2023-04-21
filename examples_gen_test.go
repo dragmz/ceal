@@ -35,6 +35,9 @@ func TestExample_boxes(t *testing.T) {
 func TestExample_breakcontinue(t *testing.T) {
 	testExample(t, "examples/breakcontinue.cpp")
 }
+func TestExample_calculator(t *testing.T) {
+	testExample(t, "examples/calculator.cpp")
+}
 func TestExample_chained_conditional(t *testing.T) {
 	testExample(t, "examples/chained_conditional.cpp")
 }

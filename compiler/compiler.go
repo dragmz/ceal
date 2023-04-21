@@ -42,7 +42,7 @@ type Function struct {
 	t    string
 	name string
 
-	returns int
+	returns []*FunctionParam
 
 	builtin  *BuiltinFunction
 	user     *UserFunction
@@ -115,6 +115,7 @@ type Variable struct {
 	local  *LocalVariable
 	param  *ParameterVariable
 	const_ *ConstVariable
+	fun    *Function
 
 	fields map[string]*Variable
 }
@@ -269,7 +270,7 @@ func (s *Scope) readonly() {
 }
 
 type UserFunction struct {
-	args int
+	args []*FunctionParam
 
 	sub bool
 
@@ -364,11 +365,49 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 		simple: &SimpleType{},
 	})
 
+	global.registerType(&Type{
+		name:   "method",
+		simple: &SimpleType{},
+	})
+
 	{
 		f := &Function{
-			name:    "abi_encode",
-			t:       "bytes",
-			returns: 1,
+			name: "avm_method",
+			t:    "bytes",
+			returns: []*FunctionParam{
+				&FunctionParam{
+					t:    "bytes",
+					name: "r1",
+				},
+			},
+			compiler: &CompilerFunction{
+				parameters: []*FunctionParam{
+					{
+						t:    "method",
+						name: "name",
+					},
+				},
+				handler: func(args []CealAst) teal.TealAst {
+					return &teal.Teal_method{
+						Name: args[0].TealAst().Teal().String(),
+					}
+				},
+			},
+		}
+
+		global.registerFunction(f)
+	}
+
+	{
+		f := &Function{
+			name: "abi_encode",
+			t:    "bytes",
+			returns: []*FunctionParam{
+				&FunctionParam{
+					t:    "bytes",
+					name: "r1",
+				},
+			},
 			compiler: &CompilerFunction{
 				handler: func(args []CealAst) teal.TealAst {
 					v, ok := args[0].(*CealVariable)
@@ -471,12 +510,18 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 
 	for _, item := range builtin_functions {
 		f := &Function{
-			t:       item.t,
-			name:    item.name,
-			returns: item.returns,
+			t:    item.t,
+			name: item.name,
 			builtin: &BuiltinFunction{
 				op: item.op,
 			},
+		}
+
+		for _, item := range item.returns {
+			f.returns = append(f.returns, &FunctionParam{
+				t:    item.t,
+				name: item.name,
+			})
 		}
 
 		for _, item := range item.stack {

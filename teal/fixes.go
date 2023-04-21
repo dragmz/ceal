@@ -242,3 +242,20 @@ func Parse_Teal_byte_op(a ParserContext) TealOp {
 	v := a.Read_rbyte()
 	return &Teal_byte{S: &Teal_byte_value{V: v}}
 }
+
+type Teal_method struct {
+	Name string
+}
+
+func (a *Teal_method) Teal() Teal {
+	return Teal{a}
+}
+
+func (a *Teal_method) String() string {
+	return fmt.Sprintf("method \"%s\"", a.Name)
+}
+
+func Parse_Teal_method(a ParserContext) TealOp {
+	v := a.Read_string()
+	return &Teal_method{Name: v}
+}

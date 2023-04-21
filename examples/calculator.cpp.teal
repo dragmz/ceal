@@ -1,0 +1,38 @@
+#pragma version 8
+b avm_main
+add:
+proto 2 1
+frame_dig -2
+frame_dig -1
++
+retsub
+sub:
+proto 2 1
+frame_dig -2
+frame_dig -1
+-
+retsub
+avm_main:
+txna ApplicationArgs 1
+btoi
+store 0
+txna ApplicationArgs 2
+btoi
+store 1
+method "add(uint64,uint64)uint64"
+method "sub(uint64,uint64)uint64"
+txna ApplicationArgs 0
+match switch_0_0 switch_0_1
+switch_0_0:
+load 0
+load 1
+callsub add
+popn 1
+b switch_0_end
+switch_0_1:
+load 0
+load 1
+callsub sub
+popn 1
+b switch_0_end
+switch_0_end:

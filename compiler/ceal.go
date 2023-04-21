@@ -431,9 +431,29 @@ func (a *CealVariable) TealAst() teal.TealAst {
 	switch a.D.V.t {
 	case "uint64":
 		res.Write(&teal.Teal_named_int{V: &teal.Teal_named_int_value{V: a.D.V.name}})
-		return res.Build()
 	case "bytes":
 		res.Write(&teal.Teal_byte{S: &teal.Teal_byte_string_value{V: a.D.V.name}})
+	case "method":
+		// TODO: I'm not sure why the sig generation is here and not in Teal_method
+		sig := strings.Builder{}
+		sig.WriteString(a.D.V.name)
+		sig.WriteString("(")
+		for i, arg := range a.D.V.fun.user.args {
+			if i > 0 {
+				sig.WriteString(",")
+			}
+			sig.WriteString(arg.t)
+		}
+		sig.WriteString(")")
+
+		for i, r := range a.D.V.fun.returns {
+			if i > 0 {
+				sig.WriteString(",")
+			}
+			sig.WriteString(r.t)
+		}
+
+		res.Write(&teal.Teal_literal{V: sig.String()})
 	default:
 		panic(fmt.Sprintf("type '%s' is not supported", a.D.V.t))
 	}
@@ -772,8 +792,8 @@ func (a *CealCall) TealAst() teal.TealAst {
 	}
 
 	if a.IsStmt {
-		if a.Fun.returns > 0 {
-			res.Write(&teal.Teal_popn{Teal_popn_op: teal.Teal_popn_op{N1: uint8(a.Fun.returns)}})
+		if len(a.Fun.returns) > 0 {
+			res.Write(&teal.Teal_popn{Teal_popn_op: teal.Teal_popn_op{N1: uint8(len(a.Fun.returns))}})
 		}
 	}
 
@@ -999,11 +1019,11 @@ func (a *CealFunction) TealAst() teal.TealAst {
 	res := &teal.TealAstBuilder{}
 
 	if a.Fun.user.sub {
-		if a.Fun.user.args != 0 || a.Fun.returns != 0 {
+		if len(a.Fun.user.args) != 0 || len(a.Fun.returns) != 0 {
 			ast := &teal.Teal_proto{
 				Teal_proto_op: teal.Teal_proto_op{
-					A1: uint8(a.Fun.user.args),
-					R2: uint8(a.Fun.returns),
+					A1: uint8(len(a.Fun.user.args)),
+					R2: uint8(len(a.Fun.returns)),
 				},
 			}
 
