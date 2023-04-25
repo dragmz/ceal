@@ -22,10 +22,6 @@ func (v *SymbolTableVisitor) initVariable(vr *Variable) {
 		return
 	}
 
-	if vr.param != nil {
-		panic("struct types are not supported for parameters yet")
-	}
-
 	fields := map[string]*Variable{}
 
 	for _, name := range t.complex.fieldsNames {
