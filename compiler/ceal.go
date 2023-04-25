@@ -441,7 +441,7 @@ func (a *CealVariable) TealAst() teal.TealAst {
 		}
 	}
 
-	switch a.D.V.t {
+	switch a.D.V.t.name {
 	case "uint64":
 		res.Write(&teal.Teal_named_int{V: &teal.Teal_named_int_value{V: a.D.V.name}})
 	case "bytes":
@@ -468,7 +468,7 @@ func (a *CealVariable) TealAst() teal.TealAst {
 
 		res.Write(&teal.Teal_literal{V: sig.String()})
 	default:
-		panic(fmt.Sprintf("type '%s' is not supported", a.D.V.t))
+		panic(fmt.Sprintf("type '%s' is not supported", a.D.V.t.name))
 	}
 
 	return res.Build()
@@ -634,7 +634,7 @@ type CealDefine struct {
 }
 
 func (a *CealDefine) TealAst() teal.TealAst {
-	if a.D.T.complex != nil {
+	if a.D.V.t.complex != nil {
 		panic("defining complex variable is not supported yet")
 	}
 
@@ -667,7 +667,7 @@ func (a *CealAssign) TealAst() teal.TealAst {
 
 	res := &teal.TealAstBuilder{}
 
-	if a.D.T.complex != nil && a.D.T.complex.builtin != nil {
+	if a.D.V.t.complex != nil && a.D.V.t.complex.builtin != nil {
 		panic("cannot assign to built-in op")
 	}
 
@@ -690,18 +690,14 @@ type CealStructField struct {
 func (a *CealStructField) TealAst() teal.TealAst {
 	res := &teal.TealAstBuilder{}
 
-	if a.D.T.complex.builtin != nil {
+	if a.D.V.t.complex.builtin != nil {
 		res.Write(&teal.Teal_call_builtin{
-			Name: a.D.Fun.builtin.op,
+			Name: a.D.F.fun.builtin.op,
 			Imms: []teal.TealAst{&teal.Teal_named_int_value{
 				V: a.D.F.name,
 			}},
 		})
 		return res.Build()
-	}
-
-	if a.D.V.param != nil {
-		panic("accessing struct param fields is not supported yet")
 	}
 
 	ast := a.D.Load()

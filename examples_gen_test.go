@@ -125,6 +125,9 @@ func TestExample_scratch(t *testing.T) {
 func TestExample_struct(t *testing.T) {
 	testExample(t, "examples/struct.cpp")
 }
+func TestExample_struct_param(t *testing.T) {
+	testExample(t, "examples/struct_param.cpp")
+}
 func TestExample_subscript(t *testing.T) {
 	testExample(t, "examples/subscript.cpp")
 }

@@ -52,7 +52,7 @@ type Function struct {
 type StructField struct {
 	t    string
 	name string
-	fun  string
+	fun  *Function
 }
 
 type BuiltinStruct struct {
@@ -109,7 +109,7 @@ type ConstVariable struct {
 type Variable struct {
 	constant bool
 
-	t    string
+	t    *Type
 	name string
 
 	local  *LocalVariable
@@ -220,6 +220,9 @@ func (s *Scope) registerFunction(f *Function) {
 }
 
 func (s *Scope) registerType(t *Type) {
+	if t.simple != nil && t.complex != nil {
+		panic(fmt.Sprintf("type cannot be both simple and complex: '%s'", t.name))
+	}
 	if _, ok := s.types[t.name]; ok {
 		panic(fmt.Sprintf("type '%s' is already defined", t.name))
 	}
@@ -441,7 +444,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 						panic("abi_encode data argument expects a variable")
 					}
 
-					vt := global.resolveType(v.D.V.t)
+					vt := v.D.V.t
 
 					if vt.simple != nil {
 						// TODO: implement
@@ -451,7 +454,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 					if vt.complex != nil {
 						for _, name := range vt.complex.fieldsNames {
 							field := vt.complex.fields[name]
-							if field.fun != "" {
+							if field.fun != nil {
 								panic(fmt.Sprintf("abi_encode does not support built-in fields: '%s'", field.name))
 							}
 
@@ -485,7 +488,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 						panic("abi_decode data argument expects a variable")
 					}
 
-					v1t := global.resolveType(v1.D.V.t)
+					v1t := v1.D.V.t
 
 					if v1t.simple == nil || v1t.simple.kind != SimpleTypeBytes {
 						panic("abi_decode data argument must be of bytes type")
@@ -496,7 +499,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 						panic("abi_decode out argument expects a variable")
 					}
 
-					v2t := global.resolveType(v2.D.V.t)
+					v2t := v2.D.V.t
 
 					if v2t.simple != nil {
 						// TODO: implement
@@ -506,7 +509,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 					if v2t.complex != nil {
 						for _, name := range v2t.complex.fieldsNames {
 							field := v2t.complex.fields[name]
-							if field.fun != "" {
+							if field.fun != nil {
 								panic(fmt.Sprintf("abi_decode does not support built-in fields: '%s'", field.name))
 							}
 
@@ -579,10 +582,12 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 		}
 
 		for _, item := range item.fields {
+			fun := global.functions[item.fun]
+
 			s.fields[item.name] = &StructField{
 				t:    item.t,
 				name: item.name,
-				fun:  item.fun,
+				fun:  fun,
 			}
 		}
 
@@ -607,8 +612,9 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 	}
 
 	for _, item := range builtin_variables {
+		t := global.resolveType(item.t)
 		v := &Variable{
-			t:    item.t,
+			t:    t,
 			name: item.name,
 		}
 

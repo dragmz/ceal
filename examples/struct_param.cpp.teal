@@ -1,0 +1,17 @@
+#pragma version 8
+b avm_main
+add:
+proto 1 1
+frame_dig -1
+frame_dig -2
++
+retsub
+avm_main:
+int 1
+store 0
+int 2
+store 1
+load 0
+load 1
+callsub add
+return

@@ -8,12 +8,16 @@ import (
 )
 
 func (v *SymbolTableVisitor) initVariable(vr *Variable) {
-	t := v.scope.resolveType(vr.t)
+	t := vr.t
 
 	if t.simple != nil {
 		if vr.local != nil {
 			vr.local.slot = v.slot
 			v.slot++
+		}
+		if vr.param != nil {
+			vr.param.index = v.index
+			v.index--
 		}
 		return
 	}
@@ -26,10 +30,20 @@ func (v *SymbolTableVisitor) initVariable(vr *Variable) {
 
 	for _, name := range t.complex.fieldsNames {
 		f := t.complex.fields[name]
+
 		fv := &Variable{
-			name:  f.name,
-			t:     f.t,
-			local: &LocalVariable{},
+			name: f.name,
+			t:    v.scope.resolveType(f.t),
+		}
+
+		if vr.local != nil {
+			fv.local = &LocalVariable{}
+		}
+
+		if vr.param != nil {
+			fv.param = &ParameterVariable{
+				index: v.index,
+			}
 		}
 
 		v.initVariable(fv)
@@ -48,7 +62,8 @@ type SymbolTableVisitor struct {
 	global *Scope
 	scope  *Scope
 
-	slot int
+	slot  int
+	index int
 }
 
 func (v *SymbolTableVisitor) VisitDeclarationStmt(ctx *parser.DeclarationStmtContext) interface{} {
@@ -60,7 +75,7 @@ func (v *SymbolTableVisitor) VisitDeclarationStmt(ctx *parser.DeclarationStmtCon
 
 	local := &LocalVariable{}
 
-	t := ctx.Declaration().Type_().ID().GetText()
+	t := v.scope.resolveType(ctx.Declaration().Type_().ID().GetText())
 
 	vr := &Variable{
 		t:     t,
@@ -85,7 +100,7 @@ func (v *SymbolTableVisitor) VisitDefinitionStmt(ctx *parser.DefinitionStmtConte
 
 	vr := &Variable{
 		constant: ctx.Definition().Type_().Const_() != nil,
-		t:        ctx.Definition().Type_().ID().GetText(),
+		t:        v.scope.resolveType(ctx.Definition().Type_().ID().GetText()),
 		name:     id,
 		local:    local,
 	}
@@ -196,7 +211,7 @@ func (v *SymbolTableVisitor) VisitFunction(ctx *parser.FunctionContext) interfac
 	v.scope.registerFunction(fun)
 
 	v.scope.variables[fun.name] = &Variable{
-		t:    "method",
+		t:    v.scope.resolveType("method"),
 		name: fun.name,
 		fun:  fun,
 	}
@@ -204,26 +219,26 @@ func (v *SymbolTableVisitor) VisitFunction(ctx *parser.FunctionContext) interfac
 	v.scope = user.scope
 	v.scope.function = fun
 
-	index := -len(ctx.Params().AllParam())
+	v.index = -1
 
-	for _, pctx := range ctx.Params().AllParam() {
+	allparam := ctx.Params().AllParam()
+
+	for i := len(allparam) - 1; i >= 0; i-- {
+		pctx := allparam[i]
+
 		id := pctx.ID().GetText()
 
 		if _, ok := v.scope.variables[id]; ok {
 			panic(fmt.Sprintf("param '%s' already defined", id))
 		}
 
-		param := &ParameterVariable{
-			index: index,
-		}
-
-		index++
-
 		vr := &Variable{
 			constant: pctx.Type_().Const_() != nil,
-			t:        pctx.Type_().ID().GetText(),
+			t:        v.scope.resolveType(pctx.Type_().ID().GetText()),
 			name:     id,
-			param:    param,
+			param: &ParameterVariable{
+				index: v.index,
+			},
 		}
 
 		v.initVariable(vr)
@@ -252,7 +267,7 @@ func (v *SymbolTableVisitor) VisitForStmt(ctx *parser.ForStmtContext) interface{
 		local := &LocalVariable{}
 
 		vr := &Variable{
-			t:     init.Definition().Type_().ID().GetText(),
+			t:     v.scope.resolveType(init.Definition().Type_().ID().GetText()),
 			name:  id,
 			local: local,
 		}
@@ -304,7 +319,7 @@ func (v *SymbolTableVisitor) VisitGlobal(ctx *parser.GlobalContext) interface{} 
 	vr := &Variable{
 		constant: ctx.Type_().Const_() != nil,
 		name:     id,
-		t:        tn,
+		t:        t,
 		const_: &ConstVariable{
 			kind: t.simple.kind,
 		},

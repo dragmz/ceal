@@ -405,7 +405,7 @@ func (v *AstVisitor) mustResolveFunction(ids []antlr.TerminalNode) (*StructFunct
 			nvr = vr.fields[id]
 		}
 
-		t := v.scope.resolveType(vr.t)
+		t := vr.t
 		sf := t.complex.functions[name]
 
 		if sf == nil {
@@ -432,7 +432,7 @@ func (v *AstVisitor) mustResolve(ids []antlr.TerminalNode) (*Variable, *StructFi
 		panic(fmt.Sprintf("failed to resolve id: '%s", id))
 	}
 
-	t := v.scope.resolveType(vr.t)
+	t := vr.t
 
 	if len(ids) == 1 {
 		return vr, nil
@@ -448,7 +448,6 @@ func (v *AstVisitor) mustResolve(ids []antlr.TerminalNode) (*Variable, *StructFi
 
 	for i := 1; i < len(ids); i++ {
 		vr = nvr
-		t = v.scope.resolveType(vr.t)
 
 		id := ids[i].GetText()
 		f = t.complex.fields[id]
@@ -461,14 +460,12 @@ func (v *AstVisitor) mustResolve(ids []antlr.TerminalNode) (*Variable, *StructFi
 func (v *AstVisitor) VisitDefinition(ctx *parser.DefinitionContext) interface{} {
 	id := ctx.ID().GetText()
 	vr := v.scope.variables[id]
-	t := v.scope.resolveType(vr.t)
 	e := ctx.Expr()
 
 	ast := &CealAssign{
 		D: valueData{
 			dotData: dotData{
 				V: vr,
-				T: t,
 			},
 		},
 		Value: v.visitAst(e),
@@ -480,14 +477,12 @@ func (v *AstVisitor) VisitDefinition(ctx *parser.DefinitionContext) interface{} 
 func (v *AstVisitor) VisitDefinitionStmt(ctx *parser.DefinitionStmtContext) interface{} {
 	id := ctx.Definition().ID().GetText()
 	vr := v.scope.variables[id]
-	t := v.scope.resolveType(vr.t)
 	e := ctx.Definition().Expr()
 
 	ast := &CealDefine{
 		D: valueData{
 			dotData: dotData{
 				V: vr,
-				T: t,
 			},
 		},
 		Value: v.visitAst(e),
@@ -590,16 +585,14 @@ type valueData struct {
 }
 
 type dotData struct {
-	V   *Variable
-	F   *StructField
-	T   *Type
-	Fun *Function
+	V *Variable
+	F *StructField
 }
 
 func (d dotData) Slot() uint8 {
 	var slot uint8
 
-	if d.T.complex != nil {
+	if d.V.t.complex != nil {
 		v := d.V.fields[d.F.name]
 		slot = uint8(v.local.slot)
 	} else {
@@ -610,11 +603,48 @@ func (d dotData) Slot() uint8 {
 }
 
 func (d dotData) Load() teal.TealAst {
-	if d.V.param != nil {
-		return &teal.Teal_frame_dig{Teal_frame_dig_op: teal.Teal_frame_dig_op{I1: int8(d.V.param.index)}}
+	var v *Variable
+
+	if d.F != nil {
+		v = d.V.fields[d.F.name]
+	} else {
+		v = d.V
 	}
 
-	return &teal.Teal_load{Teal_load_op: teal.Teal_load_op{I1: d.Slot()}}
+	if v.t.simple != nil {
+		if v.param != nil {
+			return &teal.Teal_frame_dig{Teal_frame_dig_op: teal.Teal_frame_dig_op{I1: int8(v.param.index)}}
+		}
+
+		return &teal.Teal_load{Teal_load_op: teal.Teal_load_op{I1: d.Slot()}}
+	}
+
+	if v.t.complex != nil {
+		if v.param != nil {
+			panic("complex param fields are not supported")
+		}
+
+		seq := teal.Teal_seq{}
+		for _, name := range v.t.complex.fieldsNames {
+			f := v.fields[name]
+
+			if f.t.complex != nil {
+				// TODO: refactor to support nested complex field
+				panic("nested complex fields are not supported")
+			}
+
+			if f.param != nil {
+				seq = append(seq, &teal.Teal_frame_dig{Teal_frame_dig_op: teal.Teal_frame_dig_op{I1: int8(f.param.index)}})
+			}
+
+			if f.local != nil {
+				seq = append(seq, &teal.Teal_load{Teal_load_op: teal.Teal_load_op{I1: uint8(f.local.slot)}})
+			}
+		}
+		return seq
+	}
+
+	panic("unsupported")
 }
 
 func (d valueData) Store(op teal.TealAst) teal.TealAst {
@@ -657,18 +687,10 @@ func (v *AstVisitor) mustResolveDot(ctx parser.IDot_exprContext) dotData {
 	ids = append(ids, ctx.AllID()...)
 
 	vr, f := v.mustResolve(ids)
-	t := v.scope.resolveType(vr.t)
-
-	var fun *Function
-	if f != nil {
-		fun = v.global.functions[f.fun]
-	}
 
 	return dotData{
-		V:   vr,
-		F:   f,
-		T:   t,
-		Fun: fun,
+		V: vr,
+		F: f,
 	}
 }
 
