@@ -118,6 +118,7 @@ func (a *CealBreak) TealAst() teal.TealAst {
 }
 
 type CealSwitchCase struct {
+	Loop       *LoopScopeItem
 	Value      CealAst
 	Statements []CealAst
 }
@@ -134,6 +135,8 @@ type CealSwitch struct {
 
 func (a *CealSwitch) TealAst() teal.TealAst {
 	res := &teal.TealAstBuilder{}
+
+	end_label_name := fmt.Sprintf("switch_%d_end", a.Index)
 
 	labels := []string{}
 
@@ -157,6 +160,12 @@ func (a *CealSwitch) TealAst() teal.TealAst {
 		}
 	}
 
+	breaks := a.Loop.breaks
+
+	if !breaks {
+		res.Write(&teal.Teal_b{Teal_b_op: teal.Teal_b_op{TARGET1: end_label_name}})
+	}
+
 	for i, c := range a.Cases {
 		label := labels[i]
 
@@ -165,10 +174,14 @@ func (a *CealSwitch) TealAst() teal.TealAst {
 		for _, stmt := range c.Statements {
 			res.Write(stmt.TealAst())
 		}
+
+		if c.Loop.breaks {
+			breaks = true
+		}
 	}
 
-	if a.Loop.breaks {
-		res.Write(&teal.Teal_label{Name: fmt.Sprintf("switch_%d_end", a.Index)})
+	if breaks {
+		res.Write(&teal.Teal_label{Name: end_label_name})
 	}
 
 	return res.Build()

@@ -15,3 +15,12 @@ byte "1"
 log
 b switch_0_end
 switch_0_end:
+byte "test"
+txna ApplicationArgs 0
+match switch_1_0
+b switch_1_end
+switch_1_0:
+byte "test"
+log
+b switch_1_end
+switch_1_end:

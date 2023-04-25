@@ -831,16 +831,21 @@ func (v *AstVisitor) VisitSwitchStmt(ctx *parser.SwitchStmtContext) interface{} 
 	for _, c := range ctx.AllCase_() {
 		stmts := []CealAst{}
 
+		loop := v.loops.Push("switch")
+
 		for _, item := range c.AllStmt() {
 			stmts = append(stmts, v.visitAst(item))
 		}
 
 		sc := &CealSwitchCase{
+			Loop:       loop,
 			Value:      v.visitAst(c.Expr()),
 			Statements: stmts,
 		}
 
 		ast.Cases = append(ast.Cases, sc)
+
+		v.loops.Pop()
 	}
 
 	if ctx.Default_() != nil {

@@ -7,7 +7,8 @@ constexpr uint64_t fnv1a_hash(const char* str, uint64_t hash = 14695981039346656
     return (*str == '\0') ? hash : fnv1a_hash(str + 1, (hash ^ static_cast<uint64_t>(*str)) * 1099511628211u);
 }
 
-#define avm_method(x) fnv1a_hash(#x)
+#define const_string(x) fnv1a_hash(x)
+#define avm_method(x) const_string(#x)
 
 #define IMMEDIATE
 #define STACK

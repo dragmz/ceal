@@ -372,10 +372,36 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 
 	{
 		f := &Function{
+			name: "const_string",
+			t:    "bytes",
+			returns: []*FunctionParam{
+				{
+					t:    "bytes",
+					name: "r1",
+				},
+			},
+			compiler: &CompilerFunction{
+				parameters: []*FunctionParam{
+					{
+						t:    "bytes",
+						name: "value",
+					},
+				},
+				handler: func(args []CealAst) teal.TealAst {
+					return &teal.Teal_literal{V: args[0].TealAst().Teal().String()}
+				},
+			},
+		}
+
+		global.registerFunction(f)
+	}
+
+	{
+		f := &Function{
 			name: "avm_method",
 			t:    "bytes",
 			returns: []*FunctionParam{
-				&FunctionParam{
+				{
 					t:    "bytes",
 					name: "r1",
 				},
@@ -403,7 +429,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 			name: "abi_encode",
 			t:    "bytes",
 			returns: []*FunctionParam{
-				&FunctionParam{
+				{
 					t:    "bytes",
 					name: "r1",
 				},

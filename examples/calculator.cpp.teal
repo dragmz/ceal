@@ -23,6 +23,7 @@ method "add(uint64,uint64)uint64"
 method "sub(uint64,uint64)uint64"
 txna ApplicationArgs 0
 match switch_0_0 switch_0_1
+b switch_0_end
 switch_0_0:
 load 0
 load 1

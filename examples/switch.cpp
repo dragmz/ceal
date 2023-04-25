@@ -14,4 +14,11 @@ uint64 avm_main()
         avm_log("call");
         break;
     }
+
+    switch (avm_txna.ApplicationArgs(0))
+    {
+    case const_string("test"):
+        avm_log("test");
+        break;
+    }
 }
