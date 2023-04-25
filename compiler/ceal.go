@@ -455,7 +455,7 @@ func (a *CealVariable) TealAst() teal.TealAst {
 			if i > 0 {
 				sig.WriteString(",")
 			}
-			sig.WriteString(arg.t)
+			sig.WriteString(arg.t.name)
 		}
 		sig.WriteString(")")
 
@@ -463,7 +463,7 @@ func (a *CealVariable) TealAst() teal.TealAst {
 			if i > 0 {
 				sig.WriteString(",")
 			}
-			sig.WriteString(r.t)
+			sig.WriteString(r.t.name)
 		}
 
 		res.Write(&teal.Teal_literal{V: sig.String()})
@@ -763,7 +763,7 @@ func (a *CealCall) TealAst() teal.TealAst {
 			}
 
 			if e, ok := arg.(*CealStringConstant); ok {
-				switch imm.t {
+				switch imm.t.name {
 				case "label":
 					e.kind = CealStringConstantLabel
 				}

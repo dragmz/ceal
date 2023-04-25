@@ -33,7 +33,7 @@ func (v *SymbolTableVisitor) initVariable(vr *Variable) {
 
 		fv := &Variable{
 			name: f.name,
-			t:    v.scope.resolveType(f.t),
+			t:    f.t,
 		}
 
 		if vr.local != nil {
@@ -128,7 +128,7 @@ func (v *SymbolTableVisitor) VisitStruct(ctx *parser.StructContext) interface{} 
 	}
 
 	for _, item := range ctx.AllField() {
-		t := item.Type_().ID().GetText()
+		t := v.scope.resolveType(item.Type_().ID().GetText())
 		name := item.ID().GetText()
 
 		f := &StructField{
@@ -168,8 +168,9 @@ func (v *SymbolTableVisitor) VisitFunction(ctx *parser.FunctionContext) interfac
 	var args []*FunctionParam
 
 	for _, p := range ctx.Params().AllParam() {
+		t := v.scope.resolveType(p.Type_().ID().GetText())
 		arg := &FunctionParam{
-			t:    p.Type_().ID().GetText(),
+			t:    t,
 			name: p.ID().GetText(),
 		}
 
@@ -200,7 +201,7 @@ func (v *SymbolTableVisitor) VisitFunction(ctx *parser.FunctionContext) interfac
 	} else if !t.simple.empty {
 		fun.returns = []*FunctionParam{
 			{
-				t:    t.name,
+				t:    t,
 				name: "r1",
 			},
 		}

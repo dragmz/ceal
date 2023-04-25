@@ -620,27 +620,22 @@ func (d dotData) Load() teal.TealAst {
 	}
 
 	if v.t.complex != nil {
-		if v.param != nil {
-			panic("complex param fields are not supported")
-		}
-
 		seq := teal.Teal_seq{}
+
 		for _, name := range v.t.complex.fieldsNames {
-			f := v.fields[name]
-
-			if f.t.complex != nil {
-				// TODO: refactor to support nested complex field
-				panic("nested complex fields are not supported")
+			var f *StructField
+			if v.t.complex != nil {
+				f = v.t.complex.fields[name]
 			}
 
-			if f.param != nil {
-				seq = append(seq, &teal.Teal_frame_dig{Teal_frame_dig_op: teal.Teal_frame_dig_op{I1: int8(f.param.index)}})
+			fd := dotData{
+				V: v,
+				F: f,
 			}
 
-			if f.local != nil {
-				seq = append(seq, &teal.Teal_load{Teal_load_op: teal.Teal_load_op{I1: uint8(f.local.slot)}})
-			}
+			seq = append(seq, fd.Load())
 		}
+
 		return seq
 	}
 

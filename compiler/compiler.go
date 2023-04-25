@@ -15,7 +15,7 @@ type CealCompiler struct {
 }
 
 type FunctionParam struct {
-	t     string
+	t     *Type
 	name  string
 	array bool
 	field bool
@@ -50,7 +50,7 @@ type Function struct {
 }
 
 type StructField struct {
-	t    string
+	t    *Type
 	name string
 	fun  *Function
 }
@@ -223,6 +223,7 @@ func (s *Scope) registerType(t *Type) {
 	if t.simple != nil && t.complex != nil {
 		panic(fmt.Sprintf("type cannot be both simple and complex: '%s'", t.name))
 	}
+
 	if _, ok := s.types[t.name]; ok {
 		panic(fmt.Sprintf("type '%s' is already defined", t.name))
 	}
@@ -328,6 +329,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 
 	global := NewScope(nil)
 
+	// TODO: don't really have an idea how to handle the runtime types below
 	global.registerType(&Type{
 		name: "void",
 		simple: &SimpleType{
@@ -337,6 +339,77 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 
 	global.registerType(&Type{
 		name: "bytes",
+		simple: &SimpleType{
+			kind: SimpleTypeBytes,
+		},
+	})
+
+	global.registerType(&Type{
+		name: "key_t",
+		simple: &SimpleType{
+			kind: SimpleTypeBytes,
+		},
+	})
+
+	global.registerType(&Type{
+		name: "label",
+	})
+
+	global.registerType(&Type{
+		name: "any_t",
+	})
+
+	global.registerType(&Type{
+		name: "bigint_t",
+		simple: &SimpleType{
+			kind: SimpleTypeInt,
+		},
+	})
+
+	global.registerType(&Type{
+		name: "name_t",
+		simple: &SimpleType{
+			kind: SimpleTypeBytes,
+		},
+	})
+
+	global.registerType(&Type{
+		name: "addr_t",
+		simple: &SimpleType{
+			kind: SimpleTypeBytes,
+		},
+	})
+
+	global.registerType(&Type{
+		name: "int8",
+		simple: &SimpleType{
+			kind: SimpleTypeInt,
+		},
+	})
+
+	global.registerType(&Type{
+		name: "uint64_t",
+		simple: &SimpleType{
+			kind: SimpleTypeInt,
+		},
+	})
+
+	global.registerType(&Type{
+		name: "bool_t",
+		simple: &SimpleType{
+			kind: SimpleTypeInt,
+		},
+	})
+
+	global.registerType(&Type{
+		name: "r_byte_t",
+		simple: &SimpleType{
+			kind: SimpleTypeBytes,
+		},
+	})
+
+	global.registerType(&Type{
+		name: "r32_byte_t",
 		simple: &SimpleType{
 			kind: SimpleTypeBytes,
 		},
@@ -379,14 +452,14 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 			t:    "bytes",
 			returns: []*FunctionParam{
 				{
-					t:    "bytes",
+					t:    global.resolveType("bytes"),
 					name: "r1",
 				},
 			},
 			compiler: &CompilerFunction{
 				parameters: []*FunctionParam{
 					{
-						t:    "bytes",
+						t:    global.resolveType("bytes"),
 						name: "value",
 					},
 				},
@@ -405,14 +478,14 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 			t:    "bytes",
 			returns: []*FunctionParam{
 				{
-					t:    "bytes",
+					t:    global.resolveType("bytes"),
 					name: "r1",
 				},
 			},
 			compiler: &CompilerFunction{
 				parameters: []*FunctionParam{
 					{
-						t:    "method",
+						t:    global.resolveType("method"),
 						name: "name",
 					},
 				},
@@ -433,7 +506,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 			t:    "bytes",
 			returns: []*FunctionParam{
 				{
-					t:    "bytes",
+					t:    global.resolveType("bytes"),
 					name: "r1",
 				},
 			},
@@ -458,7 +531,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 								panic(fmt.Sprintf("abi_encode does not support built-in fields: '%s'", field.name))
 							}
 
-							ft := global.resolveType(field.t)
+							ft := field.t
 							// TODO: implement
 							panic(fmt.Sprintf("abi_encode does not support encoding type: '%s'", ft.name))
 						}
@@ -468,7 +541,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 				},
 				parameters: []*FunctionParam{
 					{
-						t:    "any",
+						t:    global.resolveType("any"),
 						name: "in",
 					},
 				},
@@ -513,7 +586,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 								panic(fmt.Sprintf("abi_decode does not support built-in fields: '%s'", field.name))
 							}
 
-							ft := global.resolveType(field.t)
+							ft := field.t
 							// TODO: implement
 							panic(fmt.Sprintf("abi_decode does not support decoding type: '%s'", ft.name))
 						}
@@ -523,11 +596,11 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 				},
 				parameters: []*FunctionParam{
 					{
-						t:    "bytes",
+						t:    global.resolveType("bytes"),
 						name: "data",
 					},
 					{
-						t:    "any&",
+						t:    global.resolveType("any"),
 						name: "out",
 					},
 				},
@@ -548,14 +621,14 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 
 		for _, item := range item.returns {
 			f.returns = append(f.returns, &FunctionParam{
-				t:    item.t,
+				t:    global.resolveType(item.t),
 				name: item.name,
 			})
 		}
 
 		for _, item := range item.stack {
 			f.builtin.stack = append(f.builtin.stack, &FunctionParam{
-				t:     item.t,
+				t:     global.resolveType(item.t),
 				name:  item.name,
 				array: item.array,
 				field: item.field,
@@ -564,7 +637,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 
 		for _, item := range item.imm {
 			f.builtin.imm = append(f.builtin.imm, &FunctionParam{
-				t:     item.t,
+				t:     global.resolveType(item.t),
 				name:  item.name,
 				array: item.array,
 				field: item.field,
@@ -584,8 +657,9 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 		for _, item := range item.fields {
 			fun := global.functions[item.fun]
 
+			t := global.resolveType(item.t)
 			s.fields[item.name] = &StructField{
-				t:    item.t,
+				t:    t,
 				name: item.name,
 				fun:  fun,
 			}
