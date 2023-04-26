@@ -634,10 +634,6 @@ type CealDefine struct {
 }
 
 func (a *CealDefine) TealAst() teal.TealAst {
-	if a.D.V.t.complex != nil {
-		panic("defining complex variable is not supported yet")
-	}
-
 	ast := a.D.Store(a.Value.TealAst())
 
 	return ast

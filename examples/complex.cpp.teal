@@ -1,0 +1,17 @@
+#pragma version 8
+// test_t a
+// set a fields
+int 1
+store 0
+int 2
+store 1
+// test_t b = a
+load 0
+load 1
+store 2
+store 3
+// a = b
+load 2
+load 3
+store 0
+store 1

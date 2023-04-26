@@ -282,7 +282,6 @@ func (v *AstVisitor) VisitCall_expr(ctx *parser.Call_exprContext) interface{} {
 	}
 
 	if f.builtin != nil {
-		// TODO: refactor the ^ and v conditions
 		if sf != nil {
 			field = &CealRaw{Value: sf.name}
 		}
@@ -628,9 +627,11 @@ func (d dotData) Load() teal.TealAst {
 				f = v.t.complex.fields[name]
 			}
 
-			fd := dotData{
-				V: v,
-				F: f,
+			fd := valueData{
+				dotData: dotData{
+					V: v,
+					F: f,
+				},
 			}
 
 			seq = append(seq, fd.Load())
@@ -639,7 +640,7 @@ func (d dotData) Load() teal.TealAst {
 		return seq
 	}
 
-	panic("unsupported")
+	panic(fmt.Sprintf("both non-simple and non-complex type not supported: '%s'", v.t.name))
 }
 
 func (d valueData) Store(op teal.TealAst) teal.TealAst {
@@ -662,15 +663,49 @@ func (d valueData) Store(op teal.TealAst) teal.TealAst {
 		value = op
 	}
 
+	var v *Variable
+
+	if d.F != nil {
+		v = d.V.fields[d.F.name]
+	} else {
+		v = d.V
+	}
+
 	var ast teal.TealAst
 
-	if d.V.param != nil {
+	if v.param != nil {
 		ast = &teal.Teal_frame_bury{
-			Teal_frame_bury_op: teal.Teal_frame_bury_op{I1: int8(d.V.param.index)},
+			Teal_frame_bury_op: teal.Teal_frame_bury_op{I1: int8(v.param.index)},
 			STACK_1:            ast,
 		}
 	} else {
-		ast = &teal.Teal_store{STACK_1: value, Teal_store_op: teal.Teal_store_op{I1: d.Slot()}}
+		if v.t.simple != nil {
+			ast = &teal.Teal_store{STACK_1: value, Teal_store_op: teal.Teal_store_op{I1: d.Slot()}}
+		}
+
+		if v.t.complex != nil {
+			seq := teal.Teal_seq{
+				value,
+			}
+
+			for _, name := range v.t.complex.fieldsNames {
+				var f *StructField
+				if v.t.complex != nil {
+					f = v.t.complex.fields[name]
+				}
+
+				fd := valueData{
+					dotData: dotData{
+						V: v,
+						F: f,
+					},
+				}
+
+				seq = append(seq, fd.Store(&teal.Teal_seq{}))
+			}
+
+			return seq
+		}
 	}
 
 	return ast

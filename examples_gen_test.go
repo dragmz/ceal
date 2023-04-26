@@ -41,6 +41,9 @@ func TestExample_chained_conditional(t *testing.T) {
 func TestExample_comment(t *testing.T) {
 	testExample(t, "examples/comment.cpp")
 }
+func TestExample_complex(t *testing.T) {
+	testExample(t, "examples/complex.cpp")
+}
 func TestExample_conditional(t *testing.T) {
 	testExample(t, "examples/conditional.cpp")
 }
