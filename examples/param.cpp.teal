@@ -1,0 +1,16 @@
+#pragma version 8
+b avm_main
+test:
+proto 2 0
+frame_dig -3
+frame_bury -3
+frame_dig -1
+frame_dig -2
+frame_bury -1
+frame_bury -2
+retsub
+avm_main:
+int 1
+load 0
+load 1
+callsub test

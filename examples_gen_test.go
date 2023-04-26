@@ -116,6 +116,9 @@ func TestExample_nested_struct(t *testing.T) {
 func TestExample_ok(t *testing.T) {
 	testExample(t, "examples/ok.cpp")
 }
+func TestExample_param(t *testing.T) {
+	testExample(t, "examples/param.cpp")
+}
 func TestExample_round(t *testing.T) {
 	testExample(t, "examples/round.cpp")
 }

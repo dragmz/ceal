@@ -610,12 +610,14 @@ func (d dotData) Load() teal.TealAst {
 		v = d.V
 	}
 
+	var ast teal.TealAst
+
 	if v.t.simple != nil {
 		if v.param != nil {
-			return &teal.Teal_frame_dig{Teal_frame_dig_op: teal.Teal_frame_dig_op{I1: int8(v.param.index)}}
+			ast = &teal.Teal_frame_dig{Teal_frame_dig_op: teal.Teal_frame_dig_op{I1: int8(v.param.index)}}
+		} else {
+			ast = &teal.Teal_load{Teal_load_op: teal.Teal_load_op{I1: d.Slot()}}
 		}
-
-		return &teal.Teal_load{Teal_load_op: teal.Teal_load_op{I1: d.Slot()}}
 	}
 
 	if v.t.complex != nil {
@@ -637,10 +639,10 @@ func (d dotData) Load() teal.TealAst {
 			seq = append(seq, fd.Load())
 		}
 
-		return seq
+		ast = seq
 	}
 
-	panic(fmt.Sprintf("both non-simple and non-complex type not supported: '%s'", v.t.name))
+	return ast
 }
 
 func (d valueData) Store(op teal.TealAst) teal.TealAst {
@@ -673,39 +675,39 @@ func (d valueData) Store(op teal.TealAst) teal.TealAst {
 
 	var ast teal.TealAst
 
-	if v.param != nil {
-		ast = &teal.Teal_frame_bury{
-			Teal_frame_bury_op: teal.Teal_frame_bury_op{I1: int8(v.param.index)},
-			STACK_1:            ast,
-		}
-	} else {
-		if v.t.simple != nil {
+	if v.t.simple != nil {
+		if v.param != nil {
+			ast = &teal.Teal_frame_bury{
+				Teal_frame_bury_op: teal.Teal_frame_bury_op{I1: int8(v.param.index)},
+				STACK_1:            value,
+			}
+		} else {
 			ast = &teal.Teal_store{STACK_1: value, Teal_store_op: teal.Teal_store_op{I1: d.Slot()}}
 		}
+	}
 
-		if v.t.complex != nil {
-			seq := teal.Teal_seq{
-				value,
-			}
-
-			for _, name := range v.t.complex.fieldsNames {
-				var f *StructField
-				if v.t.complex != nil {
-					f = v.t.complex.fields[name]
-				}
-
-				fd := valueData{
-					dotData: dotData{
-						V: v,
-						F: f,
-					},
-				}
-
-				seq = append(seq, fd.Store(&teal.Teal_seq{}))
-			}
-
-			return seq
+	if v.t.complex != nil {
+		seq := teal.Teal_seq{
+			value,
 		}
+
+		for _, name := range v.t.complex.fieldsNames {
+			var f *StructField
+			if v.t.complex != nil {
+				f = v.t.complex.fields[name]
+			}
+
+			fd := valueData{
+				dotData: dotData{
+					V: v,
+					F: f,
+				},
+			}
+
+			seq = append(seq, fd.Store(&teal.Teal_seq{}))
+		}
+
+		ast = seq
 	}
 
 	return ast

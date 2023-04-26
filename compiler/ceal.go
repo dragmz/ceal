@@ -656,11 +656,6 @@ func (a *CealAssign) TealAst() teal.TealAst {
 		panic("cannot assign to a const var")
 	}
 
-	if a.D.V.param != nil {
-		// TODO: add param var assignment support
-		panic("cannot assign param var")
-	}
-
 	res := &teal.TealAstBuilder{}
 
 	if a.D.V.t.complex != nil && a.D.V.t.complex.builtin != nil {
