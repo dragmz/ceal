@@ -75,22 +75,50 @@ func (s *Struct) registerFunction(f *StructFunction) {
 	s.functions[f.name] = f
 }
 
-type SimpleTypeKind int
+type AvmTypeKind int
 
 const (
-	SimpleTypeInt = SimpleTypeKind(iota)
-	SimpleTypeBytes
+	AvmTypeInt = AvmTypeKind(iota)
+	AvmTypeBytes
 )
 
-type SimpleType struct {
-	kind  SimpleTypeKind
-	empty bool
+type AvmType struct {
+	kind AvmTypeKind
 }
 
 type Type struct {
-	name    string
+	name string
+
 	complex *Struct // struct
-	simple  *SimpleType
+	avm     *AvmType
+}
+
+var noneType = &Type{
+	name: "none",
+}
+
+var anyType = &Type{
+	name: "any",
+}
+
+var bytesType = &Type{
+	name: "bytes",
+	avm: &AvmType{
+		kind: AvmTypeBytes,
+	},
+}
+
+var avmTypeBytes = &AvmType{
+	kind: AvmTypeBytes,
+}
+
+var avmTypeUint64 = &AvmType{
+	kind: AvmTypeInt,
+}
+
+var uint64Type = &Type{
+	name: "uint64",
+	avm:  avmTypeUint64,
 }
 
 type LocalVariable struct {
@@ -102,7 +130,7 @@ type ParameterVariable struct {
 }
 
 type ConstVariable struct {
-	kind  SimpleTypeKind
+	kind  AvmTypeKind
 	index int
 }
 
@@ -220,15 +248,29 @@ func (s *Scope) registerFunction(f *Function) {
 }
 
 func (s *Scope) registerType(t *Type) {
-	if t.simple != nil && t.complex != nil {
-		panic(fmt.Sprintf("type cannot be both simple and complex: '%s'", t.name))
-	}
+	validateType(t)
 
 	if _, ok := s.types[t.name]; ok {
 		panic(fmt.Sprintf("type '%s' is already defined", t.name))
 	}
 
 	s.types[t.name] = t
+}
+
+func validateType(t *Type) {
+	if t.avm != nil && t.complex != nil {
+		panic(fmt.Sprintf("type cannot be both simple and complex: '%s'", t.name))
+	}
+}
+
+func (s *Scope) registerTypeAlias(name string, t *Type) {
+	validateType(t)
+
+	if _, ok := s.types[name]; ok {
+		panic(fmt.Sprintf("type '%s' is already defined", name))
+	}
+
+	s.types[name] = t
 }
 
 func (s *Scope) enter() *Scope {
@@ -329,122 +371,43 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 
 	global := NewScope(nil)
 
-	// TODO: don't really have an idea how to handle the runtime types below
+	global.registerType(uint64Type)
+	global.registerType(bytesType)
+	global.registerType(anyType)
+	global.registerType(noneType)
+	global.registerTypeAlias("void", noneType)
 	global.registerType(&Type{
-		name: "void",
-		simple: &SimpleType{
-			empty: true,
-		},
+		name: "uint8",
+		avm:  avmTypeUint64,
 	})
-
 	global.registerType(&Type{
-		name: "bytes",
-		simple: &SimpleType{
-			kind: SimpleTypeBytes,
-		},
+		name: "int8",
+		avm:  avmTypeUint64,
 	})
-
 	global.registerType(&Type{
-		name: "key_t",
-		simple: &SimpleType{
-			kind: SimpleTypeBytes,
-		},
+		name: "bool",
+		avm:  avmTypeUint64,
 	})
 
 	global.registerType(&Type{
 		name: "label",
 	})
 
-	global.registerType(&Type{
-		name: "any_t",
-	})
+	for _, item := range builtin_types {
+		bt := &Type{
+			name: item.Name,
+		}
 
-	global.registerType(&Type{
-		name: "bigint_t",
-		simple: &SimpleType{
-			kind: SimpleTypeInt,
-		},
-	})
+		switch item.Type {
+		case "uint64":
+			bt.avm = avmTypeUint64
+		case "bytes":
+			bt.avm = avmTypeBytes
+		case "none":
+		}
 
-	global.registerType(&Type{
-		name: "name_t",
-		simple: &SimpleType{
-			kind: SimpleTypeBytes,
-		},
-	})
-
-	global.registerType(&Type{
-		name: "addr_t",
-		simple: &SimpleType{
-			kind: SimpleTypeBytes,
-		},
-	})
-
-	global.registerType(&Type{
-		name: "int8",
-		simple: &SimpleType{
-			kind: SimpleTypeInt,
-		},
-	})
-
-	global.registerType(&Type{
-		name: "uint64_t",
-		simple: &SimpleType{
-			kind: SimpleTypeInt,
-		},
-	})
-
-	global.registerType(&Type{
-		name: "bool_t",
-		simple: &SimpleType{
-			kind: SimpleTypeInt,
-		},
-	})
-
-	global.registerType(&Type{
-		name: "r_byte_t",
-		simple: &SimpleType{
-			kind: SimpleTypeBytes,
-		},
-	})
-
-	global.registerType(&Type{
-		name: "r32_byte_t",
-		simple: &SimpleType{
-			kind: SimpleTypeBytes,
-		},
-	})
-
-	global.registerType(&Type{
-		name: "bool",
-		simple: &SimpleType{
-			kind: SimpleTypeInt,
-		},
-	})
-
-	global.registerType(&Type{
-		name: "uint8",
-		simple: &SimpleType{
-			kind: SimpleTypeInt,
-		},
-	})
-
-	global.registerType(&Type{
-		name: "uint64",
-		simple: &SimpleType{
-			kind: SimpleTypeInt,
-		},
-	})
-
-	global.registerType(&Type{
-		name:   "any",
-		simple: &SimpleType{},
-	})
-
-	global.registerType(&Type{
-		name:   "method",
-		simple: &SimpleType{},
-	})
+		global.registerType(bt)
+	}
 
 	{
 		f := &Function{
@@ -485,7 +448,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 			compiler: &CompilerFunction{
 				parameters: []*FunctionParam{
 					{
-						t:    global.resolveType("method"),
+						t:    global.resolveType("method_t"),
 						name: "name",
 					},
 				},
@@ -519,7 +482,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 
 					vt := v.D.V.t
 
-					if vt.simple != nil {
+					if vt.avm != nil {
 						// TODO: implement
 						panic("abi_encode does not support simple types yet")
 					}
@@ -541,7 +504,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 				},
 				parameters: []*FunctionParam{
 					{
-						t:    global.resolveType("any"),
+						t:    anyType,
 						name: "in",
 					},
 				},
@@ -563,7 +526,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 
 					v1t := v1.D.V.t
 
-					if v1t.simple == nil || v1t.simple.kind != SimpleTypeBytes {
+					if v1t.avm == nil || v1t.avm.kind != AvmTypeBytes {
 						panic("abi_decode data argument must be of bytes type")
 					}
 
@@ -574,7 +537,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 
 					v2t := v2.D.V.t
 
-					if v2t.simple != nil {
+					if v2t.avm != nil {
 						// TODO: implement
 						panic("abi_decode does not support simple types yet")
 					}
@@ -600,7 +563,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 						name: "data",
 					},
 					{
-						t:    global.resolveType("any"),
+						t:    anyType,
 						name: "out",
 					},
 				},

@@ -34,8 +34,9 @@ type CealSpecOp struct {
 }
 
 type CealSpecType struct {
-	Name string `json:"Name"`
-	Type string `json:"Type"`
+	Name  string    `json:"Name"`
+	Type  string    `json:"Type"`
+	Bound [2]uint64 `json:"Bound"`
 }
 
 type CealSpec struct {

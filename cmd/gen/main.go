@@ -177,7 +177,23 @@ type BuiltinStructData struct
 	fields []BuiltinStructFieldData
 	functions []BuiltinStructFunctionData
 };
-	
+
+type BuiltinType struct {
+	Name string
+	Type string
+	Bound [2]uint64
+}
+`)
+
+	bw.WriteString(`var builtin_types = []BuiltinType {
+	`)
+	for _, t := range cs.Types {
+		fmt.Fprintf(bw, "{ Name: \"%s\", Type: \"%s\", Bound: [2]uint64 { %d, %d } },\n", t.Name, t.Type, t.Bound[0], t.Bound[1])
+	}
+	bw.WriteString(`}
+	`)
+
+	bw.WriteString(`
 var builtin_structs = []BuiltinStructData {
 `)
 

@@ -10,7 +10,7 @@ import (
 func (v *SymbolTableVisitor) initVariable(vr *Variable) {
 	t := vr.t
 
-	if t.simple != nil {
+	if t.avm != nil {
 		if vr.local != nil {
 			vr.local.slot = v.slot
 			v.slot++
@@ -198,7 +198,7 @@ func (v *SymbolTableVisitor) VisitFunction(ctx *parser.FunctionContext) interfac
 				name: name,
 			})
 		}
-	} else if !t.simple.empty {
+	} else if t != noneType {
 		fun.returns = []*FunctionParam{
 			{
 				t:    t,
@@ -212,7 +212,7 @@ func (v *SymbolTableVisitor) VisitFunction(ctx *parser.FunctionContext) interfac
 	v.scope.registerFunction(fun)
 
 	v.scope.variables[fun.name] = &Variable{
-		t:    v.scope.resolveType("method"),
+		t:    v.scope.resolveType("method_t"),
 		name: fun.name,
 		fun:  fun,
 	}
@@ -313,7 +313,7 @@ func (v *SymbolTableVisitor) VisitGlobal(ctx *parser.GlobalContext) interface{} 
 
 	t := v.scope.resolveType(tn)
 
-	if t.simple == nil {
+	if t.avm == nil {
 		panic(fmt.Sprintf("global variables of non built-in type '%s' are not supported yet", t.name))
 	}
 
@@ -322,7 +322,7 @@ func (v *SymbolTableVisitor) VisitGlobal(ctx *parser.GlobalContext) interface{} 
 		name:     id,
 		t:        t,
 		const_: &ConstVariable{
-			kind: t.simple.kind,
+			kind: t.avm.kind,
 		},
 	}
 
@@ -332,11 +332,11 @@ func (v *SymbolTableVisitor) VisitGlobal(ctx *parser.GlobalContext) interface{} 
 
 	v.scope.variables[id] = vr
 
-	switch t.simple.kind {
-	case SimpleTypeInt:
+	switch t.avm.kind {
+	case AvmTypeInt:
 		vr.const_.index = len(v.program.ConstInts)
 		v.program.ConstInts = append(v.program.ConstInts, atoi(ctx.Constant().GetText()))
-	case SimpleTypeBytes:
+	case AvmTypeBytes:
 		vr.const_.index = len(v.program.ConstBytes)
 		v.program.ConstBytes = append(v.program.ConstBytes, []byte(ctx.Constant().GetText()))
 	default:

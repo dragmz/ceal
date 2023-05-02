@@ -2713,6 +2713,26 @@ type BuiltinStructData struct {
 	functions []BuiltinStructFunctionData
 }
 
+type BuiltinType struct {
+	Name  string
+	Type  string
+	Bound [2]uint64
+}
+
+var builtin_types = []BuiltinType{
+	{Name: "uint64_t", Type: "uint64", Bound: [2]uint64{0, 18446744073709551615}},
+	{Name: "none_t", Type: "none", Bound: [2]uint64{0, 0}},
+	{Name: "name_t", Type: "bytes", Bound: [2]uint64{1, 64}},
+	{Name: "method_t", Type: "bytes", Bound: [2]uint64{4, 4}},
+	{Name: "key_t", Type: "bytes", Bound: [2]uint64{0, 64}},
+	{Name: "bool_t", Type: "uint64", Bound: [2]uint64{0, 1}},
+	{Name: "bigint_t", Type: "bytes", Bound: [2]uint64{0, 64}},
+	{Name: "any_t", Type: "any", Bound: [2]uint64{0, 0}},
+	{Name: "addr_t", Type: "bytes", Bound: [2]uint64{32, 32}},
+	{Name: "r_byte_t", Type: "bytes", Bound: [2]uint64{0, 4096}},
+	{Name: "r32_byte_t", Type: "bytes", Bound: [2]uint64{32, 32}},
+}
+
 var builtin_structs = []BuiltinStructData{
 	{
 		name:   "avm_ecdsa_verify_t",

@@ -198,8 +198,9 @@ func run(a args) error {
 		name := ceal.ReadStackType(t.Name)
 
 		ct := ceal.CealSpecType{
-			Name: name,
-			Type: readType(t.AVMType),
+			Name:  name,
+			Type:  readType(t.AVMType),
+			Bound: t.Bound,
 		}
 
 		cs.Types = append(cs.Types, ct)

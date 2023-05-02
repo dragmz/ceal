@@ -430,11 +430,11 @@ func (a *CealVariable) TealAst() teal.TealAst {
 
 	if a.D.V.const_ != nil {
 		switch a.D.V.const_.kind {
-		case SimpleTypeInt:
+		case AvmTypeInt:
 			ast := &teal.Teal_intc{Teal_intc_op: teal.Teal_intc_op{I1: uint8(a.D.V.const_.index)}}
 			res.Write(ast)
 			return res.Build()
-		case SimpleTypeBytes:
+		case AvmTypeBytes:
 			ast := &teal.Teal_bytec{Teal_bytec_op: teal.Teal_bytec_op{I1: uint8(a.D.V.const_.index)}}
 			res.Write(ast)
 			return res.Build()
@@ -446,7 +446,7 @@ func (a *CealVariable) TealAst() teal.TealAst {
 		res.Write(&teal.Teal_named_int{V: &teal.Teal_named_int_value{V: a.D.V.name}})
 	case "bytes":
 		res.Write(&teal.Teal_byte{S: &teal.Teal_byte_string_value{V: a.D.V.name}})
-	case "method":
+	case "method_t":
 		// TODO: I'm not sure why the sig generation is here and not in Teal_method
 		sig := strings.Builder{}
 		sig.WriteString(a.D.V.name)
@@ -698,8 +698,8 @@ func (a *CealStructField) TealAst() teal.TealAst {
 }
 
 type CealCall struct {
-	Fun   *Function
-	Field CealAst // TODO: not sure the Field should be here or filled in as an Arg already
+	Fun  *Function
+	SFun *StructFunction
 
 	Args []CealAst
 
@@ -721,6 +721,12 @@ func (a *CealCall) TealAst() teal.TealAst {
 	}
 
 	if a.Fun.builtin != nil {
+		var field CealAst
+
+		if a.SFun != nil {
+			field = &CealRaw{Value: a.SFun.name}
+		}
+
 		sl := len(a.Fun.builtin.stack)
 
 		for i := 0; i < sl; i++ {
@@ -734,7 +740,7 @@ func (a *CealCall) TealAst() teal.TealAst {
 		arg_index := 0
 
 		l := len(a.Args) - sl
-		if a.Field != nil {
+		if field != nil {
 			l++
 		}
 
@@ -743,7 +749,7 @@ func (a *CealCall) TealAst() teal.TealAst {
 
 			imm := a.Fun.builtin.imm[imm_index]
 			if imm.field {
-				arg = a.Field
+				arg = field
 			} else {
 				arg = a.Args[arg_index+len(a.Fun.builtin.stack)]
 				arg_index++

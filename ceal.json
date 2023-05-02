@@ -3,47 +3,91 @@
 	"types": [
 		{
 			"Name": "uint64_t",
-			"Type": "uint64"
+			"Type": "uint64",
+			"Bound": [
+				0,
+				18446744073709551615
+			]
 		},
 		{
 			"Name": "none_t",
-			"Type": "none"
+			"Type": "none",
+			"Bound": [
+				0,
+				0
+			]
 		},
 		{
 			"Name": "name_t",
-			"Type": "bytes"
+			"Type": "bytes",
+			"Bound": [
+				1,
+				64
+			]
 		},
 		{
 			"Name": "method_t",
-			"Type": "bytes"
+			"Type": "bytes",
+			"Bound": [
+				4,
+				4
+			]
 		},
 		{
 			"Name": "key_t",
-			"Type": "bytes"
+			"Type": "bytes",
+			"Bound": [
+				0,
+				64
+			]
 		},
 		{
 			"Name": "bool_t",
-			"Type": "uint64"
+			"Type": "uint64",
+			"Bound": [
+				0,
+				1
+			]
 		},
 		{
 			"Name": "bigint_t",
-			"Type": "bytes"
+			"Type": "bytes",
+			"Bound": [
+				0,
+				64
+			]
 		},
 		{
 			"Name": "any_t",
-			"Type": "any"
+			"Type": "any",
+			"Bound": [
+				0,
+				0
+			]
 		},
 		{
 			"Name": "addr_t",
-			"Type": "bytes"
+			"Type": "bytes",
+			"Bound": [
+				32,
+				32
+			]
 		},
 		{
 			"Name": "r_byte_t",
-			"Type": "bytes"
+			"Type": "bytes",
+			"Bound": [
+				0,
+				4096
+			]
 		},
 		{
 			"Name": "r32_byte_t",
-			"Type": "bytes"
+			"Type": "bytes",
+			"Bound": [
+				32,
+				32
+			]
 		}
 	],
 	"ops": [

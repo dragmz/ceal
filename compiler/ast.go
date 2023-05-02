@@ -275,21 +275,13 @@ func (v *AstVisitor) VisitCallStmt(ctx *parser.CallStmtContext) interface{} {
 func (v *AstVisitor) VisitCall_expr(ctx *parser.Call_exprContext) interface{} {
 	sf, f := v.mustResolveFunction(ctx.Value_access_expr().Dot_expr().AllID())
 
-	var field CealAst
-
 	if sf != nil {
 		f = sf.f
 	}
 
-	if f.builtin != nil {
-		if sf != nil {
-			field = &CealRaw{Value: sf.name}
-		}
-	}
-
 	ast := &CealCall{
-		Fun:   f,
-		Field: field,
+		Fun:  f,
+		SFun: sf,
 	}
 
 	for _, arg := range ctx.Args().AllExpr() {
@@ -437,7 +429,7 @@ func (v *AstVisitor) mustResolve(ids []antlr.TerminalNode) (*Variable, *StructFi
 		return vr, nil
 	}
 
-	if t.simple != nil {
+	if t.avm != nil {
 		panic("cannot resolve simple type access")
 	}
 
@@ -612,7 +604,7 @@ func (d dotData) Load() teal.TealAst {
 
 	var ast teal.TealAst
 
-	if v.t.simple != nil {
+	if v.t.avm != nil {
 		if v.param != nil {
 			ast = &teal.Teal_frame_dig{Teal_frame_dig_op: teal.Teal_frame_dig_op{I1: int8(v.param.index)}}
 		} else {
@@ -675,7 +667,7 @@ func (d valueData) Store(op teal.TealAst) teal.TealAst {
 
 	var ast teal.TealAst
 
-	if v.t.simple != nil {
+	if v.t.avm != nil {
 		if v.param != nil {
 			ast = &teal.Teal_frame_bury{
 				Teal_frame_bury_op: teal.Teal_frame_bury_op{I1: int8(v.param.index)},
