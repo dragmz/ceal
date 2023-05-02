@@ -122,6 +122,9 @@ func TestExample_ok(t *testing.T) {
 func TestExample_param(t *testing.T) {
 	testExample(t, "examples/param.cpp")
 }
+func TestExample_pragma_once(t *testing.T) {
+	testExample(t, "examples/pragma_once.cpp")
+}
 func TestExample_round(t *testing.T) {
 	testExample(t, "examples/round.cpp")
 }

@@ -83,12 +83,9 @@ func run(a args) error {
 
 	defer bw.Flush()
 
-	bw.WriteString(`#ifdef CEAL
-#pragma ceal_exclude
-#endif
+	bw.WriteString(`#pragma once
 
-#pragma once
-
+#ifndef CEAL
 #include <string>
 
 constexpr uint64_t fnv1a_hash(const char* str, uint64_t hash = 14695981039346656037u) {
@@ -209,6 +206,7 @@ struct any
 		}
 	}
 
+	bw.WriteString("#endif\n")
 	return nil
 }
 

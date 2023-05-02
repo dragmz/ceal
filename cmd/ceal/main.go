@@ -13,8 +13,9 @@ import (
 )
 
 type args struct {
-	Path   string
-	Format bool
+	Path    string
+	Format  bool
+	Include string
 }
 
 func run(a args) error {
@@ -24,12 +25,13 @@ func run(a args) error {
 	}
 
 	src := string(bs)
-	c := compiler.CealCompiler{
+	c := compiler.NewCompiler(compiler.CealCompilerConfig{
 		Includes: []string{
 			".",
 			filepath.Dir(a.Path),
+			filepath.Dir(a.Include),
 		},
-	}
+	})
 
 	program := c.Compile(src)
 	ast := program.TealAst()
@@ -49,6 +51,7 @@ func main() {
 	var a args
 	flag.StringVar(&a.Path, "path", "", "source file path")
 	flag.BoolVar(&a.Format, "format", false, "format output")
+	flag.StringVar(&a.Include, "include", "", "include path")
 	flag.Parse()
 
 	err := run(a)

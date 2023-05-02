@@ -130,9 +130,6 @@ type CListener interface {
 	// EnterMinusExpr is called when entering the MinusExpr production.
 	EnterMinusExpr(c *MinusExprContext)
 
-	// EnterInclude is called when entering the include production.
-	EnterInclude(c *IncludeContext)
-
 	// EnterFunction is called when entering the function production.
 	EnterFunction(c *FunctionContext)
 
@@ -354,9 +351,6 @@ type CListener interface {
 
 	// ExitMinusExpr is called when exiting the MinusExpr production.
 	ExitMinusExpr(c *MinusExprContext)
-
-	// ExitInclude is called when exiting the include production.
-	ExitInclude(c *IncludeContext)
 
 	// ExitFunction is called when exiting the function production.
 	ExitFunction(c *FunctionContext)

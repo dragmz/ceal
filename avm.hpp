@@ -1,9 +1,6 @@
-#ifdef CEAL
-#pragma ceal_exclude
-#endif
-
 #pragma once
 
+#ifndef CEAL
 #include <string>
 
 constexpr uint64_t fnv1a_hash(const char* str, uint64_t hash = 14695981039346656037u) {
@@ -1855,3 +1852,4 @@ struct avm_block_t
 	uint64_t BlkTimestamp(STACK uint64_t STACK_1);
 };
 extern avm_block_t avm_block;
+#endif

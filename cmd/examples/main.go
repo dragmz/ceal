@@ -29,9 +29,9 @@ func run(a args) error {
 		return err
 	}
 
-	c := compiler.CealCompiler{
+	c := compiler.NewCompiler(compiler.CealCompilerConfig{
 		Includes: []string{a.Path, "."},
-	}
+	})
 
 	for _, p := range paths {
 		bs, err := os.ReadFile(p)

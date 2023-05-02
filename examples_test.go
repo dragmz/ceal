@@ -10,9 +10,9 @@ import (
 )
 
 func testExample(t *testing.T, p string) {
-	c := compiler.CealCompiler{
+	c := compiler.NewCompiler(compiler.CealCompilerConfig{
 		Includes: []string{"examples", "."},
-	}
+	})
 
 	bs, err := os.ReadFile(p)
 	if err != nil {

@@ -171,10 +171,6 @@ func (v *BaseCVisitor) VisitMinusExpr(ctx *MinusExprContext) interface{} {
 	return v.VisitChildren(ctx)
 }
 
-func (v *BaseCVisitor) VisitInclude(ctx *IncludeContext) interface{} {
-	return v.VisitChildren(ctx)
-}
-
 func (v *BaseCVisitor) VisitFunction(ctx *FunctionContext) interface{} {
 	return v.VisitChildren(ctx)
 }

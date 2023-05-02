@@ -1,0 +1,9 @@
+#pragma version 8
+b avm_main
+random:
+proto 0 1
+int 4
+retsub
+avm_main:
+callsub random
+return

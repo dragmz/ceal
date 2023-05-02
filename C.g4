@@ -2,8 +2,7 @@ grammar C;
 
 program:
     (
-        include
-        | comment
+        comment
         | global ';'
         | function
         | struct ';'
@@ -55,7 +54,6 @@ expr:
     | '(' expr ')'              # GroupExpr
     ;
 
-include: '#include' STRING;
 function: type ID '(' params ')' '{' stmt* '}';
 struct: 'struct' ID '{' field* '}';
 global: type ID '=' constant;

@@ -266,12 +266,6 @@ func (s *BaseCListener) EnterMinusExpr(ctx *MinusExprContext) {}
 // ExitMinusExpr is called when production MinusExpr is exited.
 func (s *BaseCListener) ExitMinusExpr(ctx *MinusExprContext) {}
 
-// EnterInclude is called when production include is entered.
-func (s *BaseCListener) EnterInclude(ctx *IncludeContext) {}
-
-// ExitInclude is called when production include is exited.
-func (s *BaseCListener) ExitInclude(ctx *IncludeContext) {}
-
 // EnterFunction is called when production function is entered.
 func (s *BaseCListener) EnterFunction(ctx *FunctionContext) {}
 
