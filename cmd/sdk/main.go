@@ -83,7 +83,10 @@ func run(a args) error {
 
 	defer bw.Flush()
 
-	bw.WriteString(`
+	bw.WriteString(`#ifdef CEAL
+#pragma ceal_exclude
+#endif
+
 #pragma once
 
 #include <string>

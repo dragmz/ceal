@@ -11,7 +11,7 @@ import (
 
 func testExample(t *testing.T, p string) {
 	c := compiler.CealCompiler{
-		Includes: []string{"examples"},
+		Includes: []string{"examples", "."},
 	}
 
 	bs, err := os.ReadFile(p)

@@ -1,3 +1,6 @@
+#ifdef CEAL
+#pragma ceal_exclude
+#endif
 
 #pragma once
 
@@ -8,8 +11,6 @@ constexpr uint64_t fnv1a_hash(const char* str, uint64_t hash = 14695981039346656
 }
 
 #define const_string(x) fnv1a_hash(x)
-
-// avm_method support isn't implemented yet
 #define avm_method(x) const_string(#x)
 
 #define IMMEDIATE

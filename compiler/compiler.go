@@ -6,8 +6,10 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"strings"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
+	"github.com/pkg/errors"
 )
 
 type CealCompiler struct {
@@ -336,10 +338,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 		str := includes[i].STRING().GetText()
 		name := str[1 : len(str)-1]
 
-		var incsrc string
-
-		// TODO: is a hardcoded avm.hpp okay?
-		if name != "avm.hpp" {
+		inc, err := func() (string, error) {
 			for _, dir := range c.Includes {
 				ip := path.Join(dir, name)
 
@@ -349,11 +348,24 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 				}
 
 				if err != nil {
-					panic(fmt.Sprintf("failed to read #include file: '%s'", name))
+					return "", errors.Wrapf(err, "failed to read #include file: '%s'", name)
 				}
 
-				incsrc = string(bs)
+				inc := string(bs)
+				return inc, nil
+			}
 
+			return "", errors.Errorf("failed to find #include file: '%s'", name)
+		}()
+
+		if err != nil {
+			panic(err)
+		}
+
+		lines := strings.Split(inc, "\n")
+		for _, line := range lines {
+			if strings.HasPrefix(strings.TrimSpace(line), "#pragma ceal_exclude") {
+				inc = ""
 				break
 			}
 		}
@@ -361,7 +373,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 		prefix := src[:include.GetStart().GetStart()]
 		suffix := src[include.GetStop().GetStop()+1:]
 
-		src = prefix + incsrc + suffix
+		src = prefix + inc + suffix
 	}
 
 	input = antlr.NewInputStream(src)

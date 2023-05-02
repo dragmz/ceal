@@ -30,7 +30,7 @@ func run(a args) error {
 	}
 
 	c := compiler.CealCompiler{
-		Includes: []string{a.Path},
+		Includes: []string{a.Path, "."},
 	}
 
 	for _, p := range paths {
