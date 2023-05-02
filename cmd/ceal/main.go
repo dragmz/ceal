@@ -26,6 +26,7 @@ func run(a args) error {
 	src := string(bs)
 	c := compiler.CealCompiler{
 		Includes: []string{
+			".",
 			filepath.Dir(a.Path),
 		},
 	}
