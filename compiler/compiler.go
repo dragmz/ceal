@@ -325,7 +325,7 @@ type UserFunction struct {
 	scope *Scope
 }
 
-func (c *CealCompiler) Compile(src string) *CealProgram {
+func (c *CealCompiler) preprocess(src string) (string, error) {
 	input := antlr.NewInputStream(src)
 	lexer := parser.NewCLexer(input)
 	stream := antlr.NewCommonTokenStream(lexer, 0)
@@ -359,7 +359,7 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 		}()
 
 		if err != nil {
-			panic(err)
+			return "", err
 		}
 
 		lines := strings.Split(inc, "\n")
@@ -376,10 +376,19 @@ func (c *CealCompiler) Compile(src string) *CealProgram {
 		src = prefix + inc + suffix
 	}
 
-	input = antlr.NewInputStream(src)
-	lexer = parser.NewCLexer(input)
-	stream = antlr.NewCommonTokenStream(lexer, 0)
-	p = parser.NewCParser(stream)
+	return src, nil
+}
+
+func (c *CealCompiler) Compile(src string) *CealProgram {
+	src, err := c.preprocess(src)
+	if err != nil {
+		panic(err)
+	}
+
+	input := antlr.NewInputStream(src)
+	lexer := parser.NewCLexer(input)
+	stream := antlr.NewCommonTokenStream(lexer, 0)
+	p := parser.NewCParser(stream)
 
 	global := NewScope(nil)
 

@@ -23,6 +23,9 @@ func TestExample_bitor(t *testing.T) {
 func TestExample_bitxor(t *testing.T) {
 	testExample(t, "examples/bitxor.cpp")
 }
+func TestExample_blank(t *testing.T) {
+	testExample(t, "examples/blank.cpp")
+}
 func TestExample_block(t *testing.T) {
 	testExample(t, "examples/block.cpp")
 }

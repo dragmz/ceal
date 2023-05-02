@@ -53,41 +53,44 @@ func (a *CealProgram) TealAst() teal.TealAst {
 
 	main := a.Functions[AvmMainName]
 
-	if len(a.Functions) > 1 {
-		res.Write(&teal.Teal_b{
-			Teal_b_op: teal.Teal_b_op{
-				TARGET1: main.Fun.name,
-			},
-		})
-	}
+	if main != nil {
 
-	writeAffix := func(items []CealAst) {
-		for _, item := range items {
-			res.Write(item.TealAst())
-		}
-	}
-
-	for _, name := range a.FunctionNames {
-		ast := a.Functions[name]
-
-		if name == AvmMainName {
-			continue
+		if len(a.Functions) > 1 {
+			res.Write(&teal.Teal_b{
+				Teal_b_op: teal.Teal_b_op{
+					TARGET1: main.Fun.name,
+				},
+			})
 		}
 
-		writeAffix(ast.pre)
-		res.Write(&teal.Teal_label{Name: ast.Fun.name})
-		res.Write(ast.TealAst())
-		writeAffix(ast.post)
+		writeAffix := func(items []CealAst) {
+			for _, item := range items {
+				res.Write(item.TealAst())
+			}
+		}
+
+		for _, name := range a.FunctionNames {
+			ast := a.Functions[name]
+
+			if name == AvmMainName {
+				continue
+			}
+
+			writeAffix(ast.pre)
+			res.Write(&teal.Teal_label{Name: ast.Fun.name})
+			res.Write(ast.TealAst())
+			writeAffix(ast.post)
+		}
+
+		writeAffix(main.pre)
+
+		if len(a.Functions) > 1 {
+			res.Write(&teal.Teal_label{Name: main.Fun.name})
+		}
+
+		res.Write(main.TealAst())
+		writeAffix(main.post)
 	}
-
-	writeAffix(main.pre)
-
-	if len(a.Functions) > 1 {
-		res.Write(&teal.Teal_label{Name: main.Fun.name})
-	}
-
-	res.Write(main.TealAst())
-	writeAffix(main.post)
 
 	return res.Build()
 }
