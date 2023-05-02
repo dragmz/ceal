@@ -370,6 +370,11 @@ func (c *CealCompiler) preprocess(src string) (string, error) {
 			}
 		}
 
+		inc, err = c.preprocess(inc)
+		if err != nil {
+			return "", err
+		}
+
 		prefix := src[:include.GetStart().GetStart()]
 		suffix := src[include.GetStop().GetStop()+1:]
 

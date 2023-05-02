@@ -1,5 +1,10 @@
 #pragma version 8
 b avm_main
+log2:
+proto 1 0
+frame_dig -1
+log
+retsub
 log:
 proto 1 0
 frame_dig -1
