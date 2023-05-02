@@ -140,6 +140,9 @@ func TestExample_subscript(t *testing.T) {
 func TestExample_switch(t *testing.T) {
 	testExample(t, "examples/switch.cpp")
 }
+func TestExample_varargs(t *testing.T) {
+	testExample(t, "examples/varargs.cpp")
+}
 func TestExample_while(t *testing.T) {
 	testExample(t, "examples/while.cpp")
 }

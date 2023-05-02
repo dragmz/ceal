@@ -49,8 +49,8 @@ func formatImms(op ceal.CealSpecOp, skip int, b *strings.Builder) {
 		b.WriteString(arg.Type)
 		b.WriteString(" ")
 		b.WriteString(arg.Name)
+
 		if arg.Array {
-			// TODO: not sure the ", ..." is the best design choice; what about multiple array args? (but there are none in avm currently)
 			b.WriteString(", ...")
 		}
 	}

@@ -1,0 +1,3 @@
+#pragma version 8
+pushints 1 2 3
+pushbytess "test1" "test2" "test3"
