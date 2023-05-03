@@ -333,7 +333,9 @@ type UserFunction struct {
 
 func (c *cealCompiler) Compile(src string) *CealProgram {
 	p := &cealPreprocessor{
-		includes:  c.includes,
+		includes: &cealIncludes{
+			paths: c.includes,
+		},
 		processed: map[string]bool{},
 		defines:   map[string]string{},
 		stack:     &defStack{},
