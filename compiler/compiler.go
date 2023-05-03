@@ -363,6 +363,8 @@ func (d *defStack) pop() *defStack {
 }
 
 func (p *cealPreprocessor) preprocess(name string, src string) (string, error) {
+	src = strings.ReplaceAll(strings.ReplaceAll(src, "\r\n", "\n"), "\r", "\n")
+
 	p.stack = p.stack.push()
 	defer func() {
 		p.stack = p.stack.pop()
@@ -528,15 +530,7 @@ func (p *cealPreprocessor) preprocess(name string, src string) (string, error) {
 		i++
 	}
 
-	var processed []string
-
-	for _, line := range lines {
-		if line != "" {
-			processed = append(processed, line)
-		}
-	}
-
-	src = strings.Join(processed, "\n")
+	src = strings.Join(lines, "\n")
 
 	return src, nil
 }
