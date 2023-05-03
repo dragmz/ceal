@@ -1,9 +1,12 @@
 package compiler
 
 import (
+	"ceal/parser"
 	"fmt"
+	"strconv"
 	"strings"
 
+	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
 	"github.com/pkg/errors"
 )
 
@@ -52,14 +55,13 @@ func (p *cealPreprocessor) preprocess(name string, src string) (string, error) {
 		}
 
 		line := strings.TrimSpace(lines[i])
-
-		parts := strings.SplitN(strings.TrimSpace(line), " ", 2)
-
-		if len(parts) == 0 {
+		if len(line) == 0 {
 			clear()
 			i += 1
 			continue
 		}
+
+		parts := strings.SplitN(strings.TrimSpace(line), " ", 2)
 
 		switch parts[0] {
 		case "#endif":
@@ -72,24 +74,52 @@ func (p *cealPreprocessor) preprocess(name string, src string) (string, error) {
 
 			p.stack = p.stack.push()
 
-			name := strings.TrimSpace(parts[1])
+			l := parser.NewCLexer(antlr.NewInputStream(parts[1]))
+			l.RemoveErrorListeners()
+			t := l.NextToken()
 
-			if _, ok := p.defines[name]; ok {
-				p.stack.skip = true
+			switch t.GetTokenType() {
+			case parser.CLexerID:
+				if _, ok := p.defines[t.GetText()]; ok {
+					p.stack.skip = true
+				}
+			case parser.CLexerINT:
+				v, err := strconv.ParseInt(t.GetText(), 10, 64)
+				if err != nil {
+					return "", errors.Wrapf(err, "failed to parse #ifndef value: '%s'", t.GetText())
+				}
+
+				if v != 0 {
+					p.stack.skip = true
+				}
 			}
 
 			clear()
 		case "#ifdef":
 			if len(parts) < 2 {
-				return "", fmt.Errorf("invalid #ifdef: '%s'", line)
+				return "", fmt.Errorf("invalid #ifndef: '%s'", line)
 			}
 
 			p.stack = p.stack.push()
 
-			name := strings.TrimSpace(parts[1])
+			l := parser.NewCLexer(antlr.NewInputStream(parts[1]))
+			l.RemoveErrorListeners()
+			t := l.NextToken()
 
-			if _, ok := p.defines[name]; !ok {
-				p.stack.skip = true
+			switch t.GetTokenType() {
+			case parser.CLexerID:
+				if _, ok := p.defines[t.GetText()]; !ok {
+					p.stack.skip = true
+				}
+			case parser.CLexerINT:
+				v, err := strconv.ParseInt(t.GetText(), 10, 64)
+				if err != nil {
+					return "", errors.Wrapf(err, "failed to parse #ifndef value: '%s'", t.GetText())
+				}
+
+				if v == 0 {
+					p.stack.skip = true
+				}
 			}
 
 			clear()
@@ -97,6 +127,36 @@ func (p *cealPreprocessor) preprocess(name string, src string) (string, error) {
 			if p.stack.skip {
 				clear()
 			} else {
+				stop := false
+
+				for !stop {
+					stop = true
+					l := parser.NewCLexer(antlr.NewInputStream(line))
+					l.RemoveErrorListeners()
+
+				inner:
+
+					for {
+						t := l.NextToken()
+						if t.GetTokenType() == antlr.TokenEOF {
+							break
+						}
+
+						if t.GetTokenType() == parser.CLexerID {
+							id := t.GetText()
+							if v, ok := p.defines[id]; ok && len(v) > 0 {
+								// replace token from start to stop with define value
+								line = line[:t.GetStart()] + v + line[t.GetStop()+1:]
+								lines[i] = line
+								stop = false
+								break inner
+							}
+						}
+					}
+				}
+
+				parts := strings.SplitN(strings.TrimSpace(line), " ", 2)
+
 				switch parts[0] {
 				case "#include":
 					if len(parts) != 2 {
@@ -124,13 +184,24 @@ func (p *cealPreprocessor) preprocess(name string, src string) (string, error) {
 						return "", fmt.Errorf("invalid #define: '%s'", line)
 					}
 
+					l := parser.NewCLexer(antlr.NewInputStream(parts[1]))
+					l.RemoveErrorListeners()
+					t := l.NextToken()
+
+					if t.GetTokenType() != parser.CLexerID {
+						return "", fmt.Errorf("invalid #define: '%s'", line)
+					}
+
+					id := t.GetText()
+
 					items := strings.SplitN(parts[1], " ", 2)
 
 					switch len(items) {
 					case 1:
-						p.defines[strings.TrimSpace(items[0])] = ""
+						p.defines[id] = ""
 					case 2:
-						p.defines[strings.TrimSpace(items[0])] = strings.TrimSpace(items[1])
+						value := parts[1][t.GetStop()+1:]
+						p.defines[id] = strings.TrimSpace(value)
 					}
 
 					clear()

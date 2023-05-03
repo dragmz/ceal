@@ -420,7 +420,7 @@ func (v *AstVisitor) mustResolve(ids []antlr.TerminalNode) (*Variable, *StructFi
 
 	vr := v.resolveVariable(id)
 	if vr == nil {
-		panic(fmt.Sprintf("failed to resolve id: '%s", id))
+		panic(fmt.Sprintf("failed to resolve id: '%s'", id))
 	}
 
 	t := vr.t
