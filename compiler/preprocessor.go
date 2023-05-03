@@ -3,7 +3,6 @@ package compiler
 import (
 	"ceal/parser"
 	"fmt"
-	"strconv"
 	"strings"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
@@ -31,7 +30,7 @@ func (d *defStack) push() *defStack {
 }
 
 func (d *defStack) pop() *defStack {
-	if d.parent == nil {
+	if d == nil {
 		panic("#endif without #if")
 	}
 	return d.parent
@@ -78,20 +77,12 @@ func (p *cealPreprocessor) preprocess(name string, src string) (string, error) {
 			l.RemoveErrorListeners()
 			t := l.NextToken()
 
-			switch t.GetTokenType() {
-			case parser.CLexerID:
-				if _, ok := p.defines[t.GetText()]; ok {
-					p.stack.skip = true
-				}
-			case parser.CLexerINT:
-				v, err := strconv.ParseInt(t.GetText(), 10, 64)
-				if err != nil {
-					return "", errors.Wrapf(err, "failed to parse #ifndef value: '%s'", t.GetText())
-				}
+			if t.GetTokenType() != parser.CLexerID {
+				return "", fmt.Errorf("invalid #ifndef: '%s'", line)
+			}
 
-				if v != 0 {
-					p.stack.skip = true
-				}
+			if _, ok := p.defines[t.GetText()]; ok {
+				p.stack.skip = true
 			}
 
 			clear()
@@ -106,20 +97,12 @@ func (p *cealPreprocessor) preprocess(name string, src string) (string, error) {
 			l.RemoveErrorListeners()
 			t := l.NextToken()
 
-			switch t.GetTokenType() {
-			case parser.CLexerID:
-				if _, ok := p.defines[t.GetText()]; !ok {
-					p.stack.skip = true
-				}
-			case parser.CLexerINT:
-				v, err := strconv.ParseInt(t.GetText(), 10, 64)
-				if err != nil {
-					return "", errors.Wrapf(err, "failed to parse #ifndef value: '%s'", t.GetText())
-				}
+			if t.GetTokenType() != parser.CLexerID {
+				return "", fmt.Errorf("invalid #ifdef: '%s'", line)
+			}
 
-				if v == 0 {
-					p.stack.skip = true
-				}
+			if _, ok := p.defines[t.GetText()]; !ok {
+				p.stack.skip = true
 			}
 
 			clear()
@@ -158,6 +141,27 @@ func (p *cealPreprocessor) preprocess(name string, src string) (string, error) {
 				parts := strings.SplitN(strings.TrimSpace(line), " ", 2)
 
 				switch parts[0] {
+				case "#if":
+					if len(parts) != 2 {
+						return "", fmt.Errorf("invalid #if: '%s'", line)
+					}
+
+					p.stack = p.stack.push()
+
+					l := parser.NewCLexer(antlr.NewInputStream(parts[1]))
+					l.RemoveErrorListeners()
+					t := l.NextToken()
+
+					if t.GetTokenType() != parser.CLexerINT {
+						return "", fmt.Errorf("invalid #if: '%s'", line)
+					}
+
+					if t.GetText() == "0" {
+						p.stack.skip = true
+					}
+
+					clear()
+
 				case "#include":
 					if len(parts) != 2 {
 						return "", fmt.Errorf("invalid #include: '%s'", line)
