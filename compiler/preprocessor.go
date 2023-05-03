@@ -36,6 +36,13 @@ func (d *defStack) pop() *defStack {
 	return d.parent
 }
 
+func newPreprocessorLexer(input string) *parser.CLexer {
+	l := parser.NewCLexer(antlr.NewInputStream(input))
+	// TODO: refactor so there's no need to remove error listeners
+	l.RemoveErrorListeners()
+	return l
+}
+
 func (p *cealPreprocessor) preprocess(name string, src string) (string, error) {
 	src = strings.ReplaceAll(strings.ReplaceAll(src, "\r\n", "\n"), "\r", "\n")
 
@@ -73,8 +80,7 @@ func (p *cealPreprocessor) preprocess(name string, src string) (string, error) {
 
 			p.stack = p.stack.push()
 
-			l := parser.NewCLexer(antlr.NewInputStream(parts[1]))
-			l.RemoveErrorListeners()
+			l := newPreprocessorLexer(parts[1])
 			t := l.NextToken()
 
 			if t.GetTokenType() != parser.CLexerID {
@@ -93,8 +99,7 @@ func (p *cealPreprocessor) preprocess(name string, src string) (string, error) {
 
 			p.stack = p.stack.push()
 
-			l := parser.NewCLexer(antlr.NewInputStream(parts[1]))
-			l.RemoveErrorListeners()
+			l := newPreprocessorLexer(parts[1])
 			t := l.NextToken()
 
 			if t.GetTokenType() != parser.CLexerID {
@@ -114,8 +119,7 @@ func (p *cealPreprocessor) preprocess(name string, src string) (string, error) {
 
 				for !stop {
 					stop = true
-					l := parser.NewCLexer(antlr.NewInputStream(line))
-					l.RemoveErrorListeners()
+					l := newPreprocessorLexer(line)
 
 				inner:
 
@@ -148,8 +152,7 @@ func (p *cealPreprocessor) preprocess(name string, src string) (string, error) {
 
 					p.stack = p.stack.push()
 
-					l := parser.NewCLexer(antlr.NewInputStream(parts[1]))
-					l.RemoveErrorListeners()
+					l := newPreprocessorLexer(parts[1])
 					t := l.NextToken()
 
 					if t.GetTokenType() != parser.CLexerINT {
@@ -188,8 +191,7 @@ func (p *cealPreprocessor) preprocess(name string, src string) (string, error) {
 						return "", fmt.Errorf("invalid #define: '%s'", line)
 					}
 
-					l := parser.NewCLexer(antlr.NewInputStream(parts[1]))
-					l.RemoveErrorListeners()
+					l := newPreprocessorLexer(parts[1])
 					t := l.NextToken()
 
 					if t.GetTokenType() != parser.CLexerID {
