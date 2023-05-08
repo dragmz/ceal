@@ -4,6 +4,7 @@ go 1.20
 
 require (
 	github.com/antlr/antlr4/runtime/Go/antlr/v4 v4.0.0-20230321174746-8dcc6526cfb1
+	github.com/dragmz/cpre v0.0.0-20230508225731-483b4e597134
 	github.com/dragmz/tealex v0.0.0-20230417221352-80009d0cec9b
 	github.com/joe-p/tealfmt v0.0.0-20221219211223-cec2ea891d52
 	github.com/pkg/errors v0.9.1
@@ -13,6 +14,6 @@ require (
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	golang.org/x/exp v0.0.0-20230321023759-10a507213a29 // indirect
+	golang.org/x/exp v0.0.0-20230425010034-47ecfdc1ba53 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

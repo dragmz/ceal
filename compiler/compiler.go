@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/antlr/antlr4/runtime/Go/antlr/v4"
+	"github.com/dragmz/cpre"
 )
 
 type CealCompilerConfig struct {
@@ -332,21 +333,17 @@ type UserFunction struct {
 }
 
 func (c *cealCompiler) Compile(src string) *CealProgram {
-	p := &cealPreprocessor{
-		includes: &cealIncludes{
-			paths: c.includes,
-		},
-		processed: map[string]bool{},
-		defines:   map[string]string{},
-		stack:     &defStack{},
+	includes := &cealIncludes{
+		paths: c.includes,
 	}
 
-	p.defines["CEAL"] = "1"
+	p := cpre.NewPreprocessor(cpre.PreprocessorConfig{
+		Include: includes.resolve,
+	})
 
-	src, err := p.preprocess("", src)
-	if err != nil {
-		panic(err)
-	}
+	p.Define("CEAL", "1")
+
+	src = p.Process(src)
 
 	input := antlr.NewInputStream(src)
 	lexer := parser.NewCLexer(input)
