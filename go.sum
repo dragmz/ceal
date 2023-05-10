@@ -3,8 +3,8 @@ github.com/antlr/antlr4/runtime/Go/antlr/v4 v4.0.0-20230321174746-8dcc6526cfb1/g
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/dragmz/cpre v0.0.0-20230508225731-483b4e597134 h1:R+4ESIOQVhiyzRAgFi8hpPZbGG4u+qoivbRzdrcq7k8=
-github.com/dragmz/cpre v0.0.0-20230508225731-483b4e597134/go.mod h1:+1CbAUErSy0CgVoVIm4HMYNspLyg+rDEzVRsyTE4eX8=
+github.com/dragmz/cpre v0.0.0-20230510203622-c47955272f84 h1:jgmIUOyoZq7mcQwkvgH7VnGyYVLvWcpyq5gwvIz/4cw=
+github.com/dragmz/cpre v0.0.0-20230510203622-c47955272f84/go.mod h1:LckaXt6ufJyLq+5+3bF/0r1cUAxKsHvTNv2WCwPa7B0=
 github.com/dragmz/tealex v0.0.0-20230417221352-80009d0cec9b h1:UT9rv6Lgq9DtXaKrkhl/LP762YPTGD+z+VNRyEbd4T4=
 github.com/dragmz/tealex v0.0.0-20230417221352-80009d0cec9b/go.mod h1:o+yTJLCXeyH3mW6XqknClRm1XU8nSlhOXgtqwibTk9c=
 github.com/joe-p/tealfmt v0.0.0-20221219211223-cec2ea891d52 h1:ljH8x/Wg09cHcf9Yw5ZYtvN2zcMx07YSsp/dNEVEnUI=
