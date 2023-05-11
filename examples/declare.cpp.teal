@@ -1,0 +1,8 @@
+#pragma version 8
+byte ""
+store 0
+load 0
+len
+load 1
++
+return

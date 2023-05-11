@@ -56,6 +56,9 @@ func TestExample_const(t *testing.T) {
 func TestExample_contract(t *testing.T) {
 	testExample(t, "examples/contract.cpp")
 }
+func TestExample_declare(t *testing.T) {
+	testExample(t, "examples/declare.cpp")
+}
 func TestExample_define(t *testing.T) {
 	testExample(t, "examples/define.cpp")
 }

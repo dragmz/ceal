@@ -642,6 +642,29 @@ func (a *CealDefine) TealAst() teal.TealAst {
 	return ast
 }
 
+type CealDeclare struct {
+	D valueData
+}
+
+func (a *CealDeclare) TealAst() teal.TealAst {
+	res := &teal.TealAstBuilder{}
+
+	if a.D.V.t.complex != nil && a.D.V.t.complex.builtin != nil {
+		panic("cannot assign to built-in op")
+	}
+
+	if a.D.V.t.avm != nil {
+		switch a.D.V.t.avm.kind {
+		case AvmTypeBytes:
+			res.Write(
+				&teal.Teal_store{STACK_1: &teal.Teal_byte{S: &teal.Teal_byte_string_value{}}})
+		}
+	}
+
+	return res.Build()
+
+}
+
 type CealAssign struct {
 	D valueData
 

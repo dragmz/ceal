@@ -115,14 +115,18 @@ func (v *AstVisitor) mustResolveDotSub(dot parser.IDot_exprContext, sub parser.I
 }
 
 func (v *AstVisitor) VisitDeclarationStmt(ctx *parser.DeclarationStmtContext) interface{} {
-	id := ctx.Declaration().Type_().ID().GetText()
-	t := v.scope.resolveType(id)
+	id := ctx.Declaration().ID().GetText()
+	vr := v.scope.variables[id]
 
-	if t == nil {
-		panic(fmt.Sprintf("type '%s' not found", id))
+	ast := &CealDeclare{
+		D: valueData{
+			dotData: dotData{
+				V: vr,
+			},
+		},
 	}
 
-	return nil
+	return ast
 }
 
 func (v *AstVisitor) VisitMinusExpr(ctx *parser.MinusExprContext) interface{} {
