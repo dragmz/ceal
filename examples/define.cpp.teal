@@ -1,4 +1,3 @@
 #pragma version 8
-intcblock 123
-intc 0
+int 123
 return
