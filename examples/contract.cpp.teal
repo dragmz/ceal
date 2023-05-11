@@ -12,8 +12,6 @@ itob
 box_put
 retsub
 noop:
-byte ""
-store 0
 // timestamp bytes
 txn Sender
 int 0
